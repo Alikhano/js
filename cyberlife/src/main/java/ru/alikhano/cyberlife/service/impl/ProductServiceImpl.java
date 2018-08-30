@@ -3,11 +3,13 @@ package ru.alikhano.cyberlife.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ru.alikhano.cyberlife.dao.ProductDao;
 import ru.alikhano.cyberlife.model.Product;
 import ru.alikhano.cyberlife.service.ProductService;
 
+@Service
 public class ProductServiceImpl implements ProductService{
 	
 	@Autowired
