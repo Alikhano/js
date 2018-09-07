@@ -14,3 +14,20 @@
 .jumb-text {
 	background-color: rgba(0, 0, 0, 0.6);
 }
+
+#admin-sidebar {
+	height: 100vh;
+	margin-bottom: 0px;
+}
+
+.sidebar-item a:hover {
+	color: #007DDD !important;
+	cursor: pointer;
+}
+
+.container-wrapper {
+	height:80%;
+    margin: auto;
+    margin-top: 80px;
+    margin-bottom: 300px;
+}
