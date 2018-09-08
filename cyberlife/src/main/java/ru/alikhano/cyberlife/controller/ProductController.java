@@ -20,17 +20,16 @@ public class ProductController {
 
 	@RequestMapping("/catalogue")
 	public String getProducts(Model model) {
-		List<ProductDTO> products = productService.getProductDTOList();
+		List<ProductDTO> products = productService.getAll();
 		model.addAttribute("products", products);
 
 		return "productCatalogue";
 	}
 
-
     
     @RequestMapping("/viewProduct/{productId}")
-    public String viewProduct(@PathVariable("productId") int productId, Model model) throws IOException{
-        ProductDTO productDTO = productService.getProductDTOById(productId);
+    public String viewProduct(@PathVariable("productId") int productId, Model model) {
+        ProductDTO productDTO = productService.getById(productId);
         model.addAttribute("product", productDTO);
 
         return "viewProduct";

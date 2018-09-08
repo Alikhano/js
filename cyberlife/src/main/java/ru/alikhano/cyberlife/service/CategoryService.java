@@ -6,12 +6,12 @@ import ru.alikhano.cyberlife.DTO.CategoryDTO;
 
 public interface CategoryService {
 	
-	List<CategoryDTO> getCategoryDTOList();
+	List<CategoryDTO> getAll();
 
-	CategoryDTO getCategoryDTOById(int id);
+	CategoryDTO getById(int id);
 
-	CategoryDTO getCategoryDTOByType(String catType);
+	CategoryDTO getByType(String catType);
 
-	void addCategory(CategoryDTO categoryDTO);
+	void create(CategoryDTO categoryDTO);
 
 }

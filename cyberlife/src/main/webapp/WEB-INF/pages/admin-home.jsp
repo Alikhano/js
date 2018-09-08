@@ -6,7 +6,7 @@
 			<div class="py-2 sticky-top">
 				<div class="nav flex-column">
 				<div class="sidebar-item">
-				<a href="#" class="nav-link text-white">Admin Home</a> 
+				<a href="<c:url value="/admin-home" />" class="nav-link text-white">Admin Home</a> 
 					<a href="<c:url value="/productList" />" class="nav-link text-white">Inventory list</a> 
 					<a href="<c:url value="/addProduct" />" class="nav-link text-white">Add product</a> 
 					<a href="#" class="nav-link text-white">Edit characteristics</a> 

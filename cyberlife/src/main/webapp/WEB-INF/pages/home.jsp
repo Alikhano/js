@@ -10,7 +10,7 @@
   <hr class="my-4">
   <p class="lead">We offer a wide variety of android models to suit your needs in every aspect of your private or business life.</p>
   <p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Catalogue</a> <!--add link to catalogue  -->
+    <a class="btn btn-primary btn-lg"  href="<c:url value="/catalogue" />" role="button">Catalogue</a> <!--add link to catalogue  -->
   </p>
   <br>
 </div>

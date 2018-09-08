@@ -1,20 +1,12 @@
 package ru.alikhano.cyberlife.dao;
 
-
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 import ru.alikhano.cyberlife.model.Product;
 
-public interface ProductDao {
+@Repository
+public interface ProductDao extends GenericDao<Product> {
 	
-	List<Product> getProductList();
-
-	Product getProductById(int id);
-
-	void addProduct(Product product);
-
-	void editProduct(Product product);
-
-	void deleteProduct(Product product);
+	Product getByModel(String model);
 
 }

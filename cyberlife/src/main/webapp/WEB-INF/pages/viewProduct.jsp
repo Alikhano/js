@@ -5,7 +5,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-5">
-			<img src="<c:url value="/static/images/${product.model}.jpg" />"
+			<img src="${pageContext.request.contextPath}/static/images/${product.model}.jpg"
 				alt="image" style="width: 50%" />
 		</div>
 		<div class="col-md-5">
@@ -16,15 +16,15 @@
 			</p>
 			<p>
 				<strong>Consciousness</strong>: ${product.cons.level}
+				<br>
+				<${product.cons.description}
 			</p>
-			<p>${product.price}USD</p>
+			<p>${product.price} USD</p>
 
 			<p>
 				<a href="<c:url value = "${url}" />" class="btn btn-default">Back</a>
-				<a href="#" class="btn btn-warning btn-large"><span
-					class="glyphicon glyphicon-shopping-cart"></span> Order Now</a> <a
-					href="<spring:url value="/cart" />" class="btn btn-default"><span
-					class="glyphicon glyphicon-hand-right"></span> View Cart</a>
+				<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-shopping-cart"></span> Order Now</a> 
+				<a href="<spring:url value="/cart" />" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"></span> View Cart</a>
 			</p>
 
 		</div>

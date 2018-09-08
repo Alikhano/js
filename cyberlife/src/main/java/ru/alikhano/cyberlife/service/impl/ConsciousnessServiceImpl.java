@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.alikhano.cyberlife.DTO.ConsDTO;
 import ru.alikhano.cyberlife.dao.ConsciousnessDao;
@@ -22,8 +23,9 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	ConsciousnessMapper consMapper;
 
 	@Override
+	@Transactional
 	public List<ConsDTO> getConsDTOList() {
-		List<Consciousness> consList = consDao.getConList();
+		List<Consciousness> consList = consDao.getAll();
 		List<ConsDTO> consesDTO = new ArrayList<>();
 		consList.stream().forEach(cons -> {
 			ConsDTO consDTO = consMapper.consToConsDTO(cons);
@@ -33,18 +35,21 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	}
 
 	@Override
+	@Transactional
 	public ConsDTO getConsDTOById(int id) {
-		return consMapper.consToConsDTO(consDao.getConsById(id));
+		return consMapper.consToConsDTO(consDao.getById(id));
 	}
 
 	@Override
+	@Transactional
 	public ConsDTO getConsDTOByLevel(String consLevel) {
 		return consMapper.consToConsDTO(consDao.getConsByLevel(consLevel));
 	}
 
 	@Override
+	@Transactional
 	public void addLevel(ConsDTO consDTO) {
-		consDao.addLevel(consMapper.consDTOtoCons(consDTO));
+		consDao.create(consMapper.consDTOtoCons(consDTO));
 		
 	}
 

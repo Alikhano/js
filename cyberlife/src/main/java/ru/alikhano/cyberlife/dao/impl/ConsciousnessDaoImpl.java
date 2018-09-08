@@ -1,7 +1,5 @@
 package ru.alikhano.cyberlife.dao.impl;
 
-import java.util.List;
-
 import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
@@ -15,26 +13,11 @@ import ru.alikhano.cyberlife.model.Consciousness;
 
 @Repository
 @Transactional
-public class ConsciousnessDaoImpl implements ConsciousnessDao {
+public class ConsciousnessDaoImpl extends GenericDaoImpl<Consciousness> implements ConsciousnessDao {
 	
 	@Autowired
 	SessionFactory sessionFactory;
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Consciousness> getConList() {
-		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from Consciousness").getResultList();
-	}
-
-	@Override
-	public Consciousness getConsById(int id) {
-		Session session = sessionFactory.getCurrentSession();
-		Consciousness cons = session.get(Consciousness.class, id);
-		session.flush();
-		return cons;
-	}
-
+	
 	@Override
 	public Consciousness getConsByLevel(String level) {
 		try {
@@ -45,12 +28,5 @@ public class ConsciousnessDaoImpl implements ConsciousnessDao {
 		catch (NoResultException noResultExc) {
 			return null;
 		}
-	}
-
-	@Override
-	public void addLevel(Consciousness consciousness) {
-		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(consciousness);
-		session.flush();	
 	}
 }

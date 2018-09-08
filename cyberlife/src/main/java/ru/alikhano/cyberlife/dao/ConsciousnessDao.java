@@ -1,17 +1,14 @@
 package ru.alikhano.cyberlife.dao;
 
-import java.util.List;
+
+import org.springframework.stereotype.Repository;
 
 import ru.alikhano.cyberlife.model.Consciousness;
 
-public interface ConsciousnessDao {
-
-	List<Consciousness> getConList();
-
-	Consciousness getConsById(int id);
-
+@Repository
+public interface ConsciousnessDao extends GenericDao<Consciousness> {
+	
 	Consciousness getConsByLevel(String consLevel);
 
-	void addLevel(Consciousness consciousness);
 
 }

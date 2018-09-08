@@ -1,5 +1,7 @@
 package ru.alikhano.cyberlife.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,8 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="product")
@@ -39,8 +44,6 @@ public class Product {
 	@Lob
 	@Column(name="image")
 	private byte[] image;
-	
-
 
 	@ManyToOne
 	@JoinColumn(name="catId")
@@ -49,6 +52,10 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="consId")
 	private Consciousness cons;
+	
+	@OneToMany(mappedBy="product")
+	@JsonIgnore
+	private Set<CartItem> cartItems;
 	
 	
 	public int getProductId() {
@@ -114,6 +121,16 @@ public class Product {
 
 	public void setCons(Consciousness cons) {
 		this.cons = cons;
+	}
+	
+	
+
+	public Set<CartItem> getCartItems() {
+		return cartItems;
+	}
+
+	public void setCartItems(Set<CartItem> cartItems) {
+		this.cartItems = cartItems;
 	}
 
 	@Override

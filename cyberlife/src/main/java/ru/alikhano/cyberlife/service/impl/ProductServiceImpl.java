@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.dao.ProductDao;
@@ -22,8 +23,9 @@ public class ProductServiceImpl implements ProductService{
 	ProductMapper productMapper;
 	
 	@Override
-	public List<ProductDTO> getProductDTOList() {
-		List<Product> products = productDao.getProductList();
+	@Transactional
+	public List<ProductDTO> getAll() {
+		List<Product> products = productDao.getAll();
 		List<ProductDTO> productsDTO = new ArrayList<>();
 		products.stream().forEach(product -> {
 			ProductDTO productDTO = productMapper.productToProductDTO(product);
@@ -34,26 +36,35 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public ProductDTO getProductDTOById(int id) {
-		return productMapper.productToProductDTO((productDao.getProductById(id)));
+	@Transactional
+	public ProductDTO getById(int id) {
+		return productMapper.productToProductDTO((Product)(productDao.getById(id)));
 	}
 
 	@Override
-	public void addProduct(ProductDTO productDTO) {
-		productDao.addProduct(productMapper.productDTOtOProduct(productDTO));
+	@Transactional
+	public void create(ProductDTO productDTO) {
+		productDao.create(productMapper.productDTOtOProduct(productDTO));
 		
 	}
 
 	@Override
-	public void editProduct(ProductDTO productDTO) {
-		productDao.editProduct(productMapper.productDTOtOProduct(productDTO));
+	@Transactional
+	public void update(ProductDTO productDTO) {
+		productDao.update(productMapper.productDTOtOProduct(productDTO));
 		
 	}
 
 	@Override
-	public void deleteProduct(ProductDTO productDTO) {
-		productDao.deleteProduct(productMapper.productDTOtOProduct(productDTO));
+	@Transactional
+	public void delete(ProductDTO productDTO) {
+		productDao.delete(productMapper.productDTOtOProduct(productDTO));
 		
+	}
+
+	@Override
+	public ProductDTO getByModel(String model) {
+		return productMapper.productToProductDTO(productDao.getByModel(model));
 	}
 
 }

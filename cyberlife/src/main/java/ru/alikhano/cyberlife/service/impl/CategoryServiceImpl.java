@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.alikhano.cyberlife.DTO.CategoryDTO;
 import ru.alikhano.cyberlife.dao.CategoryDao;
@@ -21,8 +22,9 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	CategoryMapper categoryMapper;
 
-	public List<CategoryDTO> getCategoryDTOList() {
-		List<Category> categories= categoryDao.getCategoryList();
+	@Transactional
+	public List<CategoryDTO> getAll() {
+		List<Category> categories= categoryDao.getAll();
 		List<CategoryDTO> categoriesDTO = new ArrayList<>();
 		categories.stream().forEach(category -> {
 			CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
@@ -32,18 +34,21 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoriesDTO;
 	}
 
-	public CategoryDTO getCategoryDTOById(int id) {
-		return categoryMapper.categoryToCategoryDTO(categoryDao.getCategoryById(id));
+	@Transactional
+	public CategoryDTO getById(int id) {
+		return categoryMapper.categoryToCategoryDTO(categoryDao.getById(id));
 	}
 
 	
-	public CategoryDTO getCategoryDTOByType(String catType) {
-		return categoryMapper.categoryToCategoryDTO(categoryDao.getCategoryByType(catType));
+	@Transactional
+	public CategoryDTO getByType(String catType) {
+		return categoryMapper.categoryToCategoryDTO(categoryDao.getByType(catType));
 	}
 
 	
-	public void addCategory(CategoryDTO categoryDTO) {
-		categoryDao.addCategory(categoryMapper.categoryDTOtoCategory(categoryDTO));
+	@Transactional
+	public void create(CategoryDTO categoryDTO) {
+		categoryDao.create(categoryMapper.categoryDTOtoCategory(categoryDTO));
 		
 	}
 

@@ -15,14 +15,14 @@
 	<c:forEach items="${products}" var="product">
 		<tr>
 			<td><img
-				src="<c:url value="/static/images/${product.model}.jpg" />"
+				src="${pageContext.request.contextPath}/static/images/${product.model}.jpg"
 				alt="image" style="width: 50%" /></td>
 			<td>${product.model}</td>
 			<td>${product.category.catType}</td>
 			<td>${product.cons.level}</td>
-			<td>${product.price}USD</td>
+			<td>${product.price} USD</td>
 			<td><a href="<spring:url value="/viewProduct/${product.productId}" />">
-				<input type="submit" class="buttons" value="<spring:message text="Edit"/>"/></a>
+				<input type="submit" class="buttons" value="<spring:message text="View"/>"/></a>
 				 <a><input type="hidden"name="id" value="${product.productId}" />
 				</a>
 				</td>

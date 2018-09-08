@@ -3,19 +3,19 @@ package ru.alikhano.cyberlife.service;
 import java.util.List;
 
 import ru.alikhano.cyberlife.DTO.ProductDTO;
-import ru.alikhano.cyberlife.model.Product;
 
 public interface ProductService {
 
+	List<ProductDTO> getAll();
 
-	List<ProductDTO> getProductDTOList();
+	ProductDTO getById(int id);
 
-	ProductDTO getProductDTOById(int id);
+	void create(ProductDTO productDTO);
 
-	void addProduct(ProductDTO productDTO);
+	void update(ProductDTO productDTO);
 
-	void editProduct(ProductDTO productDTO);
-
-	void deleteProduct(ProductDTO productDTO);
+	void delete(ProductDTO productDTO);
+	
+	ProductDTO getByModel(String model);
 
 }

@@ -1,17 +1,13 @@
 package ru.alikhano.cyberlife.dao;
 
-import java.util.List;
+
+import org.springframework.stereotype.Repository;
 
 import ru.alikhano.cyberlife.model.Category;
 
-public interface CategoryDao {
+@Repository
+public interface CategoryDao extends GenericDao<Category> {
 
-	List<Category> getCategoryList();
-
-	Category getCategoryById(int id);
-
-	Category getCategoryByType(String catType);
-
-	void addCategory(Category category);
+	Category getByType(String catType);
 
 }

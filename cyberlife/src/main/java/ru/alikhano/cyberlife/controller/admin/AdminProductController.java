@@ -41,7 +41,7 @@ public class AdminProductController {
 	public String getAddNewProductForm(Model model) {
 		ProductDTO newProductDTO = new ProductDTO();
 		model.addAttribute("newProductDTO", newProductDTO);
-		model.addAttribute("categoryDTOList", categoryService.getCategoryDTOList());
+		model.addAttribute("categoryDTOList", categoryService.getAll());
 		model.addAttribute("consDTOList", consService.getConsDTOList());
 		return "addProduct";
 	}
@@ -68,14 +68,14 @@ public class AdminProductController {
 			}
 		}
 
-		productService.addProduct(newProductDTO);
+		productService.create(newProductDTO);
 
 		return "redirect:/productList";
 	}
 
 	@RequestMapping("/productList")
 	public String getProducts(Model model) {
-		List<ProductDTO> products = productService.getProductDTOList();
+		List<ProductDTO> products = productService.getAll();
 		model.addAttribute("products", products);
 
 		return "productList";
@@ -83,8 +83,8 @@ public class AdminProductController {
 
 	@RequestMapping("/editProduct/{productId}")
 	public String editProduct(@PathVariable("productId") int productId, Model model) {
-		ProductDTO productDTO = productService.getProductDTOById(productId);
-		model.addAttribute("categoryDTOList", categoryService.getCategoryDTOList());
+		ProductDTO productDTO = productService.getById(productId);
+		model.addAttribute("categoryDTOList", categoryService.getAll());
 		model.addAttribute("consDTOList", consService.getConsDTOList());
 		model.addAttribute("product", productDTO);
 
@@ -94,14 +94,14 @@ public class AdminProductController {
 	@RequestMapping(value = "/editProduct", method = RequestMethod.POST)
 	public String editProductPost(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result,
 			HttpServletRequest request) {
-		productService.editProduct(productDTO);
+		productService.update(productDTO);
 
 		return "redirect:/productList";
 	}
 
 	@RequestMapping(value = "/deleteProduct/{productId}")
 	public String deleteProduct(@PathVariable("productId") int productId, Model model) {
-		productService.deleteProduct(productService.getProductDTOById(productId));
+		productService.delete(productService.getById(productId));
 
 		return "redirect:/productList";
 	}
