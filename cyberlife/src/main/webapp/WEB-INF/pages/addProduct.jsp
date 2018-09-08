@@ -29,7 +29,7 @@
 
 						<form:input type="hidden" path="productId" id="productId" />
 
-						<div class="reg-container">
+						<div class="container">
 							<div class="form-group">
 								<label for="model">Model</label>
 								<form:errors path="model" cssStyle="color:#ff0000;" />
@@ -78,9 +78,9 @@
 									class="form:input-large" />
 							</div>
 
-							<br /> <br /> <input type="submit" value="Submit"
-								class="btn btn-default"> <a
-								href="<c:url value="/productList" />" class="btn btn-default">Cancel</a>
+							<br /> <br /> 
+							<input type="submit" value="Submit" class="btn btn-default"> 
+							<a href="<c:url value="/productList" />" class="btn btn-default">Cancel</a>
 						</div>
 
 					</form:form>

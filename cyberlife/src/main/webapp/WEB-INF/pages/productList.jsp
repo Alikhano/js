@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/pages/common/header.jsp" %>
+<%@ include file="/WEB-INF/pages/common/admin-side.jsp"%>
 
 <a href="<c:url value="/admin-home" />" class="btn btn-default">Back to Admin home</a>
 

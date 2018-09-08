@@ -14,7 +14,6 @@ public class Category {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@NotNull
 	@Column(name="catId")
 	private int catId;
 	

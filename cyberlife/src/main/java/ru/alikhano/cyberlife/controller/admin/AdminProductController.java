@@ -37,16 +37,16 @@ public class AdminProductController {
 
 	private Path path;
 
-	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/addProduct", method = RequestMethod.GET)
 	public String getAddNewProductForm(Model model) {
 		ProductDTO newProductDTO = new ProductDTO();
 		model.addAttribute("newProductDTO", newProductDTO);
 		model.addAttribute("categoryDTOList", categoryService.getAll());
-		model.addAttribute("consDTOList", consService.getConsDTOList());
+		model.addAttribute("consDTOList", consService.getAll());
 		return "addProduct";
 	}
 
-	@RequestMapping(value = "/addProduct", method = RequestMethod.POST, consumes = "multipart/form-data")
+	@RequestMapping(value = "admin/addProduct", method = RequestMethod.POST, consumes = "multipart/form-data")
 	public String addProductPost(@ModelAttribute("newProductDTO") ProductDTO newProductDTO, BindingResult result,
 			HttpServletRequest request, @RequestPart("file") MultipartFile file) throws IOException {
 
@@ -70,10 +70,10 @@ public class AdminProductController {
 
 		productService.create(newProductDTO);
 
-		return "redirect:/productList";
+		return "redirect:/admin/productList";
 	}
 
-	@RequestMapping("/productList")
+	@RequestMapping("/admin/productList")
 	public String getProducts(Model model) {
 		List<ProductDTO> products = productService.getAll();
 		model.addAttribute("products", products);
@@ -81,17 +81,17 @@ public class AdminProductController {
 		return "productList";
 	}
 
-	@RequestMapping("/editProduct/{productId}")
+	@RequestMapping("/admin/editProduct/{productId}")
 	public String editProduct(@PathVariable("productId") int productId, Model model) {
 		ProductDTO productDTO = productService.getById(productId);
 		model.addAttribute("categoryDTOList", categoryService.getAll());
-		model.addAttribute("consDTOList", consService.getConsDTOList());
+		model.addAttribute("consDTOList", consService.getAll());
 		model.addAttribute("product", productDTO);
 
 		return "editProduct";
 	}
 
-	@RequestMapping(value = "/editProduct", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/editProduct", method = RequestMethod.POST)
 	public String editProductPost(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result,
 			HttpServletRequest request) {
 		productService.update(productDTO);
@@ -99,7 +99,7 @@ public class AdminProductController {
 		return "redirect:/productList";
 	}
 
-	@RequestMapping(value = "/deleteProduct/{productId}")
+	@RequestMapping(value = "/admin/deleteProduct/{productId}")
 	public String deleteProduct(@PathVariable("productId") int productId, Model model) {
 		productService.delete(productService.getById(productId));
 

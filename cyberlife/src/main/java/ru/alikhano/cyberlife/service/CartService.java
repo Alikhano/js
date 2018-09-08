@@ -5,6 +5,8 @@ import java.util.List;
 import ru.alikhano.cyberlife.DTO.CartDTO;
 
 public interface CartService {
+	
+	void create(CartDTO cartDTO);
 
 	List<CartDTO> getAll();
 

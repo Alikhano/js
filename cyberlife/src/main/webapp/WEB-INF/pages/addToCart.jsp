@@ -23,7 +23,7 @@
 
 			<p>
 				<a href="<c:url value = "${url}" />" class="btn btn-default">Back</a>
-				<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-shopping-cart"></span> Add to cart</a> 
+				<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-shopping-cart"></span> Order Now</a> 
 				<a href="<spring:url value="/cart" />" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"></span> View Cart</a>
 			</p>
 

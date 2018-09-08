@@ -43,9 +43,9 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public void deleteAll(CartDTO cartDTO) {
-		Set<CartItem> items = cartDTO.getItems();
-		for (CartItem item : items) {
-			cartItemDao.delete(item);
+		Set<CartItemDTO> items = cartDTO.getItems();
+		for (CartItemDTO item : items) {
+			cartItemDao.delete(cartItemMapper.cartDTOtoCartItem(item));
 		}
 	}
 

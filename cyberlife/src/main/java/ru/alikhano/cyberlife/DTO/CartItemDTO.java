@@ -8,7 +8,7 @@ public class CartItemDTO {
 	private int itemId;
 	private double totalPrice;
 	private int quantity;
-	private Product product;
+	private ProductDTO product;
 	private Cart cart;
 	
 	public int getItemId() {
@@ -30,10 +30,11 @@ public class CartItemDTO {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public Product getProduct() {
+	
+	public ProductDTO getProduct() {
 		return product;
 	}
-	public void setProduct(Product product) {
+	public void setProduct(ProductDTO product) {
 		this.product = product;
 	}
 	public Cart getCart() {

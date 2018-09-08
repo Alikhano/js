@@ -14,7 +14,6 @@ public class Consciousness {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@NotNull
 	@Column(name="consId")
 	private int consId;
 	

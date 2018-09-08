@@ -24,7 +24,7 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 
 	@Override
 	@Transactional
-	public List<ConsDTO> getConsDTOList() {
+	public List<ConsDTO> getAll() {
 		List<Consciousness> consList = consDao.getAll();
 		List<ConsDTO> consesDTO = new ArrayList<>();
 		consList.stream().forEach(cons -> {
@@ -36,19 +36,19 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 
 	@Override
 	@Transactional
-	public ConsDTO getConsDTOById(int id) {
+	public ConsDTO getById(int id) {
 		return consMapper.consToConsDTO(consDao.getById(id));
 	}
 
 	@Override
 	@Transactional
-	public ConsDTO getConsDTOByLevel(String consLevel) {
+	public ConsDTO getByLevel(String consLevel) {
 		return consMapper.consToConsDTO(consDao.getConsByLevel(consLevel));
 	}
 
 	@Override
 	@Transactional
-	public void addLevel(ConsDTO consDTO) {
+	public void create(ConsDTO consDTO) {
 		consDao.create(consMapper.consDTOtoCons(consDTO));
 		
 	}

@@ -8,7 +8,7 @@ public class CartDTO {
 	
 	private int cartId;
 	private double grandTotal;
-	private Set<CartItem> items;
+	private Set<CartItemDTO> items;
 	
 	public int getCartId() {
 		return cartId;
@@ -22,12 +22,13 @@ public class CartDTO {
 	public void setGrandTotal(double grandTotal) {
 		this.grandTotal = grandTotal;
 	}
-	public Set<CartItem> getItems() {
+	public Set<CartItemDTO> getItems() {
 		return items;
 	}
-	public void setItems(Set<CartItem> items) {
+	public void setItems(Set<CartItemDTO> items) {
 		this.items = items;
 	}
+	
 	
 	
 

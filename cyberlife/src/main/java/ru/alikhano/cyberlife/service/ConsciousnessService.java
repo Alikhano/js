@@ -6,12 +6,12 @@ import ru.alikhano.cyberlife.DTO.ConsDTO;
 
 public interface ConsciousnessService {
 	
-	List<ConsDTO> getConsDTOList();
+	List<ConsDTO> getAll();
 
-	ConsDTO getConsDTOById(int id);
+	ConsDTO getById(int id);
 
-	ConsDTO getConsDTOByLevel(String consLevel);
+	ConsDTO getByLevel(String consLevel);
 
-	void addLevel(ConsDTO consDTO);
+	void create(ConsDTO consDTO);
 
 }
