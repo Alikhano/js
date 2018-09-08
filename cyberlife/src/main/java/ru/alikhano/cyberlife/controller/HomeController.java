@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
 	// test controller, this method will actually redirect to a home page
-	@RequestMapping("/home")
+	@RequestMapping("/")
 	public String home() {
 		return "home";
 	}
