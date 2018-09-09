@@ -8,23 +8,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name="role")
 public class Role {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="userId")
-	private int id;
+	@Column(name="roleId")
+	private int roleId;
 	
 	@Column(name="type")
 	private String type;
 
-	public int getId() {
-		return id;
+	
+	public int getRoleId() {
+		return roleId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getType() {
@@ -39,7 +40,7 @@ public class Role {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + roleId;
 		return result;
 	}
 
@@ -52,7 +53,7 @@ public class Role {
 		if (getClass() != obj.getClass())
 			return false;
 		Role other = (Role) obj;
-		if (id != other.id)
+		if (roleId != other.roleId)
 			return false;
 		return true;
 	}

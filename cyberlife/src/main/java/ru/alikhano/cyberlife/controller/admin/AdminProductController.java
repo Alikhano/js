@@ -37,7 +37,7 @@ public class AdminProductController {
 
 	private Path path;
 
-	@RequestMapping(value = "admin/addProduct", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/addProduct", method = RequestMethod.GET)
 	public String getAddNewProductForm(Model model) {
 		ProductDTO newProductDTO = new ProductDTO();
 		model.addAttribute("newProductDTO", newProductDTO);
@@ -46,7 +46,7 @@ public class AdminProductController {
 		return "addProduct";
 	}
 
-	@RequestMapping(value = "admin/addProduct", method = RequestMethod.POST, consumes = "multipart/form-data")
+	@RequestMapping(value = "/admin/addProduct", method = RequestMethod.POST, consumes = "multipart/form-data")
 	public String addProductPost(@ModelAttribute("newProductDTO") ProductDTO newProductDTO, BindingResult result,
 			HttpServletRequest request, @RequestPart("file") MultipartFile file) throws IOException {
 

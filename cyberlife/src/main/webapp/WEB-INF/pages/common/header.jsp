@@ -16,7 +16,7 @@
 <!--test navbar, will be customized  -->
 <!-- <div class="container"> -->
 <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark navbar-fixed-top">
-  <a class="navbar-brand" href="<c:url value="/home" />">Cyberlife</a>
+  <a class="navbar-brand" href="<c:url value="/" />">Cyberlife</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -34,8 +34,8 @@
           Dropdown
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Login</a>
-          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="/login">Login</a>
+          <a class="dropdown-item" href="/registration">Register</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>

@@ -1,29 +1,10 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/WEB-INF/pages/common/header.jsp"%>
+<%@ include file="/WEB-INF/pages/common/admin-side.jsp"%>
 
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-2 px-1 bg-dark" id="admin-sidebar">
-			<div class="py-2 sticky-top">
-				<div class="nav flex-column">
-					<div class="sidebar-item">
-						<a href="<c:url value="/admin-home" />"
-							class="nav-link text-white">Admin Home</a> 
-							<a href="<c:url value="/productList" />" class="nav-link text-white">Inventory list</a> 
-							<a href="<c:url value="/addProduct" />" class="nav-link text-white">Add product</a> 
-							<a href="#" class="nav-link text-white">Edit characteristics</a> 
-							<a href="#" class="nav-link text-white">Order management</a>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="col" id="admin-main">
 			<h1>Add Product</h1>
 			<div class="container-wrapper">
 				<div class="container">
-					<form:form action="${pageContext.request.contextPath}/addProduct"
+					<form:form action="${pageContext.request.contextPath}/admin/addProduct"
 						method="post" modelAttribute="newProductDTO"
 						enctype="multipart/form-data">
 

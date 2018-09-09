@@ -35,10 +35,7 @@ public class Address {
 	
 	@Column(name="flat")
 	private String flat;
-	
-	@OneToOne
-	@JoinColumn(name="customerId")
-	Customer customer;
+
 
 	public int getAddressId() {
 		return addressId;
@@ -95,15 +92,7 @@ public class Address {
 	public void setFlat(String flat) {
 		this.flat = flat;
 	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
