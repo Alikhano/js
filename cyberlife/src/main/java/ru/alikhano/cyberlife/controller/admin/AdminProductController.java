@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +52,11 @@ public class AdminProductController {
 			HttpServletRequest request, @RequestPart("file") MultipartFile file) throws IOException {
 
 		if (result.hasErrors()) {
-			return "addProduct";
+			 List<FieldError> errors = result.getFieldErrors();
+			    for (FieldError error : errors ) {
+			        System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
+			    }
+			return "home";
 		}
 
 		newProductDTO.setImage(file.getBytes());
@@ -96,14 +101,14 @@ public class AdminProductController {
 			HttpServletRequest request) {
 		productService.update(productDTO);
 
-		return "redirect:/productList";
+		return "redirect:/admin/productList";
 	}
 
 	@RequestMapping(value = "/admin/deleteProduct/{productId}")
 	public String deleteProduct(@PathVariable("productId") int productId, Model model) {
 		productService.delete(productService.getById(productId));
 
-		return "redirect:/productList";
+		return "redirect:/admin/productList";
 	}
 
 }

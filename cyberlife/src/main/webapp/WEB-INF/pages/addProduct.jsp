@@ -2,7 +2,6 @@
 
 		<div class="col" id="admin-main">
 			<h1>Add Product</h1>
-			<div class="container-wrapper">
 				<div class="container">
 					<form:form action="${pageContext.request.contextPath}/admin/addProduct"
 						method="post" modelAttribute="newProductDTO"
@@ -60,15 +59,14 @@
 							</div>
 
 							<br /> <br /> 
-							<input type="submit" value="Submit" class="btn btn-default"> 
-							<a href="<c:url value="/productList" />" class="btn btn-default">Cancel</a>
+							<input type="submit" value="Add product" class="btn btn-success"> 
+							<a href="<c:url value="/admin/productList" />" class="btn btn-danger">Cancel</a>
 						</div>
 
 					</form:form>
 
 				</div>
 			</div>
-		</div>
 	</div>
 </div>
 

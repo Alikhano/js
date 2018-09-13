@@ -13,5 +13,7 @@ public interface CartService {
 	CartDTO getById(int id);
 
 	void update(CartDTO cartDTO);
+	
+	int createAndGetId(CartDTO cartDTO);
 
 }

@@ -1,12 +1,11 @@
 <%@ include file="/WEB-INF/pages/common/admin-side.jsp"%>
 
-<a href="<c:url value="/admin-home" />" class="btn btn-default">Back to Admin home</a>
-
+<div class="col" id="admin-main">
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Photo Thumb</th>
-			<th>Product Name</th>
+			<th>Image</th>
+			<th>Model</th>
 			<th>Category</th>
 			<th>Consciousness</th>
 			<th>Description</th>
@@ -36,6 +35,7 @@
 		</tr>
 	</c:forEach>
 </table>
+</div>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>   
 </body>

@@ -1,10 +1,27 @@
 package ru.alikhano.cyberlife.DTO;
 
+import java.util.Set;
+
 public class UserDTO {
 	
 	private int userId;
 	private String username;
 	private String password;
+	private Set<RoleDTO> roles;
+	private boolean enabled;
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	public Set<RoleDTO> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<RoleDTO> roles) {
+		this.roles = roles;
+	}
+	
 	
 	
 	public int getUserId() {

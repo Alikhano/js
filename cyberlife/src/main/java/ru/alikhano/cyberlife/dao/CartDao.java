@@ -7,5 +7,7 @@ import ru.alikhano.cyberlife.model.Cart;
 @Repository
 public interface CartDao extends GenericDao<Cart>{
 	
+	int createAndGetId(Cart cart);
+	
 
 }

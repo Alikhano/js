@@ -9,7 +9,7 @@ public class CartItemDTO {
 	private double totalPrice;
 	private int quantity;
 	private ProductDTO product;
-	private Cart cart;
+	private CartDTO cart;
 	
 	public int getItemId() {
 		return itemId;
@@ -37,12 +37,13 @@ public class CartItemDTO {
 	public void setProduct(ProductDTO product) {
 		this.product = product;
 	}
-	public Cart getCart() {
+	public CartDTO getCart() {
 		return cart;
 	}
-	public void setCart(Cart cart) {
+	public void setCart(CartDTO cart) {
 		this.cart = cart;
 	}
+	
 	
 	
 

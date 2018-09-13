@@ -35,8 +35,8 @@
 									id="description" class="form-Control" />
 							</div>
 
-			<br /> <br /> <input type="submit" value="Submit" class="btn btn-default">
-			<a href="<c:url value="/productList" />" class="btn btn-default">Cancel</a>
+			<br /> <br /> <input type="submit" value="Add" class="btn btn-success">
+			<a href="<c:url value="/productList" />" class="btn btn-danger">Cancel</a>
 		</div>
 
 	</form:form>

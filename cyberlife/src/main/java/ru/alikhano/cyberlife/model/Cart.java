@@ -20,7 +20,7 @@ public class Cart {
 	@Column(name="cartId")
 	private int cartId;
 	
-	@Column(name="garndTotal")
+	@Column(name="grandTotal")
 	private double grandTotal;
 	
 	@OneToMany(mappedBy="cart")

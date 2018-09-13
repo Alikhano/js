@@ -46,17 +46,8 @@ public class UserController {
 		
 		customerService.create(customerForm);
 			
-		return "redirect:/myAccount";
+		return "redirect:/login";
 	}
 	
-	@RequestMapping("/myAccount")
-	public String viewAccount(Model model, Authentication authentication) {
-		String username = authentication.getName();
-		UserDTO user = userService.getByUsernameDTO(username);
-		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
-		model.addAttribute("customer", customerDTO);
-		
-		return "customerAccount";
-	}
-
+	
 }

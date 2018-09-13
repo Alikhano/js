@@ -17,14 +17,19 @@
 			<p>
 				<strong>Consciousness</strong>: ${product.cons.level}
 				<br>
-				<${product.cons.description}
+				${product.cons.description}
 			</p>
 			<p>${product.price} USD</p>
 
 			<p>
-				<a href="<c:url value = "${url}" />" class="btn btn-default">Back</a>
-				<a href="#" class="btn btn-default"><span class="glyphicon glyphicon-shopping-cart"></span> Add to cart</a> 
-				<a href="<spring:url value="/cart" />" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"></span> View Cart</a>
+			<form:form action="${pageContext.request.contextPath}/viewProduct" method="post" modelAttribute="newCartItem">
+			 <form:input path="itemId" type="hidden" name="itemId" value=""/>
+			 <%-- <form:input path="productId" type="hidden" name="productId" value="${product.productId}"/> --%>
+			 <input type='hidden' id='productId' name='productId' value='${product.productId}'/>
+			 <form:input path="quantity" id="quantity" class="form-Control"/>
+			 <input type="submit" value="Add to cart" class="btn btn-success">
+	         </form:form>
+				<a href="<c:url value = "/catalogue" />" class="btn btn-secondary">Back</a>
 			</p>
 
 		</div>

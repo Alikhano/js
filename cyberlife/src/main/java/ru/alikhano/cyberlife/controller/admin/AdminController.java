@@ -56,7 +56,7 @@ public class AdminController {
 	@RequestMapping(value="admin/addCons", method = RequestMethod.POST)
     public String addCons(@ModelAttribute("newCons") ConsDTO consDTO, BindingResult result,
 			HttpServletRequest request) {
-		consService.create(consDTO);;
+		consService.create(consDTO);
 		
         return "redirect:/admin/admin-home";
     }

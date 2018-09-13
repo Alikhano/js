@@ -91,4 +91,13 @@ public class UserServiceImpl implements UserService {
 		return userMapper.userToUserDTO(getByUsername(username));
 	}
 
+	@Override
+	@Transactional
+	public void changePassword(String password, int id) {
+		UserDTO userDTO = userMapper.userToUserDTO(userDao.getById(id));
+		userDTO.setPassword(encoder.encode(password));
+		userDao.update(userMapper.userDTOtoUser(userDTO));
+		
+	}
+
 }

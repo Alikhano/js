@@ -49,9 +49,16 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
+	@Transactional
 	public void create(CartDTO cartDTO) {
 		cartDao.create(cartMapper.cartDTOtoCart(cartDTO));
 		
+	}
+
+	@Override
+	@Transactional
+	public int createAndGetId(CartDTO cartDTO) {
+		return cartDao.createAndGetId(cartMapper.cartDTOtoCart(cartDTO));
 	}
 
 }

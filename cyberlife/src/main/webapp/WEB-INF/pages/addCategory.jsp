@@ -29,9 +29,9 @@
 		</div>
 
 		<br /> <br /> <input type="submit" value="Add"
-			class="btn btn-default">
+			class="btn btn-success">
 			
-			<a href="<c:url value="/productList" />" class="btn btn-default">Cancel</a>
+			<a href="<c:url value="/productList" />" class="btn btn-danger">Cancel</a>
 	</div>
 	
 

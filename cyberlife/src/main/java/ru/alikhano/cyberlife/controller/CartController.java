@@ -5,6 +5,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
@@ -25,8 +27,9 @@ public class CartController {
 	@Autowired
 	CartItemService cartItemService;
 	
+/*	@RequestMapping(value="/viewProduct", method = RequestMethod.POST)
 	public void addToCart(@PathVariable("productId") int productId, @PathVariable("quantity") int quantity) {
-		CartDTO cartDTO = new CartDTO();
+		CartDTO cartDTO = cartService.getById(id);
 		CartItemDTO cartItemDTO = new CartItemDTO();
 		ProductDTO productDTO = productService.getById(productId);
 		cartItemDTO.setProduct(productDTO);
@@ -39,6 +42,6 @@ public class CartController {
 		
 		
 	
-	}
+	}*/
 
 }

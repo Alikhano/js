@@ -25,5 +25,7 @@ public interface UserService {
 	UserDTO getByUsernameDTO(String username);
 	
 	void register(UserDTO userDTO);
+	
+	void changePassword(String password, int id);
 
 }

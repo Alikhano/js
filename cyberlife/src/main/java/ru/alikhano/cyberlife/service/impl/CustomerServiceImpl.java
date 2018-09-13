@@ -50,7 +50,12 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void update(CustomerDTO customerDTO) {
-		customerDao.update(customerMapper.customerDTOtoCustomer(customerDTO));
+		Customer customer = customerDao.getById(customerDTO.getCustomerId());
+		customer.setFirstName(customerDTO.getFirstName());
+		customer.setLastName(customerDTO.getLastName());
+		customer.setBirthDate(customerDTO.getBirthDate());
+		customer.setEmail(customerDTO.getEmail());
+		customerDao.update(customer);
 	
 	}
 

@@ -2,7 +2,7 @@ package ru.alikhano.cyberlife.DTO;
 
 public class CustomerDTO {
 	
-	private int id;
+	private int customerId;
 	private String firstName;
 	private String lastName;
 	private String birthDate;
@@ -11,11 +11,12 @@ public class CustomerDTO {
 	private UserDTO user;
 	
 	
-	public int getId() {
-		return id;
+	
+	public int getCustomerId() {
+		return customerId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 	public String getFirstName() {
 		return firstName;

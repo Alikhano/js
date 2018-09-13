@@ -4,17 +4,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 import ru.alikhano.cyberlife.DTO.RoleDTO;
-import ru.alikhano.cyberlife.DTO.UserDTO;
 import ru.alikhano.cyberlife.model.Role;
-import ru.alikhano.cyberlife.model.User;
 
 @Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.WARN)
-public interface UserMapper {
-	
-	UserDTO userToUserDTO(User user);
-	User userDTOtoUser(UserDTO userDTO);
+public interface RoleMapper {
 	
 	RoleDTO roleToRoleDTO(Role role);
 	Role roleDTOtoRole(RoleDTO roleDTO);
-
 }

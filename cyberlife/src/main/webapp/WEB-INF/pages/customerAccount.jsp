@@ -24,7 +24,9 @@
 
 			<p>
 				<a href="<c:url value = "/" />" class="btn btn-default">Back</a>
-				<a href="<spring:url value="/changePassword" />" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"></span> Change password</a>
+				<a href="<spring:url value="/changePassword" />" class="btn btn-default">Change password</a>
+				<input type="hidden" name="customerId" value="${customer.customerId}" />
+				<a href="<spring:url value="/updateAccount/${customer.customerId}" />" class="btn btn-default">Edit account</a>
 			</p>
 
 		</div>

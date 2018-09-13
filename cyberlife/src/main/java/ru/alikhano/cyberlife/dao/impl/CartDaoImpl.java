@@ -15,5 +15,10 @@ public class CartDaoImpl extends GenericDaoImpl<Cart> implements CartDao {
 	
 	@Autowired
 	SessionFactory sessionFactory;
+
+	@Override
+	public int createAndGetId(Cart cart) {
+		return (Integer) sessionFactory.getCurrentSession().save(cart);
+	}
 	
 }
