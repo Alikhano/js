@@ -18,7 +18,7 @@ public interface UserService {
 	
 	List<User> getAll();
 	
-	void update(User user);
+	void update(UserDTO userDTO);
 	
 	User getByUsername(String username);
 	
@@ -26,6 +26,8 @@ public interface UserService {
 	
 	void register(UserDTO userDTO);
 	
-	void changePassword(String password, int id);
+	boolean verifyPassword(String password, int id);
+	
+	void changePassword(String password, UserDTO userDTO);
 
 }

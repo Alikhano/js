@@ -37,10 +37,12 @@
           Dropdown
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/login">Login</a>
-          <a class="dropdown-item" href="/registration">Register</a>
+          <a class="dropdown-item" href="<c:url value="/login" />">Login</a>
+          <a class="dropdown-item" href="<c:url value="/registration" />">Register</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <a href="<c:url value="/logout" />">Logout</a>
+          </c:if>
         </div>
       </li>
       <li class="nav-item">

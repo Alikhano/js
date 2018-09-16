@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,8 +59,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void update(User user) {
-		userDao.update(user);
+	public void changePassword(String password, UserDTO userDTO) {
+		userDTO.setPassword(encoder.encode(password));
+		update(userDTO);
+		
+	}
+
+	@Override
+	@Transactional
+	public void update(UserDTO userDTO) {
+		userDao.update(userMapper.userDTOtoUser(userDTO));
 	}
 
 	@Override
@@ -91,13 +100,13 @@ public class UserServiceImpl implements UserService {
 		return userMapper.userToUserDTO(getByUsername(username));
 	}
 
+
 	@Override
 	@Transactional
-	public void changePassword(String password, int id) {
+	public boolean verifyPassword(String password, int id) {
 		UserDTO userDTO = userMapper.userToUserDTO(userDao.getById(id));
-		userDTO.setPassword(encoder.encode(password));
-		userDao.update(userMapper.userDTOtoUser(userDTO));
-		
+
+		return BCrypt.checkpw(password, userDTO.getPassword());
 	}
 
 }

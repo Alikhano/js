@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.alikhano.cyberlife.DTO.AddressDTO;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
@@ -31,6 +33,9 @@ public class CustomerController {
 	
 	@Autowired
 	AddressService addressService;
+	
+	@Autowired
+	BCryptPasswordEncoder encoder;
 	
 	@RequestMapping("/myAccount")
 	public String viewAccount(Model model, Authentication authentication) {
@@ -78,6 +83,26 @@ public class CustomerController {
 		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
 		addressService.update(addressDTO);
 		
+		return "redirect:/myAccount";
+	}
+	
+	@RequestMapping("/myAccount/changePassword")
+	public String changePassword(Authentication authentication, Model model) {
+	
+
+		return "changePassword";
+	}
+	
+	@RequestMapping(value = "/myAccount/changePassword", method = RequestMethod.POST)
+	public String changePasswordPost(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword,
+			HttpServletRequest request, Authentication authentication, Model model) {
+		String username = authentication.getName();
+		UserDTO user = userService.getByUsernameDTO(username);
+		if (!userService.verifyPassword(oldPassword, user.getUserId())) {
+			model.addAttribute("mismatchMsg", "Oops, entered password does not match the stored value");
+			return "changePassword";
+		}
+		userService.changePassword(newPassword, user);
 		return "redirect:/myAccount";
 	}
 
