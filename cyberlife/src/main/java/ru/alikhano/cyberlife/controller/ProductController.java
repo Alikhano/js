@@ -65,6 +65,7 @@ public class ProductController {
         CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
         Set<CartItemDTO> items = cartDTO.getItems();
         items.add(newCartItem);
+        cartDTO.setItems(items);
         newCartItem.setCart(cartDTO);
         cartDTO.setGrandTotal(newCartItem.getTotalPrice() + cartDTO.getGrandTotal());
         newCartItem.setCart(cartDTO);

@@ -12,5 +12,8 @@ public interface CartItemService {
 	void delete(CartItemDTO cartItemDTO);
 
 	void deleteAll(CartDTO cartDTO);
+	
+	CartItemDTO getById(int id);
+
 
 }

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ru.alikhano.cyberlife.DTO.AddressDTO;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.service.AddressService;
 import ru.alikhano.cyberlife.service.CustomerService;
 import ru.alikhano.cyberlife.service.UserService;
 
@@ -27,6 +29,9 @@ public class CustomerController {
 	@Autowired
 	CustomerService customerService;
 	
+	@Autowired
+	AddressService addressService;
+	
 	@RequestMapping("/myAccount")
 	public String viewAccount(Model model, Authentication authentication) {
 		String username = authentication.getName();
@@ -38,20 +43,41 @@ public class CustomerController {
 	}
 	
 	
-	@RequestMapping("/updateAccount/{customerId}")
-	public String editProduct(@PathVariable("customerId") int customerId, Model model) {
+	@RequestMapping("/myAccount/updateAccount/{customerId}")
+	public String updateAccount(@PathVariable("customerId") int customerId, Model model) {
 		CustomerDTO customerDTO = customerService.getById(customerId);
 		model.addAttribute("customer", customerDTO);
 
 		return "updateAccount";
 	}
 	
-	@RequestMapping(value = "/updateAccount", method = RequestMethod.POST)
-	public String editProductPost(@Valid @ModelAttribute("customer") CustomerDTO customerDTO, BindingResult result,
+	@RequestMapping(value = "/myAccount/updateAccount", method = RequestMethod.POST)
+	public String updateAccountPost(@Valid @ModelAttribute("customer") CustomerDTO customerDTO, BindingResult result,
 			HttpServletRequest request) {
 		customerService.update(customerDTO);
-		System.out.println(customerDTO);
 
+		return "redirect:/myAccount";
+	}
+	
+	@RequestMapping("/myAccount/changeAddress")
+	public String changeAddress(Authentication authentication, Model model) {
+		String username = authentication.getName();
+		UserDTO user = userService.getByUsernameDTO(username);
+		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
+
+		model.addAttribute("address", customerDTO.getAddress());
+
+		return "changeAddress";
+	}
+	
+	@RequestMapping(value = "/myAccount/changeAddress", method = RequestMethod.POST)
+	public String changeAddressPost(@Valid @ModelAttribute("address") AddressDTO addressDTO, BindingResult result,
+			HttpServletRequest request, Authentication authentication) {
+		String username = authentication.getName();
+		UserDTO user = userService.getByUsernameDTO(username);
+		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
+		addressService.update(addressDTO);
+		
 		return "redirect:/myAccount";
 	}
 

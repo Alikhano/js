@@ -1,6 +1,7 @@
 package ru.alikhano.cyberlife.controller;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
@@ -19,6 +20,7 @@ import org.springframework.web.util.WebUtils;
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.RoleDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.model.Cart;
 import ru.alikhano.cyberlife.model.User;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.RoleService;

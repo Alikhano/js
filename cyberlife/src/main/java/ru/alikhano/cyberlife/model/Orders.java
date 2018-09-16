@@ -10,8 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="order")
-public class Order {
+@Table(name="orders")
+public class Orders {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -22,7 +22,10 @@ public class Order {
 	private String paymentType;
 	
 	@Column(name="paymentStatus")
-	private String paymnetStatus;
+	private String paymentStatus;
+	
+	@Column(name="orderStatus")
+	private String orderStatus;
 	
 	@OneToOne
 	@JoinColumn(name="customerId")
@@ -48,12 +51,20 @@ public class Order {
 		this.paymentType = paymentType;
 	}
 
-	public String getPaymnetStatus() {
-		return paymnetStatus;
+	public String getPaymentStatus() {
+		return paymentStatus;
 	}
 
-	public void setPaymnetStatus(String paymnetStatus) {
-		this.paymnetStatus = paymnetStatus;
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 	public Customer getCustomer() {
@@ -88,7 +99,7 @@ public class Order {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		Orders other = (Orders) obj;
 		if (orderId != other.orderId)
 			return false;
 		return true;

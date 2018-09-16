@@ -56,4 +56,10 @@ public class CartItemServiceImpl implements CartItemService {
 		
 	}
 
+	@Override
+	@Transactional
+	public CartItemDTO getById(int id) {
+		return cartItemMapper.cartItemToCartItemDTO(cartItemDao.getById(id));
+	}
+
 }

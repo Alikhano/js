@@ -2,15 +2,18 @@ package ru.alikhano.cyberlife.controller;
 
 import java.util.Set;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.ProductService;
@@ -27,21 +30,45 @@ public class CartController {
 	@Autowired
 	CartItemService cartItemService;
 	
-/*	@RequestMapping(value="/viewProduct", method = RequestMethod.POST)
-	public void addToCart(@PathVariable("productId") int productId, @PathVariable("quantity") int quantity) {
-		CartDTO cartDTO = cartService.getById(id);
-		CartItemDTO cartItemDTO = new CartItemDTO();
-		ProductDTO productDTO = productService.getById(productId);
-		cartItemDTO.setProduct(productDTO);
-		cartItemDTO.setQuantity(quantity);
-		cartItemDTO.setTotalPrice(productDTO.getPrice() * quantity);
-		cartItemService.create(cartItemDTO);
-		Set<CartItemDTO> items = cartDTO.getItems();
-		items.add(cartItemDTO);
-		cartService.create(cartDTO);
+	@RequestMapping("/myCart")
+	public String viewCart(HttpServletRequest request, Model model) {
+		int cartId = 0;
+		CartDTO cartDTO = null;
+		Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals("cartId")) {
+				cartId = Integer.parseInt(cookie.getValue());
+			}
+		}
+		if (cartId != 0) {
+			cartDTO = cartService.getById(cartId);
+			model.addAttribute("cart", cartDTO);
+			model.addAttribute("cartItems", cartDTO.getItems());
+		}
 		
-		
+		return "cartList";	
+	}
 	
-	}*/
+	@RequestMapping(value = "/deleteItem/{itemId}")
+	public String deleteProduct(@PathVariable("itemId") int itemId, HttpServletRequest request, Model model) {
+		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
+		CartItemDTO cartItemDTO = cartItemService.getById(itemId);
+		Set<CartItemDTO> items = cartDTO.getItems();
+		for (CartItemDTO item : items) {
+			if (item.getItemId() == itemId) {
+				items.remove(item);
+			}
+		}
+		
+		double grandTotal = cartDTO.getGrandTotal() - (cartItemDTO.getTotalPrice() * cartItemDTO.getQuantity());
+		cartDTO.setItems(items);
+		cartDTO.setGrandTotal(grandTotal);
+		cartService.update(cartDTO);
+		cartItemService.delete(cartItemDTO);
+
+		return "redirect:/myCart";
+	}
+	
+
 
 }

@@ -17,7 +17,7 @@
 		<tr>
 			<td><img
 				src="${pageContext.request.contextPath}/static/images/${product.model}.jpg"
-				alt="image" style="width: 50%" /></td>
+				alt="image" style="width: 150px; height: auto" /></td>
 			<td>${product.model}</td>
 			<td>${product.category.catType}</td>
 			<td>${product.cons.level}</td>

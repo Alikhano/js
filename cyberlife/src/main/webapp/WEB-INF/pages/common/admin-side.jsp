@@ -13,7 +13,7 @@
 					<a href="<c:url value="/admin/addProduct" />" class="nav-link text-white">Add product</a> 
 					<a href="<c:url value="/admin/addCategory"/>" class="nav-link text-white">Add category</a>
 					<a href="<c:url value="/admin/addCons"/>" class="nav-link text-white">Add AI config</a>  
-					<a href="#" class="nav-link text-white">Order management</a>
+					<a href="<c:url value="/admin/orderStatus"/>" class="nav-link text-white">Order management</a>
 				</div>
 				</div>
 			</div>
