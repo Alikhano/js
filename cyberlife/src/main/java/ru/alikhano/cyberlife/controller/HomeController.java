@@ -96,7 +96,12 @@ public class HomeController {
 			HttpServletRequest request) {
 
 		if (bindingResult.hasErrors()) {
-			return "registration";
+			return "register";
+		}
+		
+		if (userService.getByUsernameDTO(userForm.getUsername()) != null) {
+			model.addAttribute("repUsername", "Oops, this username is taken. Please try again");
+			return "register";
 		}
 		
 		RoleDTO roleDTO = roleService.getRoleDTO();

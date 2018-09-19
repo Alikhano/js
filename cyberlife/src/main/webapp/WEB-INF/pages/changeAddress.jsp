@@ -7,32 +7,32 @@
 <div class="container-wrapper">
 <form:form
 	action="${pageContext.request.contextPath}/myAccount/changeAddress"
-	method="post" modelAttribute="address">
+	method="post"  id="changeAdr" modelAttribute="address">
 	
 	<form:input type="hidden" path="addressId" id="addressId" />
 	
 		<div class="form-group">
-			<label for="country">Country</label>
+			<label for="country">Country*</label>
 			<form:input path="country" id="country" class="form-Control" />
 		</div>
 		<div class="form-group">
-			<label for="city">City</label>
+			<label for="city">City*</label>
 			<form:input path="city" id="city" class="form-Control" />
 		</div>
 		<div class="form-group">
-			<label for="zipCode">Zip code</label>
+			<label for="zipCode">Zip code*</label>
 			<form:input path="zipCode" id="zipCode" class="form-Control" />
 		</div>
 		<div class="form-group">
-			<label for="street">Street</label>
+			<label for="street">Street*</label>
 			<form:input path="street" id="street" class="form-Control" />
 		</div>
 		<div class="form-group">
-			<label for="building">Building</label>
+			<label for="building">Building*</label>
 			<form:input path="building" id="building" class="form-Control" />
 		</div>
 		<div class="form-group">
-			<label for="flat">Flat</label>
+			<label for="flat">Flat*</label>
 			<form:input path="flat" id="flat" class="form-Control" />
 		</div>
 
@@ -49,6 +49,56 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+	$("#changeAdr").validate({
+		rules : {
+			country : {
+				required : true,
+
+			},
+			city : {
+				required : true,
+			},
+			zipCode : {
+				required : true,
+			},
+			street : {
+				required : true,
+			},
+			building : {
+				required : true,
+			},
+			flat : {
+				required : true,
+			}
+		},
+		messages : {
+			country : {
+				required : "Please enter country",
+
+			},
+			city : {
+				required : "Please enter city",
+			},
+			zipCode : {
+				required : "Please enter zipCode",
+			},
+			street : {
+				required : "Please enter street",
+			},
+			building : {
+				required : "Please enter building",
+			},
+			flat : {
+				required : "Please enter flat",
+			}
+		}
+	});
+</script>
 
 </body>
 </html>
