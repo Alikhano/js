@@ -1,13 +1,19 @@
 package ru.alikhano.cyberlife.model;
 
+import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="orders")
@@ -31,9 +37,15 @@ public class Orders {
 	@JoinColumn(name="customerId")
 	Customer customer;
 	
-	@OneToOne
-	@JoinColumn(name="cartId")
-	Cart cart;
+	@Column(name="orderPrice")
+	private double orderPrice;
+	
+	@Column(name="orderDate")
+	@Temporal(TemporalType.DATE)
+	private Date orderDate;
+	
+	@OneToMany(mappedBy="order")
+	Set<OrderItem> orderedItems;
 
 	public int getOrderId() {
 		return orderId;
@@ -75,12 +87,28 @@ public class Orders {
 		this.customer = customer;
 	}
 
-	public Cart getCart() {
-		return cart;
+	public double getOrderPrice() {
+		return orderPrice;
 	}
 
-	public void setCart(Cart cart) {
-		this.cart = cart;
+	public void setOrderPrice(double orderPrice) {
+		this.orderPrice = orderPrice;
+	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public Set<OrderItem> getOrderedItems() {
+		return orderedItems;
+	}
+
+	public void setOrderedItems(Set<OrderItem> orderedItems) {
+		this.orderedItems = orderedItems;
 	}
 
 	@Override

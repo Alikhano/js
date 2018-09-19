@@ -5,31 +5,68 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 <div class="container-wrapper">
-<form
-	action="${pageContext.request.contextPath}/myAccount/changePassword"
-	method="post" >
-	
+	<form id="changePass"
+		action="${pageContext.request.contextPath}/myAccount/changePassword"
+		method="post">
+
 		<div class="form-group">
 			<label for="oldPassword">Please enter your current password:</label>
-			<input type="password" name="oldPassword" id="oldPassword" class="form-Control" />
-			<span style="color: #ff0000">${mismatchMsg}</span>
+			<input type="password" name="oldPassword" id="oldPassword"
+				class="form-Control" /> <span style="color: #ff0000">${mismatchMsg}</span>
 		</div>
 		<div class="form-group">
-			<label for="newPassword">Please enter new password</label>
-			<input type="password" name="newPassword" id="newPassword" class="form-Control" />
+			<label for="newPassword">Please enter new password</label> <input
+				type="password" name="newPassword" id="newPassword"
+				class="form-Control" />
 		</div>
-		<br /> <br /> <input type="submit" value="Change" class="btn btn-default"> 
-		
-		<a href="<c:url value="/myAccount" />" class="btn btn-default">Cancel</a>
+		<div class="form-group">
+			<label for="repeatPassword">Please repeat new password</label> <input
+				type="password" name="repeatPassword" id="repeatPassword"
+				class="form-Control" />
+		</div>
+		<br /> <br /> <input type="submit" value="Change"
+			class="btn btn-default"> <a
+			href="<c:url value="/myAccount" />" class="btn btn-default">Cancel</a>
 
 
-</form>
+	</form>
 
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script type="text/javascript">
+	$("#changePass").validate({
+		rules : {
+			oldPassword : {
+				required : true,
+
+			},
+			newPassword : {
+				required : true,
+			},
+			repeatPassword : {
+				equalTo : "#newPassword"
+			}
+		},
+		messages : {
+			oldPassword : {
+				required : "Please enter old password"
+			},
+			newPassword : {
+				required : "Please enter new password"
+			},
+			repeatPassword : {
+				equalTo : "Repeated new password does not match"
+			}
+		}
+	});
+</script>
 
 </body>
 </html>

@@ -45,14 +45,18 @@ public class HomeController {
 		final String cookiePath = "/";
 		Cookie[] cookies = request.getCookies();
 		boolean hasCookie = false;
+		int cartId = 0;
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals(cookieName)) {
 					hasCookie = true;
+					cartId = Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue());
 				}
 			}
 			
-			if (!hasCookie) {
+			
+			
+			if (!hasCookie || cartService.getById(cartId) == null) {
 				
 				CartDTO cartDTO = new CartDTO();
 				int cookieValue = cartService.createAndGetId(cartDTO);

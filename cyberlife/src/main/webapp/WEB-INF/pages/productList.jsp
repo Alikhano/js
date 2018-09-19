@@ -8,7 +8,7 @@
 			<th>Model</th>
 			<th>Category</th>
 			<th>Consciousness</th>
-			<th>Description</th>
+			<th>Units in stock</th>
 			<th>Price</th>
 			<th>Actions</th>
 		</tr>
@@ -21,13 +21,13 @@
 			<td>${product.model}</td>
 			<td>${product.category.catType}</td>
 			<td>${product.cons.level}</td>
-			<td>${product.description}</td>
+			<td>${product.unitsInStock}</td>
 			<td>${product.price} USD</td>
-			<td><a href="<spring:url value="/editProduct/${product.productId}" />">
+			<td><a href="<spring:url value="/admin/editProduct/${product.productId}" />">
 				<input type="submit" class="buttons" value="<spring:message text="Edit"/>"/></a>
 				 <a><input type="hidden"name="id" value="${product.productId}" />
 				</a>
-				<a href="<spring:url value="/deleteProduct/${product.productId}" />">
+				<a href="<spring:url value="/admin/deleteProduct/${product.productId}" />">
 				<input type="submit" class="buttons" value="<spring:message text="Delete"/>" /> 
 				<input type="hidden"name="id" value="${product.productId}" />
 				</a>

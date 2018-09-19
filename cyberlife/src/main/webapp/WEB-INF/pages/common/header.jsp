@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,26 +28,33 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="<c:url value="/catalogue" />">Catalogue <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="<c:url value="/catalogue" />">Catalogue </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="<c:url value="/login" />">Login</a>
-          <a class="dropdown-item" href="<c:url value="/registration" />">Register</a>
-          <div class="dropdown-divider"></div>
-          <c:if test="${pageContext.request.userPrincipal.name != null}">
-            <a href="<c:url value="/logout" />">Logout</a>
-          </c:if>
-        </div>
+       <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <a class="nav-link" href="<c:url value="/admin/admin-home" />">Admin home</a>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_USER')">
+            <a class="nav-link" href="<c:url value="/myAccount" />">My Account</a>
+         </sec:authorize>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+       <sec:authorize access="!hasRole('ROLE_ADMIN')">
+         <a  class="nav-link" href="<c:url value="/myCart" />">My Cart</a>
+        </sec:authorize>   
+      </li>
+      <li class="nav-item">
+       <sec:authorize access="hasRole('ROLE_USER')">
+            <a  class="nav-link" href="<c:url value="/orderHistory" />">My Orders</a>
+         </sec:authorize>
+      </li>
+      <li class="nav-item">
+         <sec:authorize access="isAuthenticated()">
+            <a  class="nav-link" href="<c:url value="/logout" />">Logout</a>
+          </sec:authorize> 
+          <sec:authorize access="!isAuthenticated()">
+             <a class="nav-link" href="<c:url value="/login" />">Login</a>
+          </sec:authorize> 
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">

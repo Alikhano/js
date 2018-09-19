@@ -1,7 +1,8 @@
 <%@ include file="/WEB-INF/pages/common/admin-side.jsp"%>
 
 <div class="admin-main">
-<table class="table table-striped table-hover">
+<div id="add-info"></div>
+<table id="catTable" class="table table-striped table-hover">
 	<thead>
 		<tr>
 			<th>Available categories
@@ -16,19 +17,15 @@
 </table>
 
 
-<form:form action="${pageContext.request.contextPath}/admin/addCategory"
+<form:form id="addCat" action="${pageContext.request.contextPath}/admin/addCategory"
 	method="post" modelAttribute="newCategory">
-
-	<form:input type="hidden" path="catId" id="catId" />
-
 	<div class="container">
 		<div class="form-group">
 			<label for="model">Category</label>
-			<form:errors path="catType" cssStyle="color:#ff0000;" />
 			<form:input path="catType" id="catType" class="form-Control" />
 		</div>
 
-		<br /> <br /> <input type="submit" value="Add"
+		<br /> <br /> <input type="submit" value="Add" 
 			class="btn btn-success">
 			
 			<a href="<c:url value="/productList" />" class="btn btn-danger">Cancel</a>
@@ -39,8 +36,31 @@
 
 </div>
 
-</div>
-</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#addCat").submit(function(e) {
+		 e.preventDefault();
+	
+	
+	var catType = $("#catType").val();
+
+	$.ajax({
+		type: 'POST',
+		url:'${pageContext.request.contextPath}/admin/addCategory',
+		data: JSON.stringify({
+			catType: $("#catType").val()
+		}),
+        contentType: 'application/json',
+		success: function(data) {
+			location.reload();
+		},
+	});
+});
+});
+</script>
 
 </body>
 </html>

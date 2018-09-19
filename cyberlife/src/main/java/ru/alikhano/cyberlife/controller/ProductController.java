@@ -25,7 +25,7 @@ import ru.alikhano.cyberlife.service.ProductService;
 
 @Controller
 public class ProductController {
-
+	
 	@Autowired
 	ProductService productService;
 	
@@ -57,21 +57,27 @@ public class ProductController {
     @RequestMapping(value = "/viewProduct", method = RequestMethod.POST)
     public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) {
         ProductDTO productDTO = productService.getById(productId);
-        newCartItem.setProduct(productDTO);
+        
         int quantity = newCartItem.getQuantity();
+        
         double totalPrice = quantity * productDTO.getPrice();
         newCartItem.setTotalPrice(totalPrice);
+        
         newCartItem.setProduct(productDTO);
+        
         CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
         Set<CartItemDTO> items = cartDTO.getItems();
         items.add(newCartItem);
         cartDTO.setItems(items);
-        newCartItem.setCart(cartDTO);
+        
+        
         cartDTO.setGrandTotal(newCartItem.getTotalPrice() + cartDTO.getGrandTotal());
         newCartItem.setCart(cartDTO);
+        
         cartItemService.create(newCartItem);
         cartService.update(cartDTO);
 
         return "redirect:/catalogue";
     }
+    
 }

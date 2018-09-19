@@ -17,6 +17,8 @@
 			access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/myAccount/**"
 			access="hasRole('ROLE_USER')" />
+			<intercept-url pattern="/orderHistory"
+			access="hasRole('ROLE_USER')" />
 
 		<form-login login-page="/login" default-target-url="/"
 			authentication-failure-url="/login?error"

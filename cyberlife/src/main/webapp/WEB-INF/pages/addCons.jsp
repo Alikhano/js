@@ -18,14 +18,12 @@
 
 
 	<form:form action="${pageContext.request.contextPath}/admin/addCons"
-		method="post" modelAttribute="newCons">
+		method="post" modelAttribute="newCons" id="addCons">
 
-		<form:input type="hidden" path="consId" id="consId"/>
 
 		<div class="container">
 			<div class="form-group">
 				<label for="model">Level</label>
-				<form:errors path="level" cssStyle="color:#ff0000;" />
 				<form:input path="level" id="level" class="form-Control" />
 		</div>
 		
@@ -42,8 +40,32 @@
 	</form:form>
 	
 	</div>
-	</div>
-	</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#addCons").submit(function(e) {
+		 e.preventDefault();
+
+	$.ajax({
+		type: 'POST',
+		headers: { 
+	        'Content-Type': 'application/json' 
+	    },
+		url:'${pageContext.request.contextPath}/admin/addCons',
+		data: JSON.stringify({
+			level: $("#level").val(),
+			description: $("#description").val()
+		}),
+        contentType: 'application/json',
+		success: function(data) {
+			location.reload();
+		},
+	});
+});
+});
+</script>
 
 </body>
 </html>

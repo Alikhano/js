@@ -40,6 +40,7 @@
 								<form:option value="credit card">Credit card</form:option>
 							</form:select>
 							<input type="submit" value="Add to cart" class="btn btn-success">
+							<span style="color: #ff0000">${noStockMsg}</span>
 						</form:form>
 					</div>
 
