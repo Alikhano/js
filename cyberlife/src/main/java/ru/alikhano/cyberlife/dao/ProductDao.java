@@ -11,6 +11,6 @@ public interface ProductDao extends GenericDao<Product> {
 	
 	Product getByModel(String model);
 	
-	List<Product> searchParam(String category, String consLevel, double toPrice, double fromPrice);
+	List<Product> searchParam(int category, int consLevel, double toPrice, double fromPrice);
 
 }

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.DTO.ProductInfo;
 import ru.alikhano.cyberlife.dao.ProductDao;
+import ru.alikhano.cyberlife.mapper.ProductInfoMapper;
 import ru.alikhano.cyberlife.mapper.ProductMapper;
 import ru.alikhano.cyberlife.model.Product;
 import ru.alikhano.cyberlife.service.ProductService;
@@ -21,6 +23,9 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Autowired
 	ProductMapper productMapper;
+	
+	@Autowired
+	ProductInfoMapper productInfoMapper;
 	
 	@Override
 	@Transactional
@@ -63,8 +68,22 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+	@Transactional
 	public ProductDTO getByModel(String model) {
 		return productMapper.productToProductDTO(productDao.getByModel(model));
+	}
+
+	@Override
+	@Transactional
+	public List<ProductInfo> searchParam(int category, int consLevel, double fromPrice, double toPrice) {
+		List<Product> list = productDao.searchParam(category, consLevel, fromPrice, toPrice);
+		List<ProductInfo> infoList = new ArrayList<>();
+		for (Product product : list) {
+			ProductInfo productInfo = productInfoMapper.productToProductInfo(product);
+			infoList.add(productInfo);
+		}
+		
+		return infoList;
 	}
 
 }

@@ -1,6 +1,6 @@
 package ru.alikhano.cyberlife.DTO;
 
-public class ProductSearchDTO {
+public class ProductInfo {
 	
 	private int productId;
 	private String model;

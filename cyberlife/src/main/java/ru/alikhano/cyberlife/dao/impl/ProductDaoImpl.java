@@ -26,7 +26,7 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 	}
 
 	@Override
-	public List<Product> searchParam(String category, String consLevel, double toPrice, double fromPrice) {
+	public List<Product> searchParam(int category, int consLevel, double fromPrice, double toPrice) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		CriteriaBuilder searchCriteriaBuilder = session.getCriteriaBuilder();
@@ -36,15 +36,15 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 		 
 		searchCriteria.select(root);
 		
-		if (category != "any") {
+		if (category != 0) {
 			searchCriteria.where(searchCriteriaBuilder.equal(root.get("category"), category));
 		}
-		if (consLevel != "any") {
+		if (consLevel != 0) {
 			searchCriteria.where(searchCriteriaBuilder.equal(root.get("cons"), consLevel));
 		}
 
 		if(fromPrice != 0 && toPrice != 0) {
-			searchCriteria.where(searchCriteriaBuilder.between(root.get("price"), toPrice, fromPrice));
+			searchCriteria.where(searchCriteriaBuilder.between(root.get("price"), fromPrice, toPrice));
 		}
 		
 	
