@@ -102,10 +102,14 @@ public class OrderController {
 		//update order status
 		orderDTO.setPaymentStatus("unpaid");
 		orderDTO.setOrderStatus("awaits delivery");
+		
+		
 
 		//set ordered items, erase cart items
 		Set<CartItemDTO> items = cartDTO.getItems();
-		Set<OrderItemDTO> orderedItems = new HashSet<>();
+		
+		int orderId = orderService.createAndGetId(orderDTO);
+	
 		
 		for (CartItemDTO cartItem : items) {
 			//decrease units in stock for product, update product
@@ -115,30 +119,34 @@ public class OrderController {
 				model.addAttribute("noStockMsg", "Oops " + productDTO.getModel() + " is out of stock. Please remove from cart and proceed to order.");
 				return "myOrder";
 			}
-			productDTO.setUnitsInStock(prevQuantity - cartItem.getQuantity());
-			productService.update(productDTO);
+			else {
+				productDTO.setUnitsInStock(prevQuantity - cartItem.getQuantity());
+				productService.update(productDTO);
+							
+			}
 			
 			//cartItem into orderItem
 			OrderItemDTO item = new OrderItemDTO();
 			item.setOrderQuantity(cartItem.getQuantity());
 			item.setOrderTotal(cartItem.getTotalPrice());
 			item.setProduct(cartItem.getProduct());
-			orderedItems.add(item);
-			item.setOrder(orderDTO);
+			orderService.getById(orderId).addItem(item);
 			orderItemService.create(item);
 			
 		}
 		
 		cartItemService.deleteAll(cartDTO);
 		items.clear();
-		
-		orderDTO.setOrderedItems(orderedItems);
+	
 		cartDTO.setItems(items);
 		
 		//update cart, create order
 		cartService.update(cartDTO);
-		orderService.create(orderDTO);
 		
+
+
+		
+	
 		return "redirect:/myAccount";
 		
 	}

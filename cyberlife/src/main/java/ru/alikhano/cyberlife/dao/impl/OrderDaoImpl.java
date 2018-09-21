@@ -22,5 +22,11 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 		return orders;
 	}
 	
+	@Override
+	public int createAndGetId(Orders order) {
+		return (Integer) sessionFactory.getCurrentSession().save(order);
+	}
+	
+	
 
 }

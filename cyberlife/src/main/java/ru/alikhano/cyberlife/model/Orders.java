@@ -1,8 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,37 +17,39 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ru.alikhano.cyberlife.DTO.OrderItemDTO;
+
 @Entity
-@Table(name="orders")
+@Table(name = "orders")
 public class Orders {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="orderId")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "orderId")
 	private int orderId;
-	
-	@Column(name="paymentType")
+
+	@Column(name = "paymentType")
 	private String paymentType;
-	
-	@Column(name="paymentStatus")
+
+	@Column(name = "paymentStatus")
 	private String paymentStatus;
-	
-	@Column(name="orderStatus")
+
+	@Column(name = "orderStatus")
 	private String orderStatus;
-	
+
 	@OneToOne
-	@JoinColumn(name="customerId")
+	@JoinColumn(name = "customerId")
 	Customer customer;
-	
-	@Column(name="orderPrice")
+
+	@Column(name = "orderPrice")
 	private double orderPrice;
-	
-	@Column(name="orderDate")
+
+	@Column(name = "orderDate")
 	@Temporal(TemporalType.DATE)
 	private Date orderDate;
-	
-	@OneToMany(mappedBy="order")
-	Set<OrderItem> orderedItems;
+
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+	Set<OrderItem> orderedItems = new HashSet<>(0);
 
 	public int getOrderId() {
 		return orderId;
@@ -111,6 +115,27 @@ public class Orders {
 		this.orderedItems = orderedItems;
 	}
 
+	public void addOrderItem(OrderItem item) {
+		orderedItems.add(item);
+		item.setOrder(this);
+		
+	}
+
+	public void removeOrderItem(OrderItem item) {
+		orderedItems.remove(item);
+		item.setOrder(null);
+	}
+	
+	public void addItem(OrderItem item) {
+		orderedItems.add(item);
+		item.setOrder(this);
+	}
+	
+	public void removeItem(OrderItem item) {
+		orderedItems.remove(item);
+		item.setOrder(null);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -132,7 +157,5 @@ public class Orders {
 			return false;
 		return true;
 	}
-	
-	
 
 }

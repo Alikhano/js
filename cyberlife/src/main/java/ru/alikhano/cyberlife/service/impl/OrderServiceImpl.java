@@ -64,5 +64,11 @@ public class OrderServiceImpl implements OrderService {
 		});
 		return ordersDTO;
 	}
+	
+	@Override
+	@Transactional
+	public int createAndGetId(OrderDTO order) {
+		return orderDao.createAndGetId(orderMapper.orderDTOtoOder(order));
+	}
 
 }

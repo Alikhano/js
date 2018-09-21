@@ -3,6 +3,7 @@ package ru.alikhano.cyberlife.service;
 import java.util.List;
 
 import ru.alikhano.cyberlife.DTO.OrderDTO;
+import ru.alikhano.cyberlife.model.Orders;
 
 
 public interface OrderService {
@@ -16,5 +17,7 @@ public interface OrderService {
 	void update(OrderDTO orderDTO);
 	
 	List<OrderDTO> getByCustomerId(int id);
+	
+	public int createAndGetId(OrderDTO order);
 
 }

@@ -1,5 +1,6 @@
 package ru.alikhano.cyberlife.controller;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
@@ -54,7 +55,8 @@ public class CartController {
 		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
 		CartItemDTO cartItemDTO = cartItemService.getById(itemId);
 		Set<CartItemDTO> items = cartDTO.getItems();
-		for (CartItemDTO item : items) {
+		Set<CartItemDTO> iterSet = new HashSet<>(items);
+		for (CartItemDTO item : iterSet) {
 			if (item.getItemId() == itemId) {
 				items.remove(item);
 			}
