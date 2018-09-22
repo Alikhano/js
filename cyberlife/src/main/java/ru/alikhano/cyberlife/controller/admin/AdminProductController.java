@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.service.CategoryService;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
+import ru.alikhano.cyberlife.service.CustomerService;
+import ru.alikhano.cyberlife.service.OrderService;
 import ru.alikhano.cyberlife.service.ProductService;
 
 @Controller
@@ -35,6 +37,10 @@ public class AdminProductController {
 	CategoryService categoryService;
 	@Autowired
 	ConsciousnessService consService;
+	@Autowired
+	CustomerService customerService;
+	@Autowired
+	OrderService orderService;
 
 	private Path path;
 
@@ -109,6 +115,24 @@ public class AdminProductController {
 		productService.delete(productService.getById(productId));
 
 		return "redirect:/admin/productList";
+	}
+	
+	@RequestMapping(value="/admin/stats") 
+	public String getTopProducts(Model model) {
+		model.addAttribute("topProduct", productService.getTopProducts());
+		model.addAttribute("topCustomer", customerService.getTopCustomers());
+		model.addAttribute("monthlyRev", orderService.getMonthlyRevenue());
+		double weeklyRev = orderService.getWeeklyRevenue();
+		if (weeklyRev == 0) {
+			model.addAttribute("weeklyNo", "nothing to show here, try later");
+		}
+		else {
+			model.addAttribute("weeklyRev", orderService.getWeeklyRevenue());
+		}
+		
+		return "stats";
+
+		
 	}
 
 }

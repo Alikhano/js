@@ -8,17 +8,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
+import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.dao.CustomerDao;
 import ru.alikhano.cyberlife.mapper.CustomerMapper;
 import ru.alikhano.cyberlife.model.Customer;
+import ru.alikhano.cyberlife.model.Product;
 import ru.alikhano.cyberlife.service.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-	
+
 	@Autowired
 	CustomerDao customerDao;
-	
+
 	@Autowired
 	CustomerMapper customerMapper;
 
@@ -44,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public void create(CustomerDTO customerDTO) {
 		customerDao.create(customerMapper.customerDTOtoCustomer(customerDTO));
-		
+
 	}
 
 	@Override
@@ -56,20 +58,40 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setBirthDate(customerDTO.getBirthDate());
 		customer.setEmail(customerDTO.getEmail());
 		customerDao.update(customer);
-	
+
 	}
 
 	@Override
 	@Transactional
 	public void delete(CustomerDTO customerDTO) {
 		customerDao.delete(customerMapper.customerDTOtoCustomer(customerDTO));
-		
+
 	}
 
 	@Override
 	@Transactional
 	public CustomerDTO getByUserId(int userId) {
 		return customerMapper.customerToCustomerDTO(customerDao.getByUserId(userId));
+	}
+
+	@Override
+	@Transactional
+	public List<CustomerDTO> getTopCustomers() {
+
+		List<Customer> customerList = customerDao.getTopCustomers();
+		List<CustomerDTO> dtoList = new ArrayList<>();
+
+		for (Customer customer : customerList) {
+			CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
+			dtoList.add(customerDTO);
+		}
+
+		return dtoList;
+	}
+
+	@Override
+	public CustomerDTO getByEmail(String email) {
+		return customerMapper.customerToCustomerDTO(customerDao.getByEmail(email));
 	}
 
 }

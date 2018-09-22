@@ -1,5 +1,7 @@
 package ru.alikhano.cyberlife.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import ru.alikhano.cyberlife.model.Customer;
@@ -8,5 +10,9 @@ import ru.alikhano.cyberlife.model.Customer;
 public interface CustomerDao extends GenericDao<Customer> {
 	
 	Customer getByUserId(int id);
+	
+	Customer getByEmail(String email);
+	
+	List<Customer> getTopCustomers();
 
 }

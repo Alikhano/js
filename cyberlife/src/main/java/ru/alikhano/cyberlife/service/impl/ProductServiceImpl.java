@@ -86,4 +86,18 @@ public class ProductServiceImpl implements ProductService{
 		return infoList;
 	}
 
+	@Override
+	@Transactional
+	public List<ProductDTO> getTopProducts() {
+		List<Product> prodList =  productDao.getTopProducts();
+		List<ProductDTO> dtoList = new ArrayList<>();
+		
+		for (Product prod : prodList) {
+			ProductDTO prodDTO = productMapper.productToProductDTO(prod);
+			dtoList.add(prodDTO);
+		}
+		
+		return dtoList;
+	}
+
 }

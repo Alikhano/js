@@ -143,10 +143,6 @@ public class OrderController {
 		//update cart, create order
 		cartService.update(cartDTO);
 		
-
-
-		
-	
 		return "redirect:/myAccount";
 		
 	}

@@ -16,10 +16,11 @@
 			<form:input type="text" path="lastName" class="form-control"
 				placeholder="lastName" autofocus="true"></form:input>
 			<form:errors path="lastName"></form:errors>
-		</div>
+		</div>S
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<form:input type="text" path="email" class="form-control"
 				placeholder="email" autofocus="true"></form:input>
+				 <span style="color: #ff0000">${repEmail}</span>
 			<form:errors path="email"></form:errors>
 		</div>
 

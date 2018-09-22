@@ -42,6 +42,12 @@ public class UserController {
             return "registerCustomer";
         }
 		
+		
+		if (customerService.getByEmail(customerForm.getEmail()) != null) {
+			model.addAttribute("repEmail", "Oops, this email is taken. Please try again");
+			return "createProfile";
+		}
+		
 		customerForm.setUser(userService.getByUsernameDTO((String)request.getSession().getAttribute("username")));
 		
 		customerService.create(customerForm);

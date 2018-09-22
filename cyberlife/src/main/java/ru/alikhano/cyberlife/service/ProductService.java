@@ -4,6 +4,7 @@ import java.util.List;
 
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.ProductInfo;
+import ru.alikhano.cyberlife.model.Product;
 
 public interface ProductService {
 
@@ -20,5 +21,7 @@ public interface ProductService {
 	ProductDTO getByModel(String model);
 	
 	List<ProductInfo> searchParam(int category, int consLevel, double fromPrice, double toPrice);
+	
+	List<ProductDTO> getTopProducts();
 
 }

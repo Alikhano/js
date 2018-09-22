@@ -1,5 +1,6 @@
 package ru.alikhano.cyberlife.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -8,6 +9,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,23 +21,24 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	@Override
 	public Product getByModel(String model) {
-		return (Product) sessionFactory.getCurrentSession().createQuery("from Product where model =:model").setParameter("model", model).uniqueResult();
+		return (Product) sessionFactory.getCurrentSession().createQuery("from Product where model =:model")
+				.setParameter("model", model).uniqueResult();
 	}
 
 	@Override
 	public List<Product> searchParam(int category, int consLevel, double fromPrice, double toPrice) {
-		
+
 		Session session = sessionFactory.getCurrentSession();
 		CriteriaBuilder searchCriteriaBuilder = session.getCriteriaBuilder();
 
 		CriteriaQuery<Product> searchCriteria = searchCriteriaBuilder.createQuery(Product.class);
 		Root<Product> root = searchCriteria.from(Product.class);
-		 
+
 		searchCriteria.select(root);
-		
+
 		if (category != 0) {
 			searchCriteria.where(searchCriteriaBuilder.equal(root.get("category"), category));
 		}
@@ -43,14 +46,32 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 			searchCriteria.where(searchCriteriaBuilder.equal(root.get("cons"), consLevel));
 		}
 
-		if(fromPrice != 0 && toPrice != 0) {
+		if (fromPrice != 0 && toPrice != 0) {
 			searchCriteria.where(searchCriteriaBuilder.between(root.get("price"), fromPrice, toPrice));
 		}
-		
-	
+
 		return session.createQuery(searchCriteria).getResultList();
 	}
 
+	@Override
+	public List<Product> getTopProducts() {
+		
+		List<Product> topProducts = new ArrayList<>();
 
+		String hql = "select item.product, count(*) as purchaseCount  from OrderItem item where item.order.paymentStatus =: paymentStatus " + "GROUP BY item.product ORDER BY purchaseCount desc";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("paymentStatus", "paid");
+		query.setMaxResults(10);
+		List<Object[]> resultList = query.list();
+		
+		for (Object o : resultList) {
+			Object[] row = (Object[]) o;
+			Product product = (Product) row[0];
+			topProducts.add(product);
+		}
+		
+		return topProducts;
+		
+	}
 
 }
