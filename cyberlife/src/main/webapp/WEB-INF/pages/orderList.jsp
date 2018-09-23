@@ -56,7 +56,9 @@
           <sec:authorize access="hasRole('ROLE_ADMIN')">
 			 <a href="<c:url value = "/admin/admin-home" />" class="btn btn-secondary">Back to admin home</a>
 	       </sec:authorize>
+	         <sec:authorize access="!hasRole('ROLE_ADMIN')">
 	        <a href="<c:url value = "/myAccount" />" class="btn btn-secondary">Back to my account</a>
+	        </sec:authorize>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

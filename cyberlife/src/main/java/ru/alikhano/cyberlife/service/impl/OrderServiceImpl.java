@@ -118,6 +118,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional
 	public String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) {
 
 		UserDTO user = userService.getByUsernameDTO(username);

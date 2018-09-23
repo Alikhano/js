@@ -15,7 +15,6 @@
 			<p class="lead">
 				<a class="btn btn-primary btn-lg"
 					href="<c:url value="/catalogue" />" role="button">Catalogue</a>
-				<!--add link to catalogue  -->
 			</p>
 			<br>
 		</div>
@@ -31,6 +30,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	
 
 </body>
 </html>

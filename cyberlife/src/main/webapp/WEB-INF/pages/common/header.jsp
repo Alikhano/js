@@ -16,9 +16,6 @@
 
 </head>
 <body>
-
-<!--test navbar, will be customized  -->
-<!-- <div class="container"> -->
 <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark navbar-fixed-top">
   <a class="navbar-brand" href="<c:url value="/" />">Cyberlife</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,10 +54,9 @@
           </sec:authorize> 
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" name="modelSearch" id = "modelSearch" method="post">
+      <input class="form-control mr-sm-2" name="model" id="model" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
 </nav>
-<!-- </div> --> <!--end of navbar-->

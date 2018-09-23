@@ -90,6 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional 
 	public CustomerDTO getByEmail(String email) {
 		return customerMapper.customerToCustomerDTO(customerDao.getByEmail(email));
 	}

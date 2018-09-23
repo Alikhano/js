@@ -9,5 +9,5 @@ import ru.alikhano.cyberlife.model.Category;
 public interface CategoryDao extends GenericDao<Category> {
 
 	Category getByType(String catType);
-
+	
 }

@@ -2,6 +2,7 @@ package ru.alikhano.cyberlife.service;
 
 import java.util.List;
 
+import ru.alikhano.cyberlife.DTO.CustomException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.ProductInfo;
 import ru.alikhano.cyberlife.model.Product;
@@ -18,7 +19,7 @@ public interface ProductService {
 
 	void delete(ProductDTO productDTO);
 	
-	ProductDTO getByModel(String model);
+	ProductDTO getByModel(String model) throws CustomException;
 	
 	List<ProductInfo> searchParam(int category, int consLevel, double fromPrice, double toPrice);
 	

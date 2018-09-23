@@ -1,7 +1,6 @@
 package ru.alikhano.cyberlife.controller;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
@@ -15,14 +14,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
+import ru.alikhano.cyberlife.DTO.CustomException;
+import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.RoleDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
-import ru.alikhano.cyberlife.model.Cart;
 import ru.alikhano.cyberlife.model.User;
 import ru.alikhano.cyberlife.service.CartService;
+import ru.alikhano.cyberlife.service.ProductService;
 import ru.alikhano.cyberlife.service.RoleService;
 import ru.alikhano.cyberlife.service.UserService;
 
@@ -37,6 +39,9 @@ public class HomeController {
 	
 	@Autowired
 	RoleService roleService;
+	
+	@Autowired
+	ProductService productService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, HttpServletResponse response) {
@@ -53,9 +58,7 @@ public class HomeController {
 					cartId = Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue());
 				}
 			}
-			
-			
-			
+						
 			if (!hasCookie || cartService.getById(cartId) == null) {
 				
 				CartDTO cartDTO = new CartDTO();
@@ -68,6 +71,21 @@ public class HomeController {
 			
 		}   
 		return "home";
+	}
+	
+	@RequestMapping(value="/", method = RequestMethod.POST)
+	public String searchbyModel(@RequestParam("model") String modelName, Model model) throws CustomException {
+		
+		ProductDTO product = productService.getByModel(modelName);
+	
+		if (product == null) {
+			throw new CustomException("Sorry! We do not have a model you're searching for. Please try again.");
+		}
+		
+		int productId = product.getProductId();
+		
+		return "redirect:/viewProduct/" + productId;
+		
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

@@ -5,12 +5,12 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 <div class="container-wrapper">
-<form:form
-	action="${pageContext.request.contextPath}/myAccount/changeAddress"
-	method="post"  id="changeAdr" modelAttribute="address">
-	
-	<form:input type="hidden" path="addressId" id="addressId" />
-	
+	<form:form
+		action="${pageContext.request.contextPath}/myAccount/changeAddress"
+		method="post" id="changeAdr" modelAttribute="address">
+
+		<form:input type="hidden" path="addressId" id="addressId" />
+
 		<div class="form-group">
 			<label for="country">Country*</label>
 			<form:input path="country" id="country" class="form-Control" />
@@ -37,12 +37,14 @@
 		</div>
 
 
-		<br /> <br /> <input type="submit" value="Update" class="btn btn-default"> 
-		
+		<br />
+		<br />
+		<input type="submit" value="Update" class="btn btn-default">
+
 		<a href="<c:url value="/myAccount" />" class="btn btn-default">Cancel</a>
 
 
-</form:form>
+	</form:form>
 
 </div>
 
@@ -65,6 +67,7 @@
 			},
 			zipCode : {
 				required : true,
+				digits : true
 			},
 			street : {
 				required : true,
@@ -86,15 +89,16 @@
 			},
 			zipCode : {
 				required : "Please enter zipCode",
+				digits : "Should only contain digits"
 			},
 			street : {
-				required : "Please enter street",
+				required : "Please enter the street name",
 			},
 			building : {
-				required : "Please enter building",
+				required : "Please enter the building number",
 			},
 			flat : {
-				required : "Please enter flat",
+				required : "Please enter the flat number",
 			}
 		}
 	});

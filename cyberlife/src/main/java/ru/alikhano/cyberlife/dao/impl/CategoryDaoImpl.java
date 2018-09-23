@@ -1,6 +1,8 @@
 package ru.alikhano.cyberlife.dao.impl;
 
 
+import java.util.List;
+
 import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
@@ -28,4 +30,5 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category> implements Categor
 			return null;
 		}
 	}
+
 }

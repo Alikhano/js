@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.alikhano.cyberlife.DTO.CustomException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.ProductInfo;
 import ru.alikhano.cyberlife.dao.ProductDao;
@@ -69,8 +70,9 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	@Transactional
-	public ProductDTO getByModel(String model) {
+	public ProductDTO getByModel(String model) throws CustomException {
 		return productMapper.productToProductDTO(productDao.getByModel(model));
+	
 	}
 
 	@Override

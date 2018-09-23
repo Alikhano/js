@@ -82,66 +82,16 @@ public class OrderController {
 	
 	@RequestMapping(value="/myOrder", method=RequestMethod.POST)
 	public String submitOrder(@Valid @ModelAttribute("newOrder") OrderDTO orderDTO, BindingResult result, HttpServletRequest request,Authentication authentication, Model model) {
-		//find customer by username
+
 		String username = authentication.getName();
-		UserDTO user = userService.getByUsernameDTO(username);
-		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
-		
-		//assign customer to order
-		orderDTO.setCustomer(customerDTO);
-		
 		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
 		
-		//set price to order, erase price from cart
-		orderDTO.setOrderPrice(cartDTO.getGrandTotal());
-		cartDTO.setGrandTotal(0);
-		//add date to order
-		orderDTO.setOrderDate(new Date());
-
-
-		//update order status
-		orderDTO.setPaymentStatus("unpaid");
-		orderDTO.setOrderStatus("awaits delivery");
+		String cartToOrder = orderService.cartToOrder(orderDTO, cartDTO, username);
 		
-		
-
-		//set ordered items, erase cart items
-		Set<CartItemDTO> items = cartDTO.getItems();
-		
-		int orderId = orderService.createAndGetId(orderDTO);
-	
-		
-		for (CartItemDTO cartItem : items) {
-			//decrease units in stock for product, update product
-			ProductDTO productDTO = cartItem.getProduct();
-			int prevQuantity = productDTO.getUnitsInStock();
-			if (prevQuantity == 0) {
-				model.addAttribute("noStockMsg", "Oops " + productDTO.getModel() + " is out of stock. Please remove from cart and proceed to order.");
-				return "myOrder";
-			}
-			else {
-				productDTO.setUnitsInStock(prevQuantity - cartItem.getQuantity());
-				productService.update(productDTO);
-							
-			}
-			
-			//cartItem into orderItem
-			OrderItemDTO item = new OrderItemDTO();
-			item.setOrderQuantity(cartItem.getQuantity());
-			item.setOrderTotal(cartItem.getTotalPrice());
-			item.setProduct(cartItem.getProduct());
-			orderService.getById(orderId).addItem(item);
-			orderItemService.create(item);
-			
+		if (!cartToOrder.equals("success")) {
+			model.addAttribute("noStockMsg", cartToOrder);
+			return "/myOrder";
 		}
-		
-		cartItemService.deleteAll(cartDTO);
-		items.clear();
-	
-		cartDTO.setItems(items);
-		
-		//update cart, create order
-		cartService.update(cartDTO);
 		
 		return "redirect:/myAccount";
 		
