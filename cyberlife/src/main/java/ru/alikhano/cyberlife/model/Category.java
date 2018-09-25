@@ -17,7 +17,7 @@ public class Category {
 	@Column(name="catId")
 	private int catId;
 	
-	@Column(name="catType")
+	@Column(name="catType", unique = true)
 	private String catType;
 	
 

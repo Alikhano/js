@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.alikhano.cyberlife.DTO.CategoryDTO;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.dao.CategoryDao;
 import ru.alikhano.cyberlife.mapper.CategoryMapper;
 import ru.alikhano.cyberlife.model.Category;
@@ -47,9 +48,16 @@ public class CategoryServiceImpl implements CategoryService {
 
 	
 	@Transactional
-	public void create(CategoryDTO categoryDTO) {
+	public void create(CategoryDTO categoryDTO){
+	
 		categoryDao.create(categoryMapper.categoryDTOtoCategory(categoryDTO));
 		
+	}
+
+	@Override
+	public int createAndGetId(CategoryDTO categoryDTO) {
+
+		return categoryDao.createAndGetId(categoryMapper.categoryDTOtoCategory(categoryDTO));
 	}
 
 }

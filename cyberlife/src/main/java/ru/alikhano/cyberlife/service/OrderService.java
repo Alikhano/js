@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.OrderDTO;
 
 
@@ -25,6 +26,6 @@ public interface OrderService {
 	
 	double getWeeklyRevenue();
 	
-	String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username);
+	String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException;
 
 }

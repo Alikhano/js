@@ -9,11 +9,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.service.CategoryService;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
@@ -41,6 +43,8 @@ public class AdminProductController {
 	CustomerService customerService;
 	@Autowired
 	OrderService orderService;
+	
+	private static final Logger logger = LogManager.getLogger(AdminProductController.class);
 
 	private Path path;
 
@@ -55,17 +59,28 @@ public class AdminProductController {
 
 	@RequestMapping(value = "/admin/addProduct", method = RequestMethod.POST, consumes = "multipart/form-data")
 	public String addProductPost(@ModelAttribute("newProductDTO") ProductDTO newProductDTO, BindingResult result,
-			HttpServletRequest request, @RequestPart("file") MultipartFile file) throws IOException {
+			HttpServletRequest request, @RequestPart("file") MultipartFile file, Model model) throws IOException, CustomLogicException {
 
-		if (result.hasErrors()) {
-			 List<FieldError> errors = result.getFieldErrors();
-			    for (FieldError error : errors ) {
-			        System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
-			    }
-			return "home";
+		//newProductDTO.setImage(file.getBytes());
+		
+		if (newProductDTO.getUnitsInStock() < 0) {
+			throw new CustomLogicException("There should > 0 units in stock!");
 		}
-
-		newProductDTO.setImage(file.getBytes());
+		if (newProductDTO.getPrice() < 0) {
+			throw new CustomLogicException("Price should be > 0!");
+		}
+		
+		
+		try {
+			productService.create(newProductDTO);
+		}
+		catch (CustomLogicException ex) {
+			logger.error(ex.getErrMessage());
+			model.addAttribute("repModel", "Oops, this model exists already");
+			return "addProduct";
+		}
+		
+		productService.getByModel(newProductDTO.getModel()).setImage(file.getBytes());
 
 		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
 		path = Paths.get(rootDirectory + "/static/images/" + newProductDTO.getModel() + ".jpg");
@@ -74,12 +89,9 @@ public class AdminProductController {
 			try {
 				file.transferTo(new File(path.toString()));
 			} catch (Exception ex) {
-				ex.printStackTrace();
 				throw new RuntimeException("Product image saving failed", ex);
 			}
 		}
-
-		productService.create(newProductDTO);
 
 		return "redirect:/admin/productList";
 	}
@@ -104,14 +116,21 @@ public class AdminProductController {
 
 	@RequestMapping(value = "/admin/editProduct", method = RequestMethod.POST)
 	public String editProductPost(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws CustomLogicException {
+		if (productDTO.getUnitsInStock() < 0) {
+			throw new CustomLogicException("There should > 0 units in stock!");
+		}
+		if (productDTO.getPrice() < 0) {
+			throw new CustomLogicException("Price should be > 0!");
+		}
+		
 		productService.update(productDTO);
 
 		return "redirect:/admin/productList";
 	}
 
 	@RequestMapping(value = "/admin/deleteProduct/{productId}")
-	public String deleteProduct(@PathVariable("productId") int productId, Model model) {
+	public String deleteProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException {
 		productService.delete(productService.getById(productId));
 
 		return "redirect:/admin/productList";
@@ -127,7 +146,7 @@ public class AdminProductController {
 			model.addAttribute("weeklyNo", "nothing to show here, try later");
 		}
 		else {
-			model.addAttribute("weeklyRev", orderService.getWeeklyRevenue());
+			model.addAttribute("weeklyRev", orderService.getWeeklyRevenue() + " USD");
 		}
 		
 		return "stats";

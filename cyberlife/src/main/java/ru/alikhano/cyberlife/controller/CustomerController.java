@@ -3,6 +3,8 @@ package ru.alikhano.cyberlife.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.alikhano.cyberlife.DTO.AddressDTO;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
 import ru.alikhano.cyberlife.service.AddressService;
@@ -24,6 +27,8 @@ import ru.alikhano.cyberlife.service.UserService;
 
 @Controller
 public class CustomerController {
+	
+	private static final Logger logger = LogManager.getLogger(CustomerController.class);
 	
 	@Autowired
 	UserService userService;
@@ -58,7 +63,16 @@ public class CustomerController {
 	
 	@RequestMapping(value = "/myAccount/updateAccount", method = RequestMethod.POST)
 	public String updateAccountPost(@Valid @ModelAttribute("customer") CustomerDTO customerDTO, BindingResult result,
-			HttpServletRequest request) {
+			HttpServletRequest request, Authentication authentication) throws CustomLogicException {
+		UserDTO currentUser =  userService.getByUsernameDTO(authentication.getName());
+		CustomerDTO currentCustomer = customerService.getByUserId(currentUser.getUserId());
+		
+		for (CustomerDTO customer : customerService.getAll()) {
+			// check if email changed and if new email belongs to some other user on the website
+			if (customer.getEmail().equals(customerDTO.getEmail()) && !currentCustomer.getEmail().equals(customerDTO.getEmail()) ) {
+				throw new CustomLogicException("Your have used the email address which is already taken on this website. Please try again.");
+			}
+		}
 		customerService.update(customerDTO);
 
 		return "redirect:/myAccount";
@@ -78,9 +92,7 @@ public class CustomerController {
 	@RequestMapping(value = "/myAccount/changeAddress", method = RequestMethod.POST)
 	public String changeAddressPost(@Valid @ModelAttribute("address") AddressDTO addressDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication) {
-		String username = authentication.getName();
-		UserDTO user = userService.getByUsernameDTO(username);
-		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
+		
 		addressService.update(addressDTO);
 		
 		return "redirect:/myAccount";
@@ -100,6 +112,7 @@ public class CustomerController {
 		UserDTO user = userService.getByUsernameDTO(username);
 		if (!userService.verifyPassword(oldPassword, user.getUserId())) {
 			model.addAttribute("mismatchMsg", "Oops, entered password does not match the stored value");
+			logger.error("Oops, entered password does not match the stored value");
 			return "changePassword";
 		}
 		userService.changePassword(newPassword, user);

@@ -9,10 +9,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
 import ru.alikhano.cyberlife.DTO.OrderDTO;
 import ru.alikhano.cyberlife.DTO.OrderItemDTO;
@@ -55,6 +55,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	OrderMapper orderMapper;
+	
 
 	@Override
 	@Transactional
@@ -119,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) {
+	public String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException {
 
 		UserDTO user = userService.getByUsernameDTO(username);
 		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
@@ -146,10 +147,11 @@ public class OrderServiceImpl implements OrderService {
 		
 		for (CartItemDTO cartItem : items) {
 			//decrease units in stock for product, update product
-			ProductDTO productDTO = cartItem.getProduct();
+			ProductDTO productDTO = productService.selectForUpdate(cartItem.getProduct().getProductId());
 			int prevQuantity = productDTO.getUnitsInStock();
 			if (prevQuantity == 0) {
-			return "Oops " + productDTO.getModel() + " is out of stock. Please remove from cart and proceed to order.";
+				
+			throw new CustomLogicException("You tried to submit order while one of the items is out of stock. Please delete item from cart and proceed to order");
 			}
 			else {
 				productDTO.setUnitsInStock(prevQuantity - cartItem.getQuantity());

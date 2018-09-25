@@ -3,6 +3,7 @@ package ru.alikhano.cyberlife.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.LockModeType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -72,6 +73,15 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 		
 		return topProducts;
 		
+	}
+
+	@Override
+	public Product selectForUpdate(Integer id) {
+		String hql = "select from Product where productId =: productId";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setParameter("productId", id);
+		query.setLockMode(LockModeType.PESSIMISTIC_WRITE);
+		 return (Product) query.uniqueResult();
 	}
 
 }

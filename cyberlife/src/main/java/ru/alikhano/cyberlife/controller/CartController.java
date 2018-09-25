@@ -52,6 +52,7 @@ public class CartController {
 	
 	@RequestMapping(value = "/deleteItem/{itemId}")
 	public String deleteProduct(@PathVariable("itemId") int itemId, HttpServletRequest request, Model model) {
+		double grandTotal = 0;
 		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
 		CartItemDTO cartItemDTO = cartItemService.getById(itemId);
 		Set<CartItemDTO> items = cartDTO.getItems();
@@ -61,8 +62,13 @@ public class CartController {
 				items.remove(item);
 			}
 		}
+		if (items.isEmpty()) {
+			cartDTO.setGrandTotal(0);
+		}
+		else {
+			grandTotal = cartDTO.getGrandTotal() - (cartItemDTO.getTotalPrice() * cartItemDTO.getQuantity());
+		}
 		
-		double grandTotal = cartDTO.getGrandTotal() - (cartItemDTO.getTotalPrice() * cartItemDTO.getQuantity());
 		cartDTO.setItems(items);
 		cartDTO.setGrandTotal(grandTotal);
 		cartService.update(cartDTO);

@@ -21,6 +21,7 @@ import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
 import ru.alikhano.cyberlife.DTO.OrderDTO;
 import ru.alikhano.cyberlife.DTO.OrderItemDTO;
@@ -81,7 +82,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value="/myOrder", method=RequestMethod.POST)
-	public String submitOrder(@Valid @ModelAttribute("newOrder") OrderDTO orderDTO, BindingResult result, HttpServletRequest request,Authentication authentication, Model model) {
+	public String submitOrder(@Valid @ModelAttribute("newOrder") OrderDTO orderDTO, BindingResult result, HttpServletRequest request,Authentication authentication, Model model) throws CustomLogicException {
 
 		String username = authentication.getName();
 		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));

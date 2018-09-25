@@ -1,5 +1,13 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
+<br>
+<div class="container">
+<form name="modelSearch" id = "modelSearch" action="${pageContext.request.contextPath}/searchModel" method="post">
+      <input name="model" id="model" type="search" placeholder="Search"  aria-label="Search">
+      <button class="btn btn-success" type="submit">Search by model</button>
+    </form>
+</div>
+<br>
 <div class="container">
 
 	<form id="searchForm"
@@ -24,7 +32,7 @@
 
 		<input id="toPrice" name="toPrice" type="text" placeholder="0.0" /> <br>
 
-		<input type="submit" value="Search" class="btn btn-success">
+		<input type="submit" value="Search by params" class="btn btn-success">
 
 	</form>
 
@@ -52,8 +60,39 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js">
 	
 </script>
+<script
+	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+
+		$("#searchForm").validate({
+			rules : {
+				"fromPrice" : {
+					number : true,
+					min: 0
+
+				},
+				"toPrice" : {
+					number: true,
+					min: 50
+				}
+
+			},
+			messages : {
+				"fromPrice" : {
+					number : "value shoudl be a number",
+					min: "should be at least 0 usd"
+
+				},
+				"toPrice" : {
+					number : "value should be a number",
+					min: "should be at least 50 usd"
+				
+				}
+			}
+		});
 		$("#searchForm").submit(function(e) {
 			e.preventDefault();
 
@@ -73,40 +112,31 @@
 				url : '${pageContext.request.contextPath}/searchProduct',
 				success : function(data) {
 					var product = data;
-					if (product === null) {
-						alert("Oops, we found nothing. Try again!")
+					if (!$.isArray(data) || !data.length) {
+						alert("Oops, we found nothing. Try again!");
+					} else {
+						append_json(product);
 					}
-					append_json(product);
 				}
 			});
 		});
 	});
+
 	function append_json(data) {
 		var table = document.getElementById('searchTable');
 		$('.resultRow').remove();
-		/*  for(var i = 0, len = data.length; i < length; i++) {
-			 var tr = document.createElement('tr');
-		     tr.className = "resultRow";
-		     tr.innerHTML = '<td>' + data[i].model + '</td>' +
-		     '<td>' + data[i].category + '</td>' +
-		     '<td>' + data[i].cons + '</td>' +
-		     '<td>' + data[i].description + '</td>' +
-		     '<td>' + data[i].unitsInStock + '</td>'  +
-		     '<td>' + data[i].price + " USD"+ '</td>';
-		     table.appendChild(tr);
-		
-		 } */
+
 		$.each(data, function(index, object) {
 			var tr = document.createElement('tr');
 			tr.className = "resultRow";
-			for (var x in object) {
+			for ( var x in object) {
 				tr.innerHTML = '<td>' + object.model + '</td>' + '<td>'
-				+ object.category + '</td>' + '<td>' + object.cons
-				+ '</td>' + '<td>' + object.description + '</td>' + '<td>'
-				+ object.unitsInStock + '</td>' + '<td>' + object.price
-				+ " USD" + '</td>';
+						+ object.category + '</td>' + '<td>' + object.cons
+						+ '</td>' + '<td>' + object.description + '</td>'
+						+ '<td>' + object.unitsInStock + '</td>' + '<td>'
+						+ object.price + " USD" + '</td>';
 			}
-			
+
 			table.appendChild(tr);
 		})
 	};

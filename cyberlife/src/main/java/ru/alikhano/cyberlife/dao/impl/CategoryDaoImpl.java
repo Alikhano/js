@@ -1,8 +1,6 @@
 package ru.alikhano.cyberlife.dao.impl;
 
 
-import java.util.List;
-
 import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
@@ -10,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.dao.CategoryDao;
 import ru.alikhano.cyberlife.model.Category;
 
@@ -30,5 +29,12 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category> implements Categor
 			return null;
 		}
 	}
+
+	@Override
+	public int createAndGetId(Category category)  {
+		return (Integer) sessionFactory.getCurrentSession().save(category);
+	}
+
+	
 
 }

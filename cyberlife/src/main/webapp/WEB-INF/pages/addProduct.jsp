@@ -15,6 +15,7 @@
 					<label for="model">Model</label>
 					<form:errors path="model" cssStyle="color:#ff0000;" />
 					<form:input path="model" id="model" class="form-Control" />
+					<span style="color: #ff0000">${repModel}</span>
 				</div>
 
 				<div class="form-group">
@@ -94,11 +95,12 @@
 			},
 			"price" : {
 				required : true,
+				number: true,
 				min: 1
 			},
 			"unitsInStock" : {
 				required : true,
-				number : true,
+				digits : true,
 				min: 1
 			},
 			"file" : {
@@ -123,11 +125,12 @@
 			},
 			"price" : {
 				required : "Please enter the price",
+				number: "Entered value should be a number",
 				min: "Cannot be zero"
 			},
 			"unitsInStock" : {
 				required : "Please enter the number of units in stock",
-				number : "Entered value should be a number",
+				digits : "Entered value should contain only digits",
 				min: "Cannot be zero"
 			},
 			"file" : {

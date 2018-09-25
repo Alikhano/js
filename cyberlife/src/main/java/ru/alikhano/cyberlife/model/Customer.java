@@ -29,7 +29,7 @@ public class Customer {
 	@Column(name="birthDate")
 	private String birthDate;
 	
-	@Column(name="email")
+	@Column(name="email", unique = true)
 	private String email;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

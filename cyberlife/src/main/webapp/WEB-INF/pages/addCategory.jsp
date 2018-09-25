@@ -11,7 +11,7 @@
 	</thead>
 	<c:forEach items="${categories}" var="category">
 		<tr>
-			<th>${category.catType}</th>
+			<td>${category.catType}</td>
 		</tr>
 	</c:forEach>
 </table>
@@ -54,12 +54,16 @@ $(document).ready(function() {
 			catType: $("#catType").val()
 		}),
         contentType: 'application/json',
-		success: function(data) {
+        success: function(data) {
 			location.reload();
 		},
+		error: function(error) {
+			location.href="error.jsp";
+		}
 	});
 });
 });
+
 </script>
 
 </body>

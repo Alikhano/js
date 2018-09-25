@@ -62,6 +62,9 @@ $(document).ready(function() {
 		success: function(data) {
 			location.reload();
 		},
+		error : function(error) {
+			location.href="error.jsp";
+		}
 	});
 });
 });

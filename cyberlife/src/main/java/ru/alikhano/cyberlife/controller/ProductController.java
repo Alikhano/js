@@ -18,6 +18,7 @@ import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
@@ -55,8 +56,12 @@ public class ProductController {
     }
     
     @RequestMapping(value = "/viewProduct", method = RequestMethod.POST)
-    public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) {
+    public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
         ProductDTO productDTO = productService.getById(productId);
+        
+        if (newCartItem.getQuantity() < 0) {
+        	throw new CustomLogicException("Quantity should be > 0!");
+        }
         
         int quantity = newCartItem.getQuantity();
         

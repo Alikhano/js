@@ -53,23 +53,20 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 	public double getWeeklyRevenue() {
 		Calendar date = Calendar.getInstance();
 		if (date.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-			Date today = date.getTime();
+			date.add(Calendar.DAY_OF_MONTH, -1);
+			Date yesterday = date.getTime();
 			date.add(Calendar.DAY_OF_MONTH, -7);
 			Date weekBefore = date.getTime();
 			String hql = "SELECT sum(orderPrice) FROM Orders WHERE paymentStatus =: paymentStatus AND orderDate BETWEEN ?1 AND ?2";
 			Query query = sessionFactory.getCurrentSession().createQuery(hql);
 			query.setParameter("paymentStatus", "paid");
 			query.setParameter(1, weekBefore);
-			query.setParameter(2, today);
-			System.out.println(query.uniqueResult());
+			query.setParameter(2, yesterday);
 			return (double) query.uniqueResult();
 			
 		}
 		
-		return 0;
-		
-		
-		
+		return 0;		
 	}
 
 }

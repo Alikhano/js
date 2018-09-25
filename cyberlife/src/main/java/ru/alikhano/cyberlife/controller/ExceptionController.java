@@ -2,11 +2,14 @@ package ru.alikhano.cyberlife.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import ru.alikhano.cyberlife.DTO.CustomException;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 
 @ControllerAdvice
 public class ExceptionController {
@@ -17,22 +20,29 @@ public class ExceptionController {
 	public ModelAndView handleGenericException(Exception ex) {
 		
 		logger.error(ex.getMessage(), ex);
-		ModelAndView model = new ModelAndView("/generic_error");
+		ModelAndView model = new ModelAndView("generic_error");
 		
 		model.addObject("errorMessage", ex.getMessage());
 		
 		return model;
 	}
 	
-	@ExceptionHandler(CustomException.class)
-	public ModelAndView handleCustomException(CustomException ex) {
+	@ExceptionHandler(CustomLogicException.class)
+	public ModelAndView handleCustomException(CustomLogicException ex) {
 		
 		logger.error(ex.getErrMessage(), ex);
-		ModelAndView model = new ModelAndView("/generic-error");
+		ModelAndView model = new ModelAndView("generic-error");
 		
 		model.addObject("errorMessage", ex.getErrMessage());
 		
 		return model;
 	}
+	
+	/*@ResponseBody
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(CustomLogicException.class)
+	public CustomLogicException handleRestCustomException(CustomLogicException ex) {
+		return ex;
+	}*/
 
 }

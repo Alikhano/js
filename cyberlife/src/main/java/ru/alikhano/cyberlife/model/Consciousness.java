@@ -17,7 +17,7 @@ public class Consciousness {
 	@Column(name="consId")
 	private int consId;
 	
-	@Column(name="level")
+	@Column(name="level", unique = true)
 	private String level;
 	
 	@Column(name="description")

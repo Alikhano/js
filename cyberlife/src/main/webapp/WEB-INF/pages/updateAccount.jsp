@@ -5,7 +5,7 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 <div class="container-wrapper">
-	<form:form action="${pageContext.request.contextPath}/updateAccount"
+	<form:form action="${pageContext.request.contextPath}/myAccount/updateAccount"
 		method="post" modelAttribute="customer" id="updateProfile">
 		<input type="hidden" name="customerId" value="${customer.customerId}" />
 

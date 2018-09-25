@@ -24,8 +24,11 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="<c:url value="/catalogue" />">Catalogue </a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="<c:url value="/searchProduct" />">Search </a>
       </li>
       <li class="nav-item">
        <sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -54,9 +57,6 @@
           </sec:authorize> 
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" name="modelSearch" id = "modelSearch" method="post">
-      <input class="form-control mr-sm-2" name="model" id="model" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    
   </div>
 </nav>

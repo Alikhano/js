@@ -10,9 +10,9 @@
 
 	<http auto-config="true">
 		<intercept-url pattern="/myOrder"
-			access="isAuthenticated()" />
+			access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/myOrder/**"
-			access="isAuthenticated()" />
+			access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/admin/**"
 			access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/myAccount/**"

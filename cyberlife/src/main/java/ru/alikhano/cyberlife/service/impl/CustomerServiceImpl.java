@@ -7,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.dao.CustomerDao;
 import ru.alikhano.cyberlife.mapper.CustomerMapper;
 import ru.alikhano.cyberlife.model.Customer;
-import ru.alikhano.cyberlife.model.Product;
 import ru.alikhano.cyberlife.service.CustomerService;
 
 @Service
@@ -51,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional
-	public void update(CustomerDTO customerDTO) {
+	public void update(CustomerDTO customerDTO) throws CustomLogicException {
 		Customer customer = customerDao.getById(customerDTO.getCustomerId());
 		customer.setFirstName(customerDTO.getFirstName());
 		customer.setLastName(customerDTO.getLastName());

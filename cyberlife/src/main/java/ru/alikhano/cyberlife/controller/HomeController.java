@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CustomException;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.RoleDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
@@ -46,7 +46,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, HttpServletResponse response) {
 		String cookieName = "cartId";
-		final int expiryTime = 10 * 24 * 60 * 60;
+		final int expiryTime = 10 * 24 * 60 * 60; //10 days
 		final String cookiePath = "/";
 		Cookie[] cookies = request.getCookies();
 		boolean hasCookie = false;
@@ -73,20 +73,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value="/", method = RequestMethod.POST)
-	public String searchbyModel(@RequestParam("model") String modelName, Model model) throws CustomException {
-		
-		ProductDTO product = productService.getByModel(modelName);
 	
-		if (product == null) {
-			throw new CustomException("Sorry! We do not have a model you're searching for. Please try again.");
-		}
-		
-		int productId = product.getProductId();
-		
-		return "redirect:/viewProduct/" + productId;
-		
-	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model, String error, String logout) {

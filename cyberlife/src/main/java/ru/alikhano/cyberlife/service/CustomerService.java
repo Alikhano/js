@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.model.Customer;
 
 @Service
 public interface CustomerService {
@@ -16,7 +16,7 @@ public interface CustomerService {
 
 	void create(CustomerDTO customerDTO);
 
-	void update(CustomerDTO customerDTO);
+	void update(CustomerDTO customerDTO) throws CustomLogicException;
 
 	void delete(CustomerDTO customerDTO);
 	

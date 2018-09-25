@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.DTO.CustomException;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.ProductInfo;
 import ru.alikhano.cyberlife.dao.ProductDao;
@@ -49,7 +49,11 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	@Transactional
-	public void create(ProductDTO productDTO) {
+	public void create(ProductDTO productDTO) throws CustomLogicException {
+		ProductDTO product = getByModel(productDTO.getModel());
+		if (product != null) {
+			throw new CustomLogicException("The model you have specified already exists in the catalogue");
+		}
 		productDao.create(productMapper.productDTOtOProduct(productDTO));
 		
 	}
@@ -63,22 +67,28 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	@Transactional
-	public void delete(ProductDTO productDTO) {
+	public void delete(ProductDTO productDTO) throws CustomLogicException {
+		if (getById(productDTO.getProductId()) != null) {
+			throw new CustomLogicException("There is no product with ID specified.");
+		}
 		productDao.delete(productMapper.productDTOtOProduct(productDTO));
 		
 	}
 
 	@Override
 	@Transactional
-	public ProductDTO getByModel(String model) throws CustomException {
+	public ProductDTO getByModel(String model) throws CustomLogicException {
 		return productMapper.productToProductDTO(productDao.getByModel(model));
 	
 	}
 
 	@Override
 	@Transactional
-	public List<ProductInfo> searchParam(int category, int consLevel, double fromPrice, double toPrice) {
+	public List<ProductInfo> searchParam(int category, int consLevel, double fromPrice, double toPrice) throws CustomLogicException {
 		List<Product> list = productDao.searchParam(category, consLevel, fromPrice, toPrice);
+		if (list == null) {
+			throw new CustomLogicException("No product matches your search parameters. Please try again.");
+		}
 		List<ProductInfo> infoList = new ArrayList<>();
 		for (Product product : list) {
 			ProductInfo productInfo = productInfoMapper.productToProductInfo(product);
@@ -100,6 +110,11 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		return dtoList;
+	}
+
+	@Override
+	public ProductDTO selectForUpdate(int id) {
+		return productMapper.productToProductDTO(productDao.selectForUpdate(id));
 	}
 
 }
