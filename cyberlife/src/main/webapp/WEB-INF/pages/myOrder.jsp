@@ -36,8 +36,8 @@
 							method="post" modelAttribute="newOrder">
 							<form:input type="hidden" path="orderId" id="orderId" />
 							<form:select path="paymentType">
-								<form:option value="cash">Cash on delivery</form:option>
-								<form:option value="credit card">Credit card</form:option>
+								<form:option value="cash">cash on delivery</form:option>
+								<form:option value="credit card">credit card</form:option>
 							</form:select>
 							<input type="submit" value="Add to cart" class="btn btn-success">
 							<span style="color: #ff0000">${noStockMsg}</span>

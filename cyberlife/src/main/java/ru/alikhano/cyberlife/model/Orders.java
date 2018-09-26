@@ -24,7 +24,7 @@ import ru.alikhano.cyberlife.DTO.OrderItemDTO;
 public class Orders {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderId")
 	private int orderId;
 

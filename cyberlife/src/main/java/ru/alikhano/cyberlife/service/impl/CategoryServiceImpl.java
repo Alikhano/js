@@ -55,6 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	@Transactional
 	public int createAndGetId(CategoryDTO categoryDTO) {
 
 		return categoryDao.createAndGetId(categoryMapper.categoryDTOtoCategory(categoryDTO));

@@ -1,5 +1,7 @@
 package ru.alikhano.cyberlife.DTO;
 
+import ru.alikhano.cyberlife.model.Address;
+
 public class AddressDTO {
 	
 	private int addressId;
@@ -53,5 +55,18 @@ public class AddressDTO {
 		this.flat = flat;
 	}
 	
+	public AddressDTO() {
+		
+	}
+	
+	public AddressDTO(Address address) {
+		this.addressId = address.getAddressId();
+		this.building = address.getBuilding();
+		this.city = address.getCity();
+		this.country = address.getCountry();
+		this.flat = address.getFlat();
+		this.street = address.getStreet();
+		this.zipCode = address.getZipCode();
+	}
 
 }

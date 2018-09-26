@@ -18,7 +18,9 @@
 #admin-sidebar {
 	height: 100vh;
 	margin-bottom: 0px;
+	width: 300px;
 }
+
 
 .sidebar-item a:hover {
 	color: #007DDD !important;
@@ -30,4 +32,24 @@
 	margin: auto;
 	margin-top: 80px;
 	margin-bottom: 300px;
+}
+
+.category-main {
+	margin-top: 25px;
+	margin-left: 250px;
+}
+
+.cons-main {
+	margin-top: 25px;
+	margin-left: 25px;
+}
+
+.product-main{
+	margin-top: 25px;
+	margin-left: 25px;
+}
+
+.account-container{
+	margin-top: 25px;
+	margin-left: 25px;
 }

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class Address {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="addressId")
 	private int addressId;
 	
@@ -113,6 +113,22 @@ public class Address {
 		if (addressId != other.addressId)
 			return false;
 		return true;
+	}
+	
+	public Address() {
+		
+	}
+
+	public Address(int addressId, String country, String city, String zipCode, String street, String building,
+			String flat) {
+		super();
+		this.addressId = addressId;
+		this.country = country;
+		this.city = city;
+		this.zipCode = zipCode;
+		this.street = street;
+		this.building = building;
+		this.flat = flat;
 	}
 	
 	

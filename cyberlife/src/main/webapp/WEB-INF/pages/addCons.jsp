@@ -1,17 +1,18 @@
 <%@ include file="/WEB-INF/pages/common/admin-side.jsp"%>
 
-<div class="admin-main">
+<div class="side-content">
+<div class="cons-main">
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Available AI configurations
-			<th>
+			<th>Available AI configurations</th>
+			<th>Description</th>
 		</tr>
 	</thead>
 	<c:forEach items="${consLevels}" var="cons">
 		<tr>
-			<th>${cons.level}</th>
-			<th>${cons.description}</th>
+			<td>${cons.level}</td>
+			<td><div style='width: 700px'>${cons.description}</div></td>
 		</tr>
 	</c:forEach>
 </table>
@@ -23,22 +24,22 @@
 
 		<div class="container">
 			<div class="form-group">
-				<label for="model">Level</label>
-				<form:input path="level" id="level" class="form-Control" />
+				<form:input path="level" id="level" class="form-Control" placeholder="Level" />
 		</div>
 		
 		<div class="form-group">
-								<label for="description">Description</label>
+
 								<form:textarea rows="4" cols="50" path="description"
-									id="description" class="form-Control" />
+									id="description" class="form-Control" placeholder="Description" />
 							</div>
 
-			<br /> <br /> <input type="submit" value="Add" class="btn btn-success">
+		<input type="submit" value="Add" class="btn btn-success">
 			<a href="<c:url value="/productList" />" class="btn btn-danger">Cancel</a>
 		</div>
 
 	</form:form>
 	
+	</div>
 	</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

@@ -106,15 +106,21 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value="/orderHistory")
-	public String myOrders(Model model, HttpServletRequest request) {
-		model.addAttribute("orders", orderService.getAll());
+	public String myOrders(Model model, HttpServletRequest request, Authentication authentication) {
+		String username = authentication.getName();
+		UserDTO user = userService.getByUsernameDTO(username);
+		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
+		model.addAttribute("orders", orderService.getByCustomerId(customerDTO.getCustomerId()));
 		model.addAttribute("updatedOrder", new OrderDTO());
 		return "orderList";
 	}
 	
 	@RequestMapping(value="/admin/orderStatus", method=RequestMethod.POST)
-	public String orderStatusPost(@RequestParam("orderId") int orderId, @RequestParam("orderStatus") String orderStatus, @RequestParam("paymentStatus") String paymentStatus,Model model, HttpServletRequest request) {
+	public String orderStatusPost(@RequestParam("orderId") int orderId, @RequestParam("orderStatus") String orderStatus, @RequestParam("paymentStatus") String paymentStatus,Model model, HttpServletRequest request) throws CustomLogicException {
 		OrderDTO order = orderService.getById(orderId);
+		if (order.getOrderStatus().equals("delivered and recieved") || order.getPaymentStatus().equals("paid")) {
+			throw new CustomLogicException("No status updates after order completion!");
+		}
 		order.setOrderStatus(orderStatus);
 		order.setPaymentStatus(paymentStatus);
 		orderService.update(order);

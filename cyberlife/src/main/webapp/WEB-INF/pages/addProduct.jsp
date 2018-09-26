@@ -1,69 +1,70 @@
 <%@ include file="/WEB-INF/pages/common/admin-side.jsp"%>
 
-<div class="col" id="admin-main">
-	<h1>Add Product</h1>
-	<div class="container">
-		<form:form
-			action="${pageContext.request.contextPath}/admin/addProduct"
-			method="post" modelAttribute="newProductDTO"
-			enctype="multipart/form-data" id="addProduct">
+<div class="side-content">
+<div class="product-main">
+	<div class="col" id="admin-main">
+		<div class="container">
+			<form:form
+				action="${pageContext.request.contextPath}/admin/addProduct"
+				method="post" modelAttribute="newProductDTO"
+				enctype="multipart/form-data" id="addProduct">
 
-			<form:input type="hidden" path="productId" id="productId" />
+				<form:input type="hidden" path="productId" id="productId" />
 
-			<div class="container">
-				<div class="form-group">
-					<label for="model">Model</label>
-					<form:errors path="model" cssStyle="color:#ff0000;" />
-					<form:input path="model" id="model" class="form-Control" />
-					<span style="color: #ff0000">${repModel}</span>
+				<div class="container">
+					<div class="form-group">
+						<form:errors path="model" cssStyle="color:#ff0000;" />
+						<form:input path="model" id="model" class="form-Control" placeholder="Model"/>
+						<span style="color: #ff0000">${repModel}</span>
+					</div>
+
+					<div class="form-group">
+						<label for="category">Category</label>
+						<form:select path="category.catId">
+							<form:options items="${categoryDTOList}" itemValue="catId"
+								itemLabel="catType" />
+						</form:select>
+					</div>
+
+					<div class="form-group">
+						<label for="cons">Consciousness</label>
+						<form:select path="cons.consId">
+							<form:options items="${consDTOList}" itemValue="consId"
+								itemLabel="level" />
+						</form:select>
+					</div>
+
+					<div class="form-group">
+						
+						<form:textarea rows="4" cols="50" path="description"
+							id="description" class="form-Control" placeholder="Description"/>
+					</div>
+
+					<div class="form-group">
+						<label for="price">Price</label>
+						<form:input path="price" id="price" class="form-Control" />
+					</div>
+
+
+					<div class="form-group">
+						<label for="unitsInStock">Units In Stock</label>
+						<form:input path="unitsInStock" id="unitsInStock"
+							class="form-Control" />
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="file">Upload model image</label>
+						<input id="file" name="file" type="file" class="form:input-large" />
+					</div>
+
+					<input type="submit" value="Add product"
+						class="btn btn-success"> <a
+						href="<c:url value="/admin/productList" />" class="btn btn-danger">Cancel</a>
 				</div>
 
-				<div class="form-group">
-					<label for="category">Category</label>
-					<form:select path="category.catId">
-						<form:options items="${categoryDTOList}" itemValue="catId"
-							itemLabel="catType" />
-					</form:select>
-				</div>
-
-				<div class="form-group">
-					<label for="cons">Consciousness</label>
-					<form:select path="cons.consId">
-						<form:options items="${consDTOList}" itemValue="consId"
-							itemLabel="level" />
-					</form:select>
-				</div>
-
-				<div class="form-group">
-					<label for="description">Description</label>
-					<form:textarea rows="4" cols="50" path="description"
-						id="description" class="form-Control" />
-				</div>
-
-				<div class="form-group">
-					<label for="price">Price</label>
-					<form:input path="price" id="price" class="form-Control" />
-				</div>
-
-
-				<div class="form-group">
-					<label for="unitsInStock">Units In Stock</label>
-					<form:input path="unitsInStock" id="unitsInStock"
-						class="form-Control" />
-				</div>
-
-				<div class="form-group">
-					<label class="control-label" for="file">Upload model image</label>
-					<input id="file" name="file" type="file" class="form:input-large" />
-				</div>
-
-				<br /> <br /> <input type="submit" value="Add product"
-					class="btn btn-success"> <a
-					href="<c:url value="/admin/productList" />" class="btn btn-danger">Cancel</a>
-			</div>
-
-		</form:form>
-
+			</form:form>
+		</div>
+	</div>
 	</div>
 </div>
 </div>
@@ -95,13 +96,13 @@
 			},
 			"price" : {
 				required : true,
-				number: true,
-				min: 1
+				number : true,
+				min : 1
 			},
 			"unitsInStock" : {
 				required : true,
 				digits : true,
-				min: 1
+				min : 1
 			},
 			"file" : {
 				required : true,
@@ -125,13 +126,13 @@
 			},
 			"price" : {
 				required : "Please enter the price",
-				number: "Entered value should be a number",
-				min: "Cannot be zero"
+				number : "Entered value should be a number",
+				min : "Cannot be zero"
 			},
 			"unitsInStock" : {
 				required : "Please enter the number of units in stock",
 				digits : "Entered value should contain only digits",
-				min: "Cannot be zero"
+				min : "Cannot be zero"
 			},
 			"file" : {
 				required : "Please add image",

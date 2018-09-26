@@ -3,24 +3,24 @@
 
 
 <div class="container">
-<h2>Your account details</h2>
+<div class="account-container">
 	<div class="row">
 		<div class="col-md-5">
 			<h3 class="title mb-3">${customer.firstName} ${customer.lastName} </h3>
 			<p>
-				<strong>Email</strong>: ${customer.email}
+				<strong><i class="fas fa-envelope"></i></strong> ${customer.email}
 			</p>
 			<p>
-				<strong>Address</strong>
-				 ${customer.address.country}
-				<br>
-				${customer.address.city}
-				<br>
-				${customer.address.street}, ${customer.address.building}, ${customer.address.flat}
-				<br>
-				<a href="<spring:url value="/myAccount/changeAddress" />" class="btn btn-default"> Edit your address</a>
-			</p>
-			<p>${customer.birthDate}</p>
+				<strong><i class="fas fa-map-marked-alt"></i></strong>
+				 ${customer.address.country} </p>
+				
+				<p>${customer.address.city}</p>
+			
+				<p>${customer.address.street}, ${customer.address.building}, ${customer.address.flat}</p>
+				
+				<p><a href="<spring:url value="/myAccount/changeAddress" />" class="btn btn-default"> Edit your address</a></p>
+			
+			<p><strong><i class="fas fa-birthday-cake"></i></strong> ${customer.birthDate}</p>
 
 			<p>
 				<a href="<c:url value = "/" />" class="btn btn-default">Back</a>
@@ -32,7 +32,7 @@
 		</div>
 	</div>
 </div>
-
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script

@@ -22,7 +22,7 @@ public class Product {
 	
 	@Id
 	@Column(name="productId")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int productId;
 	
 	@Column(name="model", unique=true)
@@ -160,5 +160,27 @@ public class Product {
 			return false;
 		return true;
 	}
+	
+	public Product() {
+		
+	}
+
+	public Product(int productId, @NotNull String model, @NotNull String description, @NotNull int unitsInStock,
+			@NotNull double price, Category category, Consciousness cons) {
+		super();
+		this.productId = productId;
+		this.model = model;
+		this.description = description;
+		this.unitsInStock = unitsInStock;
+		this.price = price;
+		this.category = category;
+		this.cons = cons;
+	}
+	
+	
+
+	
+	
+	
 
 }

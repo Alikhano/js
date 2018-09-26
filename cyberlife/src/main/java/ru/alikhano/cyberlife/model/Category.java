@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Category {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="catId")
 	private int catId;
 	
@@ -63,5 +63,14 @@ public class Category {
 		} else if (!catType.equals(other.catType))
 			return false;
 		return true;
+	}
+	
+	public Category() {
+		
+	}
+	
+	public Category(int id, String catType) {
+		this.catId = id;
+		this.catType = catType;
 	}
 }

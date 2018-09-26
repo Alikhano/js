@@ -35,8 +35,8 @@ public class CustomerDaoImpl extends GenericDaoImpl<Customer> implements Custome
 
 		List<Customer> topCustomers = new ArrayList<>();
 
-		String hql = "select item.order.customer, count(*) as purchaseCount  from OrderItem item where item.order.paymentStatus =: paymentStatus "
-				+ "GROUP BY item.order.customer ORDER BY purchaseCount desc";
+		String hql = "select order.customer, count(*) as purchaseCount  from Orders order where order.paymentStatus =: paymentStatus "
+				+ "GROUP BY order.customer ORDER BY purchaseCount desc";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameter("paymentStatus", "paid");
 		query.setMaxResults(10);

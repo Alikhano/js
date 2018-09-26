@@ -18,5 +18,6 @@ public interface OrderDao extends GenericDao<Orders> {
 	Map<Integer, Double> getMonthlyRevenue();
 	
 	double getWeeklyRevenue();
+	
 
 }

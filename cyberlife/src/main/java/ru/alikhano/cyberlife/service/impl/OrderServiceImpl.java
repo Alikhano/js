@@ -124,6 +124,10 @@ public class OrderServiceImpl implements OrderService {
 
 		UserDTO user = userService.getByUsernameDTO(username);
 		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
+		
+		if (customerDTO.getAddress() == null || customerDTO.getEmail() == null || customerDTO.getLastName() == null) {
+			throw new CustomLogicException("Your customer profile must miss some information. Please go back to your profile and complete it.");
+		}
 
 		// assign customer to order
 		orderDTO.setCustomer(customerDTO);
@@ -136,6 +140,11 @@ public class OrderServiceImpl implements OrderService {
 		orderDTO.setOrderDate(new Date());
 		
      	//update order status
+		
+		if (orderDTO.getPaymentType().equals("credit cart")) {
+			orderDTO.setPaymentStatus("paid");
+		}
+		
 		orderDTO.setPaymentStatus("unpaid");
 		orderDTO.setOrderStatus("awaits delivery");
 		
@@ -147,7 +156,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		for (CartItemDTO cartItem : items) {
 			//decrease units in stock for product, update product
-			ProductDTO productDTO = productService.selectForUpdate(cartItem.getProduct().getProductId());
+			ProductDTO productDTO = cartItem.getProduct();
 			int prevQuantity = productDTO.getUnitsInStock();
 			if (prevQuantity == 0) {
 				

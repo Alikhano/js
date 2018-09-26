@@ -37,7 +37,7 @@
 				</thead>
 				<c:forEach items="${topCustomer}" var="customer">
 					<tr>
-						<td>${customer.firstName}${customer.lastName}</td>
+						<td>${customer.firstName} ${customer.lastName}</td>
 					</tr>
 				</c:forEach>
 

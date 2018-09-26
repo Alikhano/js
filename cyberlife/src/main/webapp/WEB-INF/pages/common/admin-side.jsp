@@ -8,7 +8,7 @@
 			<div class="py-2 sticky-top">
 				<div class="nav flex-column">
 				<div class="sidebar-item">
-				<a href="<c:url value="/admin/stats" />" class="nav-link text-white"" class="nav-link text-white">Admin Home</a> 
+				<a href="<c:url value="/admin/stats" />" class="nav-link text-white" class="nav-link text-white">Admin stats</a> 
 					<a href="<c:url value="/admin/productList" />" class="nav-link text-white">Inventory list</a> 
 					<a href="<c:url value="/admin/addProduct" />" class="nav-link text-white">Add product</a> 
 					<a href="<c:url value="/admin/addCategory"/>" class="nav-link text-white">Add category</a>
@@ -18,4 +18,6 @@
 				</div>
 			</div>
 		</div>
+		
+		
 		

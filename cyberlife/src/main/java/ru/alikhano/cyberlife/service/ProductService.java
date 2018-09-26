@@ -8,6 +8,15 @@ import ru.alikhano.cyberlife.DTO.ProductInfo;
 import ru.alikhano.cyberlife.model.Product;
 
 public interface ProductService {
+	
+	/*List<Product> getAllProducts();
+	void create(Product product);
+	void delete(Product product);
+	void update(Product product);
+	*/
+	
+	Product getProductById(int id);
+
 
 	List<ProductDTO> getAll();
 

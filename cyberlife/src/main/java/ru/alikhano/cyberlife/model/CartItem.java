@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class CartItem {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="itemId")
 	private int itemId;
 	

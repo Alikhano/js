@@ -77,7 +77,7 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 
 	@Override
 	public Product selectForUpdate(Integer id) {
-		String hql = "select from Product where productId =: productId";
+		String hql = "from Product where productId =: productId";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameter("productId", id);
 		query.setLockMode(LockModeType.PESSIMISTIC_WRITE);

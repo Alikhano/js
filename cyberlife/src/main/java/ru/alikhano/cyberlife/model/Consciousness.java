@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Consciousness {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="consId")
 	private int consId;
 	
@@ -81,5 +81,18 @@ public class Consciousness {
 			return false;
 		return true;
 	}
+	
+	public Consciousness() {
+		
+	}
+
+	public Consciousness(int consId, String level, String description) {
+		super();
+		this.consId = consId;
+		this.level = level;
+		this.description = description;
+	}
+	
+	
 
 }

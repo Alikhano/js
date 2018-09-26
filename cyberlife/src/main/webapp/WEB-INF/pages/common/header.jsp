@@ -16,7 +16,7 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark navbar-fixed-top">
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark navbar-fixed-top" id="main-nav">
   <a class="navbar-brand" href="<c:url value="/" />">Cyberlife</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -32,7 +32,7 @@
       </li>
       <li class="nav-item">
        <sec:authorize access="hasRole('ROLE_ADMIN')">
-            <a class="nav-link" href="<c:url value="/admin/admin-home" />">Admin home</a>
+            <a class="nav-link" href="<c:url value="/admin/stats" />">Admin home</a>
         </sec:authorize>
         <sec:authorize access="hasRole('ROLE_USER')">
             <a class="nav-link" href="<c:url value="/myAccount" />">My Account</a>
