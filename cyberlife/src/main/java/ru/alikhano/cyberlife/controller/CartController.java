@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,13 @@ import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
+import ru.alikhano.cyberlife.DTO.CustomerDTO;
+import ru.alikhano.cyberlife.DTO.UserDTO;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
+import ru.alikhano.cyberlife.service.CustomerService;
 import ru.alikhano.cyberlife.service.ProductService;
+import ru.alikhano.cyberlife.service.UserService;
 
 @Controller
 public class CartController {
@@ -26,13 +31,19 @@ public class CartController {
 	CartService cartService;
 	
 	@Autowired
+	UserService userService;
+	
+	@Autowired
+	CustomerService customerService;
+	
+	@Autowired
 	ProductService productService;
 	
 	@Autowired
 	CartItemService cartItemService;
 	
 	@RequestMapping("/myCart")
-	public String viewCart(HttpServletRequest request, Model model) {
+	public String viewCart(HttpServletRequest request, Model model, Authentication authentication) {
 		int cartId = 0;
 		CartDTO cartDTO = null;
 		Cookie[] cookies = request.getCookies();
@@ -46,6 +57,7 @@ public class CartController {
 			model.addAttribute("cart", cartDTO);
 			model.addAttribute("cartItems", cartDTO.getItems());
 		}
+		
 		
 		return "cartList";	
 	}

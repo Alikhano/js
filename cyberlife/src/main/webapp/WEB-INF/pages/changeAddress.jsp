@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 <div class="container-wrapper">
+<div class="change-container">
 	<form:form
 		action="${pageContext.request.contextPath}/myAccount/changeAddress"
 		method="post" id="changeAdr" modelAttribute="address">
@@ -45,7 +46,7 @@
 
 
 	</form:form>
-
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

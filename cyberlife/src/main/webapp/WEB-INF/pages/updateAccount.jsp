@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 <div class="container-wrapper">
+<div class="change-container">
 	<form:form action="${pageContext.request.contextPath}/myAccount/updateAccount"
 		method="post" modelAttribute="customer" id="updateProfile">
 		<input type="hidden" name="customerId" value="${customer.customerId}" />
@@ -35,7 +36,7 @@
 
 
 	</form:form>
-
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

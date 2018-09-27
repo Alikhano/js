@@ -64,10 +64,10 @@ public class AdminProductController {
 		//newProductDTO.setImage(file.getBytes());
 		
 		if (newProductDTO.getUnitsInStock() < 0) {
-			throw new CustomLogicException("There should > 0 units in stock!");
+			throw new CustomLogicException("There should > 0 units in stock! Please go back and fill in the product form again");
 		}
 		if (newProductDTO.getPrice() < 0) {
-			throw new CustomLogicException("Price should be > 0!");
+			throw new CustomLogicException("Price should be > 0! Please go back and fill in the product form again");
 		}
 		
 		

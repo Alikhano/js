@@ -118,14 +118,14 @@ public class OrderController {
 	@RequestMapping(value="/admin/orderStatus", method=RequestMethod.POST)
 	public String orderStatusPost(@RequestParam("orderId") int orderId, @RequestParam("orderStatus") String orderStatus, @RequestParam("paymentStatus") String paymentStatus,Model model, HttpServletRequest request) throws CustomLogicException {
 		OrderDTO order = orderService.getById(orderId);
-		if (order.getOrderStatus().equals("delivered and recieved") || order.getPaymentStatus().equals("paid")) {
+		if (order.getOrderStatus().equals("delivered and recieved") && order.getPaymentStatus().equals("paid")) {
 			throw new CustomLogicException("No status updates after order completion!");
 		}
 		order.setOrderStatus(orderStatus);
 		order.setPaymentStatus(paymentStatus);
 		orderService.update(order);
 		
-		return "redirect:/admin/admin-home";
+		return "redirect:/admin/stats";
 	}
 	
 

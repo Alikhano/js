@@ -120,6 +120,21 @@ public class Customer {
 		return true;
 	}
 	
+	public Customer() {
+		
+	}
+
+	public Customer(int customerId, String firstName, String lastName, String birthDate, String email,
+			Address address) {
+		this.customerId = customerId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.birthDate = birthDate;
+		this.email = email;
+		this.address = address;
+	}
+	
+	
 	
 	
 

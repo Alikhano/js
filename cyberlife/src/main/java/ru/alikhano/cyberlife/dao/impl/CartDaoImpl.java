@@ -20,5 +20,5 @@ public class CartDaoImpl extends GenericDaoImpl<Cart> implements CartDao {
 	public int createAndGetId(Cart cart) {
 		return (Integer) sessionFactory.getCurrentSession().save(cart);
 	}
-	
+
 }

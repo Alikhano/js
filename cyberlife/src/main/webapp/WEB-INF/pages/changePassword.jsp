@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 <div class="container-wrapper">
+<div class="change-container">
 	<form id="changePass"
 		action="${pageContext.request.contextPath}/myAccount/changePassword"
 		method="post">
@@ -30,7 +31,7 @@
 
 
 	</form>
-
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

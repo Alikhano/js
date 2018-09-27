@@ -1,5 +1,7 @@
 package ru.alikhano.cyberlife.DTO;
 
+import ru.alikhano.cyberlife.model.Customer;
+
 public class CustomerDTO {
 	
 	private int customerId;
@@ -53,6 +55,26 @@ public class CustomerDTO {
 	}
 	public void setUser(UserDTO user) {
 		this.user = user;
+	}
+	
+	public CustomerDTO() {
+		
+	}
+	
+	public CustomerDTO(Customer customer) {
+		this.address = new AddressDTO();
+		address.setAddressId(customer.getAddress().getAddressId());
+		address.setCountry(customer.getAddress().getCountry());
+		address.setCity(customer.getAddress().getCity());
+		address.setZipCode(customer.getAddress().getZipCode());
+		address.setStreet(customer.getAddress().getStreet());
+		address.setBuilding(customer.getAddress().getBuilding());
+		address.setFlat(customer.getAddress().getFlat());
+		this.birthDate = customer.getBirthDate();
+		this.email = customer.getEmail();
+		this.firstName = customer.getFirstName();
+		this.lastName = customer.getLastName();
+		this.customerId = customer.getCustomerId();
 	}
 	
 
