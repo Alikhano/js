@@ -8,22 +8,21 @@
 			<div class="row">
 				<div class="col-50">
 					<h3>Shipping Address</h3>
-					<label for="name"><i class="fa fa-user"></i> Your name </label> <label
-						for="firstName">First Name</label> ${customer.firstName} <label
-						for="lastName">Last Name</label> ${customer.lastName}
+					<label for="name"><i class="fa fa-user"></i> <strong>Your name</strong> </label> 
+					 <p>${customer.firstName}  ${customer.lastName}</p>
 					<!-- display name -->
-					<label for="email"><i class="fa fa-envelope"></i> Email</label>
-					${customer.email}
+					<label for="email"><i class="fa fa-envelope"></i> <strong>Email</strong></label>
+					<p>${customer.email}</p>
 					<!-- display email -->
 					<label for="address"><i class="fas fa-address-card"></i>
-						Address</label> <label for="city"> City</label> ${customer.address.city}
+						<strong>Address</strong></label> <label for="city"> <strong>City</strong> </label> <p>${customer.address.city}</p>
 
 					<div class="row">
 						<div class="col-50">
-							<label for="country">Country</label> ${customer.address.country}
+							<label for="country"><strong>Country</strong></label> ${customer.address.country}
 						</div>
 						<div class="col-50">
-							<label for="zip">Zip code</label> ${customer.address.zipCode}
+							<label for="zip"><strong>Zip code</strong></label> ${customer.address.zipCode}
 						</div>
 					</div>
 				</div>
@@ -39,7 +38,7 @@
 								<form:option value="cash">cash on delivery</form:option>
 								<form:option value="credit card">credit card</form:option>
 							</form:select>
-							<input type="submit" value="Add to cart" class="btn btn-success">
+							<input type="submit" value="Submit order" class="btn btn-success">
 							<span style="color: #ff0000">${noStockMsg}</span>
 						</form:form>
 					</div>

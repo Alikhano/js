@@ -68,9 +68,6 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	@Transactional
 	public void delete(ProductDTO productDTO) throws CustomLogicException {
-		if (getById(productDTO.getProductId()) != null) {
-			throw new CustomLogicException("There is no product with ID specified.");
-		}
 		productDao.delete(productMapper.productDTOtOProduct(productDTO));
 		
 	}
@@ -118,33 +115,6 @@ public class ProductServiceImpl implements ProductService{
 		return productMapper.productToProductDTO(productDao.selectForUpdate(id));
 	}
 
-	/*@Override
-	@Transactional
-	public List<Product> getAllProducts() {
-		return productDao.getAll();
-	}
-
-	@Override
-	@Transactional
-	public void create(Product product) {
-		productDao.create(product);
-		
-	}
-
-	@Override
-	@Transactional
-	public void delete(Product product) {
-		productDao.delete(product);
-		
-	}
-
-	@Override
-	@Transactional
-	public void update(Product product) {
-		productDao.update(product);
-		
-	}
-*/
 	@Override
 	@Transactional
 	public Product getProductById(int id) {

@@ -72,7 +72,8 @@ $(document).ready(function() {
 	$('#orderTable').DataTable( {
 		"searching": false,
 		"bLengthChange": false,
-	    "pageLength": 10		
+	    "pageLength": 10,
+	    "order": [[ 0, "desc" ]]
 	});
 	
 	

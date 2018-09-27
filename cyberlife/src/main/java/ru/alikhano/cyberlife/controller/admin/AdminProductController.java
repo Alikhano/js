@@ -69,16 +69,24 @@ public class AdminProductController {
 		if (newProductDTO.getPrice() < 0) {
 			throw new CustomLogicException("Price should be > 0! Please go back and fill in the product form again");
 		}
-		
-		
-		try {
+		if (productService.getByModel(newProductDTO.getModel()) != null) {
+			throw new CustomLogicException("Oops, this model exists already");
+		}
+		else {
+			newProductDTO.setImage(file.getBytes());
 			productService.create(newProductDTO);
+			
+		}
+		
+		/*try {
+			productService.create(newProductDTO);
+			
 		}
 		catch (CustomLogicException ex) {
 			logger.error(ex.getErrMessage());
 			model.addAttribute("repModel", "Oops, this model exists already");
 			return "addProduct";
-		}
+		}*/
 		
 		productService.getByModel(newProductDTO.getModel()).setImage(file.getBytes());
 

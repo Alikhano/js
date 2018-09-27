@@ -52,7 +52,7 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 	@Override
 	public double getWeeklyRevenue() {
 		Calendar date = Calendar.getInstance();
-		if (date.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+		if (date.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
 			date.add(Calendar.DAY_OF_MONTH, -1);
 			Date yesterday = date.getTime();
 			date.add(Calendar.DAY_OF_MONTH, -7);
