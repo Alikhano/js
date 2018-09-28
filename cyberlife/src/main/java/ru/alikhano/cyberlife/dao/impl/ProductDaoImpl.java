@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.LockModeType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -37,19 +38,23 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 
 		CriteriaQuery<Product> searchCriteria = searchCriteriaBuilder.createQuery(Product.class);
 		Root<Product> root = searchCriteria.from(Product.class);
+		
+		List<Predicate> predicates = new ArrayList<>();
 
-		searchCriteria.select(root);
+		
 
 		if (category != 0) {
-			searchCriteria.where(searchCriteriaBuilder.equal(root.get("category"), category));
+			predicates.add(searchCriteriaBuilder.equal(root.get("category"), category));
 		}
 		if (consLevel != 0) {
-			searchCriteria.where(searchCriteriaBuilder.equal(root.get("cons"), consLevel));
+			predicates.add(searchCriteriaBuilder.equal(root.get("cons"), consLevel));
 		}
 
 		if (fromPrice != 0 && toPrice != 0) {
-			searchCriteria.where(searchCriteriaBuilder.between(root.get("price"), fromPrice, toPrice));
+			predicates.add(searchCriteriaBuilder.between(root.get("price"), fromPrice, toPrice));
 		}
+		
+		searchCriteria.select(root).where(predicates.toArray(new Predicate[] {}));
 
 		return session.createQuery(searchCriteria).getResultList();
 	}
