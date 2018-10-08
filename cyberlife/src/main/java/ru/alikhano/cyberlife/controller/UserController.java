@@ -1,6 +1,7 @@
 package ru.alikhano.cyberlife.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,16 +33,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/createProfile", method = RequestMethod.POST)
-	public String createProfilePost(@ModelAttribute(name="customerForm") CustomerDTO customerForm, BindingResult result, Model model, HttpServletRequest request) throws CustomLogicException {
+	public String createProfilePost(@ModelAttribute(name="customerForm") @Valid CustomerDTO customerForm, BindingResult result, Model model, HttpServletRequest request) throws CustomLogicException {
 		
 		if(result.hasErrors()){
             return "registerCustomer";
         }
-		
-		if (customerForm.getLastName() == null || (customerForm.getAddress().getCity() == null && customerForm.getAddress().getStreet() == null && customerForm.getAddress().getZipCode() == null)) {
-			throw new CustomLogicException("You did not fill in some of information for your account. Please make sure to complete your profile after login!");
-		}
-		
+
 		
 		if (customerService.getByEmail(customerForm.getEmail()) != null) {
 			model.addAttribute("repEmail", "Oops, this email is taken. Please try again");

@@ -22,7 +22,7 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category> implements Categor
 	public Category getByType(String catType) {
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			return (Category) session.createQuery("from Category where catType = :catType").setParameter("catType", catType).getSingleResult();
+			return (Category) session.createQuery("from Category where lower(catType) like :catType").setParameter("catType", "%"+catType.toLowerCase()+"%").getSingleResult();
 		    
 		}
 		catch (NoResultException noResultExc) {

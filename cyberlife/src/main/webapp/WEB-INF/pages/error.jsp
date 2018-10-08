@@ -7,8 +7,14 @@
 			<h1 class="display-4">Oops, something went wrong</h1>
 			<br>
 			<p class="lead">
+			 <sec:authorize access="hasRole('ROLE_ADMIN')">
+				<a class="btn btn-primary btn-lg"
+					href="<c:url value="/admin/admin-home" />" role="button">Back to home</a>
+			</sec:authorize>
+					 <sec:authorize access="!hasRole('ROLE_ADMIN')">
 				<a class="btn btn-primary btn-lg"
 					href="<c:url value="/" />" role="button">Back to home</a>
+					</sec:authorize>
 			</p>
 			<br>
 		</div>

@@ -18,6 +18,7 @@ public class Category {
 	private int catId;
 	
 	@Column(name="catType", unique = true)
+	@NotNull
 	private String catType;
 	
 

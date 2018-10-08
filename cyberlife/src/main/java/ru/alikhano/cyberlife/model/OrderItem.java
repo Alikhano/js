@@ -1,6 +1,5 @@
 package ru.alikhano.cyberlife.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="orderItem")
@@ -20,17 +21,23 @@ public class OrderItem {
 	private int orderItemId;
 	
 	@Column(name="orderQuantity")
+	@NotNull
+	@Min(value=1)
 	private int orderQuantity;
 	
 	@Column(name="orderTotal")
+	@NotNull
+	@Min(value=100)
 	private double orderTotal;
 	
 	@ManyToOne
 	@JoinColumn(name="productId")
+	@NotNull
 	private Product product;
 	
 	@ManyToOne
 	@JoinColumn(name="orderId")
+	@NotNull
 	private Orders order;
 
 	

@@ -23,6 +23,7 @@
 	<div class="container">
 		<div class="form-group">
 			<form:input path="catType" id="catType" class="form-Control" placeholder="Category" />
+				<form:errors path="catType" cssClass="error"></form:errors>
 		</div>
 
 		<input type="submit" value="Add" 

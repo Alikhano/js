@@ -5,9 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="address")
@@ -19,21 +20,28 @@ public class Address {
 	private int addressId;
 	
 	@Column(name="country")
+	@NotNull
 	private String country;
 	
 	@Column(name="city")
+	@NotNull
 	private String city;
 	
 	@Column(name="zipCode")
+	@NotNull
+	@Digits(integer=6, fraction=0)
 	private String zipCode;
 	
 	@Column(name="street")
+	@NotNull
 	private String street;
 	
 	@Column(name="building")
+	@Min(value=1)
 	private String building;
 	
 	@Column(name="flat")
+	@Min(value=1)
 	private String flat;
 
 

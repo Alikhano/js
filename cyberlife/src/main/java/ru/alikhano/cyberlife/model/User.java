@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="user")
@@ -23,9 +24,11 @@ public class User {
 	private int userId;
 	
 	@Column(name="username", unique = true)
+	@NotNull
 	private String username;
 	
 	@Column(name="password")
+	@NotNull
 	private String password;
 	
 	@Column(name="enabled")

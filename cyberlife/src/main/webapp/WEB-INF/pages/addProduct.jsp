@@ -35,19 +35,21 @@
 					</div>
 
 					<div class="form-group">
-						
+						<form:errors path="description" cssClass="error" />
 						<form:textarea rows="4" cols="50" path="description"
 							id="description" class="form-Control" placeholder="Description"/>
 					</div>
 
 					<div class="form-group">
 						<label for="price">Price</label>
+						<form:errors path="price" cssClass="error" />
 						<form:input path="price" id="price" class="form-Control" />
 					</div>
 
 
 					<div class="form-group">
 						<label for="unitsInStock">Units In Stock</label>
+						<form:errors path="unitsInStock" cssClass="error" />
 						<form:input path="unitsInStock" id="unitsInStock"
 							class="form-Control" />
 					</div>

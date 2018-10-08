@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,10 +36,12 @@ public class Product {
 	
 	@Column(name="units")
 	@NotNull
+	@Min(value=1)
 	private int unitsInStock;
 
 	@Column(name="price")
 	@NotNull
+	@Min(value=100)
 	private double price;
 	
 	@Lob

@@ -1,8 +1,5 @@
 package ru.alikhano.cyberlife.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="cartItem")
@@ -22,17 +21,23 @@ public class CartItem {
 	private int itemId;
 	
 	@Column(name="quantity")
+	@NotNull
+	@Min(value=1)
 	private int quantity;
 	
 	@Column(name="totalPrice")
+	@NotNull
+	@Min(value=1)
 	private double totalPrice;
 	
 	@ManyToOne
 	@JoinColumn(name="productId")
+	@NotNull
 	private Product product;
 	
 	@ManyToOne
 	@JoinColumn(name="cartId")
+	@NotNull
 	private Cart cart;
 
 	public int getItemId() {

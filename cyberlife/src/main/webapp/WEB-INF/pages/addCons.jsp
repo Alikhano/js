@@ -25,12 +25,14 @@
 		<div class="container">
 			<div class="form-group">
 				<form:input path="level" id="level" class="form-Control" placeholder="Level" />
+					<form:errors path="level" cssClass="error"></form:errors>
 		</div>
 		
 		<div class="form-group">
 
 								<form:textarea rows="4" cols="50" path="description"
 									id="description" class="form-Control" placeholder="Description" />
+										<form:errors path="level" cssClass="error"></form:errors>
 							</div>
 
 		<input type="submit" value="Add" class="btn btn-success">

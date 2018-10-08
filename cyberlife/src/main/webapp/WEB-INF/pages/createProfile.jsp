@@ -15,19 +15,20 @@
 		<div class="form-group">
 			<form:input type="text" id="lastName" path="lastName"
 				class="form-control" placeholder="last name" autofocus="true"></form:input>
-			<form:errors path="lastName"></form:errors>
+			<form:errors path="lastName" cssClass="error"></form:errors>
+			
 		</div>
 		<div class="form-group">
 			<form:input type="text" id="email" path="email" class="form-control"
 				placeholder="email" autofocus="true"></form:input>
 			<span style="color: #ff0000">${repEmail}</span>
-			<form:errors path="email"></form:errors>
+			<form:errors path="email" cssClass="error"></form:errors>
 		</div>
 
 		<div class="form-group">
 			<form:input type="text" id="birthDate" path="birthDate"
 				class="form-control" placeholder="yyyy-mm-dd"></form:input>
-			<form:errors path="birthDate"></form:errors>
+			<form:errors path="birthDate" cssClass="error"></form:errors>
 		</div>
 
 		<h2 class="form-signin-heading">Add address information</h2>
@@ -36,31 +37,37 @@
 		<div class="form-group">
 			<form:input type="text" id="street" path="address.street"
 				class="form-control" placeholder="street" autofocus="true"></form:input>
+			<form:errors path="street" cssClass="error"></form:errors>
 		</div>
 
 		<div class="form-group">
 			<form:input type="text" id="building" path="address.building"
 				class="form-control" placeholder="building" autofocus="true"></form:input>
+					<form:errors path="building" cssClass="error"></form:errors>
 		</div>
 
 		<div class="form-group">
 			<form:input type="text" id="flat" path="address.flat"
 				class="form-control" placeholder="apt. number" autofocus="true"></form:input>
+					<form:errors path="building" cssClass="error"></form:errors>
 		</div>
 
 		<div class="form-group">
 			<form:input type="text" id="city" path="address.city"
 				class="form-control" placeholder="city" autofocus="true"></form:input>
+					<form:errors path="city" cssClass="error"></form:errors>
 		</div>
 
 		<div class="form-group">
 			<form:input type="text" id="country" path="address.country"
 				class="form-control" placeholder="country" autofocus="true"></form:input>
+					<form:errors path="country" cssClass="error"></form:errors>
 		</div>
 
 		<div class="form-group">
 			<form:input type="text" id="zipCode" path="address.zipCode"
 				class="form-control" placeholder="zip code" autofocus="true"></form:input>
+					<form:errors path="zipCode" cssClass="error"></form:errors>
 		</div>
 
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>

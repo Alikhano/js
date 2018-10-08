@@ -58,17 +58,9 @@ public class AdminProductController {
 	}
 
 	@RequestMapping(value = "/admin/addProduct", method = RequestMethod.POST, consumes = "multipart/form-data")
-	public String addProductPost(@ModelAttribute("newProductDTO") ProductDTO newProductDTO, BindingResult result,
+	public String addProductPost(@ModelAttribute("newProductDTO") @Valid ProductDTO newProductDTO, BindingResult result,
 			HttpServletRequest request, @RequestPart("file") MultipartFile file, Model model) throws IOException, CustomLogicException {
 
-		//newProductDTO.setImage(file.getBytes());
-		
-		if (newProductDTO.getUnitsInStock() < 0) {
-			throw new CustomLogicException("There should > 0 units in stock! Please go back and fill in the product form again");
-		}
-		if (newProductDTO.getPrice() < 0) {
-			throw new CustomLogicException("Price should be > 0! Please go back and fill in the product form again");
-		}
 		if (productService.getByModel(newProductDTO.getModel()) != null) {
 			throw new CustomLogicException("Oops, this model exists already");
 		}
@@ -77,16 +69,6 @@ public class AdminProductController {
 			productService.create(newProductDTO);
 			
 		}
-		
-		/*try {
-			productService.create(newProductDTO);
-			
-		}
-		catch (CustomLogicException ex) {
-			logger.error(ex.getErrMessage());
-			model.addAttribute("repModel", "Oops, this model exists already");
-			return "addProduct";
-		}*/
 		
 		productService.getByModel(newProductDTO.getModel()).setImage(file.getBytes());
 

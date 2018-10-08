@@ -16,8 +16,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import ru.alikhano.cyberlife.DTO.OrderItemDTO;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "orders")
@@ -29,23 +29,30 @@ public class Orders {
 	private int orderId;
 
 	@Column(name = "paymentType")
+	@NotNull
 	private String paymentType;
 
 	@Column(name = "paymentStatus")
+	@NotNull
 	private String paymentStatus;
 
 	@Column(name = "orderStatus")
+	@NotNull
 	private String orderStatus;
 
 	@OneToOne
 	@JoinColumn(name = "customerId")
+	@NotNull
 	Customer customer;
 
 	@Column(name = "orderPrice")
+	@NotNull
+	@Min(value=100)
 	private double orderPrice;
 
 	@Column(name = "orderDate")
 	@Temporal(TemporalType.DATE)
+	@NotNull
 	private Date orderDate;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)

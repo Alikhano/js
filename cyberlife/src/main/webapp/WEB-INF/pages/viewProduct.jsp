@@ -32,7 +32,9 @@
 			 <form:input path="itemId" type="hidden" name="itemId" value=""/>
 			 <input type='hidden' id='productId' name='productId' value='${product.productId}'/>
 			 <input type='hidden' id='unitsInStock' name='unitsInStock' value='${product.unitsInStock}'/>
+			 	<form:errors path="unitsInStock" cssClass="error"></form:errors>
 			 <form:input path="quantity" id="quantity" class="form-Control"/>
+			 	<form:errors path="quantity" cssClass="error"></form:errors>
 			 <input type="submit" id ="addToCart" value="Add to cart" class="btn btn-success">
 			 <a href="<c:url value = "/catalogue" />" class="btn btn-secondary">Back</a>
 	         </form:form>

@@ -14,8 +14,9 @@
 				<label for="category">Category</label>
 				<form:select path="category.catId">
 					<form:options items="${categoryDTOList}" itemValue="catId"
-						itemLabel="catType" />
+						itemLabel="category.catId" />
 				</form:select>
+					<form:errors path="catType" cssClass="error"></form:errors>
 			</div>
 
 			<div class="form-group">
@@ -24,6 +25,7 @@
 					<form:options items="${consDTOList}" itemValue="consId"
 						itemLabel="level" />
 				</form:select>
+					<form:errors path="cons.consId" cssClass="error"></form:errors>
 			</div>
 
 
@@ -31,20 +33,22 @@
 				<label for="description">Description</label>
 				<form:textarea rows="4" cols="50" path="description"
 					id="description" class="form-Control" />
+						<form:errors path="description" cssClass="error"></form:errors>
 			</div>
 
 			<div class="form-group">
 				<label for="price">Price</label>
-				<form:errors path="price" cssStyle="color:#ff0000;" />
 				<form:input path="price" id="price" class="form-Control" />
+				<form:errors path="price" cssClass="error" />
+					
 			</div>
 
 
 			<div class="form-group">
 				<label for="unitsInStock">Units In Stock</label>
-				<form:errors path="unitsInStock" cssStyle="color:#ff0000;" />
 				<form:input path="unitsInStock" id="unitsInStock"
 					class="form-Control" />
+						<form:errors path="unitsInStock" cssClass="error" />
 			</div>
 
 

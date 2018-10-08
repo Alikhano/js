@@ -18,9 +18,11 @@ public class Consciousness {
 	private int consId;
 	
 	@Column(name="level", unique = true)
+	@NotNull
 	private String level;
 	
 	@Column(name="description")
+	@NotNull
 	private String description;
 	
 

@@ -1,12 +1,12 @@
 package ru.alikhano.cyberlife.controller.admin;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ru.alikhano.cyberlife.DTO.CategoryDTO;
 import ru.alikhano.cyberlife.DTO.ConsDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.service.CategoryService;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
 
@@ -49,7 +48,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "admin/addCategory", method = RequestMethod.POST)
-	public @ResponseBody String addCategoryPost(@RequestBody CategoryDTO categoryDTO, BindingResult result,
+	public @ResponseBody String addCategoryPost(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result,
 			HttpServletRequest request) {
 		categoryService.create(categoryDTO);
 
@@ -57,7 +56,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "admin/addCons", method = RequestMethod.POST)
-	public @ResponseBody String addConsPost(@RequestBody ConsDTO consDTO, BindingResult result,
+	public @ResponseBody String addConsPost(@RequestBody @Valid ConsDTO consDTO, BindingResult result,
 			HttpServletRequest request) {
 
 		consService.create(consDTO);

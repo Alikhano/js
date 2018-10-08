@@ -22,7 +22,7 @@ public class ConsciousnessDaoImpl extends GenericDaoImpl<Consciousness> implemen
 	public Consciousness getConsByLevel(String level) {
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			return (Consciousness) session.createQuery("from Consciousness where level = :level").setParameter("level", level).getSingleResult();
+			return (Consciousness) session.createQuery("from Consciousness where lower(level) like :level").setParameter("level", "%"+level.toLowerCase()+"%").getSingleResult();
 		    
 		}
 		catch (NoResultException noResultExc) {

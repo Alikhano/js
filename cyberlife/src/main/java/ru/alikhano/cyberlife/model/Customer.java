@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="customer")
@@ -21,23 +25,30 @@ public class Customer {
 	private int customerId;
 	
 	@Column(name="firstName")
+	@NotNull
 	private String firstName;
 	
 	@Column(name="lastName")
+	@NotNull
 	private String lastName;
 	
 	@Column(name="birthDate")
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String birthDate;
 	
 	@Column(name="email", unique = true)
+	@NotNull
+	@Email
 	private String email;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="addressId")
+	@NotNull
 	private Address address;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="userId")
+	@NotNull
 	User user;
 
 	public int getCustomerId() {

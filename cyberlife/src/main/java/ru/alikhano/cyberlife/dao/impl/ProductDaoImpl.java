@@ -26,8 +26,8 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 
 	@Override
 	public Product getByModel(String model) {
-		return (Product) sessionFactory.getCurrentSession().createQuery("from Product where model =:model")
-				.setParameter("model", model).uniqueResult();
+		return (Product) sessionFactory.getCurrentSession().createQuery("from Product where lower(model) like :model")
+				.setParameter("model", "%"+model.toLowerCase()+"%").uniqueResult();
 	}
 
 	@Override

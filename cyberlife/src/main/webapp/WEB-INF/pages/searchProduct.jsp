@@ -82,13 +82,13 @@
 			},
 			messages : {
 				"fromPrice" : {
-					number : "value shoudl be a number",
-					min: "should be at least 0 usd"
+					number : "value should be a number",
+					min: "should be at least 10 USD"
 
 				},
 				"toPrice" : {
 					number : "value should be a number",
-					min: "should be at least 50 usd"
+					min: "should be at least 100 USD"
 				
 				}
 			}

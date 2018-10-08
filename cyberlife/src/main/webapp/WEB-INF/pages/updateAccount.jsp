@@ -13,18 +13,22 @@
 		<div class="form-group">
 			<label for="firstName">First name</label>
 			<form:input path="firstName" id="firstName" class="form-Control" />
+				<form:errors path="firstName" cssClass="error"></form:errors>
 		</div>
 		<div class="form-group">
 			<label for="lastName">Last name</label>
 			<form:input path="lastName" id="lastName" class="form-Control" />
+				<form:errors path="lastName" cssClass="error"></form:errors>
 		</div>
 		<div class="form-group">
 			<label for="email">Email</label>
 			<form:input path="email" id="email" class="form-Control" />
+			<form:errors path="email" cssClass="error"></form:errors>
 		</div>
 		<div class="form-group">
 			<label for="birtDate">Date of birth</label>
 			<form:input path="birthDate" id="birthDate" class="form-Control" />
+			<form:errors path="birthDate" cssClass="error"></form:errors>
 		</div>
 
 

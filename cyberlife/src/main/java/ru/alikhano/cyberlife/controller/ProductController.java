@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,7 @@ public class ProductController {
     }
     
     @RequestMapping(value = "/viewProduct", method = RequestMethod.POST)
-    public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
+    public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") @Valid CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
         ProductDTO productDTO = productService.getById(productId);
         
         if (newCartItem.getQuantity() < 0) {
