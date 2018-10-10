@@ -3,9 +3,9 @@
 <div class="container-wrapper">
 	<form:form
 		action="${pageContext.request.contextPath}/admin/editProduct"
-		method="post" modelAttribute="product" id="editProduct" >
+		method="post" modelAttribute="product" id="editProduct">
 
-		<form:input type="hidden" path="productId" id="productId"/>
+		<form:input type="hidden" path="productId" id="productId" />
 		<form:input type="hidden" path="model" id="model" />
 
 		<div class="reg-container">
@@ -14,18 +14,16 @@
 				<label for="category">Category</label>
 				<form:select path="category.catId">
 					<form:options items="${categoryDTOList}" itemValue="catId"
-						itemLabel="category.catId" />
+						itemLabel="catType" />
 				</form:select>
-					<form:errors path="catType" cssClass="error"></form:errors>
 			</div>
-
 			<div class="form-group">
 				<label for="cons">Consciousness</label>
 				<form:select path="cons.consId">
 					<form:options items="${consDTOList}" itemValue="consId"
 						itemLabel="level" />
 				</form:select>
-					<form:errors path="cons.consId" cssClass="error"></form:errors>
+				<%-- <form:errors path="cons.consId" cssClass="error"></form:errors> --%>
 			</div>
 
 
@@ -33,14 +31,14 @@
 				<label for="description">Description</label>
 				<form:textarea rows="4" cols="50" path="description"
 					id="description" class="form-Control" />
-						<form:errors path="description" cssClass="error"></form:errors>
+				<%-- <form:errors path="description" cssClass="error"></form:errors> --%>
 			</div>
 
 			<div class="form-group">
 				<label for="price">Price</label>
 				<form:input path="price" id="price" class="form-Control" />
-				<form:errors path="price" cssClass="error" />
-					
+				<%-- <form:errors path="price" cssClass="error" /> --%>
+
 			</div>
 
 
@@ -48,7 +46,7 @@
 				<label for="unitsInStock">Units In Stock</label>
 				<form:input path="unitsInStock" id="unitsInStock"
 					class="form-Control" />
-						<form:errors path="unitsInStock" cssClass="error" />
+				<%-- <form:errors path="unitsInStock" cssClass="error" /> --%>
 			</div>
 
 

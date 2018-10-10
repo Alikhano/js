@@ -27,10 +27,10 @@
 				<input type="submit" class="buttons" value="<spring:message text="Edit"/>"/></a>
 				 <a><input type="hidden"name="id" value="${product.productId}" />
 				</a>
-				<a href="<spring:url value="/admin/deleteProduct/${product.productId}" />">
+				<%-- <a href="<spring:url value="/admin/deleteProduct/${product.productId}" />">
 				<input type="submit" class="buttons" value="<spring:message text="Delete"/>" /> 
 				<input type="hidden"name="id" value="${product.productId}" />
-				</a>
+				</a> --%>
 				</td>
 		</tr>
 	</c:forEach>

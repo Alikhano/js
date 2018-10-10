@@ -1,8 +1,10 @@
 package ru.alikhano.cyberlife.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -82,7 +84,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value="/myOrder", method=RequestMethod.POST)
-	public String submitOrder(@Valid @ModelAttribute("newOrder") OrderDTO orderDTO, BindingResult result, HttpServletRequest request,Authentication authentication, Model model) throws CustomLogicException {
+	public String submitOrder(@Valid @ModelAttribute("newOrder") OrderDTO orderDTO, BindingResult result, HttpServletRequest request,Authentication authentication, Model model) throws CustomLogicException, IOException, TimeoutException {
 
 		String username = authentication.getName();
 		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
@@ -116,7 +118,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value="/admin/orderStatus", method=RequestMethod.POST)
-	public String orderStatusPost(@RequestParam("orderId") int orderId, @RequestParam("orderStatus") String orderStatus, @RequestParam("paymentStatus") String paymentStatus,Model model, HttpServletRequest request) throws CustomLogicException {
+	public String orderStatusPost(@RequestParam("orderId") int orderId, @RequestParam("orderStatus") String orderStatus, @RequestParam("paymentStatus") String paymentStatus,Model model, HttpServletRequest request) throws CustomLogicException, IOException, TimeoutException {
 		OrderDTO order = orderService.getById(orderId);
 		if (order.getOrderStatus().equals("delivered and recieved") && order.getPaymentStatus().equals("paid")) {
 			throw new CustomLogicException("No status updates after order completion!");

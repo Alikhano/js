@@ -40,7 +40,7 @@
 		<div class="form-group">
 			<label for="flat">Flat*</label>
 			<form:input path="flat" id="flat" class="form-Control" />
-			<form:errors path="flat cssClass="error" />
+			<form:errors path="flat" cssClass="error" />
 		</div>
 
 

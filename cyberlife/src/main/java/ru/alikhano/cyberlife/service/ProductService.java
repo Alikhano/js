@@ -1,6 +1,8 @@
 package ru.alikhano.cyberlife.service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
@@ -24,9 +26,9 @@ public interface ProductService {
 
 	void create(ProductDTO productDTO) throws CustomLogicException;
 
-	void update(ProductDTO productDTO);
+	void update(ProductDTO productDTO) throws IOException, TimeoutException;
 
-	void delete(ProductDTO productDTO) throws CustomLogicException;
+	void delete(ProductDTO productDTO) throws CustomLogicException, IOException, TimeoutException;
 	
 	ProductDTO getByModel(String model) throws CustomLogicException;
 	
@@ -35,6 +37,8 @@ public interface ProductService {
 	List<ProductDTO> getTopProducts();
 	
 	ProductDTO selectForUpdate(int id);
+	
+	boolean isInTop(ProductDTO productDTO);
 
 
 }

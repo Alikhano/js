@@ -3,8 +3,10 @@ package ru.alikhano.cyberlife.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -74,7 +76,7 @@ public class ProductServiceTest {
 	}
 	
 	@Test
-	public void delete() throws CustomLogicException {
+	public void delete() throws CustomLogicException, IOException, TimeoutException {
 		productDaoMock.delete(productMock);
 		productService.delete(productDTOMock);
 	
@@ -82,12 +84,12 @@ public class ProductServiceTest {
 	}
 	
 	@Test 
-	public void update() {
+	public void update() throws IOException, TimeoutException {
 		productService.update(productDTOMock);
 	}
 	
 	@Test
-	public void updateDTO() {
+	public void updateDTO() throws IOException, TimeoutException {
 		productDaoMock.update(productMock);
 		productService.update(productDTOMock);
 	}

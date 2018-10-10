@@ -20,7 +20,7 @@
 							<i class="fa fa-at"></i>
 						</div>
 						<span>${message}</span> <input name="username" type="text"
-							class="form-control" placeholder="Username" autofocus="true" />
+							class="form-control" placeholder="Username" />
 					</div>
 
 				</div>

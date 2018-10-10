@@ -28,11 +28,11 @@
 			<strong>Price: </strong>${product.price} USD</p>
 
 			<p>
-			<form:form action="${pageContext.request.contextPath}/viewProduct" method="post" modelAttribute="newCartItem" id="newCartItem">
+			<form:form action="${pageContext.request.contextPath}/viewProduct" method="post" modelAttribute="newCartItem" id="newCartItemForm">
 			 <form:input path="itemId" type="hidden" name="itemId" value=""/>
 			 <input type='hidden' id='productId' name='productId' value='${product.productId}'/>
 			 <input type='hidden' id='unitsInStock' name='unitsInStock' value='${product.unitsInStock}'/>
-			 	<form:errors path="unitsInStock" cssClass="error"></form:errors>
+			 	<%-- <form:errors path="unitsInStock" cssClass="error"></form:errors> --%>
 			 <form:input path="quantity" id="quantity" class="form-Control"/>
 			 	<form:errors path="quantity" cssClass="error"></form:errors>
 			 <input type="submit" id ="addToCart" value="Add to cart" class="btn btn-success">
@@ -63,7 +63,7 @@ $(document).ready(function() {
 		$("#outWarning").css('display', 'none');
 	}
 
-	$("#newCartItem").validate({
+$("#newCartItemForm").validate({
 		rules : {
 			"unitsInStock" : {
 				digits: true
@@ -71,7 +71,7 @@ $(document).ready(function() {
 		},
 		messages : {
 			"unitsInStock" : {
-				digits: "Entered value shpuld contain only digits"
+				digits: "Entered value should contain only digits"
 			}
 			}
 		})

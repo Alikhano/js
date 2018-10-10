@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -106,7 +107,7 @@ public class AdminProductController {
 
 	@RequestMapping(value = "/admin/editProduct", method = RequestMethod.POST)
 	public String editProductPost(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result,
-			HttpServletRequest request) throws CustomLogicException {
+			HttpServletRequest request) throws CustomLogicException, IOException, TimeoutException {
 		if (productDTO.getUnitsInStock() < 0) {
 			throw new CustomLogicException("There should > 0 units in stock!");
 		}
@@ -120,7 +121,7 @@ public class AdminProductController {
 	}
 
 	@RequestMapping(value = "/admin/deleteProduct/{productId}")
-	public String deleteProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException {
+	public String deleteProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException, IOException, TimeoutException {
 		productService.delete(productService.getById(productId));
 
 		return "redirect:/admin/productList";
@@ -143,5 +144,5 @@ public class AdminProductController {
 
 		
 	}
-
+	
 }

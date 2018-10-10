@@ -11,7 +11,7 @@ public class ProductJson extends ProductToJsonParser implements Serializable{
 	//
 	private int productId;
 	private String model;
-	private String category;
+	private String catType;
 	private String consLevel;
 	private double price;
 	
@@ -27,11 +27,12 @@ public class ProductJson extends ProductToJsonParser implements Serializable{
 	public void setModel(String model) {
 		this.model = model;
 	}
-	public String getCategory() {
-		return category;
+	
+	public String getCatType() {
+		return catType;
 	}
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCatType(String catType) {
+		this.catType = catType;
 	}
 	public String getConsLevel() {
 		return consLevel;
@@ -49,7 +50,7 @@ public class ProductJson extends ProductToJsonParser implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "ProductJson [productId=" + productId + ", model=" + model + ", category=" + category + ", consLevel="
+		return "ProductJson [productId=" + productId + ", model=" + model + ", category=" + catType + ", consLevel="
 				+ consLevel + ", price=" + price + "]";
 	}
 

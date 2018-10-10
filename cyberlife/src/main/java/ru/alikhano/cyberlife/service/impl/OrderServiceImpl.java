@@ -1,10 +1,12 @@
 package ru.alikhano.cyberlife.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	MessagingService messaginService;
 
 	@Autowired
 	OrderMapper orderMapper;
@@ -83,8 +88,13 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public void update(OrderDTO orderDTO) {
+	public void update(OrderDTO orderDTO) throws IOException, TimeoutException {
 		orderDao.update(orderMapper.orderDTOtoOder(orderDTO));
+		if (orderDTO.getPaymentStatus().equals("paid")) {
+			if (isInTop(orderDTO)) {
+				messaginService.sendUpdateMessage("table should be updated!");
+			}
+		}
 
 	}
 
@@ -120,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException {
+	public String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException, IOException, TimeoutException {
 
 		UserDTO user = userService.getByUsernameDTO(username);
 		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
@@ -190,6 +200,22 @@ public class OrderServiceImpl implements OrderService {
 		
 		return "success";
 
+	}
+
+	@Override
+	@Transactional
+	public boolean isInTop(OrderDTO order) {
+		Set<OrderItemDTO> orderItems = order.getOrderedItems();
+		List<ProductDTO> top = productService.getTopProducts();
+		for (OrderItemDTO orderItem : orderItems) {
+			ProductDTO productDTO = orderItem.getProduct();	
+			for (ProductDTO product : top) {
+				if (product.getProductId() == productDTO.getProductId()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }

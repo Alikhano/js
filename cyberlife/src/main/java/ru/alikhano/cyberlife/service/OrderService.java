@@ -1,7 +1,9 @@
 package ru.alikhano.cyberlife.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
@@ -16,7 +18,7 @@ public interface OrderService {
 
 	OrderDTO getById(int id);
 
-	void update(OrderDTO orderDTO);
+	void update(OrderDTO orderDTO) throws IOException, TimeoutException;
 	
 	List<OrderDTO> getByCustomerId(int id);
 	
@@ -26,6 +28,8 @@ public interface OrderService {
 	
 	double getWeeklyRevenue();
 	
-	String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException;
+	String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException, IOException, TimeoutException;
+	
+	boolean isInTop(OrderDTO order);
 
 }
