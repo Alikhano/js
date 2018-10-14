@@ -31,7 +31,7 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 	}
 
 	@Override
-	public List<Product> searchParam(int category, int consLevel, double fromPrice, double toPrice) {
+	public List<Product> searchParam(String model, int category, int consLevel, double fromPrice, double toPrice) {
 
 		Session session = sessionFactory.getCurrentSession();
 		CriteriaBuilder searchCriteriaBuilder = session.getCriteriaBuilder();
@@ -41,7 +41,9 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 		
 		List<Predicate> predicates = new ArrayList<>();
 
-		
+		if (!model.equals("model")) {
+			predicates.add(searchCriteriaBuilder.like(root.get("model"),"%"+model+"%"));
+		}
 
 		if (category != 0) {
 			predicates.add(searchCriteriaBuilder.equal(root.get("category"), category));
@@ -87,6 +89,13 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 		query.setParameter("productId", id);
 		query.setLockMode(LockModeType.PESSIMISTIC_WRITE);
 		 return (Product) query.uniqueResult();
+	}
+
+	@Override
+	public void merge(Product product) {
+	  Product productToSave = (Product) sessionFactory.getCurrentSession().merge(product);
+	  sessionFactory.getCurrentSession().save(productToSave);
+		
 	}
 
 }

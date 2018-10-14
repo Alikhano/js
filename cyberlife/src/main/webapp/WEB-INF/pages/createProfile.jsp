@@ -4,73 +4,143 @@
 
 	<form:form method="POST" modelAttribute="customerForm"
 		class="form-signin" id="createProfile">
-		<h2 class="form-signin-heading">Create your customer profile</h2>
-
-		<div class="form-group">
-			<form:input type="text" id="firstName" path="firstName"
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<h2 class="form-heading">Create your profile</h2>
+				<hr>
+			</div>
+		</div>
+		
+			<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<form:input type="text" id="firstName" path="firstName"
 				class="form-control" placeholder="first name" autofocus="true"></form:input>
 			<form:errors path="firstName"></form:errors>
-		</div>
 
-		<div class="form-group">
-			<form:input type="text" id="lastName" path="lastName"
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<form:input type="text" id="lastName" path="lastName"
 				class="form-control" placeholder="last name" autofocus="true"></form:input>
 			<form:errors path="lastName" cssClass="error"></form:errors>
-			
+
+				</div>
+			</div>
 		</div>
-		<div class="form-group">
-			<form:input type="text" id="email" path="email" class="form-control"
+		
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<form:input type="text" id="email" path="email" class="form-control"
 				placeholder="email" autofocus="true"></form:input>
 			<span style="color: #ff0000">${repEmail}</span>
 			<form:errors path="email" cssClass="error"></form:errors>
+				</div>
+			</div>
 		</div>
-
-		<div class="form-group">
-			<form:input type="text" id="birthDate" path="birthDate"
+		
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<form:input type="text" id="birthDate" path="birthDate"
 				class="form-control" placeholder="yyyy-mm-dd"></form:input>
 			<form:errors path="birthDate" cssClass="error"></form:errors>
+				</div>
+			</div>
 		</div>
 
-		<h2 class="form-signin-heading">Add address information</h2>
 
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<h2 class="form-heading">Add address information</h2>
+				<hr>
+			</div>
+		</div>
 
-		<div class="form-group">
-			<form:input type="text" id="street" path="address.street"
+<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
+				<form:input type="text" id="street" path="address.street"
 				class="form-control" placeholder="street" autofocus="true"></form:input>
-			<form:errors path="street" cssClass="error"></form:errors>
+		
+				</div>
+			</div>
 		</div>
 
-		<div class="form-group">
-			<form:input type="text" id="building" path="address.building"
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
+				<form:input type="text" id="building" path="address.building"
 				class="form-control" placeholder="building" autofocus="true"></form:input>
-					<form:errors path="building" cssClass="error"></form:errors>
-		</div>
+				
 
-		<div class="form-group">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
 			<form:input type="text" id="flat" path="address.flat"
 				class="form-control" placeholder="apt. number" autofocus="true"></form:input>
-					<form:errors path="building" cssClass="error"></form:errors>
-		</div>
+					
 
-		<div class="form-group">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
 			<form:input type="text" id="city" path="address.city"
 				class="form-control" placeholder="city" autofocus="true"></form:input>
-					<form:errors path="city" cssClass="error"></form:errors>
-		</div>
+				
 
-		<div class="form-group">
-			<form:input type="text" id="country" path="address.country"
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
+				<form:input type="text" id="country" path="address.country"
 				class="form-control" placeholder="country" autofocus="true"></form:input>
-					<form:errors path="country" cssClass="error"></form:errors>
+				
+				</div>
+			</div>
 		</div>
-
-		<div class="form-group">
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="form-group">
 			<form:input type="text" id="zipCode" path="address.zipCode"
 				class="form-control" placeholder="zip code" autofocus="true"></form:input>
-					<form:errors path="zipCode" cssClass="error"></form:errors>
+					
+
+				</div>
+			</div>
 		</div>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+			<div class="row"  style="padding-top: 1rem">
+		<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<input type="submit" value="Register" class="btn btn-success">
+			</div>
+		</div>
+	
 	</form:form>
 
 </div>

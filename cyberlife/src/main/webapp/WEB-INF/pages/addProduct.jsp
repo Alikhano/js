@@ -4,6 +4,7 @@
 <div class="product-main">
 	<div class="col" id="admin-main">
 		<div class="container">
+		<span style="color: #ff0000">${error}</span>
 			<form:form
 				action="${pageContext.request.contextPath}/admin/addProduct"
 				method="post" modelAttribute="newProductDTO"
@@ -79,6 +80,7 @@
 	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 	$("#addProduct").validate({
 		rules : {
@@ -141,7 +143,28 @@
 				extension : "Uploaded file should be an image"
 			}
 		}
+		
 	});
+	
+/* 	function exception()
+	{
+	    $.ajax({
+	    	 headers: {
+	             'Content-Type': 'application/json',
+	             'Accept': 'application/json'
+	         },
+	         method: "GET",
+	         url: "/admin/addProduct",
+	         data: JSON.stringify(data),
+	     }).done(function (response) {
+	         swal("Good job!", successMessage, "success");
+	     }).fail(function (qXHR, textStatus, errorThrown) {
+	         var messageError = JSON.parse(qXHR.responseText);
+	         swal("Oops..", messageError, "error");
+	     });
+	    
+	    return false;
+	} */
 </script>
 </body>
 </html>

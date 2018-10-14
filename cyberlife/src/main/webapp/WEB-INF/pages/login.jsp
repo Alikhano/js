@@ -8,6 +8,8 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<h2 class="form-heading">Log in</h2>
+				<span>${error}</span> 
+				<span>${message}</span> 
 				<hr>
 			</div>
 		</div>
@@ -19,7 +21,8 @@
 						<div class="input-group-addon" style="width: 2.6rem">
 							<i class="fa fa-at"></i>
 						</div>
-						<span>${message}</span> <input name="username" type="text"
+				
+						<input name="username" type="text"
 							class="form-control" placeholder="Username" />
 					</div>
 
@@ -36,7 +39,7 @@
 							<i class="fa fa-key"></i>
 						</div>
 						<input name="password" type="password" class="form-control"
-							placeholder="Password" /> <span>${error}</span> <input
+							placeholder="Password" /> <input
 							type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 

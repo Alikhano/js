@@ -10,10 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="customer")
@@ -38,7 +36,8 @@ public class Customer {
 	
 	@Column(name="email", unique = true)
 	@NotNull
-	@Email
+/*	@Email(message = "Email should be valid")*/
+	@Pattern(regexp="^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$")
 	private String email;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

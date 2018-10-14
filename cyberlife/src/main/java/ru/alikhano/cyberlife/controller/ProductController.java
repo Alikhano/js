@@ -58,29 +58,21 @@ public class ProductController {
     
     @RequestMapping(value = "/viewProduct", method = RequestMethod.POST)
     public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") @Valid CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
-        ProductDTO productDTO = productService.getById(productId);
+       
         
         if (newCartItem.getQuantity() < 0) {
         	throw new CustomLogicException("Quantity should be > 0!");
         }
         
-        int quantity = newCartItem.getQuantity();
+        ProductDTO productDTO = productService.getById(productId);
         
-        double totalPrice = quantity * productDTO.getPrice();
-        newCartItem.setTotalPrice(totalPrice);
-        
-        newCartItem.setProduct(productDTO);
-        
+        if (productDTO.getUnitsInStock() < newCartItem.getQuantity()) {
+        	throw new CustomLogicException("Quantity should be less that the amount in stock");
+        }
         CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
-        Set<CartItemDTO> items = cartDTO.getItems();
-        items.add(newCartItem);
-        cartDTO.setItems(items);
         
-        
-        cartDTO.setGrandTotal(newCartItem.getTotalPrice() + cartDTO.getGrandTotal());
-        newCartItem.setCart(cartDTO);
-        
-        cartItemService.create(newCartItem);
+   
+        cartItemService.create(productDTO, cartDTO, newCartItem);
         cartService.update(cartDTO);
 
         return "redirect:/catalogue";

@@ -1,3 +1,18 @@
+body {
+	font-family: 'Chakra Petch', sans-serif !important;
+	font-size: 20px !important;
+}
+
+.search {
+  width: 100px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-width:0px;
+  -webkit-box-sizing: content-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: content-box;    /* Firefox, other Gecko */
+  box-sizing: content-box;         /* Opera/IE 8+ */
+}
+
 .bg {
 	background-image: url('../../static/images/home.jpg');
 	background-repeat: no-repeat;

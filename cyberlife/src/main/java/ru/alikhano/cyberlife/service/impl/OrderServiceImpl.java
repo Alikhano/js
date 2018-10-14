@@ -164,19 +164,21 @@ public class OrderServiceImpl implements OrderService {
 		Set<CartItemDTO> items = cartDTO.getItems();
 		
 		int orderId = createAndGetId(orderDTO);
-	
-		
+
 		for (CartItemDTO cartItem : items) {
 			//decrease units in stock for product, update product
-			ProductDTO productDTO = cartItem.getProduct();
+			ProductDTO productDTO = productService.selectForUpdate(cartItem.getProduct().getProductId());
 			int prevQuantity = productDTO.getUnitsInStock();
 			if (prevQuantity == 0) {
 				
 			throw new CustomLogicException("You tried to submit order while one of the items is out of stock. Please delete item from cart and proceed to order");
 			}
+			else if (prevQuantity < cartItem.getQuantity()) {
+				throw new CustomLogicException("You tried to submit order while one of the items has less items in stock than you need. Please delete item from cart and proceed to order");
+			}
 			else {
 				productDTO.setUnitsInStock(prevQuantity - cartItem.getQuantity());
-				productService.update(productDTO);
+				productService.merge(productDTO);
 							
 			}
 			

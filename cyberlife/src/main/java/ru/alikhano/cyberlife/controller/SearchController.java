@@ -51,6 +51,7 @@ public class SearchController {
 		 int catId;
 		 int consId;
 		 String category = searchRequest.getCategory();
+		 String model = searchRequest.getModel();
 		 
 		 if(category.equals("any")) {
 			 catId = 0;
@@ -71,10 +72,10 @@ public class SearchController {
 		 double toPrice = searchRequest.getToPrice();
 		 
 	
-	     return productService.searchParam(catId, consId, fromPrice, toPrice);
+	     return productService.searchParam(model, catId, consId, fromPrice, toPrice);
 	 }
 	 
-	 @RequestMapping(value="/searchModel", method = RequestMethod.POST)
+	/* @RequestMapping(value="/searchModel", method = RequestMethod.POST)
 		public String searchbyModel(@RequestParam("model") String modelName, Model model) throws CustomLogicException {
 			
 			ProductDTO product = productService.getByModel(modelName);
@@ -87,6 +88,6 @@ public class SearchController {
 			
 			return "redirect:/viewProduct/" + productId;
 			
-		}
+		}*/
 
 }

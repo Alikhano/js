@@ -1,6 +1,8 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 <div class="container-wrapper">
+
+<span style="color: #ff0000">${error}</span>
 	<form:form
 		action="${pageContext.request.contextPath}/admin/editProduct"
 		method="post" modelAttribute="product" id="editProduct">

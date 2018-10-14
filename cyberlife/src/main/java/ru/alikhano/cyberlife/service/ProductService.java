@@ -11,12 +11,6 @@ import ru.alikhano.cyberlife.model.Product;
 
 public interface ProductService {
 	
-	/*List<Product> getAllProducts();
-	void create(Product product);
-	void delete(Product product);
-	void update(Product product);
-	*/
-	
 	Product getProductById(int id);
 
 
@@ -26,19 +20,23 @@ public interface ProductService {
 
 	void create(ProductDTO productDTO) throws CustomLogicException;
 
-	void update(ProductDTO productDTO) throws IOException, TimeoutException;
+	String update(ProductDTO productDTO) throws IOException, TimeoutException;
 
-	void delete(ProductDTO productDTO) throws CustomLogicException, IOException, TimeoutException;
+	String delete(ProductDTO productDTO) throws CustomLogicException, IOException, TimeoutException;
 	
 	ProductDTO getByModel(String model) throws CustomLogicException;
 	
-	List<ProductInfo> searchParam(int category, int consLevel, double fromPrice, double toPrice) throws CustomLogicException;
+	List<ProductInfo> searchParam(String model, int category, int consLevel, double fromPrice, double toPrice) throws CustomLogicException;
 	
 	List<ProductDTO> getTopProducts();
 	
 	ProductDTO selectForUpdate(int id);
 	
 	boolean isInTop(ProductDTO productDTO);
+	
+	void merge(ProductDTO productDTO) throws IOException, TimeoutException;
+	
+	boolean canBeDeleted(ProductDTO productDTO);
 
 
 }

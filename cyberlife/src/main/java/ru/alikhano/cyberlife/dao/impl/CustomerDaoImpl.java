@@ -44,9 +44,7 @@ public class CustomerDaoImpl extends GenericDaoImpl<Customer> implements Custome
 
 		for (Object o : resultList) {
 			Object[] row = (Object[]) o;
-			System.out.println(row[1]);
 			Customer customer = (Customer) row[0];
-			System.out.println(customer.getLastName());
 			topCustomers.add(customer);
 		}
 

@@ -6,6 +6,7 @@
 
 <div class="container-wrapper">
 <div class="change-container">
+<span style="color: #ff0000">${error}</span>
 	<form:form action="${pageContext.request.contextPath}/myAccount/updateAccount"
 		method="post" modelAttribute="customer" id="updateProfile">
 		<input type="hidden" name="customerId" value="${customer.customerId}" />

@@ -63,7 +63,10 @@ public class AdminProductController {
 			HttpServletRequest request, @RequestPart("file") MultipartFile file, Model model) throws IOException, CustomLogicException {
 
 		if (productService.getByModel(newProductDTO.getModel()) != null) {
-			throw new CustomLogicException("Oops, this model exists already");
+			model.addAttribute("error", "Oops, this model exists already");
+			logger.error("Oops, this model exists already");
+			return "addProduct";
+			
 		}
 		else {
 			newProductDTO.setImage(file.getBytes());
@@ -107,22 +110,36 @@ public class AdminProductController {
 
 	@RequestMapping(value = "/admin/editProduct", method = RequestMethod.POST)
 	public String editProductPost(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result,
-			HttpServletRequest request) throws CustomLogicException, IOException, TimeoutException {
-		if (productDTO.getUnitsInStock() < 0) {
-			throw new CustomLogicException("There should > 0 units in stock!");
+			HttpServletRequest request, Model model) throws CustomLogicException, IOException, TimeoutException {
+		
+		String opResult = productService.update(productDTO);
+
+		if (opResult.equals("negative units")) {
+			model.addAttribute("error", "There should > 0 units in stock!");
+			model.addAttribute("categoryDTOList", categoryService.getAll());
+			model.addAttribute("consDTOList", consService.getAll());
+			logger.error("There should > 0 units in stock!");
+			return "editProduct";
 		}
-		if (productDTO.getPrice() < 0) {
-			throw new CustomLogicException("Price should be > 0!");
+		if (opResult.equals("negative price")) {
+			model.addAttribute("error", "Price should be > 0!");
+			model.addAttribute("categoryDTOList", categoryService.getAll());
+			model.addAttribute("consDTOList", consService.getAll());
+			logger.error("Price should be > 0!");
+			return "editProduct";
+			
 		}
 		
-		productService.update(productDTO);
-
+		
 		return "redirect:/admin/productList";
 	}
 
 	@RequestMapping(value = "/admin/deleteProduct/{productId}")
 	public String deleteProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException, IOException, TimeoutException {
-		productService.delete(productService.getById(productId));
+		String result = productService.delete(productService.getById(productId));
+		if (result.equals("failed")) {
+			throw new CustomLogicException("You cannot delete a product that has not been delivered yet!");
+		}
 
 		return "redirect:/admin/productList";
 	}

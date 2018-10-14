@@ -2,10 +2,19 @@ package ru.alikhano.cyberlife.DTO;
 
 public class SearchRequest {
 	
+	private String model;
 	private String category;
 	private String consLevel;
 	private double fromPrice;
 	private double toPrice;
+	
+	
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
+	}
 	public String getCategory() {
 		return category;
 	}

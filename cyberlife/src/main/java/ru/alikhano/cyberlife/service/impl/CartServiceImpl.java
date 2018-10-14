@@ -2,12 +2,14 @@ package ru.alikhano.cyberlife.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
+import ru.alikhano.cyberlife.DTO.CartItemDTO;
 import ru.alikhano.cyberlife.dao.CartDao;
 import ru.alikhano.cyberlife.mapper.CartMapper;
 import ru.alikhano.cyberlife.model.Cart;
@@ -60,5 +62,21 @@ public class CartServiceImpl implements CartService {
 	public int createAndGetId(CartDTO cartDTO) {
 		return cartDao.createAndGetId(cartMapper.cartDTOtoCart(cartDTO));
 	}
+
+	@Override
+	public CartItemDTO getCartItemById(CartDTO cartDTO, int id) {
+		Set<CartItemDTO> items = cartDTO.getItems();
+		
+		for (CartItemDTO item : items) {
+			if (item.getItemId() == id) {
+				return item;
+			}
+		}
+		
+		return null;
+		
+	}
+	
+	
 
 }

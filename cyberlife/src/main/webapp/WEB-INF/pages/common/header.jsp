@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 <link href="<c:url value="/static/css/main.css" />" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Chakra+Petch"
+		rel="stylesheet" type="text/css" />
 
 
 </head>

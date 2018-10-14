@@ -3,6 +3,7 @@ package ru.alikhano.cyberlife.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,21 +29,14 @@ public class ExceptionController {
 	}
 	
 	@ExceptionHandler(CustomLogicException.class)
-	public ModelAndView handleCustomException(CustomLogicException ex) {
+	/*@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	@ResponseBody*/
+	public ResponseEntity<?> handleCustomException(CustomLogicException ex) {
 		
 		logger.error(ex.getErrMessage(), ex);
-		ModelAndView model = new ModelAndView("generic-error");
 		
-		model.addObject("errorMessage", ex.getErrMessage());
-		
-		return model;
+		return ResponseEntity.badRequest().body(ex.getErrMessage());
 	}
 	
-	/*@ResponseBody
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(CustomLogicException.class)
-	public CustomLogicException handleRestCustomException(CustomLogicException ex) {
-		return ex;
-	}*/
 
 }

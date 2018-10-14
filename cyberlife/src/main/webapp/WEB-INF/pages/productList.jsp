@@ -18,7 +18,8 @@
 			<td><img
 				src="${pageContext.request.contextPath}/static/images/${product.model}.jpg"
 				alt="image" style="width: 150px; height: auto" /></td>
-			<td>${product.model}</td>
+			<td><a href="http://localhost:8080/cyberlife-0.0.1-SNAPSHOT/viewProduct/${product.productId}">
+					<c:out value="${product.model}" /></a></td>
 			<td>${product.category.catType}</td>
 			<td>${product.cons.level}</td>
 			<td>${product.unitsInStock}</td>
@@ -27,10 +28,10 @@
 				<input type="submit" class="buttons" value="<spring:message text="Edit"/>"/></a>
 				 <a><input type="hidden"name="id" value="${product.productId}" />
 				</a>
-				<%-- <a href="<spring:url value="/admin/deleteProduct/${product.productId}" />">
+				<a href="<spring:url value="/admin/deleteProduct/${product.productId}" />">
 				<input type="submit" class="buttons" value="<spring:message text="Delete"/>" /> 
 				<input type="hidden"name="id" value="${product.productId}" />
-				</a> --%>
+				</a>
 				</td>
 		</tr>
 	</c:forEach>
@@ -49,6 +50,27 @@ $(document).ready(function() {
 		"bLengthChange": false,
 	    "pageLength": 5	
 	});
+	
+	function exception()
+	{
+	    $.ajax({
+	        type: 'GET',
+	        url: "/admin/productList",
+	        dataType: 'application/json; charset=UTF-8',
+	        error: function(jqXHR, textStatus, errorThrown) 
+	        {
+	            var exceptionVO = jQuery.parseJSON(jqXHR.responseText);
+	            
+	            $('#errorModal')
+	            .find('.modal-header h3').html(jqXHR.status+' error').end()
+	            .find('.modal-body p>span').html(exceptionVO.message).end()
+	            .modal('show');
+	            
+	        }
+	    });
+	     
+	    return false;
+	}
 	
 });
 </script>    

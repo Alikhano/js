@@ -1,11 +1,13 @@
 package ru.alikhano.cyberlife.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -63,17 +65,19 @@ public class CustomerController {
 	
 	@RequestMapping(value = "/myAccount/updateAccount", method = RequestMethod.POST)
 	public String updateAccountPost(@Valid @ModelAttribute("customer") CustomerDTO customerDTO, BindingResult result,
-			HttpServletRequest request, Authentication authentication) throws CustomLogicException {
+			HttpServletRequest request, Authentication authentication, Model model) throws CustomLogicException, ConstraintViolationException {
 		UserDTO currentUser =  userService.getByUsernameDTO(authentication.getName());
 		CustomerDTO currentCustomer = customerService.getByUserId(currentUser.getUserId());
 		
-		for (CustomerDTO customer : customerService.getAll()) {
-			// check if email changed and if new email belongs to some other user on the website
-			if (customer.getEmail().equals(customerDTO.getEmail()) && !currentCustomer.getEmail().equals(customerDTO.getEmail()) ) {
-				throw new CustomLogicException("Your have used the email address which is already taken on this website. Please try again.");
-			}
+		try {
+			customerService.update(customerDTO);
 		}
-		customerService.update(customerDTO);
+		catch (DataIntegrityViolationException ex) {
+			model.addAttribute("error","Your have used the email address which is already taken on this website. Please try again.");
+			logger.error("Your have used the email address which is already taken on this website. Please try again.");
+			return "updateAccount";
+		}
+		
 
 		return "redirect:/myAccount";
 	}

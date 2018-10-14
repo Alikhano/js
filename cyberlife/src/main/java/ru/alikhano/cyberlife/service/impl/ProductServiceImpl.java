@@ -3,6 +3,7 @@ package ru.alikhano.cyberlife.service.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
+import ru.alikhano.cyberlife.DTO.OrderDTO;
+import ru.alikhano.cyberlife.DTO.OrderItemDTO;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.ProductInfo;
 import ru.alikhano.cyberlife.dao.ProductDao;
 import ru.alikhano.cyberlife.mapper.ProductInfoMapper;
 import ru.alikhano.cyberlife.mapper.ProductMapper;
 import ru.alikhano.cyberlife.model.Product;
+import ru.alikhano.cyberlife.service.OrderService;
 import ru.alikhano.cyberlife.service.ProductService;
 
 @Service
@@ -29,6 +33,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	ProductInfoMapper productInfoMapper;
+	
+	@Autowired
+	OrderService orderService;
 
 	@Autowired
 	MessagingService messaginService;
@@ -65,21 +72,37 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public void update(ProductDTO productDTO) throws IOException, TimeoutException {
+	public String update(ProductDTO productDTO) throws IOException, TimeoutException {
+		if (productDTO.getUnitsInStock() < 0) {
+			return "negative units";
+		}
+		else if (productDTO.getPrice() < 0) {
+			return "negative price";
+		}
 		productDao.update(productMapper.productDTOtOProduct(productDTO));
 		if (isInTop(productDTO)) {
 			messaginService.sendUpdateMessage("table should be updated!");
 		}
+		
+		return "sucess";
 
 	}
 
 	@Override
 	@Transactional
-	public void delete(ProductDTO productDTO) throws CustomLogicException, IOException, TimeoutException {
-		productDao.delete(productMapper.productDTOtOProduct(productDTO));
-		if (isInTop(productDTO)) {
-			messaginService.sendUpdateMessage("table should be updated!");
+	public String delete(ProductDTO productDTO) throws CustomLogicException, IOException, TimeoutException {
+		if (canBeDeleted(productDTO)) {
+			productDao.delete(productMapper.productDTOtOProduct(productDTO));
+			if (isInTop(productDTO)) {
+				messaginService.sendUpdateMessage("table should be updated!");
+			}
+			
+			return "success";
 		}
+		
+		return "failed";
+		
+		
 
 	}
 
@@ -92,9 +115,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<ProductInfo> searchParam(int category, int consLevel, double fromPrice, double toPrice)
+	public List<ProductInfo> searchParam(String model, int category, int consLevel, double fromPrice, double toPrice)
 			throws CustomLogicException {
-		List<Product> list = productDao.searchParam(category, consLevel, fromPrice, toPrice);
+		List<Product> list = productDao.searchParam(model, category, consLevel, fromPrice, toPrice);
 		if (list == null) {
 			throw new CustomLogicException("No product matches your search parameters. Please try again.");
 		}
@@ -143,6 +166,28 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void merge(ProductDTO productDTO) throws IOException, TimeoutException {
+		productDao.merge(productMapper.productDTOtOProduct(productDTO));
+		if (isInTop(productDTO)) {
+			messaginService.sendUpdateMessage("table should be updated!");
+		}
+	}
+
+	@Override
+	public boolean canBeDeleted(ProductDTO productDTO) {
+	    List<OrderDTO> orders = orderService.getAll();
+	    for (OrderDTO order : orders) {
+	    	Set<OrderItemDTO> orderItems = order.getOrderedItems();
+	    	for (OrderItemDTO orderItem : orderItems) {
+	    		if (orderItem.getProduct().getProductId() == productDTO.getProductId() && order.getPaymentStatus() != "paid" && order.getOrderStatus() != "delivered and recieved") {
+	    			return false;
+	    		}
+	    	}
+	    }
+		return true;
 	}
 
 }
