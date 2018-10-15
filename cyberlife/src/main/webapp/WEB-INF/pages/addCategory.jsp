@@ -2,7 +2,9 @@
 
 <div class="side-content">
 <div class="category-main row">
+
 <div class="col">
+	<span style="color: #ff0000">${error}</span>
 <table id="catTable" class="table table-striped table-hover">
 	<thead>
 		<tr>
@@ -23,11 +25,11 @@
 	<div class="container">
 		<div class="form-group">
 			<form:input path="catType" id="catType" class="form-Control" placeholder="Category" />
-				<form:errors path="catType" cssClass="error"></form:errors>
 		</div>
 
 		<input type="submit" value="Add" 
 			class="btn btn-success">
+		
 			
 			<a href="<c:url value="/productList" />" class="btn btn-danger">Cancel</a>
 	</div>

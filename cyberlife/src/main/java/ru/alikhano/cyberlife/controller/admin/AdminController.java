@@ -3,6 +3,9 @@ package ru.alikhano.cyberlife.controller.admin;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,9 @@ import ru.alikhano.cyberlife.service.ConsciousnessService;
 
 @Controller
 public class AdminController {
+	
+
+	private static final Logger logger = LogManager.getLogger(AdminController.class);
 
 	@Autowired
 	CategoryService categoryService;
@@ -49,17 +55,36 @@ public class AdminController {
 
 	@RequestMapping(value = "admin/addCategory", method = RequestMethod.POST)
 	public @ResponseBody String addCategoryPost(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result,
-			HttpServletRequest request) {
-		categoryService.create(categoryDTO);
+			HttpServletRequest request, Model model) {
+		
+		try {
+			categoryService.create(categoryDTO);
+		}
+		catch (ConstraintViolationException ex) {
+			model.addAttribute("error","Please check for duplicate entries");
+			//model.addAttribute("categories", categoryService.getAll());
+			logger.error(ex.getMessage() + " DUPLICATE category entry");
+			return "addCategory";
+		}
+		
 
 		return "Category has been added";
 	}
 
 	@RequestMapping(value = "admin/addCons", method = RequestMethod.POST)
 	public @ResponseBody String addConsPost(@RequestBody @Valid ConsDTO consDTO, BindingResult result,
-			HttpServletRequest request) {
+			HttpServletRequest request, Model model) {
 
-		consService.create(consDTO);
+		try {
+			consService.create(consDTO);
+		}
+		catch (ConstraintViolationException ex) {
+			model.addAttribute("error","Please check for duplicate entries");
+			logger.error(ex.getMessage() + " DUPLICATE cons entry");
+			return "addCategory";
+		}
+		
+		
 
 		return "AI config has been added";
 	}

@@ -66,9 +66,7 @@ public class CustomerController {
 	@RequestMapping(value = "/myAccount/updateAccount", method = RequestMethod.POST)
 	public String updateAccountPost(@Valid @ModelAttribute("customer") CustomerDTO customerDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication, Model model) throws CustomLogicException, ConstraintViolationException {
-		UserDTO currentUser =  userService.getByUsernameDTO(authentication.getName());
-		CustomerDTO currentCustomer = customerService.getByUserId(currentUser.getUserId());
-		
+	
 		try {
 			customerService.update(customerDTO);
 		}
@@ -95,9 +93,18 @@ public class CustomerController {
 	
 	@RequestMapping(value = "/myAccount/changeAddress", method = RequestMethod.POST)
 	public String changeAddressPost(@Valid @ModelAttribute("address") AddressDTO addressDTO, BindingResult result,
-			HttpServletRequest request, Authentication authentication) {
+			HttpServletRequest request, Authentication authentication, Model model) {
 		
-		addressService.update(addressDTO);
+		try {
+			addressService.update(addressDTO);
+		}
+		catch (ConstraintViolationException ex) {
+			model.addAttribute("error","Your have mistyped values for some of the fields. Please verify provided information (no negative values, correct zip code format)");
+			logger.error(ex.getMessage() + "WRONG values");
+			return "changeAddress";
+		}
+		
+		
 		
 		return "redirect:/myAccount";
 	}

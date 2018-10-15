@@ -48,7 +48,7 @@
 					<th>Category</th>
 					<th>Consciousness</th>
 					<th>Description</th>
-					<th>Units in stock</th>
+					<th>Stock</th>
 					<th>Price</th>
 				</tr>
 			</thead>

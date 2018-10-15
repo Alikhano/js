@@ -6,9 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="address")
@@ -21,15 +21,17 @@ public class Address {
 	
 	@Column(name="country")
 	@NotNull
+	@Pattern(regexp = "[^A-Za-z\\s]+")
 	private String country;
 	
 	@Column(name="city")
 	@NotNull
+	@Pattern(regexp = "[^A-Za-z\\s]+")
 	private String city;
 	
 	@Column(name="zipCode")
 	@NotNull
-	@Digits(integer=6, fraction=0)
+	@Pattern(regexp="[\\d]{6}")
 	private String zipCode;
 	
 	@Column(name="street")

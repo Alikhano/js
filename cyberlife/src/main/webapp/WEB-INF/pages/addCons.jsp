@@ -2,6 +2,7 @@
 
 <div class="side-content">
 <div class="cons-main">
+<span style="color: #ff0000">${error}</span>
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>

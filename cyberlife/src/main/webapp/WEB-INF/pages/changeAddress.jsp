@@ -6,6 +6,7 @@
 
 <div class="container-wrapper">
 <div class="change-container">
+<span style="color: #ff0000">${error}</span>
 	<form:form
 		action="${pageContext.request.contextPath}/myAccount/changeAddress"
 		method="post" id="changeAdr" modelAttribute="address">
@@ -15,32 +16,32 @@
 		<div class="form-group">
 			<label for="country">Country*</label>
 			<form:input path="country" id="country" class="form-Control" />
-				<form:errors path="country" cssClass="error" />
+		
 		</div>
 		<div class="form-group">
 			<label for="city">City*</label>
 			<form:input path="city" id="city" class="form-Control" />
-			<form:errors path="city" cssClass="error" />
+			
 		</div>
 		<div class="form-group">
 			<label for="zipCode">Zip code*</label>
 			<form:input path="zipCode" id="zipCode" class="form-Control" />
-			<form:errors path="zipCode" cssClass="error" />
+			
 		</div>
 		<div class="form-group">
 			<label for="street">Street*</label>
 			<form:input path="street" id="street" class="form-Control" />
-			<form:errors path="street" cssClass="error" />
+			
 		</div>
 		<div class="form-group">
 			<label for="building">Building*</label>
 			<form:input path="building" id="building" class="form-Control" />
-			<form:errors path="building" cssClass="error" />
+		
 		</div>
 		<div class="form-group">
 			<label for="flat">Flat*</label>
 			<form:input path="flat" id="flat" class="form-Control" />
-			<form:errors path="flat" cssClass="error" />
+			
 		</div>
 
 
