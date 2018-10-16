@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,7 @@ import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.controller.admin.AdminController;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.CustomerService;
@@ -41,6 +42,8 @@ public class CartController {
 	
 	@Autowired
 	CartItemService cartItemService;
+	
+	private static final Logger logger = LogManager.getLogger(CartController.class);
 	
 	@RequestMapping("/myCart")
 	public String viewCart(HttpServletRequest request, Model model, Authentication authentication) {
@@ -85,6 +88,8 @@ public class CartController {
 		cartDTO.setGrandTotal(grandTotal);
 		cartService.update(cartDTO);
 		cartItemService.delete(cartItemDTO);
+		
+		logger.info("Item is removed from cart");
 
 		return "redirect:/myCart";
 	}

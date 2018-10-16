@@ -47,29 +47,29 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#addCons").submit(function(e) {
 		 e.preventDefault();
 
 	$.ajax({
-		type: 'POST',
+		method: 'POST',
 		headers: { 
-	        'Content-Type': 'application/json' 
-	    },
+	        'Content-Type': 'application/json' ,
+	        'Accept': 'application/json',
+        },
 		url:'${pageContext.request.contextPath}/admin/addCons',
 		data: JSON.stringify({
 			level: $("#level").val(),
 			description: $("#description").val()
 		}),
-        contentType: 'application/json',
-		success: function(data) {
-			location.reload();
-		},
-		error : function(error) {
-			location.href="error.jsp";
-		}
-	});
+	}).done( function(data) {
+		swal("Success", "New category: " + $("#level").val(), "success");
+		})
+		.fail( function(error) {
+			swal("Oops!","Duplicate entry!", "error");
+		});
 });
 });
 </script>

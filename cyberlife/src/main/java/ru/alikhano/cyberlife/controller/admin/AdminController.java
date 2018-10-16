@@ -61,12 +61,11 @@ public class AdminController {
 			categoryService.create(categoryDTO);
 		}
 		catch (ConstraintViolationException ex) {
-			model.addAttribute("error","Please check for duplicate entries");
-			//model.addAttribute("categories", categoryService.getAll());
 			logger.error(ex.getMessage() + " DUPLICATE category entry");
 			return "addCategory";
 		}
 		
+		logger.info("New category: " + categoryDTO.getCatType());
 
 		return "Category has been added";
 	}
@@ -79,12 +78,11 @@ public class AdminController {
 			consService.create(consDTO);
 		}
 		catch (ConstraintViolationException ex) {
-			model.addAttribute("error","Please check for duplicate entries");
 			logger.error(ex.getMessage() + " DUPLICATE cons entry");
 			return "addCategory";
 		}
 		
-		
+		logger.info("New AI config: " + consDTO.getLevel());
 
 		return "AI config has been added";
 	}

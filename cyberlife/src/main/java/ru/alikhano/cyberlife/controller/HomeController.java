@@ -7,6 +7,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.RoleDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
 import ru.alikhano.cyberlife.model.User;
@@ -42,6 +41,10 @@ public class HomeController {
 	
 	@Autowired
 	ProductService productService;
+	
+	private static final String REGISTER = "register";  
+	
+	private static final Logger logger = LogManager.getLogger(HomeController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, HttpServletResponse response) {
@@ -67,6 +70,7 @@ public class HomeController {
 				cartCookie.setMaxAge(expiryTime);
 				cartCookie.setPath(cookiePath);
 				response.addCookie(cartCookie);
+				logger.info("New persistent cookie and cart ID");
 			}
 			
 		}   
@@ -93,7 +97,7 @@ public class HomeController {
 	public String registration(Model model) {
 		model.addAttribute("userForm", new User());
 
-		return "register";
+		return REGISTER;
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
@@ -101,12 +105,14 @@ public class HomeController {
 			HttpServletRequest request) {
 
 		if (bindingResult.hasErrors()) {
-			return "register";
+			logger.error("binding result errors");
+			return REGISTER;
 		}
 		
 		if (userService.getByUsernameDTO(userForm.getUsername()) != null) {
 			model.addAttribute("repUsername", "Oops, this username is taken. Please try again");
-			return "register";
+			logger.error("User tried to use a duplicate username");
+			return REGISTER;
 		}
 		
 		RoleDTO roleDTO = roleService.getRoleDTO();
@@ -119,6 +125,8 @@ public class HomeController {
 		request.getSession().setAttribute("username", userForm.getUsername());
 		
 		userService.register(userForm);
+		
+		logger.info(userForm.getUsername() + " has registered");
 
 		return "redirect:/createProfile";
 	}

@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 <div class="container">
-
+<span style="color: #ff0000">${error}</span>
 	<form:form method="POST" modelAttribute="customerForm"
 		class="form-signin" id="createProfile">
 		<div class="row">

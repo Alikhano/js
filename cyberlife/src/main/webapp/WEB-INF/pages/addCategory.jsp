@@ -47,6 +47,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -63,18 +64,20 @@ $(document).ready(function() {
 	var catType = $("#catType").val();
 
 	$.ajax({
-		type: 'POST',
+		method: 'POST',
+		headers: {
+	            'Content-Type': 'application/json',
+	            'Accept': 'application/json'
+	        },
 		url:'${pageContext.request.contextPath}/admin/addCategory',
 		data: JSON.stringify({
 			catType: $("#catType").val()
 		}),
-        contentType: 'application/json',
-        success: function(data) {
-			location.reload();
-		},
-		error: function(error) {
-			location.href="error.jsp";
-		}
+	}).done(function(data) {
+			swal("Success", "New category: " + catType, "success");
+		})
+		.fail(function(error) {
+			swal("Oops!","Duplicate entry!", "error");
 	});
 });
 });

@@ -1,14 +1,13 @@
 package ru.alikhano.cyberlife.controller;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -18,16 +17,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
 import ru.alikhano.cyberlife.DTO.OrderDTO;
-import ru.alikhano.cyberlife.DTO.OrderItemDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
 import ru.alikhano.cyberlife.service.AddressService;
 import ru.alikhano.cyberlife.service.CartItemService;
@@ -65,6 +60,8 @@ public class OrderController {
 	@Autowired
 	ProductService productService;
 	
+	private static final Logger logger = LogManager.getLogger(OrderController.class);
+	
 	
 	@RequestMapping("/myOrder")
 	public String viewOrder(Model model, Authentication authentication, HttpServletRequest request) {
@@ -93,6 +90,7 @@ public class OrderController {
 		
 		if (!cartToOrder.equals("success")) {
 			model.addAttribute("noStockMsg", cartToOrder);
+			logger.info(username + " has created new order");
 			return "/myOrder";
 		}
 		
@@ -123,9 +121,13 @@ public class OrderController {
 		if (order.getOrderStatus().equals("delivered and recieved") && order.getPaymentStatus().equals("paid")) {
 			throw new CustomLogicException("No status updates after order completion!");
 		}
+		
+		
 		order.setOrderStatus(orderStatus);
 		order.setPaymentStatus(paymentStatus);
 		orderService.update(order);
+		
+		logger.info("Admin has updated the order");
 		
 		return "redirect:/admin/stats";
 	}

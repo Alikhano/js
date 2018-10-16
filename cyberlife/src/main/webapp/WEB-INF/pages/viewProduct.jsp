@@ -38,8 +38,8 @@
 					<input type='hidden' id='totalPrice' name='totalPrice'
 						value='${product.price}' />
 					<form:input path="quantity" id="quantity" class="form-Control" />
-					<form:errors path="quantity" cssClass="error"></form:errors>
 					  <sec:authorize access="!hasRole('ROLE_ADMIN')">
+					  <span style="color: #ff0000">${error}</span>
 					<input type="submit" id="addToCart" value="Add to cart"
 						class="btn btn-success">
 						</sec:authorize>

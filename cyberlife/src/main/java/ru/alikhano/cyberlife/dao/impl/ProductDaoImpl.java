@@ -56,6 +56,14 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 			predicates.add(searchCriteriaBuilder.between(root.get("price"), fromPrice, toPrice));
 		}
 		
+		if (toPrice == 0) {
+			predicates.add(searchCriteriaBuilder.greaterThan(root.get("price"), fromPrice));
+		}
+		
+		if (fromPrice == 0) {
+			predicates.add(searchCriteriaBuilder.between(root.get("price"), 0.0, toPrice));
+		}
+		
 		searchCriteria.select(root).where(predicates.toArray(new Predicate[] {}));
 
 		return session.createQuery(searchCriteria).getResultList();

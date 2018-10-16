@@ -71,23 +71,10 @@ public class SearchController {
 		 double fromPrice = searchRequest.getFromPrice();
 		 double toPrice = searchRequest.getToPrice();
 		 
+		 logger.info("search request has produced some results");
+		 
 	
 	     return productService.searchParam(model, catId, consId, fromPrice, toPrice);
 	 }
 	 
-	/* @RequestMapping(value="/searchModel", method = RequestMethod.POST)
-		public String searchbyModel(@RequestParam("model") String modelName, Model model) throws CustomLogicException {
-			
-			ProductDTO product = productService.getByModel(modelName);
-		
-			if (product == null) {
-				throw new CustomLogicException("Sorry! We do not have a model you're searching for. Please try again.");
-			}
-			
-			int productId = product.getProductId();
-			
-			return "redirect:/viewProduct/" + productId;
-			
-		}*/
-
 }

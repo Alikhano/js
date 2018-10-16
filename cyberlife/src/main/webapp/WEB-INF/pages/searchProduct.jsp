@@ -1,14 +1,6 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 <br>
-<%-- <div class="container">
-	<form name="modelSearch" id="modelSearch"
-		action="${pageContext.request.contextPath}/searchModel" method="post">
-		<input name="model" id="model" type="search" placeholder="Search"
-			aria-label="Search">
-		<button class="btn btn-success" type="submit">Search by model</button>
-	</form>
-</div> --%>
 <br>
 <div class="container">
 
@@ -67,6 +59,7 @@
 	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -108,6 +101,10 @@
 				"toPrice" : $("#toPrice").val()
 
 			}
+			
+			if (search.toPrice < 0 || search.fromPrice < 0) {
+				swal("Price ranges should be over 0 USD!");
+			}
 
 			$.ajax({
 				type : 'POST',
@@ -118,7 +115,7 @@
 				success : function(data) {
 					var product = data;
 					if (!$.isArray(data) || !data.length) {
-						alert("Oops, we found nothing. Try again!");
+						swal("Oops, we found nothing. Try again!");
 					} else {
 						append_json(product);
 					}

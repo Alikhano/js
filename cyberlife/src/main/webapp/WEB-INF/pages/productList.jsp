@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/pages/common/admin-side.jsp"%>
 
 <div class="col" id="admin-main">
+<span id="statusSpan" style="display:none">${statusOnDelete}</span>
 <table class="table table-striped table-hover" id="admin-catalogue">
 	<thead>
 		<tr>
@@ -18,7 +19,7 @@
 			<td><img
 				src="${pageContext.request.contextPath}/static/images/${product.model}.jpg"
 				alt="image" style="width: 150px; height: auto" /></td>
-			<td><a href="http://localhost:8080/cyberlife-0.0.1-SNAPSHOT/viewProduct/${product.productId}">
+			<td><a href="http://localhost:8080/cyberlife/viewProduct/${product.productId}">
 					<c:out value="${product.model}" /></a></td>
 			<td>${product.category.catType}</td>
 			<td>${product.cons.level}</td>
@@ -31,6 +32,8 @@
 				<a href="<spring:url value="/admin/deleteProduct/${product.productId}" />">
 				<input type="submit" class="buttons" value="<spring:message text="Delete"/>" /> 
 				<input type="hidden"name="id" value="${product.productId}" />
+				<input type="hidden"name="model" value="${product.model}" />
+				<input type="hidden"name="status" value="${product.model}" />
 				</a>
 				</td>
 		</tr>
@@ -42,6 +45,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>  
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	        	
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -51,28 +56,16 @@ $(document).ready(function() {
 	    "pageLength": 5	
 	});
 	
-	function exception()
-	{
-	    $.ajax({
-	        type: 'GET',
-	        url: "/admin/productList",
-	        dataType: 'application/json; charset=UTF-8',
-	        error: function(jqXHR, textStatus, errorThrown) 
-	        {
-	            var exceptionVO = jQuery.parseJSON(jqXHR.responseText);
-	            
-	            $('#errorModal')
-	            .find('.modal-header h3').html(jqXHR.status+' error').end()
-	            .find('.modal-body p>span').html(exceptionVO.message).end()
-	            .modal('show');
-	            
-	        }
-	    });
-	     
-	    return false;
+	if($('span').text().length != 0){
+		var span_Text = document.getElementById("statusSpan").innerText;
+		swal(span_Text, "error");
+		document.getElementById("statusSpan").empty();
+	}
+
+	   
 	}
 	
-});
+);
 </script>    
 </body>
 </html>

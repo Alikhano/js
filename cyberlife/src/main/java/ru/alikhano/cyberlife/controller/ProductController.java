@@ -1,11 +1,13 @@
 package ru.alikhano.cyberlife.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +38,8 @@ public class ProductController {
 	
 	@Autowired
 	CartItemService cartItemService;
+	
+	private static final Logger logger = LogManager.getLogger(ProductController.class);
 
 	@RequestMapping("/catalogue")
 	public String getProducts(Model model) {
@@ -58,22 +62,35 @@ public class ProductController {
     
     @RequestMapping(value = "/viewProduct", method = RequestMethod.POST)
     public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") @Valid CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
-       
-        
-        if (newCartItem.getQuantity() < 0) {
-        	throw new CustomLogicException("Quantity should be > 0!");
-        }
+      
         
         ProductDTO productDTO = productService.getById(productId);
         
-        if (productDTO.getUnitsInStock() < newCartItem.getQuantity()) {
-        	throw new CustomLogicException("Quantity should be less that the amount in stock");
-        }
         CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
         
+        if (newCartItem.getQuantity() > productDTO.getUnitsInStock()) {
+        	model.addAttribute("error","Sorry, we do not have enough units in stock. Try again");
+        	model.addAttribute("product", productDTO);
+			logger.error("Not enough units in stock");
+			return "viewProduct";
+        }
+        
+
+		try {
+			 cartItemService.create(productDTO, cartDTO, newCartItem);
+		}
+		catch (ConstraintViolationException ex) {
+			model.addAttribute("error","Plese check your input for negative values");
+			model.addAttribute("product", productDTO);
+			logger.error("Negative values in user input");
+			return "viewProduct";
+		}
+        
    
-        cartItemService.create(productDTO, cartDTO, newCartItem);
+      
         cartService.update(cartDTO);
+        
+        logger.info("new item has been added to cart: " + productDTO.getModel());
 
         return "redirect:/catalogue";
     }

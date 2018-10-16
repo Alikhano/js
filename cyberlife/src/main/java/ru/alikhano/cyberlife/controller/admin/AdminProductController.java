@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
@@ -134,13 +136,19 @@ public class AdminProductController {
 		return "redirect:/admin/productList";
 	}
 
-	@RequestMapping(value = "/admin/deleteProduct/{productId}")
+	@RequestMapping(value = "/admin/deleteProduct/{productId}", method = RequestMethod.GET)
 	public String deleteProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException, IOException, TimeoutException {
 		String result = productService.delete(productService.getById(productId));
 		if (result.equals("failed")) {
-			throw new CustomLogicException("You cannot delete a product that has not been delivered yet!");
-		}
+			logger.error("You cannot delete a product that has not been delivered yet!");
+			model.addAttribute("statusOnDelete", "Not delivered yet! " + productService.getById(productId).getModel());
+			List<ProductDTO> products = productService.getAll();
+			model.addAttribute("products", products);
 
+			return "productList";
+		}
+		
+		logger.info("model " + productService.getById(productId).getModel() + " is deleted");
 		return "redirect:/admin/productList";
 	}
 	

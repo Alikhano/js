@@ -19,7 +19,7 @@
 				src="${pageContext.request.contextPath}/static/images/${product.model}.jpg"
 				alt="image" style="width: 150px; height: auto" /></td>
 			<td><a
-				href="http://localhost:8080/cyberlife-0.0.1-SNAPSHOT/viewProduct/${product.productId}">
+				href="http://localhost:8080/cyberlife/viewProduct/${product.productId}">
 					<c:out value="${product.model}" />
 			</a> <input type="hidden" name="id" value="${product.productId}" /></td>
 			<td>${product.category.catType}</td>

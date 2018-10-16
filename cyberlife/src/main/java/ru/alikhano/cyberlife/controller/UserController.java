@@ -1,8 +1,11 @@
 package ru.alikhano.cyberlife.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,8 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	private static final Logger logger = LogManager.getLogger(UserController.class);
+	
 	@RequestMapping("/createProfile")
 	public String createProfile(Model model) {
 		CustomerDTO customerDTO = new CustomerDTO();
@@ -35,19 +40,24 @@ public class UserController {
 	@RequestMapping(value="/createProfile", method = RequestMethod.POST)
 	public String createProfilePost(@ModelAttribute(name="customerForm") @Valid CustomerDTO customerForm, BindingResult result, Model model, HttpServletRequest request) throws CustomLogicException {
 		
-		if(result.hasErrors()){
-            return "registerCustomer";
-        }
-
-		
 		if (customerService.getByEmail(customerForm.getEmail()) != null) {
 			model.addAttribute("repEmail", "Oops, this email is taken. Please try again");
 			return "createProfile";
 		}
 		
-		customerForm.setUser(userService.getByUsernameDTO((String)request.getSession().getAttribute("username")));
+		try {
+			customerForm.setUser(userService.getByUsernameDTO((String)request.getSession().getAttribute("username")));
+			
+			customerService.create(customerForm);
+			logger.info("User has registered and created an account");
+		}
+		catch (ConstraintViolationException ex) {
+			model.addAttribute("error","Your have mistyped values for some of the fields. Please verify provided information");
+			logger.error(ex.getMessage() + "WRONG values while creating a personal account");
+			return "createProfile";
+		}
 		
-		customerService.create(customerForm);
+	
 			
 		return "redirect:/login";
 	}

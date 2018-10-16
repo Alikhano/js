@@ -44,6 +44,8 @@ public class CustomerController {
 	@Autowired
 	BCryptPasswordEncoder encoder;
 	
+	private static final String REDIRECT = "redirect:/myAccount";  
+	
 	@RequestMapping("/myAccount")
 	public String viewAccount(Model model, Authentication authentication) {
 		String username = authentication.getName();
@@ -59,25 +61,32 @@ public class CustomerController {
 	public String updateAccount(@PathVariable("customerId") int customerId, Model model) {
 		CustomerDTO customerDTO = customerService.getById(customerId);
 		model.addAttribute("customer", customerDTO);
+		
 
 		return "updateAccount";
 	}
 	
 	@RequestMapping(value = "/myAccount/updateAccount", method = RequestMethod.POST)
 	public String updateAccountPost(@Valid @ModelAttribute("customer") CustomerDTO customerDTO, BindingResult result,
-			HttpServletRequest request, Authentication authentication, Model model) throws CustomLogicException, ConstraintViolationException {
+			HttpServletRequest request, Authentication authentication, Model model) throws CustomLogicException {
 	
 		try {
 			customerService.update(customerDTO);
+			logger.info(customerDTO.getLastName() + " has updated his/her account");
 		}
 		catch (DataIntegrityViolationException ex) {
 			model.addAttribute("error","Your have used the email address which is already taken on this website. Please try again.");
 			logger.error("Your have used the email address which is already taken on this website. Please try again.");
 			return "updateAccount";
 		}
+		catch (ConstraintViolationException ex) {
+			model.addAttribute("error","Please check your input, some fields are filled in incorrectly");
+			logger.error("Errors in user input");
+			return "updateAccount";
+		}
 		
 
-		return "redirect:/myAccount";
+		return REDIRECT;
 	}
 	
 	@RequestMapping("/myAccount/changeAddress")
@@ -97,6 +106,7 @@ public class CustomerController {
 		
 		try {
 			addressService.update(addressDTO);
+			logger.info(authentication.getName() + " has updated his/her account");
 		}
 		catch (ConstraintViolationException ex) {
 			model.addAttribute("error","Your have mistyped values for some of the fields. Please verify provided information (no negative values, correct zip code format)");
@@ -106,7 +116,7 @@ public class CustomerController {
 		
 		
 		
-		return "redirect:/myAccount";
+		return REDIRECT;
 	}
 	
 	@RequestMapping("/myAccount/changePassword")
@@ -127,7 +137,8 @@ public class CustomerController {
 			return "changePassword";
 		}
 		userService.changePassword(newPassword, user);
-		return "redirect:/myAccount";
+		logger.info(username + "has changed his/her password");
+		return REDIRECT;
 	}
 
 	
