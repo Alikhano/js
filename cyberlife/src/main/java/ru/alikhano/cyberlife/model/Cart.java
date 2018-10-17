@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="cart")
@@ -75,5 +73,19 @@ public class Cart {
 			return false;
 		return true;
 	}
+	
+	
+
+	public Cart() {
+
+	}
+
+	public Cart(int cartId, double grandTotal, Set<CartItem> items) {
+		this.cartId = cartId;
+		this.grandTotal = grandTotal;
+		this.items = items;
+	}
+	
+	
 
 }

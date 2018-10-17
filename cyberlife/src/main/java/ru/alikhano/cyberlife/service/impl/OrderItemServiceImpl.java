@@ -1,6 +1,6 @@
 package ru.alikhano.cyberlife.service.impl;
 
-import java.util.List;
+
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import ru.alikhano.cyberlife.DTO.OrderItemDTO;
 import ru.alikhano.cyberlife.dao.OrderItemDao;
 import ru.alikhano.cyberlife.mapper.OrderItemMapper;
 import ru.alikhano.cyberlife.mapper.OrderMapper;
-import ru.alikhano.cyberlife.model.OrderItem;
+
 import ru.alikhano.cyberlife.service.OrderItemService;
 
 @Service

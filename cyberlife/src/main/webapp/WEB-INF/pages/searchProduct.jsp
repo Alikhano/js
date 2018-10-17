@@ -108,19 +108,25 @@
 
 			$.ajax({
 				type : 'POST',
-				contentType : "application/json; charset=utf-8",
-				dataType : "json",
+				 headers: {
+			            'Content-Type': 'application/json',
+			            'Accept': 'application/json'
+			        },
 				data : JSON.stringify(search),
 				url : '${pageContext.request.contextPath}/searchProduct',
-				success : function(data) {
+				async: false
+			}).done(function(data) {
 					var product = data;
 					if (!$.isArray(data) || !data.length) {
 						swal("Oops, we found nothing. Try again!");
 					} else {
 						append_json(product);
 					}
-				}
-			});
+				}).fail(function (qXHR, textStatus, errorThrown) {
+					var exceptionVO = jQuery.parseJSON(jqXHR.responseText);
+					swal("Opps", exceptionVO.message, "error");
+				});
+			
 		});
 	});
 

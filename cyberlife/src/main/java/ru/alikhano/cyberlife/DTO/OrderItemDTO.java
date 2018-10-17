@@ -1,14 +1,5 @@
 package ru.alikhano.cyberlife.DTO;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import ru.alikhano.cyberlife.model.Orders;
-import ru.alikhano.cyberlife.model.Product;
 
 public class OrderItemDTO {
 	

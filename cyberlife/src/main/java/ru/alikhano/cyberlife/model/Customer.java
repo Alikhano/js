@@ -36,7 +36,6 @@ public class Customer {
 	
 	@Column(name="email", unique = true)
 	@NotNull
-/*	@Email(message = "Email should be valid")*/
 	@Pattern(regexp="^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$")
 	private String email;
 	
@@ -133,6 +132,7 @@ public class Customer {
 	public Customer() {
 		
 	}
+	
 
 	public Customer(int customerId, String firstName, String lastName, String birthDate, String email,
 			Address address) {

@@ -1,22 +1,19 @@
 package ru.alikhano.cyberlife.controller;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.ProductInfo;
 import ru.alikhano.cyberlife.DTO.SearchRequest;
 import ru.alikhano.cyberlife.service.CategoryService;
@@ -47,11 +44,13 @@ public class SearchController {
 	    }
 	 
 	 @RequestMapping(value="/searchProduct",method=RequestMethod.POST,  produces="application/json")
-	 public @ResponseBody List<ProductInfo> getSearchedProducts(@RequestBody SearchRequest searchRequest) throws CustomLogicException {
+	 public ResponseEntity<?> getSearchedProducts(@RequestBody SearchRequest searchRequest) throws CustomLogicException {
 		 int catId;
 		 int consId;
 		 String category = searchRequest.getCategory();
 		 String model = searchRequest.getModel();
+		 
+		 logger.info(searchRequest.toString());
 		 
 		 if(category.equals("any")) {
 			 catId = 0;
@@ -71,10 +70,17 @@ public class SearchController {
 		 double fromPrice = searchRequest.getFromPrice();
 		 double toPrice = searchRequest.getToPrice();
 		 
-		 logger.info("search request has produced some results");
+		 if (fromPrice < 0 || toPrice < 0) {
+			 logger.error("User have tried to search by negative price range");
+			 return ResponseEntity.badRequest().body("Price range cannot be negative!");
+		 }
+		 
+		 logger.info("Search request has produced some results");
+		 
+		 List<ProductInfo> searchResult = productService.searchParam(model, catId, consId, fromPrice, toPrice);
 		 
 	
-	     return productService.searchParam(model, catId, consId, fromPrice, toPrice);
+	     return ResponseEntity.ok(searchResult);
 	 }
 	 
 }

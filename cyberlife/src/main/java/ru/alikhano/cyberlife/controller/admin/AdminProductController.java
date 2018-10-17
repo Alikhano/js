@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
@@ -81,11 +79,11 @@ public class AdminProductController {
 		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
 		path = Paths.get(rootDirectory + "/static/images/" + newProductDTO.getModel() + ".jpg");
 
-		if (file != null && !file.isEmpty()) {
+		if (!file.isEmpty()) {
 			try {
 				file.transferTo(new File(path.toString()));
 			} catch (Exception ex) {
-				throw new RuntimeException("Product image saving failed", ex);
+				throw new CustomLogicException("Product image saving failed");
 			}
 		}
 

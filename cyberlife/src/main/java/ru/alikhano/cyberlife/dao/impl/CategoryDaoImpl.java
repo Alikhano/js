@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.dao.CategoryDao;
 import ru.alikhano.cyberlife.model.Category;
 

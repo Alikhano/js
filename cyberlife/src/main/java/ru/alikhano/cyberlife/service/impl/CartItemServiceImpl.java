@@ -102,7 +102,7 @@ public class CartItemServiceImpl implements CartItemService {
 		        cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
 		        cartItemDTO.setCart(cartDTO);
 		        create (cartItemDTO);
-		        System.out.println("ATTENTION!!!! NEW!!!" + cartItemDTO.getQuantity() + " " + cartItemDTO.getTotalPrice());
+		       
 			}
 		}
 		else {
@@ -119,7 +119,7 @@ public class CartItemServiceImpl implements CartItemService {
 	        cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
 	        cartItemDTO.setCart(cartDTO);
 	        create(cartItemDTO);
-	        System.out.println("ATTENTION!!!! NEW!!!" + cartItemDTO.getQuantity() + " " + cartItemDTO.getTotalPrice());
+	        
 	        
 		}
 	        

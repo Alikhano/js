@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import ru.alikhano.cyberlife.model.OrderItem;
 
 public class OrderDTO {
 

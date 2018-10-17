@@ -1,7 +1,6 @@
 package ru.alikhano.cyberlife.DTO;
 
-import ru.alikhano.cyberlife.model.Cart;
-import ru.alikhano.cyberlife.model.Product;
+import ru.alikhano.cyberlife.model.CartItem;
 
 public class CartItemDTO {
 	
@@ -43,6 +42,19 @@ public class CartItemDTO {
 	public void setCart(CartDTO cart) {
 		this.cart = cart;
 	}
+	
+	
+	public CartItemDTO() {
+	
+	}
+	public CartItemDTO(CartItem cartItem) {
+		
+		this.itemId = cartItem.getItemId();
+		this.totalPrice = cartItem.getTotalPrice();
+		this.quantity = cartItem.getQuantity();
+
+	}
+	
 	
 	
 	

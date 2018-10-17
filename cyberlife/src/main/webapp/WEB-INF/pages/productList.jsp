@@ -58,7 +58,7 @@ $(document).ready(function() {
 	
 	if($('span').text().length != 0){
 		var span_Text = document.getElementById("statusSpan").innerText;
-		swal(span_Text, "error");
+		swal("Oops", span_Text, "error");
 		document.getElementById("statusSpan").empty();
 	}
 

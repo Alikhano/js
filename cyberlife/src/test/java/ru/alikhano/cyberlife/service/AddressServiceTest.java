@@ -50,26 +50,30 @@ public class AddressServiceTest {
 		Mockito.when(addressMapper.addressDTOtoAddress(addressDTOMock)).thenReturn(addressMock);
 		Mockito.when(addressMapper.addressToAddressDTO(addressMock)).thenReturn(addressDTOMock);
 		
-		Mockito.doAnswer((i) -> {
-			System.out.println("Address is created");
-			return null;
-		}).when(addressDao).create(addressMock);
+		Mockito.doNothing().when(addressDao).create(addressMock);
 		
-		Mockito.doAnswer((i) -> {
-			System.out.println("Address is updated");
-			return null;
-		}).when(addressDao).update(addressMock);
+		Mockito.doNothing().when(addressDao).update(addressMock);
+		
+		Mockito.doNothing().when(addressDao).delete(addressMock);
 		
 	}
 	
 	@Test
 	public void create() {
 		addressService.create(addressDTOMock);
+		addressDao.create(addressMock);
 	}
 	
 	@Test
 	public void update() {
 		addressService.update(addressDTOMock);
+		addressDao.update(addressMock);
+	}
+	
+	@Test
+	public void delete() {
+		addressService.delete(addressDTOMock);
+		addressDao.delete(addressMock);
 	}
 	
 	@Test

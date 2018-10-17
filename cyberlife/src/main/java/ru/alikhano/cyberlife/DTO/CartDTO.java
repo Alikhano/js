@@ -2,7 +2,9 @@ package ru.alikhano.cyberlife.DTO;
 
 import java.util.Set;
 
+import ru.alikhano.cyberlife.model.Cart;
 import ru.alikhano.cyberlife.model.CartItem;
+
 
 public class CartDTO {
 	
@@ -27,6 +29,16 @@ public class CartDTO {
 	}
 	public void setItems(Set<CartItemDTO> items) {
 		this.items = items;
+	}
+	
+	
+	public CartDTO() {
+	
+	}
+	public CartDTO(Cart cart) {
+		
+		this.cartId = cart.getCartId();
+		this.grandTotal = cart.getGrandTotal();
 	}
 	
 	

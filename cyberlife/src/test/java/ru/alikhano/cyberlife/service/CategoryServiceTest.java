@@ -51,10 +51,7 @@ public class CategoryServiceTest {
 		Mockito.when(categoryMapper.categoryToCategoryDTO(categoryMock)).thenReturn(categoryDTOMock);
 		Mockito.when(categoryDao.createAndGetId(categoryMock)).thenReturn(1);
 		
-		Mockito.doAnswer((i) -> {
-			System.out.println("Category is created");
-			return null;
-		}).when(categoryDao).create(categoryMock);
+		Mockito.doNothing().when(categoryDao).create(categoryMock);
 		
 		
 	}
@@ -63,6 +60,7 @@ public class CategoryServiceTest {
 	public void create() {
 		categoryService.create(categoryDTOMock);
 	}
+
 	
 	@Test
 	public void createAndGetId() {
@@ -84,8 +82,8 @@ public class CategoryServiceTest {
 	
 	@Test
 	public void getAll() {
-		List<CategoryDTO> list = categoryService.getAll();
-		assertEquals(categoriesDTO, list);
+		categoryService.getAll();
+		Mockito.verify(categoryDao).getAll();
 	}
 
 }

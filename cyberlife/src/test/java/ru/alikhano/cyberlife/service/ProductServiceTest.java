@@ -15,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
@@ -56,16 +55,11 @@ public class ProductServiceTest {
 		Mockito.when(productDaoMock.getById(1)).thenReturn(productMock);
 		Mockito.when(productDaoMock.getByModel("rk800")).thenReturn(productMock);
 		Mockito.when(productDaoMock.getAll()).thenReturn(productsMock);
-		Mockito.when(productMapper.productToProductDTO(productMock)).thenReturn(productDTOMock);		
-		Mockito.doAnswer((i) -> {
-			System.out.println("Product is removed");
-			productsDTOMock.remove(0);
-			return null;
-		}).when(productDaoMock).delete(productMock);
-		Mockito.doAnswer((i) -> {
-			System.out.println("Product is updated");
-			return null;
-		}).when(productDaoMock).delete(productMock);
+		Mockito.when(productMapper.productToProductDTO(productMock)).thenReturn(productDTOMock);	
+		Mockito.when(productMapper.productDTOtOProduct(productDTOMock)).thenReturn(productMock);
+		Mockito.doNothing().when(productDaoMock).delete(productMock);
+		Mockito.doNothing().when(productDaoMock).update(productMock);
+		Mockito.doNothing().when(productDaoMock).create(productMock);
 				
 		}
 	
@@ -73,19 +67,24 @@ public class ProductServiceTest {
 	public void create() throws CustomLogicException {
 		ProductDTO product = new ProductDTO();
 		productService.create(product);
+		productDaoMock.create(productMock);
+		
 	}
 	
 	@Test
 	public void delete() throws CustomLogicException, IOException, TimeoutException {
 		productDaoMock.delete(productMock);
-		productService.delete(productDTOMock);
+		Mockito.verify(productDaoMock).delete(productMock);
 	
 
 	}
+
 	
 	@Test 
 	public void update() throws IOException, TimeoutException {
 		productService.update(productDTOMock);
+		Mockito.verify(productDaoMock).update(productMock);
+	
 	}
 	
 	@Test

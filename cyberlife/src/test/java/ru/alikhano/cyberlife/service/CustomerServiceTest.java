@@ -1,7 +1,6 @@
 package ru.alikhano.cyberlife.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -56,39 +55,31 @@ public class CustomerServiceTest {
 	   Mockito.when(customerMapper.customerDTOtoCustomer(customerDTOMock)).thenReturn(customerMock);
 	   Mockito.when(customerMapper.customerToCustomerDTO(customerMock)).thenReturn(customerDTOMock);
 	   
-	   Mockito.doAnswer((i) -> {
-			System.out.println("Customer is created");
-			return null;
-		}).when(customerDao).create(customerMock);
+	   Mockito.doNothing().when(customerDao).create(customerMock);
 		
-		Mockito.doAnswer((i) -> {
-			System.out.println("Customer is updated");
-			return null;
-		}).when(customerDao).update(customerMock);
+		Mockito.doNothing().when(customerDao).update(customerMock);
 		
-		Mockito.doAnswer((i) -> {
-			System.out.println("Customer is deleted");
-			customers.remove(customerMock);
-			customersDTO.remove(customerDTOMock);
-			return null;
-		}).when(customerDao).delete(customerMock);
+		Mockito.doNothing().when(customerDao).delete(customerMock);
 	
 	}
 	
 	@Test
 	public void create() {
 		customerService.create(customerDTOMock);
+		Mockito.verify(customerDao).create(customerMock);
 	}
 	
 	@Test
 	public void delete() {
 		customerService.delete(customerDTOMock);
-		assertTrue(customers.isEmpty());
+		Mockito.verify(customerDao).delete(customerMock);
 	}
 	
 	@Test
 	public void update() throws CustomLogicException {
 		customerService.update(customerDTOMock);
+		Mockito.verify(customerDao).update(customerMock);
+		
 	}
 	
 	@Test

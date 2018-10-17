@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ru.alikhano.cyberlife.config.rabbitmq.Producer;
 import ru.alikhano.cyberlife.config.rabbitmq.ProductJson;
 import ru.alikhano.cyberlife.service.ProductJsonSender;
 import ru.alikhano.cyberlife.service.ProductJsonService;

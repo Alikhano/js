@@ -90,10 +90,8 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional
 	public void update(OrderDTO orderDTO) throws IOException, TimeoutException {
 		orderDao.update(orderMapper.orderDTOtoOder(orderDTO));
-		if (orderDTO.getPaymentStatus().equals("paid")) {
-			if (isInTop(orderDTO)) {
-				messaginService.sendUpdateMessage("table should be updated!");
-			}
+		if (orderDTO.getPaymentStatus().equals("paid") && isInTop(orderDTO)) {	
+				messaginService.sendUpdateMessage("table should be updated!");			
 		}
 
 	}

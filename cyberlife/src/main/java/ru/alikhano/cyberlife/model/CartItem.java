@@ -69,6 +69,8 @@ public class CartItem {
 		return product;
 	}
 
+
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}
@@ -102,6 +104,20 @@ public class CartItem {
 			return false;
 		return true;
 	}
+	
+	public CartItem(int itemId, @NotNull @Min(1) int quantity, @NotNull @Min(1) double totalPrice,
+			@NotNull Product product) {
+		this.itemId = itemId;
+		this.quantity = quantity;
+		this.totalPrice = totalPrice;
+		this.product = product;
+	}
+
+	public CartItem() {
+	
+	}
+	
+	
 	
 	
 

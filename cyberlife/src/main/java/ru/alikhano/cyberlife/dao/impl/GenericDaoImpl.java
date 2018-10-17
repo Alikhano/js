@@ -17,6 +17,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 	@Autowired
 	SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	public GenericDaoImpl() {
 	
 		this.entityClass = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), GenericDao.class);

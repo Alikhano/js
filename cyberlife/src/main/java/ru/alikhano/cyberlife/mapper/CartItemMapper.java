@@ -1,6 +1,5 @@
 package ru.alikhano.cyberlife.mapper;
 
-import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

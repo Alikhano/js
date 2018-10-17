@@ -40,6 +40,13 @@ public class SearchRequest {
 		this.toPrice = toPrice;
 	}
 	
+	@Override
+	public String toString() {
+		return "SearchRequest [model=" + model + ", category=" + category + ", consLevel=" + consLevel + ", fromPrice="
+				+ fromPrice + ", toPrice=" + toPrice + "]";
+	}
+	
+	
 	
 
 }
