@@ -6,8 +6,8 @@
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Available AI configurations</th>
-			<th>Description</th>
+			<th><spring:message code="label.availableAIConfig"/></th>
+			<th><spring:message code="label.description"/></th>
 		</tr>
 	</thead>
 	<c:forEach items="${consLevels}" var="cons">
@@ -26,18 +26,18 @@
 		<div class="container">
 			<div class="form-group">
 				<form:input path="level" id="level" class="form-Control" placeholder="Level" />
-					<form:errors path="level" cssClass="error"></form:errors>
+			
 		</div>
 		
 		<div class="form-group">
 
 								<form:textarea rows="4" cols="50" path="description"
-									id="description" class="form-Control" placeholder="Description" />
+									id="description" class="form-Control" placeholder="<spring:message code="label.description"/>" />
 										<form:errors path="level" cssClass="error"></form:errors>
 							</div>
 
 		<input type="submit" value="Add" class="btn btn-success">
-			<a href="<c:url value="/productList" />" class="btn btn-danger">Cancel</a>
+			<a href="<c:url value="/productList" />" class="btn btn-danger"><spring:message code="label.cancel"/></a>
 		</div>
 
 	</form:form>

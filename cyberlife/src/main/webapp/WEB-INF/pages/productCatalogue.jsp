@@ -4,12 +4,12 @@
 <table class="table table-striped table-hover" id="catalogue">
 	<thead>
 		<tr>
-			<th>Photo Thumb</th>
-			<th>Product Name</th>
-			<th>Category</th>
-			<th>Consciousness</th>
-			<th>Quantity</th>
-			<th>Price</th>
+			<th><spring:message code="label.photoThumb"/></th>
+			<th><spring:message code="label.model"/></th>
+			<th><spring:message code="label.category"/></th>
+			<th><spring:message code="label.consciousness"/></th>
+			<th><spring:message code="label.unitsInStock"/></th>
+			<th><spring:message code="label.price"/></th>
 
 		</tr>
 	</thead>

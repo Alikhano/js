@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<h2 class="form-heading">Create your profile</h2>
+				<h2 class="form-heading"><spring:message code="label.createprofile"/></h2>
 				<hr>
 			</div>
 		</div>
@@ -17,8 +17,8 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<form:input type="text" id="firstName" path="firstName"
-				class="form-control" placeholder="first name" autofocus="true"></form:input>
-			<form:errors path="firstName"></form:errors>
+				class="form-control" placeholder="<spring:message code="label.firstName"/>" autofocus="true"></form:input>
+			
 
 				</div>
 			</div>
@@ -29,8 +29,8 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<form:input type="text" id="lastName" path="lastName"
-				class="form-control" placeholder="last name" autofocus="true"></form:input>
-			<form:errors path="lastName" cssClass="error"></form:errors>
+				class="form-control" placeholder="<spring:message code="label.lastName"/>" autofocus="true"></form:input>
+			
 
 				</div>
 			</div>
@@ -41,9 +41,9 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<form:input type="text" id="email" path="email" class="form-control"
-				placeholder="email" autofocus="true"></form:input>
+				placeholder="<spring:message code="label.email"/>" autofocus="true"></form:input>
 			<span style="color: #ff0000">${repEmail}</span>
-			<form:errors path="email" cssClass="error"></form:errors>
+		
 				</div>
 			</div>
 		</div>
@@ -53,8 +53,8 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<form:input type="text" id="birthDate" path="birthDate"
-				class="form-control" placeholder="yyyy-mm-dd"></form:input>
-			<form:errors path="birthDate" cssClass="error"></form:errors>
+				class="form-control" placeholder="<spring:message code="label.birthDate"/>"></form:input>
+			
 				</div>
 			</div>
 		</div>
@@ -63,7 +63,7 @@
 		<div class="row">
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<h2 class="form-heading">Add address information</h2>
+				<h2 class="form-heading"><spring:message code="label.addAddress"/></h2>
 				<hr>
 			</div>
 		</div>
@@ -73,7 +73,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 				<form:input type="text" id="street" path="address.street"
-				class="form-control" placeholder="street" autofocus="true"></form:input>
+				class="form-control" placeholder="<spring:message code="label.street"/>" autofocus="true"></form:input>
 		
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 				<form:input type="text" id="building" path="address.building"
-				class="form-control" placeholder="building" autofocus="true"></form:input>
+				class="form-control" placeholder="<spring:message code="label.building"/>" autofocus="true"></form:input>
 				
 
 				</div>
@@ -95,7 +95,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 			<form:input type="text" id="flat" path="address.flat"
-				class="form-control" placeholder="apt. number" autofocus="true"></form:input>
+				class="form-control" placeholder="<spring:message code="label.flat"/>" autofocus="true"></form:input>
 					
 
 				</div>
@@ -106,7 +106,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 			<form:input type="text" id="city" path="address.city"
-				class="form-control" placeholder="city" autofocus="true"></form:input>
+				class="form-control" placeholder="<spring:message code="label.city"/>" autofocus="true"></form:input>
 				
 
 				</div>
@@ -117,7 +117,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 				<form:input type="text" id="country" path="address.country"
-				class="form-control" placeholder="country" autofocus="true"></form:input>
+				class="form-control" placeholder="<spring:message code="label.country"/>" autofocus="true"></form:input>
 				
 				</div>
 			</div>
@@ -127,7 +127,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 			<form:input type="text" id="zipCode" path="address.zipCode"
-				class="form-control" placeholder="zip code" autofocus="true"></form:input>
+				class="form-control" placeholder="<spring:message code="label.zipCode"/>" autofocus="true"></form:input>
 					
 
 				</div>
@@ -137,7 +137,7 @@
 			<div class="row"  style="padding-top: 1rem">
 		<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<input type="submit" value="Register" class="btn btn-success">
+				<input type="submit" value="<spring:message code="label.register"/>" class="btn btn-success">
 			</div>
 		</div>
 	

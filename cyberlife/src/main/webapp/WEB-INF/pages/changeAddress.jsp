@@ -14,32 +14,32 @@
 		<form:input type="hidden" path="addressId" id="addressId" />
 
 		<div class="form-group">
-			<label for="country">Country*</label>
+			<label for="country"><spring:message code="label.country"/>*</label>
 			<form:input path="country" id="country" class="form-Control" />
 		
 		</div>
 		<div class="form-group">
-			<label for="city">City*</label>
+			<label for="city"><spring:message code="label.city"/>*</label>
 			<form:input path="city" id="city" class="form-Control" />
 			
 		</div>
 		<div class="form-group">
-			<label for="zipCode">Zip code*</label>
+			<label for="zipCode"><spring:message code="label.zipCode"/>*</label>
 			<form:input path="zipCode" id="zipCode" class="form-Control" />
 			
 		</div>
 		<div class="form-group">
-			<label for="street">Street*</label>
+			<label for="street"><spring:message code="label.street"/>*</label>
 			<form:input path="street" id="street" class="form-Control" />
 			
 		</div>
 		<div class="form-group">
-			<label for="building">Building*</label>
+			<label for="building"><spring:message code="label.building"/>*</label>
 			<form:input path="building" id="building" class="form-Control" />
 		
 		</div>
 		<div class="form-group">
-			<label for="flat">Flat*</label>
+			<label for="flat"><spring:message code="label.flat"/>*</label>
 			<form:input path="flat" id="flat" class="form-Control" />
 			
 		</div>
@@ -47,9 +47,9 @@
 
 		<br />
 		<br />
-		<input type="submit" value="Update" class="btn btn-default">
+		<input type="submit" value="<spring:message code="label.change"/>" class="btn btn-default">
 
-		<a href="<c:url value="/myAccount" />" class="btn btn-default">Cancel</a>
+		<a href="<c:url value="/myAccount" />" class="btn btn-default"><spring:message code="label.cancel"/></a>
 
 
 	</form:form>

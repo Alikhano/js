@@ -10,7 +10,7 @@
 
 					<tr>
 
-						<th>Top 10 models</th>
+						<th><spring:message code="label.topModels" /></th>
 
 					</tr>
 				</thead>
@@ -31,7 +31,7 @@
 
 					<tr>
 
-						<th>Top 10 customers</th>
+						<th><spring:message code="label.topCustomers" /></th>
 
 
 					</tr>
@@ -51,7 +51,7 @@
 
 					<tr>
 
-						<th>Monthly Revenue</th>
+						<th><spring:message code="label.MonthlyRevenue" /></th>
 						
 
 
@@ -71,7 +71,7 @@
 		<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<th>Weekly Revenue</th>
+						<th><spring:message code="label.weeklyRevenue" /></th>
 					</tr>
 				</thead>
 					<tr>
@@ -88,10 +88,10 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {	
-	   if($('span').text().length != 0){
-		var span_Text = document.getElementById("statusSpan").innerText;
+	   if($('#statusSpan').text().length != 0){
+		var span_Text = $('#statusSpan').text();
 		swal("Success", span_Text, "success");
-		document.getElementById("statusSpan").empty();
+		$('#statusSpan').empty();
 	};
 	});
 	</script>

@@ -4,16 +4,16 @@
 	<div class="container">
 		<div class="jumb-text">
 			<br>
-			<h1 class="display-4">Oops, something went wrong</h1>
+			<h1 class="display-4"><spring:message code="label.oops"/></h1>
 			<br>
 			<p class="lead">
 			 <sec:authorize access="hasRole('ROLE_ADMIN')">
 				<a class="btn btn-primary btn-lg"
-					href="<c:url value="/admin/admin-home" />" role="button">Back to home</a>
+					href="<c:url value="/admin/admin-home" />" role="button"><spring:message code="label.backToHome"/></a>
 			</sec:authorize>
 					 <sec:authorize access="!hasRole('ROLE_ADMIN')">
 				<a class="btn btn-primary btn-lg"
-					href="<c:url value="/" />" role="button">Back to home</a>
+					href="<c:url value="/" />" role="button"><spring:message code="label.backToHome"/></a>
 					</sec:authorize>
 			</p>
 			<br>

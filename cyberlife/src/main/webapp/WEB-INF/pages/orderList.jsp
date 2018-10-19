@@ -5,13 +5,13 @@
 	<thead>
 		<tr>
 			
-			<th>Order id</th>
-			<th>Order status</th>
-			<th>Payment status</th>
-			<th>Total price</th>
+			<th><spring:message code="label.orderId"/></th>
+			<th><spring:message code="label.orderStatus"/></th>
+			<th><spring:message code="label.paymentStatus"/></th>
+			<th><spring:message code="label.totalPrice"/></th>
 			<th>Date</th> 
 			 <sec:authorize access="hasRole('ROLE_ADMIN')">
-			<th>Update order</th>
+			<th><spring:message code="label.updateOrder"/></th>
 			</sec:authorize>
 		
 		</tr>
@@ -78,10 +78,10 @@ $(document).ready(function() {
 	    "order": [[ 0, "desc" ]]
 	});
 	
-	if($('span').text().length != 0){
-		var span_Text = document.getElementById("statusSpan").innerText;
+	if($('#statusSpan').text().length != 0){
+		var span_Text = $('#statusSpan').text();
 		swal("Oops", span_Text, "error");
-		document.getElementById("statusSpan").empty();
+		$('#statusSpan').empty();
 	}
 	
 });

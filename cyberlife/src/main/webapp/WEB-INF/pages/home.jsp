@@ -4,17 +4,14 @@
 	<div class="container">
 		<div class="jumb-text">
 			<br>
-			<h1 class="display-4">Get yours today!</h1>
+			<h1 class="display-4"><spring:message code="label.getYours"/></h1>
 			<br>
-			<p class="lead">Cyberlife is the #1 android manufacturer in the
-				world. We are here to provide you the latest AI and robotics
-				technologies.</p>
+			<p class="lead"><spring:message code="label.homeText"/></p>
 			<hr class="my-4">
-			<p class="lead">We offer a wide variety of android models to suit
-				your needs in every aspect of your private or business life.</p>
+			<p class="lead"><spring:message code="label.homeTextCont"/></p>
 			<p class="lead">
 				<a class="btn btn-primary btn-lg"
-					href="<c:url value="/catalogue" />" role="button">Catalogue</a>
+					href="<c:url value="/catalogue" />" role="button"><spring:message code="label.catalogue"/></a>
 			</p>
 			<br>
 		</div>

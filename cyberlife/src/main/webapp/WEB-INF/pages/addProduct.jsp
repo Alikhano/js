@@ -14,13 +14,13 @@
 
 				<div class="container">
 					<div class="form-group">
-						<form:errors path="model" cssStyle="color:#ff0000;" />
-						<form:input path="model" id="model" class="form-Control" placeholder="Model"/>
+						<label for="model"><spring:message code="label.model"/></label>
+						<form:input path="model" id="model" class="form-Control"/>
 						<span style="color: #ff0000">${repModel}</span>
 					</div>
 
 					<div class="form-group">
-						<label for="category">Category</label>
+						<label for="category"><spring:message code="label.category"/></label>
 						<form:select path="category.catId">
 							<form:options items="${categoryDTOList}" itemValue="catId"
 								itemLabel="catType" />
@@ -28,7 +28,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="cons">Consciousness</label>
+						<label for="cons"><spring:message code="label.consciousness"/></label>
 						<form:select path="cons.consId">
 							<form:options items="${consDTOList}" itemValue="consId"
 								itemLabel="level" />
@@ -36,33 +36,33 @@
 					</div>
 
 					<div class="form-group">
-						<form:errors path="description" cssClass="error" />
+						<label for="cons"><spring:message code="label.description"/></label>
 						<form:textarea rows="4" cols="50" path="description"
-							id="description" class="form-Control" placeholder="Description"/>
+							id="description" class="form-Control"/>
 					</div>
 
 					<div class="form-group">
-						<label for="price">Price</label>
+						<label for="price"><spring:message code="label.price"/></label>
 						<form:errors path="price" cssClass="error" />
 						<form:input path="price" id="price" class="form-Control" />
 					</div>
 
 
 					<div class="form-group">
-						<label for="unitsInStock">Units In Stock</label>
+						<label for="unitsInStock"><spring:message code="label.unitsInStock"/></label>
 						<form:errors path="unitsInStock" cssClass="error" />
 						<form:input path="unitsInStock" id="unitsInStock"
 							class="form-Control" />
 					</div>
 
 					<div class="form-group">
-						<label class="control-label" for="file">Upload model image</label>
+						<label class="control-label" for="file"><spring:message code="label.uploadImage"/></label>
 						<input id="file" name="file" type="file" class="form:input-large" />
 					</div>
 
-					<input type="submit" value="Add product"
+					<input type="submit" value="<spring:message code="label.submit"/>"
 						class="btn btn-success"> <a
-						href="<c:url value="/admin/productList" />" class="btn btn-danger">Cancel</a>
+						href="<c:url value="/admin/productList" />" class="btn btn-danger"><spring:message code="label.cancel"/></a>
 				</div>
 
 			</form:form>

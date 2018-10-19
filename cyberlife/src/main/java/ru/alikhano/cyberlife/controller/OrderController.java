@@ -13,7 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,6 +91,12 @@ public class OrderController {
 
 		String cartToOrder = orderService.cartToOrder(orderDTO, cartDTO, username);
 
+		if (orderDTO.getPaymentType().equals("credit card")) {
+			request.getSession().setAttribute("totalPrice", orderDTO.getOrderPrice());
+			request.getSession().setAttribute("orderId", orderDTO.getOrderId());
+			return "redirect:/myOrder/cardPayment";
+		}
+
 		if (!cartToOrder.equals("success")) {
 			model.addAttribute("noStockMsg", cartToOrder);
 			logger.info(username + " has created new order");
@@ -120,7 +128,7 @@ public class OrderController {
 	public String orderStatusPost(@RequestParam("orderId") int orderId, @RequestParam("orderStatus") String orderStatus,
 			@RequestParam("paymentStatus") String paymentStatus, Model model, Authentication authentication,
 			HttpServletRequest request) throws CustomLogicException, IOException, TimeoutException {
-	
+
 		OrderDTO order = orderService.getById(orderId);
 		if (order.getOrderStatus().equals("delivered and recieved") && order.getPaymentStatus().equals("paid")) {
 			model.addAttribute("errorOrder", "No status updates after order completion!");
@@ -133,12 +141,10 @@ public class OrderController {
 		if (orderStatus.equals("order status")) {
 			order.setPaymentStatus(paymentStatus);
 			orderService.update(order);
-		}
-		else if (paymentStatus.equals("payment status")) {
+		} else if (paymentStatus.equals("payment status")) {
 			order.setOrderStatus(orderStatus);
 			orderService.update(order);
-		}
-		else {
+		} else {
 			order.setOrderStatus(orderStatus);
 			order.setPaymentStatus(paymentStatus);
 			orderService.update(order);
@@ -147,6 +153,26 @@ public class OrderController {
 		logger.info("Admin has updated the order");
 
 		return "redirect:/admin/stats";
+	}
+
+	@GetMapping(value = "/myOrder/cardPayment")
+	public String creditCardPayment(Authentication authentication, Model model,
+			HttpServletRequest request) {
+		int id = (int) request.getSession().getAttribute("orderId");
+		OrderDTO orderDTO = orderService.getById(id);
+
+		model.addAttribute("orderDTO", orderDTO);
+		model.addAttribute("total", (double) request.getSession().getAttribute("totalPrice"));
+		return "cardPayment";
+	}
+
+	@PostMapping(value = "/myOrder/cardPayment")
+	public String creditCardPaymentPost(@ModelAttribute OrderDTO orderDTO, HttpServletRequest request, Model model) throws IOException, TimeoutException {
+	
+		orderDTO.setPaymentStatus("paid");
+		orderService.update(orderDTO);
+		return "redirect:/orderHistory";
+
 	}
 
 }

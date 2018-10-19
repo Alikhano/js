@@ -149,12 +149,8 @@ public class OrderServiceImpl implements OrderService {
 		
      	//update order status
 		
-		if (orderDTO.getPaymentType().equals("credit card")) {
-			orderDTO.setPaymentStatus("paid");
-		}
-		else {
-			orderDTO.setPaymentStatus("unpaid");
-		}
+		
+		orderDTO.setPaymentStatus("unpaid");	
 			
 		orderDTO.setOrderStatus("awaits delivery");
 		

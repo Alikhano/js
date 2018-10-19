@@ -13,14 +13,14 @@
 		<div class="reg-container">
 
 			<div class="form-group">
-				<label for="category">Category</label>
+				<label for="category"><spring:message code="label.category"/></label>
 				<form:select path="category.catId">
 					<form:options items="${categoryDTOList}" itemValue="catId"
 						itemLabel="catType" />
 				</form:select>
 			</div>
 			<div class="form-group">
-				<label for="cons">Consciousness</label>
+				<label for="cons"><spring:message code="label.consciousness"/></label>
 				<form:select path="cons.consId">
 					<form:options items="${consDTOList}" itemValue="consId"
 						itemLabel="level" />
@@ -30,14 +30,14 @@
 
 
 			<div class="form-group">
-				<label for="description">Description</label>
+				<label for="description"><spring:message code="label.description"/></label>
 				<form:textarea rows="4" cols="50" path="description"
 					id="description" class="form-Control" />
 				<%-- <form:errors path="description" cssClass="error"></form:errors> --%>
 			</div>
 
 			<div class="form-group">
-				<label for="price">Price</label>
+				<label for="price"><spring:message code="label.price"/></label>
 				<form:input path="price" id="price" class="form-Control" />
 				<%-- <form:errors path="price" cssClass="error" /> --%>
 
@@ -45,7 +45,7 @@
 
 
 			<div class="form-group">
-				<label for="unitsInStock">Units In Stock</label>
+				<label for="unitsInStock"><spring:message code="label.unitsInStock"/></label>
 				<form:input path="unitsInStock" id="unitsInStock"
 					class="form-Control" />
 				<%-- <form:errors path="unitsInStock" cssClass="error" /> --%>
@@ -53,14 +53,13 @@
 
 
 
-			<br /> <br /> <input type="submit" value="Submit"
+			<br /> <br /> <input type="submit" value="<spring:message code="label.submit"/>"
 				class="btn btn-default"> <a
-				href="<c:url value="/admin/productList" />" class="btn btn-default">Cancel</a>
+				href="<c:url value="/admin/productList" />" class="btn btn-default"><spring:message code="label.cancel"/></a>
 		</div>
 
 	</form:form>
 
-	<div class="container"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

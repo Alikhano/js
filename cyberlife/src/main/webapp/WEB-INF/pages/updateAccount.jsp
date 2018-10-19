@@ -12,22 +12,22 @@
 		<input type="hidden" name="customerId" value="${customer.customerId}" />
 
 		<div class="form-group">
-			<label for="firstName">First name</label>
+			<label for="firstName"><spring:message code="label.firstName" /></label>
 			<form:input path="firstName" id="firstName" class="form-Control" />
 				<form:errors path="firstName" cssClass="error"></form:errors>
 		</div>
 		<div class="form-group">
-			<label for="lastName">Last name</label>
+			<label for="lastName"><spring:message code="label.lastName" /></label>
 			<form:input path="lastName" id="lastName" class="form-Control" />
 				<form:errors path="lastName" cssClass="error"></form:errors>
 		</div>
 		<div class="form-group">
-			<label for="email">Email</label>
+			<label for="email"><spring:message code="label.email" /></label>
 			<form:input path="email" id="email" class="form-Control" />
 			<form:errors path="email" cssClass="error"></form:errors>
 		</div>
 		<div class="form-group">
-			<label for="birtDate">Date of birth</label>
+			<label for="birtDate"><spring:message code="label.dateOfBirth" /></label>
 			<form:input path="birthDate" id="birthDate" class="form-Control" />
 			<form:errors path="birthDate" cssClass="error"></form:errors>
 		</div>
@@ -35,9 +35,9 @@
 
 		<br />
 		<br />
-		<input type="submit" value="Update" class="btn btn-default">
+		<input type="submit" value="<spring:message code="label.changer" />" class="btn btn-default">
 
-		<a href="<c:url value="/myAccount" />" class="btn btn-default">Cancel</a>
+		<a href="<c:url value="/myAccount" />" class="btn btn-default"><spring:message code="label.cancel" /></a>
 
 
 	</form:form>

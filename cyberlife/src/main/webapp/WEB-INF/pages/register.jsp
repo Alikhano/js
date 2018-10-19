@@ -8,7 +8,7 @@
 		<div class="row">
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<h2 class="form-heading">Create your account</h2>
+				<h2 class="form-heading"><spring:message code="label.createProfile" /></h2>
 				<hr>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<form:input id="username" type="text" path="username"
-						class="form-control" placeholder="Username" autofocus="true"></form:input>
+						class="form-control" placeholder="<spring:message code="label.username" />" autofocus="true"></form:input>
 					<span style="color: #ff0000">${repUsername}</span>
 
 				</div>
@@ -32,7 +32,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<form:input id="password" type="password" path="password"
-						class="form-control" placeholder="Password"></form:input>
+						class="form-control" placeholder="<spring:message code="label.password" />"></form:input>
 
 				</div>
 			</div>
@@ -42,14 +42,14 @@
 			<div class="col-md-6">
 				<div class="from-group">
 					<input type="password" id="repeatPassword" name="repeatPassword"
-						class="form-control" placeholder="Repeat password">
+						class="form-control" placeholder="<th><spring:message code="label.repeatPassword" /></th>">
 				</div>
 			</div>
 		</div>
 		<div class="row"  style="padding-top: 1rem">
 		<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<input type="submit" value="Register" class="btn btn-success">
+				<input type="submit" value="<th><spring:message code="label.register" /></th>" class="btn btn-success">
 			</div>
 		</div>
 	

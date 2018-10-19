@@ -40,10 +40,10 @@
 					<form:input path="quantity" id="quantity" class="form-Control" />
 					  <sec:authorize access="!hasRole('ROLE_ADMIN')">
 					  <span style="color: #ff0000">${error}</span>
-					<input type="submit" id="addToCart" value="Add to cart"
+					<input type="submit" id="addToCart" value="<spring:message code="label.submit" />"
 						class="btn btn-success">
 						</sec:authorize>
-					<a href="<c:url value = "/catalogue" />" class="btn btn-secondary">Back</a>
+					<a href="<c:url value = "/catalogue" />" class="btn btn-secondary"><spring:message code="label.back" /></a>
 				</form:form>
 			</p>
 	</div>

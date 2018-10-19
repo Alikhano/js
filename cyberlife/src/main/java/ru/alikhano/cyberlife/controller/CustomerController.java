@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.alikhano.cyberlife.DTO.AddressDTO;
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
+import ru.alikhano.cyberlife.DTO.OrderDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
 import ru.alikhano.cyberlife.service.AddressService;
 import ru.alikhano.cyberlife.service.CustomerService;
@@ -141,7 +142,6 @@ public class CustomerController {
 		return REDIRECT;
 	}
 
-	
 
 
 }

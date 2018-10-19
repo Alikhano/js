@@ -8,7 +8,7 @@
 <table id="catTable" class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Available categories</th>
+			<th><spring:message code="label.availableCategories"/></th>
 		</tr>
 	</thead>
 	<c:forEach items="${categories}" var="category">
@@ -27,11 +27,11 @@
 			<form:input path="catType" id="catType" class="form-Control" placeholder="Category" />
 		</div>
 
-		<input type="submit" value="Add" 
+		<input type="submit" value="<spring:message code="label.add"/>" 
 			class="btn btn-success">
 		
 			
-			<a href="<c:url value="/productList" />" class="btn btn-danger">Cancel</a>
+			<a href="<c:url value="/productList" />" class="btn btn-danger"><spring:message code="label.cancel"/></a>
 	</div>
 	
 
@@ -74,7 +74,7 @@ $(document).ready(function() {
 			catType: $("#catType").val()
 		}),
 	}).done(function(data) {
-			swal("Success", "New category: " + catType, "success");
+			//swal("Success", "New category: " + catType, "success");
 		})
 		.fail(function(error) {
 			swal("Oops!","Duplicate entry!", "error");

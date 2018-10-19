@@ -27,7 +27,7 @@
 
 		<input class="search" id="toPrice" name="toPrice" type="text" placeholder="0.0" />
 
-		<input type="submit" value="Search by params" class="btn btn-success">
+		<input type="submit" value="<spring:message code="label.search" />" class="btn btn-success">
 
 	</form>
 
@@ -36,12 +36,13 @@
 		<table id="searchTable" class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th>Model</th>
-					<th>Category</th>
-					<th>Consciousness</th>
-					<th>Description</th>
-					<th>Stock</th>
-					<th>Price</th>
+						<th><spring:message code="label.model" /></th>
+			
+				<th><spring:message code="label.category" /></th>
+				<th><spring:message code="label.consciousness" /></th>
+				<th><spring:message code="label.description" /></th>
+				<th><spring:message code="label.stock" /></th>
+				<th><spring:message code="label.price" /></th>
 				</tr>
 			</thead>
 

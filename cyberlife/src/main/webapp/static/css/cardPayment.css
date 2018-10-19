@@ -1,0 +1,74 @@
+#card-container {
+	margin-top: 25px;
+}
+
+.hidden {
+  display: none;
+}
+
+
+#card-image {
+	float: right;
+	height: 100%;
+}
+
+#card-image i {
+	font-size: 40px;
+}
+
+#image-container {
+  width: 100%;
+  position: relative;
+  height: 55px;
+  margin-bottom: 5px;
+  line-height: 55px;
+}
+
+#image-container img {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+
+#form-errors {
+	color: #eb0000;
+}
+
+input.invalid {
+  border: solid 2px #eb0000;
+  height: 34px;
+}
+
+#form-errors, #card-success {
+	background-color: white;
+	width: 500px;
+	margin: 0 auto 10px;
+	height: 50px;
+	border-radius: 8px;
+	padding: 0 20px;
+	font-weight: 400;
+	box-sizing: border-box;
+	line-height: 46px;
+	letter-spacing: .5px;
+	text-transform: none;
+}
+
+#form-errors p, #card-success p {
+	margin: 0 5px;
+	display: inline-block;
+}
+
+#image-container {
+	width: 100%;
+	position: relative;
+	height: 55px;
+	margin-bottom: 5px;
+	line-height: 55px;
+}
+
+#image-container img {
+	position: absolute;
+	right: 0;
+	top: 0;
+}

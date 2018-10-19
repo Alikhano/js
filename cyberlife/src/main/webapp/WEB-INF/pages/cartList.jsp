@@ -3,14 +3,14 @@
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th>Image</th>
-			<th>Model</th>
-			<th>Category</th>
-			<th>Consciousness</th>
-			<th>Description</th>
-			<th>Price</th>
-			<th>Actions</th>
-			<th>Total Price</th>
+			<th><spring:message code="label.image"/></th>
+			<th><spring:message code="label.model"/></th>
+			<th><spring:message code="label.category"/></th>
+			<th><spring:message code="label.consciousness"/></th>
+			<th><spring:message code="label.description"/></th>
+			<th><spring:message code="label.price"/></th>
+			<th><spring:message code="label.actions"/></th>
+			<th><spring:message code="label.totalPrice"/></th>
 		</tr>
 	</thead>
 	
@@ -37,8 +37,8 @@
 </table>
 </div>
 <div>
-             <a href="<c:url value = "/myOrder" />" class="btn btn-success">Proceed to order</a>
-			 <a href="<c:url value = "/catalogue" />" class="btn btn-secondary">Back</a>
+             <a href="<c:url value = "/myOrder" />" class="btn btn-success"><spring:message code="label.proceedToOrder"/></a>
+			 <a href="<c:url value = "/catalogue" />" class="btn btn-secondary"><spring:message code="label.back"/></a>
 	         
 </div>
 

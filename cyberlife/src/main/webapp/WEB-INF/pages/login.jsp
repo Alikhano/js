@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<h2 class="form-heading">Log in</h2>
+				<h2 class="form-heading"><spring:message code="label.login"/></h2>
 				<span>${error}</span> 
 				<span>${message}</span> 
 				<hr>
@@ -23,7 +23,7 @@
 						</div>
 				
 						<input name="username" type="text"
-							class="form-control" placeholder="Username" />
+							class="form-control" placeholder="<spring:message code="label.username"/>" />
 					</div>
 
 				</div>
@@ -39,7 +39,7 @@
 							<i class="fa fa-key"></i>
 						</div>
 						<input name="password" type="password" class="form-control"
-							placeholder="Password" /> <input
+							placeholder="<spring:message code="label.password"/>" /> <input
 							type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
@@ -52,8 +52,7 @@
 			<div class="col-md-6">
 			<button class="btn btn-success" type="submit"><i class="fa fa-sign-in"></i>Log
 				In</button>
-				<a class="btn btn-link" href="${pageContext.request.contextPath}/registration">Create
-					an account</a>
+				<a class="btn btn-link" href="${pageContext.request.contextPath}/registration"><spring:message code="label.createProfile"/></a>
 			</div>
 		</div>
 

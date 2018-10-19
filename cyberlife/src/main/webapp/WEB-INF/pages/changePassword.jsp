@@ -11,23 +11,23 @@
 		method="post">
 
 		<div class="form-group">
-			<label for="oldPassword">Please enter your current password:</label>
+			<label for="oldPassword"><spring:message code="label.enterCurrentPassword"/>:</label>
 			<input type="password" name="oldPassword" id="oldPassword"
 				class="form-Control" /> <span style="color: #ff0000">${mismatchMsg}</span>
 		</div>
 		<div class="form-group">
-			<label for="newPassword">Please enter new password</label> <input
+			<label for="newPassword"><spring:message code="label.enterNewPassword"/></label> <input
 				type="password" name="newPassword" id="newPassword"
 				class="form-Control" />
 		</div>
 		<div class="form-group">
-			<label for="repeatPassword">Please repeat new password</label> <input
+			<label for="repeatPassword"><spring:message code="label.repeatPassword"/></label> <input
 				type="password" name="repeatPassword" id="repeatPassword"
 				class="form-Control" />
 		</div>
-		<br /> <br /> <input type="submit" value="Change"
+		<br /> <br /> <input type="submit" value="<spring:message code="label.change"/>"
 			class="btn btn-default"> <a
-			href="<c:url value="/myAccount" />" class="btn btn-default">Cancel</a>
+			href="<c:url value="/myAccount" />" class="btn btn-default"><spring:message code="label.cancel"/></a>
 
 
 	</form>
