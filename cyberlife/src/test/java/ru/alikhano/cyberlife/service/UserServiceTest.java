@@ -98,7 +98,7 @@ public class UserServiceTest {
 	
 	@Test
 	public void getAll() {
-		List<User> list = userServiceMock.getAll();
+		userServiceMock.getAll();
 		Mockito.verify(userDaoMock).getAll();
 	}
 	
