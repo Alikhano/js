@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/pages/common/admin-side.jsp"%>
 
 <div class="col" id="admin-main">
-	<span id="statusSpan" style="display: none">${statusOnDelete}</span>
+	<span id="statusSpan" style="display: none">${status}</span>
 	<table class="table table-striped table-hover" id="admin-catalogue">
 		<thead>
 			<tr>
@@ -26,7 +26,7 @@
 				<td>${product.category.catType}</td>
 				<td>${product.cons.level}</td>
 				<td>${product.unitsInStock}</td>
-				<td>${product.price}USD</td>
+				<td>${product.price} USD</td>
 				<td><a
 					href="<spring:url value="/admin/editProduct/${product.productId}" />">
 						<input type="submit" class="buttons"

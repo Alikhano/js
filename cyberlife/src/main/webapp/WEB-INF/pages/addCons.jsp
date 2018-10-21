@@ -30,9 +30,9 @@
 		</div>
 		
 		<div class="form-group">
-
+<spring:message code="label.description" var="tDescription"/>
 								<form:textarea rows="4" cols="50" path="description"
-									id="description" class="form-Control" placeholder="<spring:message code="label.description"/>" />
+									id="description" class="form-Control" placeholder="${tDescription}" />
 										<form:errors path="level" cssClass="error"></form:errors>
 							</div>
 
@@ -64,12 +64,18 @@ $(document).ready(function() {
 			level: $("#level").val(),
 			description: $("#description").val()
 		}),
-	}).done( function(data) {
-		swal("Success", "New category: " + $("#level").val(), "success");
+	}).done(function(response) {
+		swal({title: "Success", text: "New configuration", type: "success"}).then(
+				   function(){ 
+				       location.reload()
+				   }
+		);
+		 
 		})
-		.fail( function(error) {
+		.fail(function(error) {
 			swal("Oops!","Duplicate entry!", "error");
-		});
+	});
+	
 });
 });
 </script>

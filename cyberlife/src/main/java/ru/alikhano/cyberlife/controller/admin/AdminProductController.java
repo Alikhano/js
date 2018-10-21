@@ -86,6 +86,10 @@ public class AdminProductController {
 				throw new CustomLogicException("Product image saving failed");
 			}
 		}
+		
+		model.addAttribute("status", "New product: " + newProductDTO.getModel());
+		
+		logger.info("New product: " + newProductDTO.getModel());
 
 		return "redirect:/admin/productList";
 	}
@@ -139,14 +143,14 @@ public class AdminProductController {
 		String result = productService.delete(productService.getById(productId));
 		if (result.equals("failed")) {
 			logger.error("You cannot delete a product that has not been delivered yet!");
-			model.addAttribute("statusOnDelete", "Not delivered yet! " + productService.getById(productId).getModel());
+			model.addAttribute("status", "Not delivered yet! " + productService.getById(productId).getModel());
 			List<ProductDTO> products = productService.getAll();
 			model.addAttribute("products", products);
 
 			return "productList";
 		}
 		
-		logger.info("model " + productService.getById(productId).getModel() + " is deleted");
+		logger.info("Product has been deleted");
 		return "redirect:/admin/productList";
 	}
 	

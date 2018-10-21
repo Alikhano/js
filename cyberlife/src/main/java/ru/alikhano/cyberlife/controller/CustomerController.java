@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.alikhano.cyberlife.DTO.AddressDTO;
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.DTO.OrderDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
 import ru.alikhano.cyberlife.service.AddressService;
 import ru.alikhano.cyberlife.service.CustomerService;
@@ -57,10 +57,53 @@ public class CustomerController {
 		return "customerAccount";
 	}
 	
+	@GetMapping("/myAccount/updateAccount/")
+	public String updateAccount(Model model, Authentication authentication) throws CustomLogicException {
+		String username = authentication.getName();
+		UserDTO user = userService.getByUsernameDTO(username);
+		CustomerDTO customer = customerService.getByUserId(user.getUserId());
+		
+		if (customer == null) {
+			logger.error("Customer profile has not been created before");
+			customer = new CustomerDTO();
+			customer.setUser(user);
+			customerService.create(customer);
+			model.addAttribute("customer", customer);
+			model.addAttribute("error","You seem to not have a profile. We generated it for you");
+			return "updateAccount";
+		}
+		
+		return "updateAccount";
+			
+		}
 	
-	@RequestMapping("/myAccount/updateAccount/{customerId}")
-	public String updateAccount(@PathVariable("customerId") int customerId, Model model) {
+	
+	@GetMapping("/myAccount/updateAccount/{customerId}")
+	public String updateAccount(@PathVariable("customerId") int customerId, Model model, Authentication authentication) throws CustomLogicException {
 		CustomerDTO customerDTO = customerService.getById(customerId);
+		String username = authentication.getName();
+		UserDTO user = userService.getByUsernameDTO(username);
+		CustomerDTO customer = customerService.getByUserId(user.getUserId());
+		
+		if (customerDTO == null) {
+			logger.error("Customer profile has not been created before");
+			customer = new CustomerDTO();
+			customer.setUser(user);
+			customerService.create(customerDTO);
+			model.addAttribute("customer", customer);
+			model.addAttribute("error","You seem to not have a profile. We generated it for you");
+			return "updateAccount";
+			
+		}
+		
+		if (customer.getCustomerId() != customerId) {
+			logger.error("Oops. You should not try to access someone else's profile!");
+			model.addAttribute("customer", customer);
+			model.addAttribute("error","You cannot access someone else's profile");
+			return "updateAccount";
+			
+		}
+
 		model.addAttribute("customer", customerDTO);
 		
 
@@ -70,7 +113,7 @@ public class CustomerController {
 	@RequestMapping(value = "/myAccount/updateAccount", method = RequestMethod.POST)
 	public String updateAccountPost(@Valid @ModelAttribute("customer") CustomerDTO customerDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication, Model model) throws CustomLogicException {
-	
+		
 		try {
 			customerService.update(customerDTO);
 			logger.info(customerDTO.getLastName() + " has updated his/her account");

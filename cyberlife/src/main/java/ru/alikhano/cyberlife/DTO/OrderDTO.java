@@ -16,7 +16,7 @@ public class OrderDTO {
 	private double orderPrice;
 	private Date orderDate;
 
-	Set<OrderItemDTO> orderedItems = new HashSet<OrderItemDTO>(0);
+	Set<OrderItemDTO> orderedItems = new HashSet<>(0);
 
 	public int getOrderId() {
 		return orderId;

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
+
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.CustomerDTO;
@@ -93,7 +95,6 @@ public class OrderController {
 
 		if (orderDTO.getPaymentType().equals("credit card")) {
 			request.getSession().setAttribute("totalPrice", orderDTO.getOrderPrice());
-			request.getSession().setAttribute("orderId", orderDTO.getOrderId());
 			return "redirect:/myOrder/cardPayment";
 		}
 
@@ -158,19 +159,13 @@ public class OrderController {
 	@GetMapping(value = "/myOrder/cardPayment")
 	public String creditCardPayment(Authentication authentication, Model model,
 			HttpServletRequest request) {
-		int id = (int) request.getSession().getAttribute("orderId");
-		OrderDTO orderDTO = orderService.getById(id);
-
-		model.addAttribute("orderDTO", orderDTO);
 		model.addAttribute("total", (double) request.getSession().getAttribute("totalPrice"));
 		return "cardPayment";
 	}
 
 	@PostMapping(value = "/myOrder/cardPayment")
-	public String creditCardPaymentPost(@ModelAttribute OrderDTO orderDTO, HttpServletRequest request, Model model) throws IOException, TimeoutException {
+	public String creditCardPaymentPost(HttpServletRequest request, Model model) throws IOException, TimeoutException {
 	
-		orderDTO.setPaymentStatus("paid");
-		orderService.update(orderDTO);
 		return "redirect:/orderHistory";
 
 	}

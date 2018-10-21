@@ -7,7 +7,8 @@
 		<div class="row">
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
-				<h2 class="form-heading"><spring:message code="label.createprofile"/></h2>
+			<br>
+				<h2 class="form-heading"><spring:message code="label.createProfile"/></h2>
 				<hr>
 			</div>
 		</div>
@@ -16,8 +17,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.firstName" var="tFirstName"/>
 					<form:input type="text" id="firstName" path="firstName"
-				class="form-control" placeholder="<spring:message code="label.firstName"/>" autofocus="true"></form:input>
+				class="form-control" placeholder="${tFirstName}" autofocus="true"></form:input>
 			
 
 				</div>
@@ -28,8 +30,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.lastName" var="tLastName"/>
 					<form:input type="text" id="lastName" path="lastName"
-				class="form-control" placeholder="<spring:message code="label.lastName"/>" autofocus="true"></form:input>
+				class="form-control" placeholder="${tLastName}" autofocus="true"></form:input>
 			
 
 				</div>
@@ -40,8 +43,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.email" var="tEmail"/>
 					<form:input type="text" id="email" path="email" class="form-control"
-				placeholder="<spring:message code="label.email"/>" autofocus="true"></form:input>
+				placeholder="${tEmail}" autofocus="true"></form:input>
 			<span style="color: #ff0000">${repEmail}</span>
 		
 				</div>
@@ -52,8 +56,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.birthDate" var="tBirthDate"/>
 					<form:input type="text" id="birthDate" path="birthDate"
-				class="form-control" placeholder="<spring:message code="label.birthDate"/>"></form:input>
+				class="form-control" placeholder="${tBirthDate}"></form:input>
 			
 				</div>
 			</div>
@@ -72,8 +77,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.street" var="tAddress"/>
 				<form:input type="text" id="street" path="address.street"
-				class="form-control" placeholder="<spring:message code="label.street"/>" autofocus="true"></form:input>
+				class="form-control" placeholder="${tAddress}" autofocus="true"></form:input>
 		
 				</div>
 			</div>
@@ -83,8 +89,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.building" var="tBuilding"/>
 				<form:input type="text" id="building" path="address.building"
-				class="form-control" placeholder="<spring:message code="label.building"/>" autofocus="true"></form:input>
+				class="form-control" placeholder="${tBuilding}" autofocus="true"></form:input>
 				
 
 				</div>
@@ -94,8 +101,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.flat" var="tFlat"/>
 			<form:input type="text" id="flat" path="address.flat"
-				class="form-control" placeholder="<spring:message code="label.flat"/>" autofocus="true"></form:input>
+				class="form-control" placeholder="${tFlat}" autofocus="true"></form:input>
 					
 
 				</div>
@@ -105,8 +113,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.city" var="tCity"/>
 			<form:input type="text" id="city" path="address.city"
-				class="form-control" placeholder="<spring:message code="label.city"/>" autofocus="true"></form:input>
+				class="form-control" placeholder="${tCity}" autofocus="true"></form:input>
 				
 
 				</div>
@@ -116,8 +125,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.country" var="tCountry"/>
 				<form:input type="text" id="country" path="address.country"
-				class="form-control" placeholder="<spring:message code="label.country"/>" autofocus="true"></form:input>
+				class="form-control" placeholder="${tCountry}" autofocus="true"></form:input>
 				
 				</div>
 			</div>
@@ -126,8 +136,9 @@
 			<div class="col-md-3"></div>
 			<div class="col-md-6">
 				<div class="form-group">
+				<spring:message code="label.zipCode" var="tZip"/>
 			<form:input type="text" id="zipCode" path="address.zipCode"
-				class="form-control" placeholder="<spring:message code="label.zipCode"/>" autofocus="true"></form:input>
+				class="form-control" placeholder="${tZip}" autofocus="true"></form:input>
 					
 
 				</div>
@@ -173,12 +184,15 @@
 							},
 							"address.street" : {
 								required : true,
+							
 							},
 							"address.building" : {
 								required : true,
+								min: 1,
 							},
 							"address.flat" : {
 								required : true,
+								min: 1,
 							},
 							"address.city" : {
 								required : true,
@@ -214,10 +228,12 @@
 								required : "Please enter the name of the street"
 							},
 							"address.building" : {
-								required : "Please enter the building number"
+								required : "Please enter the building number",
+								min: "Check for negative values"
 							},
 							"address.flat" : {
-								required : "Please enter the flat number"
+								required : "Please enter the flat number",
+								min: "Check for negative values"
 							},
 							"address.city" : {
 								required : "Please enter the name of the city"

@@ -21,12 +21,12 @@ public class Address {
 	
 	@Column(name="country")
 	@NotNull
-	@Pattern(regexp = "[^A-Za-z\\s]+")
+	@Pattern(regexp = "[A-Za-z\\s]+")
 	private String country;
 	
 	@Column(name="city")
 	@NotNull
-	@Pattern(regexp = "[^A-Za-z\\s]+")
+	@Pattern(regexp = "[A-Za-z\\s]+")
 	private String city;
 	
 	@Column(name="zipCode")

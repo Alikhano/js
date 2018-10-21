@@ -23,11 +23,9 @@ public class Customer {
 	private int customerId;
 	
 	@Column(name="firstName")
-	@NotNull
 	private String firstName;
 	
 	@Column(name="lastName")
-	@NotNull
 	private String lastName;
 	
 	@Column(name="birthDate")
@@ -35,13 +33,11 @@ public class Customer {
 	private String birthDate;
 	
 	@Column(name="email", unique = true)
-	@NotNull
 	@Pattern(regexp="^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$")
 	private String email;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="addressId")
-	@NotNull
 	private Address address;
 	
 	@OneToOne(cascade = CascadeType.ALL)

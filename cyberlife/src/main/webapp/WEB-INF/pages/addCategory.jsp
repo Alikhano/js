@@ -39,8 +39,7 @@
 </div>
 </div>
 </div>
-</div>
-</div>
+
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -73,12 +72,19 @@ $(document).ready(function() {
 		data: JSON.stringify({
 			catType: $("#catType").val()
 		}),
-	}).done(function(data) {
-			//swal("Success", "New category: " + catType, "success");
+	}).done(function(response) {
+		swal({title: "Success", text: "New category", type: "success"}).then(
+				   function(){ 
+				       location.reload()
+				   }
+		);
+		 
 		})
 		.fail(function(error) {
 			swal("Oops!","Duplicate entry!", "error");
 	});
+	
+	
 });
 });
 

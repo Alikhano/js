@@ -18,14 +18,14 @@
 
 	<div class="container">
 		<div class="row ml-2 mr-2">
-			<div class="col-12 col-md-4 md-offset-4">
+			<div class="col-12 col-md-4 offset-md-4">
 				<div class="card">
 					<div class="card-header">
-						<div class="row ml-2 mr-2 ml-2 mr-2">
+						<div class="row ml-2 mr-2">
 							<h3 class="text-xs-center"><spring:message code="label.paymentDetails"/></h3>
 						</div>
 					</div>
-					<form:form action="${pageContext.request.contextPath}/myOrder/cardPayment" method="POST" modelAttribute="orderDTO" role="form" id="cardForm">
+					<form action="${pageContext.request.contextPath}/myOrder/cardPayment" method="POST" role="form" id="cardForm">
 					<div id="image-container">
 						<span class="ml-2" id="amount"><spring:message code="label.paying"/>: <strong>${total}</strong></span> 
 						<span id="card-image" class="mr-2"> </span>
@@ -50,8 +50,8 @@
 										<label><spring:message code="label.expirationDate"/></label>
 										<div class="input-group">
 											<span class="input-group-addon mr-2"><span
-												class="fa fa-calendar"></span></span> <input required type="text"
-												class="form-control" placeholder="MM/YY" />
+												class="fa fa-calendar"></span></span> <input required  id="date" type="text"
+												class="form-control" placeholder="MM/YY" pattern="([0-9]{2}[/]?){2}" />
 										</div>
 									</div>
 								</div>
@@ -60,8 +60,8 @@
 										<label><spring:message code="label.cvc"/></label>
 										<div class="input-group">
 											<span class="input-group-addon mr-2"><span
-												class="fa fa-unlock-alt"></span></span> <input required type="text"
-												class="form-control" placeholder="XXX" />
+												class="fa fa-unlock-alt"></span></span> <input required id="cvc" type="text" 
+												class="form-control" placeholder="XXX" pattern=".{3,3}" title="3 characters" />
 										</div>
 
 									</div>
@@ -74,7 +74,7 @@
 										<div class="input-group">
 											<span class="input-group-addon mr-2"><span
 												class="fa fa-user-circle"></span></span> <input required type="text"
-												class="form-control" placeholder="Jonh Doe" />
+												class="form-control" placeholder="Jonh Doe" pattern="/^[a-zA-Z\s]*$/" />
 										</div>
 									</div>
 								</div>
@@ -82,13 +82,13 @@
 					
 					</div>
 					<div class="card-footer">
-						<div class="row ml-2 mr-2">
+						<div class="row">
 							<div class="col-12">
 								<input type="submit" value="<spring:message code="label.submit"/>" class="btn btn-success btn-lg btn-block">
 							</div>
 						</div>
 					</div>
-						</form:form>
+						</form>
 				</div>
 			</div>
 		</div>
@@ -103,26 +103,9 @@
 	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/cardPayment.js"></script>
-<script type="text/javascript">
-$("#cardForm").validate({
-	rules : {
-		"card-number" : {
-			creditcard : true,
 
-		}
-	},
-	messages : {
-		"card-number" : {
-			creditcard : "Please check the credit card number"
-
-		}
-	}
-	
-});
-</script>
 
 </body>
 </html>

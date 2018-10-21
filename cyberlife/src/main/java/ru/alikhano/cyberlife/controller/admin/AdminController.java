@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ru.alikhano.cyberlife.DTO.CategoryDTO;
 import ru.alikhano.cyberlife.DTO.ConsDTO;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.service.CategoryService;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
 
@@ -53,38 +55,38 @@ public class AdminController {
 		return "addCons";
 	}
 
-	@RequestMapping(value = "admin/addCategory", method = RequestMethod.POST)
-	public @ResponseBody String addCategoryPost(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result,
-			HttpServletRequest request, Model model) {
+	@RequestMapping(value = "admin/addCategory", method = RequestMethod.POST,  produces="application/json")
+	public ResponseEntity<?> addCategoryPost(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result,
+			HttpServletRequest request, Model model) throws CustomLogicException {
 		
 		try {
 			categoryService.create(categoryDTO);
 		}
 		catch (ConstraintViolationException ex) {
 			logger.error(ex.getMessage() + " DUPLICATE category entry");
-			return "addCategory";
+			throw new CustomLogicException("duplicate entry");
 		}
 		
 		logger.info("New category: " + categoryDTO.getCatType());
-
-		return "Category has been added";
+		
+		  return ResponseEntity.ok(categoryDTO);
 	}
 
-	@RequestMapping(value = "admin/addCons", method = RequestMethod.POST)
-	public @ResponseBody String addConsPost(@RequestBody @Valid ConsDTO consDTO, BindingResult result,
-			HttpServletRequest request, Model model) {
+	@RequestMapping(value = "admin/addCons", method = RequestMethod.POST,  produces="application/json")
+	public ResponseEntity<?> addConsPost(@RequestBody @Valid ConsDTO consDTO, BindingResult result,
+			HttpServletRequest request, Model model) throws CustomLogicException {
 
 		try {
 			consService.create(consDTO);
 		}
 		catch (ConstraintViolationException ex) {
 			logger.error(ex.getMessage() + " DUPLICATE cons entry");
-			return "addCategory";
+			throw new CustomLogicException("duplicate entry");
 		}
 		
 		logger.info("New AI config: " + consDTO.getLevel());
 
-		return "AI config has been added";
+		return ResponseEntity.ok(consDTO);
 	}
 
 }

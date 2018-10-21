@@ -59,7 +59,9 @@
 					</sec:authorize> <sec:authorize access="!isAuthenticated()">
 						<a class="nav-link" href="<c:url value="/login" />"><spring:message code="label.login"/></a>
 					</sec:authorize></li>
-					<li class="nav-item"><span> <a
+			</ul>
+			<ul class="nav navbar-nav ml-auto">
+			<li class="nav-item" ><span> <a 
 						href="?lang=en">En</a> | <a href="?lang=fr">Fr</a>
 				</span></li>
 			</ul>
