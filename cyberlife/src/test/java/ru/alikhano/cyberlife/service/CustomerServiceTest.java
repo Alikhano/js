@@ -1,7 +1,6 @@
 package ru.alikhano.cyberlife.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +59,9 @@ public class CustomerServiceTest {
 		Mockito.doNothing().when(customerDao).update(customerMock);
 		
 		Mockito.doNothing().when(customerDao).delete(customerMock);
+		
+		Mockito.when(customerDao.getTopCustomers()).thenReturn(customers);
+		Mockito.when(customerDao.getByUserId(1)).thenReturn(customerMock);
 	
 	}
 	
@@ -86,20 +88,36 @@ public class CustomerServiceTest {
 	public void getById() {
 		CustomerDTO customer = customerService.getById(1);
 		assertEquals(1, customer.getCustomerId());
+		Mockito.verify(customerDao).getById(1);
 	}
 	
 	@Test
 	public void getByEmail() {
 		CustomerDTO customer = customerService.getByEmail("johnsanna@gmail.com");
 		assertEquals(1, customer.getCustomerId());
+		Mockito.verify(customerDao).getByEmail("johnsanna@gmail.com");
 	}
 	
 	@Test
 	public void getAll() {
 		List<CustomerDTO> list = customerService.getAll();
 		assertEquals(customersDTO, list);
+		Mockito.verify(customerDao).getAll();
 	}
 	
+	@Test
+	public void getTopCustomer() {
+		List<CustomerDTO> list = customerService.getTopCustomers();
+		assertEquals(list, customersDTO);
+		Mockito.verify(customerDao).getTopCustomers();
+	}
+	
+	@Test
+	public void getByUserId() {
+		CustomerDTO customer = customerService.getByUserId(1);
+		assertEquals(customer, customerDTOMock);
+		Mockito.verify(customerDao).getByUserId(1);
+	}
 	
 
 }

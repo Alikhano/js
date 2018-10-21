@@ -30,12 +30,12 @@
 				<td><a
 					href="<spring:url value="/admin/editProduct/${product.productId}" />">
 						<input type="submit" class="buttons"
-						value="<spring:message text="Edit"/>" />
+						value="<spring:message code="label.edit" />" />
 				</a> <a><input type="hidden" name="id" value="${product.productId}" />
 				</a> <a
 					href="<spring:url value="/admin/deleteProduct/${product.productId}" />">
 						<input type="submit" class="buttons"
-						value="<spring:message text="Delete"/>" /> <input type="hidden"
+						value="<spring:message code="label.delete" />" /> <input type="hidden"
 						name="id" value="${product.productId}" /> <input type="hidden"
 						name="model" value="${product.model}" /> <input type="hidden"
 						name="status" value="${product.model}" />

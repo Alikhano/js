@@ -13,29 +13,39 @@ import ru.alikhano.cyberlife.DTO.CustomLogicException;
 
 @ControllerAdvice
 public class ExceptionController {
-	
+
 	private static final Logger logger = LogManager.getLogger(ExceptionController.class);
-	
+
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleGenericException(Exception ex) {
-		
+
 		logger.error(ex.getMessage(), ex);
 		ModelAndView model = new ModelAndView("generic_error");
-		
+
 		model.addObject("errorMessage", ex.getMessage());
-		
+
 		return model;
 	}
-	
+
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<?> handleCustomException(Exception ex) {
+
+		logger.error(ex.getMessage(), ex);
+
+		return ResponseEntity.badRequest().body(ex.getMessage());
+	}
+
 	@ExceptionHandler(CustomLogicException.class)
-	/*@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	@ResponseBody*/
+	/*
+	 * @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	 * 
+	 * @ResponseBody
+	 */
 	public ResponseEntity<?> handleCustomException(CustomLogicException ex) {
-		
+
 		logger.error(ex.getErrMessage(), ex);
-		
+
 		return ResponseEntity.badRequest().body(ex.getErrMessage());
 	}
-	
 
 }

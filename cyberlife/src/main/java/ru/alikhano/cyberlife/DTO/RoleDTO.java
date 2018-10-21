@@ -1,5 +1,7 @@
 package ru.alikhano.cyberlife.DTO;
 
+import ru.alikhano.cyberlife.model.Role;
+
 public class RoleDTO {
 	
 	private int roleId;
@@ -17,6 +19,13 @@ public class RoleDTO {
 		this.type = type;
 	}
 	
+	public RoleDTO() {
+		
+	}
 	
+	public RoleDTO(Role role) {
+		this.roleId=role.getRoleId();
+		this.type=role.getType();
+	}
 
 }

@@ -4,7 +4,7 @@
 <br>
 <div class="container">
 
-	<form id="searchForm"
+	<form class="justify-content-center" id="searchForm"
 		action="${pageContext.request.contextPath}/searchProduct">
 		<input class="search" name="model" id="model" value="model"> 
 			<select class="search" id="categorySearch"
@@ -140,7 +140,7 @@
 			tr.className = "resultRow";
 			for ( var x in object) {
 				var id = object.productId;
-				var link = "<a href='http://localhost:8080/cyberlife-0.0.1-SNAPSHOT/viewProduct/" + object.productId + "'>" + object.model +"</a>";
+				var link = "<a href='http://localhost:8080/cyberlife/viewProduct/" + object.productId + "'>" + object.model +"</a>";
 				tr.innerHTML = '<td>' + link +'</td>' + '<td>'
 						+ object.category + '</td>' + '<td>' + object.cons
 						+ '</td>' + '<td>' + object.description + '</td>'

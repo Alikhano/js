@@ -58,6 +58,14 @@ public class Role {
 		return true;
 	}
 	
+	public Role() {
+		
+	}
+	
+	public Role(int roleId, String type) {
+		this.roleId=roleId;
+		this.type=type;
+	}
 	
 	
 	

@@ -59,6 +59,7 @@ public class CategoryServiceTest {
 	@Test
 	public void create() {
 		categoryService.create(categoryDTOMock);
+		Mockito.verify(categoryDao).create(categoryMock);
 	}
 
 	

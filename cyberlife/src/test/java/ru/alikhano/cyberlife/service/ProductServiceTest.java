@@ -18,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.DTO.ProductInfo;
 import ru.alikhano.cyberlife.dao.ProductDao;
 import ru.alikhano.cyberlife.mapper.ProductMapper;
 import ru.alikhano.cyberlife.model.Category;
@@ -60,6 +61,8 @@ public class ProductServiceTest {
 		Mockito.doNothing().when(productDaoMock).delete(productMock);
 		Mockito.doNothing().when(productDaoMock).update(productMock);
 		Mockito.doNothing().when(productDaoMock).create(productMock);
+		Mockito.doNothing().when(productDaoMock).merge(productMock);
+		Mockito.when(productDaoMock.searchParam("rk800", 1, 1, 1500.0, 1500.0)).thenReturn(productsMock);
 				
 		}
 	
@@ -126,6 +129,20 @@ public class ProductServiceTest {
 		assertEquals(product, productMock);
 		assertTrue(productDTO.getClass().equals(ProductDTO.class));
 	
+	}
+	
+	@Test
+	public void search() throws CustomLogicException {
+		List<ProductInfo> list = productService.searchParam("rk800",1, 1, 1500.0, 1500.0);
+		Mockito.verify(productDaoMock).searchParam("rk800",1, 1, 1500.0, 1500.0);
+		//assertEquals(list.size(), productsMock.size());
+		
+	}
+	
+	@Test
+	public void merge() throws IOException, TimeoutException {
+		productService.merge(productDTOMock);
+		Mockito.verify(productDaoMock).merge(productMock);
 	}
 	
 

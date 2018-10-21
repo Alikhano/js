@@ -74,7 +74,7 @@
 										<div class="input-group">
 											<span class="input-group-addon mr-2"><span
 												class="fa fa-user-circle"></span></span> <input required type="text"
-												class="form-control" placeholder="Jonh Doe" pattern="/^[a-zA-Z\s]*$/" />
+												class="form-control" placeholder="Jonh Doe" pattern="^[a-zA-Z\s]+$" />
 										</div>
 									</div>
 								</div>

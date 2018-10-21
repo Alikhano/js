@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="customer")
 public class Customer {
@@ -29,7 +31,7 @@ public class Customer {
 	private String lastName;
 	
 	@Column(name="birthDate")
-	//@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String birthDate;
 	
 	@Column(name="email", unique = true)

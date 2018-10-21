@@ -41,25 +41,22 @@
 				<form:option value="unpaid"/>
 				<form:option value="paid"/>
 			</form:select>
-				<button type="submit" id="update" class="btn btn-success">Update order</button>
+				<button type="submit" id="update" class="btn btn-success"><spring:message code="label.updateOrder"/></button>
 				<span style="color: #ff0000">${noChangehMsg}</span>
 			</form:form>
 		
 			</td>
 			</sec:authorize>
-			
-	
-			
 	</tr>
 	</c:forEach>
 </table>
 </div>
 <div>
           <sec:authorize access="hasRole('ROLE_ADMIN')">
-			 <a  id="editOrder" href="<c:url value = "/admin/stats" />" class="btn btn-secondary">Back to admin home</a>
+			 <a  id="editOrder" href="<c:url value = "/admin/stats" />" class="btn btn-secondary"><spring:message code="label.backToAdminHome"/></a>
 	       </sec:authorize>
 	         <sec:authorize access="!hasRole('ROLE_ADMIN')">
-	        <a href="<c:url value = "/myAccount" />" class="btn btn-secondary">Back to my account</a>
+	        <a href="<c:url value = "/myAccount" />" class="btn btn-secondary"><spring:message code="label.backToAccount"/></a>
 	        </sec:authorize>
 </div>
 

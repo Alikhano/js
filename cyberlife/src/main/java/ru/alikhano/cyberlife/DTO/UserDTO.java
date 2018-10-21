@@ -2,6 +2,9 @@ package ru.alikhano.cyberlife.DTO;
 
 import java.util.Set;
 
+import ru.alikhano.cyberlife.model.User;
+
+
 public class UserDTO {
 	
 	private int userId;
@@ -43,6 +46,15 @@ public class UserDTO {
 		this.password = password;
 	}
 	
+	public UserDTO() {
+		
+	}
+	
+	public UserDTO(User user) {
+		this.userId=user.getUserId();
+		this.username=user.getUsername();
+		this.password=user.getPassword();
+	}
 	
 
 }

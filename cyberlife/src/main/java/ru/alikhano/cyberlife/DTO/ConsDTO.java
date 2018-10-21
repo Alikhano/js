@@ -1,5 +1,7 @@
 package ru.alikhano.cyberlife.DTO;
 
+import ru.alikhano.cyberlife.model.Consciousness;
+
 public class ConsDTO {
 	
 	private int consId;
@@ -24,5 +26,16 @@ public class ConsDTO {
 	public void setLevel(String level) {
 		this.level = level;
 	}
+	
+	public ConsDTO() {
+		
+	}
+	
+	public ConsDTO(Consciousness cons) {
+		this.consId = cons.getConsId();
+		this.level = cons.getLevel();
+		this.description = cons.getDescription();
+	}
+	
 
 }

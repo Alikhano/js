@@ -13,9 +13,9 @@
 			<th><spring:message code="label.totalPrice"/></th>
 		</tr>
 	</thead>
-	
-	<c:forEach items="${cartItems}" var="cartItem">
 	<tr>
+	<c:forEach items="${cartItems}" var="cartItem">
+	
 			<td><img
 				src="${pageContext.request.contextPath}/static/images/${cartItem.product.model}.jpg"
 				alt="image" style="width: 150px; height: auto"/></td>
@@ -30,10 +30,9 @@
 				<input type="hidden"name="id" value="${cartItem.itemId}" />
 				</a>
 			</td>
-			<td>${cart.grandTotal} USD</td>
-			
-	</tr>
 	</c:forEach>
+	<td>${cart.grandTotal} USD</td>
+	</tr>
 </table>
 </div>
 <div>

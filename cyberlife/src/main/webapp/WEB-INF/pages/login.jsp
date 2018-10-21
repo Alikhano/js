@@ -50,8 +50,7 @@
 		<div class="row"  style="padding-top: 1rem">
 		<div class="col-md-3"></div>
 			<div class="col-md-6">
-			<button class="btn btn-success" type="submit"><i class="fa fa-sign-in"></i>Log
-				In</button>
+			<button class="btn btn-success" type="submit"><i class="fa fa-sign-in"></i><spring:message code="label.login"/></button>
 				<a class="btn btn-link" href="${pageContext.request.contextPath}/registration"><spring:message code="label.createProfile"/></a>
 			</div>
 		</div>
