@@ -27,20 +27,15 @@ public class ExceptionController {
 		return model;
 	}
 
-	@ExceptionHandler(Exception.class)
+/*	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> handleCustomException(Exception ex) {
 
 		logger.error(ex.getMessage(), ex);
 
 		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
-
+*/
 	@ExceptionHandler(CustomLogicException.class)
-	/*
-	 * @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	 * 
-	 * @ResponseBody
-	 */
 	public ResponseEntity<?> handleCustomException(CustomLogicException ex) {
 
 		logger.error(ex.getErrMessage(), ex);

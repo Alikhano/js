@@ -49,7 +49,7 @@ public class CartItemServiceImpl implements CartItemService {
 	public void deleteAll(CartDTO cartDTO) {
 		Set<CartItemDTO> items = cartDTO.getItems();
 		for (CartItemDTO item : items) {
-			cartItemDao.delete(cartItemMapper.cartDTOtoCartItem(item));
+			delete(item);
 		}
 	}
 

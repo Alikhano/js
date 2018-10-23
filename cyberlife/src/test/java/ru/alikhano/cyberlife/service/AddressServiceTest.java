@@ -1,6 +1,7 @@
 package ru.alikhano.cyberlife.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,12 @@ public class AddressServiceTest {
 	public void getById() {
 		AddressDTO address = addressService.getById(1);
 		assertEquals(1, address.getAddressId());
+	}
+	
+	@Test
+	public void getByIdFail() {
+		AddressDTO address = addressService.getById(2);
+		assertNull(address);
 	}
 
 }

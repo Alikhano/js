@@ -29,5 +29,7 @@ public interface UserService {
 	boolean verifyPassword(String password, int id);
 	
 	void changePassword(String password, UserDTO userDTO);
+	
+	UserDTO getDTOById(int id);
 
 }

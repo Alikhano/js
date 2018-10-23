@@ -1,6 +1,7 @@
 package ru.alikhano.cyberlife.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,10 +93,22 @@ public class CustomerServiceTest {
 	}
 	
 	@Test
+	public void getByIdFail() {
+		CustomerDTO customer = customerService.getById(2);
+		assertNull(customer);
+	}
+	
+	@Test
 	public void getByEmail() {
 		CustomerDTO customer = customerService.getByEmail("johnsanna@gmail.com");
 		assertEquals(1, customer.getCustomerId());
 		Mockito.verify(customerDao).getByEmail("johnsanna@gmail.com");
+	}
+	
+	@Test
+	public void getByEmailFail() {
+		CustomerDTO customer = customerService.getByEmail("johnsanna@yandex.com");
+		assertNull(customer);
 	}
 	
 	@Test
@@ -117,6 +130,12 @@ public class CustomerServiceTest {
 		CustomerDTO customer = customerService.getByUserId(1);
 		assertEquals(customer, customerDTOMock);
 		Mockito.verify(customerDao).getByUserId(1);
+	}
+	
+	@Test
+	public void getByUserIdFail() {
+		CustomerDTO customer = customerService.getByUserId(2);
+		assertNull(customer);
 	}
 	
 

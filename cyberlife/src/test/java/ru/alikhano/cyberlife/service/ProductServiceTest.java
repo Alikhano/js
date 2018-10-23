@@ -20,6 +20,7 @@ import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.ProductInfo;
 import ru.alikhano.cyberlife.dao.ProductDao;
+import ru.alikhano.cyberlife.mapper.ProductInfoMapper;
 import ru.alikhano.cyberlife.mapper.ProductMapper;
 import ru.alikhano.cyberlife.model.Category;
 import ru.alikhano.cyberlife.model.Consciousness;
@@ -35,6 +36,12 @@ public class ProductServiceTest {
 	@Mock
 	ProductMapper productMapper;
 	
+	@Mock
+	ProductInfoMapper productInfoMapper;
+	
+	@Mock
+	OrderService orderServiceMock;
+	
 	@InjectMocks
 	ProductServiceImpl productService;
 	
@@ -47,8 +54,9 @@ public class ProductServiceTest {
 	public void init() {
 		Category category = new Category(1,"education");
 		Consciousness cons = new Consciousness(1, "middle AI", "nothing special");
+		ProductInfo productInfo = new ProductInfo();
 		productMock = new Product(1,"rk800", "test description", 5, 1500.0, category, cons);
-		productDTOMock = new ProductDTO(productMock);
+		productDTOMock = Mockito.mock(ProductDTO.class);
 		productsMock = new ArrayList<>();
 		productsDTOMock = new ArrayList<>();
 		productsMock.add(productMock);
@@ -58,11 +66,13 @@ public class ProductServiceTest {
 		Mockito.when(productDaoMock.getAll()).thenReturn(productsMock);
 		Mockito.when(productMapper.productToProductDTO(productMock)).thenReturn(productDTOMock);	
 		Mockito.when(productMapper.productDTOtOProduct(productDTOMock)).thenReturn(productMock);
+		Mockito.when(productInfoMapper.productToProductInfo(productMock)).thenReturn(productInfo);
 		Mockito.doNothing().when(productDaoMock).delete(productMock);
 		Mockito.doNothing().when(productDaoMock).update(productMock);
-		Mockito.doNothing().when(productDaoMock).create(productMock);
 		Mockito.doNothing().when(productDaoMock).merge(productMock);
 		Mockito.when(productDaoMock.searchParam("rk800", 1, 1, 1500.0, 1500.0)).thenReturn(productsMock);
+		//Mockito.doReturn(1).when(productDTOMock).getProductId();
+		Mockito.doReturn("rk800").when(productDTOMock).getModel();
 				
 		}
 	
@@ -70,6 +80,12 @@ public class ProductServiceTest {
 	public void create() throws CustomLogicException {
 		ProductDTO product = new ProductDTO();
 		productService.create(product);
+	}
+	
+	@Test(expected=CustomLogicException.class)
+	public void createFail() throws CustomLogicException {
+		//Mockito.doThrow(CustomLogicException.class).when(productDaoMock).create(productMock);
+		productService.create(productDTOMock);
 		productDaoMock.create(productMock);
 		
 	}
@@ -79,7 +95,6 @@ public class ProductServiceTest {
 		productDaoMock.delete(productMock);
 		Mockito.verify(productDaoMock).delete(productMock);
 	
-
 	}
 
 	
@@ -88,6 +103,21 @@ public class ProductServiceTest {
 		productService.update(productDTOMock);
 		Mockito.verify(productDaoMock).update(productMock);
 	
+	}
+	
+	@Test
+	public void updateFailNegativeUnits() throws IOException, TimeoutException {
+		Mockito.doReturn(-1).when(productDTOMock).getUnitsInStock();
+		String result = productService.update(productDTOMock);
+		assertEquals("negative units", result);
+		
+	}
+	
+	@Test
+	public void updateFailNegativePrice() throws IOException, TimeoutException {
+		Mockito.doReturn(-1.0).when(productDTOMock).getPrice();
+		String result = productService.update(productDTOMock);
+		assertEquals("negative price", result);
 	}
 	
 	@Test
@@ -116,9 +146,21 @@ public class ProductServiceTest {
 	}
 	
 	@Test
+	public void getByIdFail() {
+		ProductDTO productDTO = productService.getById(2);
+		 org.junit.Assert.assertNull(productDTO);
+	}
+	
+	@Test
 	public void getByModel() throws CustomLogicException {
 		ProductDTO productDTO = productService.getByModel("rk800");
 		assertEquals(productDTO, productDTOMock);
+	}
+	
+	@Test
+	public void getByModelFail() throws CustomLogicException {
+		ProductDTO productDTO = productService.getByModel("rk900");
+		org.junit.Assert.assertNull(productDTO);
 	}
 	
 	
@@ -135,7 +177,7 @@ public class ProductServiceTest {
 	public void search() throws CustomLogicException {
 		List<ProductInfo> list = productService.searchParam("rk800",1, 1, 1500.0, 1500.0);
 		Mockito.verify(productDaoMock).searchParam("rk800",1, 1, 1500.0, 1500.0);
-		//assertEquals(list.size(), productsMock.size());
+		assertEquals(list.size(), productsMock.size());
 		
 	}
 	

@@ -1,5 +1,8 @@
 package ru.alikhano.cyberlife.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import ru.alikhano.cyberlife.DTO.RoleDTO;
 import ru.alikhano.cyberlife.DTO.UserDTO;
@@ -20,8 +24,6 @@ import ru.alikhano.cyberlife.model.Role;
 import ru.alikhano.cyberlife.model.User;
 import ru.alikhano.cyberlife.service.impl.UserServiceImpl;
 
-import static org.junit.Assert.assertEquals;
-
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 	
@@ -30,6 +32,12 @@ public class UserServiceTest {
 	
 	@Mock
 	UserMapper userMapperMock;
+	
+	@Mock
+	BCryptPasswordEncoder encoder;
+	
+	@Mock
+	RoleService roleService;
 	
 	@InjectMocks
     UserServiceImpl userServiceMock;
@@ -48,7 +56,7 @@ public class UserServiceTest {
 		roles.add(role);
 		rolesDTO.add(roleDTO);
 		userMock = new User(1, "user", "1234", true, roles);
-		userDTOMock = new UserDTO(userMock);
+		userDTOMock = Mockito.mock(UserDTO.class);
 		userDTOMock.setRoles(rolesDTO);
 		
 		Mockito.doNothing().when(userDaoMock).create(userMock);
@@ -61,6 +69,7 @@ public class UserServiceTest {
 		
 		Mockito.when(userMapperMock.userDTOtoUser(userDTOMock)).thenReturn(userMock);
 		Mockito.when(userMapperMock.userToUserDTO(userMock)).thenReturn(userDTOMock);
+		Mockito.doReturn("$2a$11$CGbN7TL4PbIg3nnRzRCPjOJPGl2e2enng/xSbf1SQ.WuKWCfTLtF6").when(userDTOMock).getPassword();
 		
 	}
 	
@@ -84,6 +93,13 @@ public class UserServiceTest {
 	}
 	
 	@Test
+	public void getByIdFail() {
+		User user = userServiceMock.getById(2);
+		assertNull(user);
+	}
+	
+	
+	@Test
 	public void updateDTO() {
 		userServiceMock.update(userDTOMock);
 		Mockito.verify(userDaoMock).update(userMock);
@@ -91,9 +107,14 @@ public class UserServiceTest {
 	
 	@Test
 	public void getByUsername() {
-		UserDTO user = userServiceMock.getByUsernameDTO("user");
-		assertEquals(user.getUserId(), userMock.getUserId());
+		userServiceMock.getByUsernameDTO("user");
 		Mockito.verify(userDaoMock).getByUsername("user");
+	}
+	
+	@Test
+	public void getByUserNameFail() {
+		UserDTO user = userServiceMock.getByUsernameDTO("user1");
+		assertNull(user);
 	}
 	
 	@Test
@@ -103,10 +124,22 @@ public class UserServiceTest {
 	}
 	
 	@Test
+	public void register() {
+		userServiceMock.register(userDTOMock);
+	}
+	
+	@Test
 	public void changePassword() {
-		userServiceMock.changePassword("1234",userDTOMock);
-		Mockito.verify(userServiceMock).update(userDTOMock);
+		userServiceMock.changePassword("1234", userDTOMock);
 		Mockito.verify(userDaoMock).update(userMock);
+		
+	}
+	
+	@Test
+	public void verifyPassword() {
+		boolean pswdCheck = userServiceMock.verifyPassword("1234", 1);
+		assertEquals(true, pswdCheck);
+		
 	}
 
 }

@@ -50,6 +50,12 @@ public class UserServiceImpl implements UserService {
 	public User getById(int id) {
 		return userDao.getById(id);
 	}
+	
+	@Override
+	@Transactional
+	public UserDTO getDTOById(int id) {
+		return userMapper.userToUserDTO(getById(id));
+	}
 
 	@Override
 	@Transactional
@@ -104,7 +110,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public boolean verifyPassword(String password, int id) {
-		UserDTO userDTO = userMapper.userToUserDTO(userDao.getById(id));
+		UserDTO userDTO = getDTOById(id);
 
 		return BCrypt.checkpw(password, userDTO.getPassword());
 	}

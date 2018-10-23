@@ -104,7 +104,7 @@ public class OrderController {
 			return "/myOrder";
 		}
 
-		return "redirect:/myAccount";
+		return "redirect:/orderHistory";
 
 	}
 
