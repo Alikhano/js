@@ -105,4 +105,20 @@ public class OrderItem {
 	
 	
 
+	public OrderItem() {
+	}
+
+	public OrderItem(int orderItemId, @NotNull @Min(1) int orderQuantity, @NotNull @Min(100) double orderTotal,
+			@NotNull Product product, @NotNull Orders order) {
+		this.orderItemId = orderItemId;
+		this.orderQuantity = orderQuantity;
+		this.orderTotal = orderTotal;
+		this.product = product;
+		this.order = order;
+	}
+	
+	
+	
+	
+
 }

@@ -115,7 +115,7 @@ public class CartServiceTest {
 	@Test
 	public void createAndGetId() {
 		int id = cartServiceMock.createAndGetId(cartDTOMock);
-		assertEquals(id, 1);
+		assertEquals(1, id);
 	}
 	
 	@Test

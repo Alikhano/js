@@ -16,11 +16,11 @@ public interface ProductService {
 
 	List<ProductDTO> getAll();
 
-	ProductDTO getById(int id);
+	ProductDTO getById(int id) throws CustomLogicException;
 
 	void create(ProductDTO productDTO) throws CustomLogicException;
 
-	String update(ProductDTO productDTO) throws IOException, TimeoutException;
+	String update(ProductDTO productDTO) throws CustomLogicException, IOException, TimeoutException;
 
 	String delete(ProductDTO productDTO) throws CustomLogicException, IOException, TimeoutException;
 	

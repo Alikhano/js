@@ -103,8 +103,20 @@ public class AdminProductController {
 	}
 
 	@RequestMapping("/admin/editProduct/{productId}")
-	public String editProduct(@PathVariable("productId") int productId, Model model) {
-		ProductDTO productDTO = productService.getById(productId);
+	public String editProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException {
+		ProductDTO productDTO;
+		try {
+		productDTO = productService.getById(productId);
+		}
+		catch(CustomLogicException ex) {
+			logger.error(ex.getErrMessage());
+			model.addAttribute("status", "No such product!");
+			List<ProductDTO> products = productService.getAll();
+			model.addAttribute("products", products);
+
+			return "productList";
+			
+		}
 		model.addAttribute("categoryDTOList", categoryService.getAll());
 		model.addAttribute("consDTOList", consService.getAll());
 		model.addAttribute("product", productDTO);
@@ -115,8 +127,7 @@ public class AdminProductController {
 	@RequestMapping(value = "/admin/editProduct", method = RequestMethod.POST)
 	public String editProductPost(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result,
 			HttpServletRequest request, Model model) throws CustomLogicException, IOException, TimeoutException {
-		
-		String opResult = productService.update(productDTO);
+		String opResult = productService.update(productDTO);	
 
 		if (opResult.equals("negative units")) {
 			model.addAttribute("error", "There should > 0 units in stock!");
@@ -140,7 +151,21 @@ public class AdminProductController {
 
 	@RequestMapping(value = "/admin/deleteProduct/{productId}", method = RequestMethod.GET)
 	public String deleteProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException, IOException, TimeoutException {
-		String result = productService.delete(productService.getById(productId));
+		
+		String result;
+		try {
+			result = productService.delete(productService.getById(productId));
+		}
+		catch (CustomLogicException ex) {
+			logger.error(ex.getErrMessage());
+			model.addAttribute("status", "No such product!");
+			List<ProductDTO> products = productService.getAll();
+			model.addAttribute("products", products);
+
+			return "productList";
+			
+		}
+	
 		if (result.equals("failed")) {
 			logger.error("You cannot delete a product that has not been delivered yet!");
 			model.addAttribute("status", "Not delivered yet! " + productService.getById(productId).getModel());

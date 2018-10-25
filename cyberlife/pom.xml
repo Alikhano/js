@@ -200,17 +200,27 @@
 			<artifactId>spring-amqp</artifactId>
 			<version>2.0.6.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>3.14.0</version>
+		</dependency>
 	</dependencies>
 	<build>
+		<finalName>cyberlife</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>1.2.2.Final</version>
 				<configuration>
-				<hostname>127.0.0.1</hostname>
-				<port>9990</port>
-				<name>cyberlife.war</name>
+					<port>9990</port>
+					<name>cyberlife.war</name>
 				</configuration>
 			</plugin>
 
@@ -249,6 +259,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>cyberlife</finalName>
+
 	</build>
 </project>

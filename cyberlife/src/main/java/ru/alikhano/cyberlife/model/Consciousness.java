@@ -74,13 +74,16 @@ public class Consciousness {
 		if (description == null) {
 			if (other.description != null)
 				return false;
-		} else if (!description.equals(other.description))
+		} else if (!description.equals(other.description)) {
+			
 			return false;
+		}
 		if (level == null) {
 			if (other.level != null)
 				return false;
-		} else if (!level.equals(other.level))
+		} else if (!level.equals(other.level)) {
 			return false;
+		}
 		return true;
 	}
 	

@@ -61,8 +61,10 @@ public class Category {
 		if (catType == null) {
 			if (other.catType != null)
 				return false;
-		} else if (!catType.equals(other.catType))
+		} else if (!catType.equals(other.catType)) {
 			return false;
+		}
+			
 		return true;
 	}
 	

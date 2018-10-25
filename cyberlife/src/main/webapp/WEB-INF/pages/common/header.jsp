@@ -35,8 +35,10 @@
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link"
-					href="<c:url value="/catalogue" />"><spring:message code="label.catalogue"/> </a></li>
+				<li class="nav-item">
+				<sec:authorize
+						access="!hasRole('ROLE_ADMIN')"><a class="nav-link"
+					href="<c:url value="/catalogue" />"><spring:message code="label.catalogue"/> </a></sec:authorize></li>
 				<li class="nav-item"><a class="nav-link"
 					href="<c:url value="/searchProduct" />"><spring:message code="label.search"/></a></li>
 				<li class="nav-item"><sec:authorize

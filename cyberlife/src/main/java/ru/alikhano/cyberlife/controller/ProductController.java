@@ -46,13 +46,26 @@ public class ProductController {
 		List<ProductDTO> products = productService.getAll();
 		model.addAttribute("products", products);
 
-		return "productCatalogue";
+		return "productList";
 	}
 
     
     @RequestMapping("/viewProduct/{productId}")
-    public String viewProduct(@PathVariable("productId") int productId, Model model) {
-        ProductDTO productDTO = productService.getById(productId);
+    public String viewProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException {
+    	ProductDTO productDTO;
+    	try {
+    		  productDTO = productService.getById(productId);
+    	}
+    	catch (CustomLogicException ex) {
+    		logger.error(ex.getErrMessage());
+    		model.addAttribute("status", "No such product!");
+    		List<ProductDTO> products = productService.getAll();
+    		model.addAttribute("products", products);
+
+    		return "productList";
+    		
+    	}
+       
         model.addAttribute("product", productDTO);
         CartItemDTO cartItem = new CartItemDTO(); 
         model.addAttribute("newCartItem", cartItem);

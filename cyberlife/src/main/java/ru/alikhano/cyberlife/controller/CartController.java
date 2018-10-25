@@ -1,6 +1,7 @@
 package ru.alikhano.cyberlife.controller;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
@@ -18,6 +19,8 @@ import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
+import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.CustomerService;
@@ -65,29 +68,22 @@ public class CartController {
 	}
 	
 	@RequestMapping(value = "/deleteItem/{itemId}")
-	public String deleteProduct(@PathVariable("itemId") int itemId, HttpServletRequest request, Model model) {
-		double grandTotal = 0;
+	public String deleteProduct(@PathVariable("itemId") int itemId, HttpServletRequest request, Model model) throws CustomLogicException {
 		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
-		CartItemDTO cartItemDTO = cartItemService.getById(itemId);
-		Set<CartItemDTO> items = cartDTO.getItems();
-		Set<CartItemDTO> iterSet = new HashSet<>(items);
-		for (CartItemDTO item : iterSet) {
-			if (item.getItemId() == itemId) {
-				items.remove(item);
-			}
-		}
-		if (items.isEmpty()) {
-			cartDTO.setGrandTotal(0);
-		}
-		else {
-			grandTotal = cartDTO.getGrandTotal() - (cartItemDTO.getTotalPrice() * cartItemDTO.getQuantity());
-		}
 		
-		cartDTO.setItems(items);
-		cartDTO.setGrandTotal(grandTotal);
-		cartService.update(cartDTO);
-		cartItemService.delete(cartItemDTO);
+		try {
+		cartService.deleteItemFromCart(cartDTO, itemId);
 		
+		}
+		catch (CustomLogicException ex) {
+			logger.error("No such item, cannot delete");
+			model.addAttribute("status", "No such product!");
+			model.addAttribute("cart", cartDTO);
+			model.addAttribute("cartItems", cartDTO.getItems());
+
+    		return "cartList";
+		}
+				
 		logger.info("Item is removed from cart");
 
 		return "redirect:/myCart";

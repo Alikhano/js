@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp" %>
 <div class="col" id="admin-main">
+<span id="statusSpan" style="display: none">${status}</span>
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
@@ -47,6 +48,21 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>   
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>  
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	if ($('#statusSpan').text() != '') {
+		var span_Text = $('#statusSpan').text();
+		console.log(span_Text);
+		swal("Oops", span_Text, "error");
+		$('#statusSpan').empty();
+	}
+
+}
+
+);
+</script> 
 </body>
 </html>

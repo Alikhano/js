@@ -11,7 +11,9 @@
 				<th><spring:message code="label.consciousness" /></th>
 				<th><spring:message code="label.unitsInStock" /></th>
 				<th><spring:message code="label.price" /></th>
+				 <sec:authorize access="hasRole('ROLE_ADMIN')">
 				<th><spring:message code="label.actions" /></th>
+				</sec:authorize>
 			</tr>
 		</thead>
 		<c:forEach items="${products}" var="product">
@@ -27,6 +29,7 @@
 				<td>${product.cons.level}</td>
 				<td>${product.unitsInStock}</td>
 				<td>${product.price} USD</td>
+				 <sec:authorize access="hasRole('ROLE_ADMIN')">
 				<td><a
 					href="<spring:url value="/admin/editProduct/${product.productId}" />">
 						<input type="submit" class="buttons"
@@ -40,6 +43,7 @@
 						name="model" value="${product.model}" /> <input type="hidden"
 						name="status" value="${product.model}" />
 				</a></td>
+				</sec:authorize>
 			</tr>
 		</c:forEach>
 	</table>

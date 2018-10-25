@@ -8,10 +8,10 @@
 		<div class="col-md-5">
 			<h3 class="title mb-3">${customer.firstName} ${customer.lastName} </h3>
 			<p>
-				<strong><i class="fas fa-envelope"></i></strong> ${customer.email}
+				<strong><em class="fas fa-envelope"></em></strong> ${customer.email}
 			</p>
 			<p>
-				<strong><i class="fas fa-map-marked-alt"></i></strong>
+				<strong><em class="fas fa-map-marked-alt"></em></strong>
 				 ${customer.address.country} </p>
 				
 				<p>${customer.address.city}</p>
@@ -20,7 +20,7 @@
 				
 				<p><a href="<spring:url value="/myAccount/changeAddress" />" class="btn btn-default"> <spring:message code="label.editAddress"/></a></p>
 			
-			<p><strong><i class="fas fa-birthday-cake"></i></strong> ${customer.birthDate}</p>
+			<p><strong><em class="fas fa-birthday-cake"></em></strong> ${customer.birthDate}</p>
 
 			<p>
 				<a href="<spring:url value="/myAccount/changePassword" />" class="btn btn-default"><spring:message code="label.changePssword"/></a>

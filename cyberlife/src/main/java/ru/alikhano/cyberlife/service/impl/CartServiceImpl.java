@@ -1,6 +1,7 @@
 package ru.alikhano.cyberlife.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
+import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.dao.CartDao;
 import ru.alikhano.cyberlife.mapper.CartMapper;
 import ru.alikhano.cyberlife.model.Cart;
+import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 
 @Service
@@ -20,6 +23,9 @@ public class CartServiceImpl implements CartService {
 	
 	@Autowired
 	CartDao cartDao;
+	
+	@Autowired
+	CartItemService cartItemService;
 	
 	@Autowired
 	CartMapper cartMapper;
@@ -74,6 +80,34 @@ public class CartServiceImpl implements CartService {
 		}
 		
 		return null;
+		
+	}
+
+	@Override
+	public void deleteItemFromCart(CartDTO cartDTO, int itemId) throws CustomLogicException {
+		double grandTotal = 0;
+		CartItemDTO cartItemDTO = cartItemService.getById(itemId);
+		if (cartItemDTO == null) {
+			throw new CustomLogicException("No such item!");
+		}
+		Set<CartItemDTO> items = cartDTO.getItems();
+		Set<CartItemDTO> iterSet = new HashSet<>(items);
+		for (CartItemDTO item : iterSet) {
+			if (item.getItemId() == itemId) {
+				items.remove(item);
+			}
+		}
+		if (items.isEmpty()) {
+			cartDTO.setGrandTotal(0);
+		}
+		else {
+			grandTotal = cartDTO.getGrandTotal() - (cartItemDTO.getTotalPrice() * cartItemDTO.getQuantity());
+		}
+		
+		cartDTO.setItems(items);
+		cartDTO.setGrandTotal(grandTotal);
+		update(cartDTO);
+		cartItemService.delete(cartItemDTO);
 		
 	}
 	

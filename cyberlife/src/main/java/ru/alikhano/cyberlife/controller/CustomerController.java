@@ -32,6 +32,9 @@ import ru.alikhano.cyberlife.service.UserService;
 public class CustomerController {
 	
 	private static final Logger logger = LogManager.getLogger(CustomerController.class);
+	private static final String CUSTOMER = "customer";
+	private static final String UPDATE= "updateAccount";
+	private static final String ERROR = "error";
 	
 	@Autowired
 	UserService userService;
@@ -52,13 +55,13 @@ public class CustomerController {
 		String username = authentication.getName();
 		UserDTO user = userService.getByUsernameDTO(username);
 		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
-		model.addAttribute("customer", customerDTO);
+		model.addAttribute(CUSTOMER, customerDTO);
 		
 		return "customerAccount";
 	}
 	
 	@GetMapping("/myAccount/updateAccount/")
-	public String updateAccount(Model model, Authentication authentication) throws CustomLogicException {
+	public String updateAccount(Model model, Authentication authentication) {
 		String username = authentication.getName();
 		UserDTO user = userService.getByUsernameDTO(username);
 		CustomerDTO customer = customerService.getByUserId(user.getUserId());
@@ -68,12 +71,12 @@ public class CustomerController {
 			customer = new CustomerDTO();
 			customer.setUser(user);
 			customerService.create(customer);
-			model.addAttribute("customer", customer);
-			model.addAttribute("error","You seem to not have a profile. We generated it for you");
-			return "updateAccount";
+			model.addAttribute(CUSTOMER, customer);
+			model.addAttribute(ERROR,"You seem to not have a profile. We generated it for you");
+			return UPDATE;
 		}
 		
-		return "updateAccount";
+		return UPDATE;
 			
 		}
 	
@@ -90,24 +93,24 @@ public class CustomerController {
 			customer = new CustomerDTO();
 			customer.setUser(user);
 			customerService.create(customerDTO);
-			model.addAttribute("customer", customer);
-			model.addAttribute("error","You seem to not have a profile. We generated it for you");
-			return "updateAccount";
+			model.addAttribute(CUSTOMER, customer);
+			model.addAttribute(ERROR,"You seem to not have a profile. We generated it for you");
+			return UPDATE;
 			
 		}
 		
 		if (customer.getCustomerId() != customerId) {
 			logger.error("Oops. You should not try to access someone else's profile!");
-			model.addAttribute("customer", customer);
-			model.addAttribute("error","You cannot access someone else's profile");
-			return "updateAccount";
+			model.addAttribute(CUSTOMER, customer);
+			model.addAttribute(ERROR,"You cannot access someone else's profile");
+			return UPDATE;
 			
 		}
 
-		model.addAttribute("customer", customerDTO);
+		model.addAttribute(CUSTOMER, customerDTO);
 		
 
-		return "updateAccount";
+		return UPDATE;
 	}
 	
 	@RequestMapping(value = "/myAccount/updateAccount", method = RequestMethod.POST)
@@ -119,14 +122,14 @@ public class CustomerController {
 			logger.info(customerDTO.getLastName() + " has updated his/her account");
 		}
 		catch (DataIntegrityViolationException ex) {
-			model.addAttribute("error","Your have used the email address which is already taken on this website. Please try again.");
+			model.addAttribute(ERROR,"Your have used the email address which is already taken on this website. Please try again.");
 			logger.error("Your have used the email address which is already taken on this website. Please try again.");
-			return "updateAccount";
+			return UPDATE;
 		}
 		catch (ConstraintViolationException ex) {
-			model.addAttribute("error","Please check your input, some fields are filled in incorrectly");
+			model.addAttribute(ERROR,"Please check your input, some fields are filled in incorrectly");
 			logger.error("Errors in user input");
-			return "updateAccount";
+			return UPDATE;
 		}
 		
 
@@ -153,7 +156,7 @@ public class CustomerController {
 			logger.info(authentication.getName() + " has updated his/her account");
 		}
 		catch (ConstraintViolationException ex) {
-			model.addAttribute("error","Your have mistyped values for some of the fields. Please verify provided information (no negative values, correct zip code format)");
+			model.addAttribute(ERROR,"Your have mistyped values for some of the fields. Please verify provided information (no negative values, correct zip code format)");
 			logger.error(ex.getMessage() + "WRONG values");
 			return "changeAddress";
 		}

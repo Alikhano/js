@@ -1,5 +1,6 @@
 package ru.alikhano.cyberlife.DTO;
 
+import ru.alikhano.cyberlife.model.OrderItem;
 
 public class OrderItemDTO {
 	
@@ -58,6 +59,16 @@ public class OrderItemDTO {
 		if (orderItemId != other.orderItemId)
 			return false;
 		return true;
+	}
+	
+	public OrderItemDTO() {
+		
+	}
+	
+	public OrderItemDTO (OrderItem item) {
+		this.orderItemId = item.getOrderItemId();
+		this.orderQuantity = item.getOrderQuantity();
+		this.orderTotal = item.getOrderTotal();
 	}
     
 

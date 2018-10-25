@@ -8,11 +8,11 @@
 
 <div class="container login-main">
 	<div id="card-success" class="hidden">
-		<i class="fa-fa-check"></i>
+		<em class="fa-fa-check"></em>
 		<p><spring:message code="label.paymentSuccess"/></p>
 	</div>
 	<div id="form-errors" class="hidden">
-		<i class="fa-fa-exclamation-triangle"></i>
+		<em class="fa-fa-exclamation-triangle"></em>
 		<p id="card-error"><spring:message code="label.cardError"/></p>
 	</div>
 

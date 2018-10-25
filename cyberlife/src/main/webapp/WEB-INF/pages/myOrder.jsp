@@ -8,13 +8,13 @@
 			<div class="row">
 				<div class="col-50">
 					<h3><spring:message code="label.shippingAddress"/></h3>
-					<label for="name"><i class="fa fa-user"></i> <strong><spring:message code="label.yourName"/></strong> </label> 
+					<label for="name"><em class="fa fa-user"></em> <strong><spring:message code="label.yourName"/></strong> </label> 
 					 <p>${customer.firstName}  ${customer.lastName}</p>
 					<!-- display name -->
-					<label for="email"><i class="fa fa-envelope"></i> <strong><spring:message code="label.email"/></strong></label>
+					<label for="email"><em class="fa fa-envelope"></em> <strong><spring:message code="label.email"/></strong></label>
 					<p>${customer.email}</p>
 					<!-- display email -->
-					<label for="address"><i class="fas fa-address-card"></i>
+					<label for="address"><em class="fas fa-address-card"></em>
 						<strong>Address</strong></label> <label for="city"> <strong><spring:message code="label.city"/></strong> </label> <p>${customer.address.city}</p>
 
 					<div class="row">
@@ -51,7 +51,7 @@
 		<div class="container">
 			<h4>
 				Cart <span class="price" style="color: black"> <i
-					class="fa fa-shopping-cart"></i> <b></b>
+					class="fa fa-shopping-cart"></i> 
 				</span>
 				<c:forEach items="${cartItems}" var="cartItem">
 					<p>
@@ -63,8 +63,8 @@
 			<!-- for each cart item -->
 			<hr>
 			<p>
-				Total <span class="price" style="color: black"><b>
-						${cart.grandTotal} USD </b></span>
+				Total <span class="price" style="color: black"><strong>
+						${cart.grandTotal} USD </strong></span>
 			</p>
 
 		</div>

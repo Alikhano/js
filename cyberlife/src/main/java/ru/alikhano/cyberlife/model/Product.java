@@ -157,10 +157,13 @@ public class Product {
 		if (model == null) {
 			if (other.model != null)
 				return false;
-		} else if (!model.equals(other.model))
+		} else if (!model.equals(other.model)) {
 			return false;
-		if (productId != other.productId)
+		}
+		if (productId != other.productId) {
 			return false;
+		}
+			
 		return true;
 	}
 	

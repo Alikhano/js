@@ -19,10 +19,10 @@
 				<div class="form-group">
 					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 						<div class="input-group-addon" style="width: 2.6rem">
-							<i class="fa fa-at"></i>
+							<em class="fa fa-at"></em>
 						</div>
 				
-						<input name="username" type="text"
+						<input id ="username" name="username" type="text"
 							class="form-control" placeholder="<spring:message code="label.username"/>" />
 					</div>
 
@@ -36,9 +36,9 @@
 				<div class="form-group">
 					<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 						<div class="input-group-addon" style="width: 2.6rem">
-							<i class="fa fa-key"></i>
+							<em class="fa fa-key"></em>
 						</div>
-						<input name="password" type="password" class="form-control"
+						<input id="password" name="password" type="password" class="form-control"
 							placeholder="<spring:message code="label.password"/>" /> <input
 							type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
@@ -50,7 +50,7 @@
 		<div class="row"  style="padding-top: 1rem">
 		<div class="col-md-3"></div>
 			<div class="col-md-6">
-			<button class="btn btn-success" type="submit"><i class="fa fa-sign-in"></i><spring:message code="label.login"/></button>
+			<button class="btn btn-success" type="submit"><em class="fa fa-sign-in"></em><spring:message code="label.login"/></button>
 				<a class="btn btn-link" href="${pageContext.request.contextPath}/registration"><spring:message code="label.createProfile"/></a>
 			</div>
 		</div>

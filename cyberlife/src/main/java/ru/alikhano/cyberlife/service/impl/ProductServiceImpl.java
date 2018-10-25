@@ -55,8 +55,12 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public ProductDTO getById(int id) {
-		return productMapper.productToProductDTO((Product) (productDao.getById(id)));
+	public ProductDTO getById(int id) throws CustomLogicException {
+		ProductDTO productDTO = productMapper.productToProductDTO((Product) (productDao.getById(id)));
+		if (productDTO == null) {
+			throw new CustomLogicException("No product with such id");
+		}
+		return productDTO;
 	}
 
 	@Override
@@ -72,7 +76,11 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public String update(ProductDTO productDTO) throws IOException, TimeoutException {
+	public String update(ProductDTO productDTO) throws IOException, TimeoutException, CustomLogicException {
+		
+		if (productDTO == null) {
+			throw new CustomLogicException("No such product, cannot edit");
+		}
 		if (productDTO.getUnitsInStock() < 0) {
 			return "negative units";
 		}
@@ -91,6 +99,10 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public String delete(ProductDTO productDTO) throws CustomLogicException, IOException, TimeoutException {
+		if (productDTO == null) {
+			throw new CustomLogicException("No such product, cannot delete");
+		}
+		
 		if (canBeDeleted(productDTO)) {
 			productDao.delete(productMapper.productDTOtOProduct(productDTO));
 			if (isInTop(productDTO)) {
@@ -115,12 +127,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<ProductInfo> searchParam(String model, int category, int consLevel, double fromPrice, double toPrice)
-			throws CustomLogicException {
+	public List<ProductInfo> searchParam(String model, int category, int consLevel, double fromPrice, double toPrice) {
 		List<Product> list = productDao.searchParam(model, category, consLevel, fromPrice, toPrice);
-		if (list == null) {
-			throw new CustomLogicException("No product matches your search parameters. Please try again.");
-		}
+		
 		List<ProductInfo> infoList = new ArrayList<>();
 		for (Product product : list) {
 			ProductInfo productInfo = productInfoMapper.productToProductInfo(product);
@@ -169,6 +178,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public void merge(ProductDTO productDTO) throws IOException, TimeoutException {
 		productDao.merge(productMapper.productDTOtOProduct(productDTO));
 		if (isInTop(productDTO)) {
@@ -177,6 +187,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Transactional
 	public boolean canBeDeleted(ProductDTO productDTO) {
 	    List<OrderDTO> orders = orderService.getAll();
 	    for (OrderDTO order : orders) {
