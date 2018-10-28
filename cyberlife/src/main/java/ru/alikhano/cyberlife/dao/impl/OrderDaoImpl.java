@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import ru.alikhano.cyberlife.dao.OrderDao;
 import ru.alikhano.cyberlife.model.Orders;
+import ru.alikhano.cyberlife.model.Product;
 
 @Repository
 public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
@@ -67,6 +68,14 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 		}
 		
 		return 0;		
+	}
+
+	@Override
+	public void merge(Orders order) {
+		 Orders orderToSave = (Orders) sessionFactory.getCurrentSession().merge(order);
+		 sessionFactory.getCurrentSession().save(orderToSave);
+			
+		
 	}
 
 }

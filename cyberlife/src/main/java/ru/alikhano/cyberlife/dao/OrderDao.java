@@ -18,5 +18,7 @@ public interface OrderDao extends GenericDao<Orders> {
 	
 	double getWeeklyRevenue();
 	
+	void merge(Orders order);
+	
 
 }

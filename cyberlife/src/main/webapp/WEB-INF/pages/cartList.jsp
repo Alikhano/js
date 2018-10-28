@@ -11,7 +11,6 @@
 			<th><spring:message code="label.description"/></th>
 			<th><spring:message code="label.price"/></th>
 			<th><spring:message code="label.actions"/></th>
-			<th><spring:message code="label.totalPrice"/></th>
 		</tr>
 	</thead>
 	
@@ -34,12 +33,10 @@
 			</td>
 			</tr>
 	</c:forEach>
-	<tr>
-	<td>${cart.grandTotal} USD</td>
-	</tr>
-	
 	
 </table>
+
+<p><strong><spring:message code="label.totalPrice"/>: ${cart.grandTotal} USD</strong></p>
 </div>
 <div>
              <a href="<c:url value = "/myOrder" />" class="btn btn-success"><spring:message code="label.proceedToOrder"/></a>

@@ -23,8 +23,8 @@ public class AdminSeleniumTest {
 	}
 	
 	@Test
-	public void adminTest() {
-		WebDriverWait driverWait = new WebDriverWait(driver, 200);
+	public void adminTest() throws InterruptedException {
+		WebDriverWait driverWait = new WebDriverWait(driver, 1000);
 		
 		// login
 		
@@ -33,6 +33,7 @@ public class AdminSeleniumTest {
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("password"))).sendKeys("admin");
 		
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//html/body/div/form/div[4]/div[2]/button"))).click();
+		
 		
 		// edit product
 		
@@ -47,7 +48,7 @@ public class AdminSeleniumTest {
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"unitsInStock\"]"))).sendKeys("10");
 		
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"editProduct\"]/div/input"))).click();
-		
+			
 		//  update order status
 		
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"admin-sidebar\"]/div/div/div/a[6]"))).click();
@@ -60,6 +61,8 @@ public class AdminSeleniumTest {
 		
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"update\"]"))).click();
 		
+
+		
 		// try to add category
 		
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"admin-sidebar\"]/div/div/div/a[4]"))).click();
@@ -70,6 +73,7 @@ public class AdminSeleniumTest {
 		
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[2]/div/div[4]/div/button"))).click();
 		
+
 		// try to add AI config
 		
         driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"admin-sidebar\"]/div/div/div/a[5]"))).click();

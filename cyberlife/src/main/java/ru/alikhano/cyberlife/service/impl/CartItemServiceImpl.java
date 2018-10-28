@@ -80,12 +80,15 @@ public class CartItemServiceImpl implements CartItemService {
 			    CartItemDTO item = cartService.getCartItemById(cartDTO, itemId);
 			    double price = item.getTotalPrice();
 		        int quantity = item.getQuantity();
+		        double newPrice = cartItemDTO.getQuantity() * productDTO.getPrice();
 				item.setQuantity(quantity + cartItemDTO.getQuantity());
 				
-				item.setTotalPrice(price + cartItemDTO.getTotalPrice());
+				item.setTotalPrice(price + newPrice);
 		
-				cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
+				cartDTO.setGrandTotal(newPrice + cartDTO.getGrandTotal());
 				update(item);
+			
+				
 			}
 			
 			else {

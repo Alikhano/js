@@ -104,21 +104,19 @@ public class CartItem {
 			return false;
 		return true;
 	}
-	
+
 	public CartItem(int itemId, @NotNull @Min(1) int quantity, @NotNull @Min(1) double totalPrice,
-			@NotNull Product product) {
+			@NotNull Product product, @NotNull Cart cart) {
+		super();
 		this.itemId = itemId;
 		this.quantity = quantity;
 		this.totalPrice = totalPrice;
 		this.product = product;
+		this.cart = cart;
 	}
 
 	public CartItem() {
 	
 	}
-	
-	
-	
-	
 
 }

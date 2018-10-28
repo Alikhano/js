@@ -58,7 +58,7 @@
 				<div class="form-group">
 				<spring:message code="label.birthDate" var="tBirthDate"/>
 					<form:input type="text" id="birthDate" path="birthDate"
-				class="form-control" placeholder="${tBirthDate}"></form:input>
+				class="form-control" pattern="^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$" placeholder="${tBirthDate}"></form:input>
 			
 				</div>
 			</div>

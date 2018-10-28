@@ -218,4 +218,29 @@ public class OrderServiceImpl implements OrderService {
 		return false;
 	}
 
+	@Override
+	@Transactional
+	public String changeOrderStatus(int orderId, String orderStatus, String paymentStatus) throws IOException, TimeoutException {
+		Orders order = orderDao.getById(orderId);
+		
+		
+		if (order.getOrderStatus().equals("delivered and recieved") && order.getPaymentStatus().equals("paid")) {
+			return "No status updates after order completion!";
+		}
+		
+		if (orderStatus.equals("order status")) {
+			order.setPaymentStatus(paymentStatus);
+			orderDao.merge(order);
+		} else if (paymentStatus.equals("payment status")) {
+			order.setOrderStatus(orderStatus);
+			orderDao.merge(order);
+		} else {
+			order.setOrderStatus(orderStatus);
+			order.setPaymentStatus(paymentStatus);
+			orderDao.merge(order);
+		}
+		
+		return "success";
+	}
+
 }

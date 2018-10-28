@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
@@ -27,6 +27,12 @@ import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.ProductService;
 
+/**
+ * @author Anastasia Likhanova
+ * @version 1.0
+ * @since 28.08.2018
+ *
+ */
 @Controller
 public class ProductController {
 	
@@ -40,8 +46,14 @@ public class ProductController {
 	CartItemService cartItemService;
 	
 	private static final Logger logger = LogManager.getLogger(ProductController.class);
+	
+	private static final String VIEW = "viewProduct";
 
-	@RequestMapping("/catalogue")
+	/**
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/catalogue")
 	public String getProducts(Model model) {
 		List<ProductDTO> products = productService.getAll();
 		model.addAttribute("products", products);
@@ -50,7 +62,14 @@ public class ProductController {
 	}
 
     
-    @RequestMapping("/viewProduct/{productId}")
+    /**
+     * controller to view detailed product info
+     * @param productId to retrieve the product from database
+     * @param model
+     * @return jsp file name
+     * @throws CustomLogicException
+     */
+    @GetMapping("/viewProduct/{productId}")
     public String viewProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException {
     	ProductDTO productDTO;
     	try {
@@ -70,10 +89,20 @@ public class ProductController {
         CartItemDTO cartItem = new CartItemDTO(); 
         model.addAttribute("newCartItem", cartItem);
 
-        return "viewProduct";
+        return VIEW;
     }
     
-    @RequestMapping(value = "/viewProduct", method = RequestMethod.POST)
+    /**
+     * controller to add product to cart
+     * @param productId
+     * @param newCartItem object, containing details of a new cart item
+     * @param result
+     * @param request
+     * @param model
+     * @return redirect back to the catalogue
+     * @throws CustomLogicException
+     */
+    @PostMapping(value = "/viewProduct")
     public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") @Valid CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
       
         
@@ -85,9 +114,8 @@ public class ProductController {
         	model.addAttribute("error","Sorry, we do not have enough units in stock. Try again");
         	model.addAttribute("product", productDTO);
 			logger.error("Not enough units in stock");
-			return "viewProduct";
-        }
-        
+			return VIEW;
+        }       
 
 		try {
 			 cartItemService.create(productDTO, cartDTO, newCartItem);
@@ -96,10 +124,9 @@ public class ProductController {
 			model.addAttribute("error","Plese check your input for negative values");
 			model.addAttribute("product", productDTO);
 			logger.error("Negative values in user input");
-			return "viewProduct";
+			return VIEW;
 		}
         
-   
       
         cartService.update(cartDTO);
         

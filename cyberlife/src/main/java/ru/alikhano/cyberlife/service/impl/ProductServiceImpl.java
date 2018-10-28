@@ -15,10 +15,13 @@ import ru.alikhano.cyberlife.DTO.OrderDTO;
 import ru.alikhano.cyberlife.DTO.OrderItemDTO;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.ProductInfo;
+import ru.alikhano.cyberlife.DTO.SearchRequest;
 import ru.alikhano.cyberlife.dao.ProductDao;
 import ru.alikhano.cyberlife.mapper.ProductInfoMapper;
 import ru.alikhano.cyberlife.mapper.ProductMapper;
 import ru.alikhano.cyberlife.model.Product;
+import ru.alikhano.cyberlife.service.CategoryService;
+import ru.alikhano.cyberlife.service.ConsciousnessService;
 import ru.alikhano.cyberlife.service.OrderService;
 import ru.alikhano.cyberlife.service.ProductService;
 
@@ -37,6 +40,12 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	OrderService orderService;
 
+	@Autowired
+	CategoryService categoryService;
+	
+	@Autowired
+	ConsciousnessService consService;
+	
 	@Autowired
 	MessagingService messaginService;
 
@@ -127,8 +136,33 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<ProductInfo> searchParam(String model, int category, int consLevel, double fromPrice, double toPrice) {
-		List<Product> list = productDao.searchParam(model, category, consLevel, fromPrice, toPrice);
+	public List<ProductInfo> searchParam(SearchRequest request) {
+		int catId;
+		int consId;
+		String category = request.getCategory();
+		String model = request.getModel();
+		
+		 if(category.equals("any")) {
+			 catId = 0;
+		 }
+		 else {
+			 catId = categoryService.getByType(category).getCatId();
+		 }
+
+		 String consLevel = request.getConsLevel();
+		 if(consLevel.equals("any")) {
+			 consId = 0;
+		 }
+		 else {
+	        consId = consService.getByLevel(consLevel).getConsId();
+		 }
+		
+		 double fromPrice = request.getFromPrice();
+		 double toPrice = request.getToPrice();
+		 
+		 
+		 
+		List<Product> list = productDao.searchParam(model, catId, consId, fromPrice, toPrice);
 		
 		List<ProductInfo> infoList = new ArrayList<>();
 		for (Product product : list) {

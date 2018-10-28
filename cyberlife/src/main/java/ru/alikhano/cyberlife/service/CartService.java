@@ -4,7 +4,6 @@ import java.util.List;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
 
 public interface CartService {
 	
@@ -19,8 +18,8 @@ public interface CartService {
 	int createAndGetId(CartDTO cartDTO);
 	
 	CartItemDTO getCartItemById(CartDTO cartDTO, int id);
-	
-	void deleteItemFromCart(CartDTO cartDTO, int itemId) throws CustomLogicException ;
+
+	void merge(CartDTO cartDTO);
 	
 
 }

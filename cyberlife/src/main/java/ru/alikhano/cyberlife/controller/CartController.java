@@ -1,7 +1,6 @@
 package ru.alikhano.cyberlife.controller;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
@@ -10,23 +9,26 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.CustomerService;
 import ru.alikhano.cyberlife.service.ProductService;
 import ru.alikhano.cyberlife.service.UserService;
 
+/**
+ * @author Anastasia Likhanova
+ * @version 1.0
+ * @since 28.08.2018
+ *
+ */
 @Controller
 public class CartController {
 	
@@ -47,8 +49,14 @@ public class CartController {
 	
 	private static final Logger logger = LogManager.getLogger(CartController.class);
 	
-	@RequestMapping("/myCart")
-	public String viewCart(HttpServletRequest request, Model model, Authentication authentication) {
+	/**
+	 * controller to show user's cart entries
+	 * @param request
+	 * @param authentication
+	 * @return jsp file name
+	 */
+	@GetMapping("/myCart")
+	public String viewCart(HttpServletRequest request, Model model) {
 		int cartId = 0;
 		CartDTO cartDTO = null;
 		Cookie[] cookies = request.getCookies();
@@ -67,22 +75,37 @@ public class CartController {
 		return "cartList";	
 	}
 	
-	@RequestMapping(value = "/deleteItem/{itemId}")
-	public String deleteProduct(@PathVariable("itemId") int itemId, HttpServletRequest request, Model model) throws CustomLogicException {
+	/**
+	 * removes product from cart
+	 * @param itemId - id of the item to be removed from the cart
+	 * @param request
+	 * @param model
+	 * @return jsp file name
+	 */
+	@GetMapping(value = "/deleteItem/{itemId}")
+	public String deleteProduct(@PathVariable("itemId") int itemId, HttpServletRequest request, Model model){
+		double grandTotal = 0;
+		
 		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
-		
-		try {
-		cartService.deleteItemFromCart(cartDTO, itemId);
-		
+		CartItemDTO cartItemDTO = cartItemService.getById(itemId);
+		Set<CartItemDTO> items = cartDTO.getItems();
+		Set<CartItemDTO> iterSet = new HashSet<>(items);
+		for (CartItemDTO item : iterSet) {
+			if (item.getItemId() == itemId) {
+				items.remove(item);
+			}
 		}
-		catch (CustomLogicException ex) {
-			logger.error("No such item, cannot delete");
-			model.addAttribute("status", "No such product!");
-			model.addAttribute("cart", cartDTO);
-			model.addAttribute("cartItems", cartDTO.getItems());
-
-    		return "cartList";
+		if (items.isEmpty()) {
+			cartDTO.setGrandTotal(0);
 		}
+		else {
+			grandTotal = cartDTO.getGrandTotal() - cartItemDTO.getTotalPrice();
+		}
+		
+		cartDTO.setItems(items);
+		cartDTO.setGrandTotal(grandTotal);
+		cartService.update(cartDTO);
+		cartItemService.delete(cartItemDTO);
 				
 		logger.info("Item is removed from cart");
 

@@ -31,5 +31,7 @@ public interface OrderService {
 	String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException, IOException, TimeoutException;
 	
 	boolean isInTop(OrderDTO order);
+	
+	String changeOrderStatus(int orderId, String orderStatus, String paymentStatus) throws IOException, TimeoutException;
 
 }

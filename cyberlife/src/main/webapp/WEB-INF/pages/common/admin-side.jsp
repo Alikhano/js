@@ -1,9 +1,12 @@
 <%@ include file="/WEB-INF/pages/common/header.jsp"%>
 
 
+
 <div class="container-fluid">
+ <div class="row">
  
-	<div class="row">
+ 	<sec:authorize
+						access="hasRole('ROLE_ADMIN')">
 		<div class="col-2 px-1 bg-dark" id="admin-sidebar">
 			<div class="py-2 sticky-top">
 				<div class="nav flex-column">
@@ -18,6 +21,10 @@
 				</div>
 			</div>
 		</div>
+		</sec:authorize>
+		
+		
+	
 		
 		
 		

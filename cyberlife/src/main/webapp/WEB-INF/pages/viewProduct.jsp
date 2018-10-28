@@ -14,18 +14,18 @@
 		<h3 class="title mb-3">${product.model}</h3>
 		<p>${product.description}</p>
 		<p>
-			<strong>Category: </strong>${product.category.catType}
+			<strong><spring:message code="label.Category" />: </strong>${product.category.catType}
 		</p>
 		<p>
-			<strong>Consciousness: </strong>${product.cons.level} <br>
+			<strong><spring:message code="label.consciousness" />: </strong>${product.cons.level} <br>
 			${product.cons.description}
 		</p>
 		<p>
-			<strong>Quantity: </strong>${product.unitsInStock} <span
+			<strong><spring:message code="label.quantity" />: </strong>${product.unitsInStock} <span
 				id="outWarning" class="alert alert-warning"></span>
 		</p>
 		<p>
-			<strong>Price: </strong>${product.price} USD
+			<strong><spring:message code="label.price" />: </strong>${product.price} USD
 		</p>
 			<p>
 				<form:form action="${pageContext.request.contextPath}/viewProduct"
@@ -39,11 +39,11 @@
 						value='${product.price}' />
 					<form:input path="quantity" id="quantity" class="form-Control" />
 					  <sec:authorize access="!hasRole('ROLE_ADMIN')">
-					  <span style="color: #ff0000">${error}</span>
+					  <span id="error" style="display:none">${error}</span>
 					<input type="submit" id="addToCart" value="<spring:message code="label.submit" />"
 						class="btn btn-success">
 						</sec:authorize>
-					<a href="<c:url value = "/catalogue" />" class="btn btn-secondary"><spring:message code="label.back" /></a>
+					<%-- <a href="<c:url value = "/catalogue" />" class="btn btn-secondary"><spring:message code="label.back" /></a> --%>
 				</form:form>
 			</p>
 	</div>
@@ -58,6 +58,7 @@
 	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		var quantity = document.getElementsByName('unitsInStock')[0].value;
@@ -67,16 +68,31 @@
 		} else {
 			$("#outWarning").css('display', 'none');
 		}
+		
+		if ($('#error').text() != '') {
+			var span_Text = $('#error').text();
+			console.log($('#error').text());
+			swal("Oops", span_Text, "error");
+			$('#error').empty();
+		}
 
 		$("#newCartItemForm").validate({
 			rules : {
 				"unitsInStock" : {
 					digits : true
+				},
+				
+				"quantity" : {
+					min: 1
 				}
+		
 			},
 			messages : {
 				"unitsInStock" : {
 					digits : "Entered value should contain only digits"
+				},
+				"quantity" : {
+					min: "You should to cart at least 1 item"
 				}
 			}
 		})

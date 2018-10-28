@@ -11,11 +11,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
 
+/**
+ * @author Anastasia Likhanova
+ * @version 1.0
+ * @since 28.08.2018
+ *
+ */
 @ControllerAdvice
 public class ExceptionController {
 
 	private static final Logger logger = LogManager.getLogger(ExceptionController.class);
 
+	/**
+	 * handler for all exceptions
+	 * @param ex
+	 * @return view to display
+	 */
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleGenericException(Exception ex) {
 
@@ -26,15 +37,12 @@ public class ExceptionController {
 
 		return model;
 	}
-
-/*	@ExceptionHandler(Exception.class)
-	public ResponseEntity<?> handleCustomException(Exception ex) {
-
-		logger.error(ex.getMessage(), ex);
-
-		return ResponseEntity.badRequest().body(ex.getMessage());
-	}
-*/
+	
+	/**
+	 * handler for custom exceptions
+	 * @param ex
+	 * @return error message in a body of an http response
+	 */
 	@ExceptionHandler(CustomLogicException.class)
 	public ResponseEntity<?> handleCustomException(CustomLogicException ex) {
 

@@ -8,6 +8,8 @@ import ru.alikhano.cyberlife.model.Cart;
 public interface CartDao extends GenericDao<Cart>{
 	
 	int createAndGetId(Cart cart);
+	
+	void merge(Cart cart);
 
 	
 

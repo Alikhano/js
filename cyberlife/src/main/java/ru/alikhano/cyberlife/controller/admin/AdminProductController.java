@@ -16,10 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +31,12 @@ import ru.alikhano.cyberlife.service.CustomerService;
 import ru.alikhano.cyberlife.service.OrderService;
 import ru.alikhano.cyberlife.service.ProductService;
 
+/**
+ * @author Anastasia Likhanova
+ * @version 1.0
+ * @since 28.08.2018
+ *
+ */
 @Controller
 public class AdminProductController {
 
@@ -47,9 +53,11 @@ public class AdminProductController {
 	
 	private static final Logger logger = LogManager.getLogger(AdminProductController.class);
 
-	private Path path;
-
-	@RequestMapping(value = "/admin/addProduct", method = RequestMethod.GET)
+	/**
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value = "/admin/addProduct")
 	public String getAddNewProductForm(Model model) {
 		ProductDTO newProductDTO = new ProductDTO();
 		model.addAttribute("newProductDTO", newProductDTO);
@@ -58,10 +66,22 @@ public class AdminProductController {
 		return "addProduct";
 	}
 
-	@RequestMapping(value = "/admin/addProduct", method = RequestMethod.POST, consumes = "multipart/form-data")
+	/**
+	 * @param newProductDTO
+	 * @param result
+	 * @param request
+	 * @param file
+	 * @param model
+	 * @return
+	 * @throws IOException
+	 * @throws CustomLogicException
+	 */
+	@PostMapping(value = "/admin/addProduct", consumes = "multipart/form-data")
 	public String addProductPost(@ModelAttribute("newProductDTO") @Valid ProductDTO newProductDTO, BindingResult result,
 			HttpServletRequest request, @RequestPart("file") MultipartFile file, Model model) throws IOException, CustomLogicException {
 
+		Path path;
+		
 		if (productService.getByModel(newProductDTO.getModel()) != null) {
 			model.addAttribute("error", "Oops, this model exists already");
 			logger.error("Oops, this model exists already");
@@ -94,7 +114,11 @@ public class AdminProductController {
 		return "redirect:/admin/productList";
 	}
 
-	@RequestMapping("/admin/productList")
+	/**
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/admin/productList")
 	public String getProducts(Model model) {
 		List<ProductDTO> products = productService.getAll();
 		model.addAttribute("products", products);
@@ -102,7 +126,13 @@ public class AdminProductController {
 		return "productList";
 	}
 
-	@RequestMapping("/admin/editProduct/{productId}")
+	/**
+	 * @param productId
+	 * @param model
+	 * @return
+	 * @throws CustomLogicException
+	 */
+	@GetMapping("/admin/editProduct/{productId}")
 	public String editProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException {
 		ProductDTO productDTO;
 		try {
@@ -124,7 +154,17 @@ public class AdminProductController {
 		return "editProduct";
 	}
 
-	@RequestMapping(value = "/admin/editProduct", method = RequestMethod.POST)
+	/**
+	 * @param productDTO
+	 * @param result
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws CustomLogicException
+	 * @throws IOException
+	 * @throws TimeoutException
+	 */
+	@PostMapping(value = "/admin/editProduct")
 	public String editProductPost(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result,
 			HttpServletRequest request, Model model) throws CustomLogicException, IOException, TimeoutException {
 		String opResult = productService.update(productDTO);	
@@ -149,7 +189,15 @@ public class AdminProductController {
 		return "redirect:/admin/productList";
 	}
 
-	@RequestMapping(value = "/admin/deleteProduct/{productId}", method = RequestMethod.GET)
+	/**
+	 * @param productId
+	 * @param model
+	 * @return
+	 * @throws CustomLogicException
+	 * @throws IOException
+	 * @throws TimeoutException
+	 */
+	@GetMapping(value = "/admin/deleteProduct/{productId}")
 	public String deleteProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException, IOException, TimeoutException {
 		
 		String result;
@@ -179,7 +227,11 @@ public class AdminProductController {
 		return "redirect:/admin/productList";
 	}
 	
-	@RequestMapping(value="/admin/stats") 
+	/**
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(value="/admin/stats") 
 	public String getTopProducts(Model model) {
 		model.addAttribute("topProduct", productService.getTopProducts());
 		model.addAttribute("topCustomer", customerService.getTopCustomers());

@@ -124,8 +124,7 @@
 						append_json(product);
 					}
 				}).fail(function (qXHR, textStatus, errorThrown) {
-					var exceptionVO = jQuery.parseJSON(jqXHR.responseText);
-					swal("Opps", exceptionVO.message, "error");
+					swal("Oops", "Check your input!", "error");
 				});
 			
 		});

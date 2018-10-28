@@ -132,17 +132,7 @@ public class Orders {
 		orderedItems.remove(item);
 		item.setOrder(null);
 	}
-	
-	/*public void addItem(OrderItem item) {
-		orderedItems.add(item);
-		item.setOrder(this);
-	}
-	
-	public void removeItem(OrderItem item) {
-		orderedItems.remove(item);
-		item.setOrder(null);
-	}
-*/
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -164,26 +154,5 @@ public class Orders {
 			return false;
 		return true;
 	}
-
-	public Orders(int orderId, @NotNull String paymentType, @NotNull String paymentStatus, @NotNull String orderStatus,
-			@NotNull Customer customer, @NotNull @Min(100) double orderPrice, @NotNull Date orderDate,
-			Set<OrderItem> orderedItems) {
-		this.orderId = orderId;
-		this.paymentType = paymentType;
-		this.paymentStatus = paymentStatus;
-		this.orderStatus = orderStatus;
-		this.customer = customer;
-		this.orderPrice = orderPrice;
-		this.orderDate = orderDate;
-		this.orderedItems = orderedItems;
-	}
-
-	public Orders() {
-		
-	}
-	
-	
-	
-	
 
 }

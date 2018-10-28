@@ -1,6 +1,7 @@
 package ru.alikhano.cyberlife.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +18,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
-
-import com.mysql.cj.x.protobuf.MysqlxCrud.Order;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
@@ -37,6 +35,12 @@ import ru.alikhano.cyberlife.service.OrderService;
 import ru.alikhano.cyberlife.service.ProductService;
 import ru.alikhano.cyberlife.service.UserService;
 
+/**
+ * @author Anastasia Likhanova
+ * @version 1.0
+ * @since 28.08.2018
+ *
+ */
 @Controller
 public class OrderController {
 
@@ -66,7 +70,13 @@ public class OrderController {
 
 	private static final Logger logger = LogManager.getLogger(OrderController.class);
 
-	@RequestMapping("/myOrder")
+	/** controller to view the order
+	 * @param model
+	 * @param authentication to retrieve the username
+	 * @param request
+	 * @return jsp file name
+	 */
+	@GetMapping("/myOrder")
 	public String viewOrder(Model model, Authentication authentication, HttpServletRequest request) {
 		String username = authentication.getName();
 		UserDTO user = userService.getByUsernameDTO(username);
@@ -83,15 +93,35 @@ public class OrderController {
 		return "myOrder";
 	}
 
-	@RequestMapping(value = "/myOrder", method = RequestMethod.POST)
+	/**
+	 * controller to display a page where customer can complete the order
+	 * @param orderDTO object containing all information about the order
+	 * @param result
+	 * @param request
+	 * @param authentication to retrieve customer's username
+	 * @param model
+	 * @return redirect to order history
+	 * @throws CustomLogicException
+	 * @throws IOException
+	 * @throws TimeoutException
+	 */
+	@PostMapping(value = "/myOrder")
 	public String submitOrder(@Valid @ModelAttribute("newOrder") OrderDTO orderDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication, Model model)
 			throws CustomLogicException, IOException, TimeoutException {
 
+		String cartToOrder;
 		String username = authentication.getName();
 		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
-
-		String cartToOrder = orderService.cartToOrder(orderDTO, cartDTO, username);
+		
+		try {
+			cartToOrder = orderService.cartToOrder(orderDTO, cartDTO, username);
+		}
+		catch (CustomLogicException ex) {
+			model.addAttribute("error", "Empty customer profile!");
+			logger.info(username + " failed to create new order");
+			return "/myOrder";
+		}
 
 		if (orderDTO.getPaymentType().equals("credit card")) {
 			request.getSession().setAttribute("totalPrice", orderDTO.getOrderPrice());
@@ -99,8 +129,8 @@ public class OrderController {
 		}
 
 		if (!cartToOrder.equals("success")) {
-			model.addAttribute("noStockMsg", cartToOrder);
-			logger.info(username + " has created new order");
+			model.addAttribute("error", cartToOrder);
+			logger.info(username + " failed to create new order");
 			return "/myOrder";
 		}
 
@@ -108,14 +138,27 @@ public class OrderController {
 
 	}
 
-	@RequestMapping(value = "/admin/orderStatus")
+	/** 
+	 * controller to display order history for admin role
+	 * @param model
+	 * @param request
+	 * @return jsp file name
+	 */
+	@GetMapping(value = "/admin/orderStatus")
 	public String orderStatus(Model model, HttpServletRequest request) {
 		model.addAttribute("orders", orderService.getAll());
 		model.addAttribute("updatedOrder", new OrderDTO());
 		return "orderList";
 	}
 
-	@RequestMapping(value = "/orderHistory")
+	/**
+	 * controller to display order history for only a specific user
+	 * @param model
+	 * @param request
+	 * @param authentication to retrieve the username
+	 * @return jsp file name
+	 */
+	@GetMapping(value = "/orderHistory")
 	public String myOrders(Model model, HttpServletRequest request, Authentication authentication) {
 		String username = authentication.getName();
 		UserDTO user = userService.getByUsernameDTO(username);
@@ -125,37 +168,44 @@ public class OrderController {
 		return "orderList";
 	}
 
-	@RequestMapping(value = "/admin/orderStatus", method = RequestMethod.POST)
-	public String orderStatusPost(@RequestParam("orderId") int orderId, @RequestParam("orderStatus") String orderStatus,
+	/**
+	 * controller to change the order status (required admin role)
+	 * @param orderId to retrieve the order from the database
+	 * @param orderStatus new status
+	 * @param paymentStatus new status
+	 * @param model
+	 * @param authentication to retrieve a user who owns the order
+	 * @param request
+	 * @return redirect to main admin page
+	 * @throws IOException
+	 * @throws TimeoutException
+	 */
+	@PostMapping(value = "/admin/orderStatus",  produces="application/json")
+	public ResponseEntity<?> orderStatusPost(@RequestParam("orderId") int orderId, @RequestParam("orderStatus") String orderStatus,
 			@RequestParam("paymentStatus") String paymentStatus, Model model, Authentication authentication,
-			HttpServletRequest request) throws CustomLogicException, IOException, TimeoutException {
+			HttpServletRequest request) throws IOException, TimeoutException {
 
-		OrderDTO order = orderService.getById(orderId);
-		if (order.getOrderStatus().equals("delivered and recieved") && order.getPaymentStatus().equals("paid")) {
-			model.addAttribute("errorOrder", "No status updates after order completion!");
+		String result = orderService.changeOrderStatus(orderId, orderStatus, paymentStatus);
+		
+		if (result != "success") {
 			logger.error("Modifications after order completion");
-			model.addAttribute("updatedOrder", new OrderDTO());
-			model.addAttribute("orders", orderService.getAll());
-			return "orderList";
-		}
-
-		if (orderStatus.equals("order status")) {
-			order.setPaymentStatus(paymentStatus);
-			orderService.update(order);
-		} else if (paymentStatus.equals("payment status")) {
-			order.setOrderStatus(orderStatus);
-			orderService.update(order);
-		} else {
-			order.setOrderStatus(orderStatus);
-			order.setPaymentStatus(paymentStatus);
-			orderService.update(order);
+			return  ResponseEntity.badRequest().body("No update after order completion");
 		}
 
 		logger.info("Admin has updated the order");
+		
+		List<OrderDTO> orders = orderService.getAll();
 
-		return "redirect:/admin/stats";
+		return ResponseEntity.ok(orders);
 	}
 
+	/**
+	 * controller to display a page with credit card payment simulation
+	 * @param authentication to retrieve customer's username
+	 * @param model
+	 * @param request
+	 * @return jsp file name
+	 */
 	@GetMapping(value = "/myOrder/cardPayment")
 	public String creditCardPayment(Authentication authentication, Model model,
 			HttpServletRequest request) {
@@ -163,6 +213,14 @@ public class OrderController {
 		return "cardPayment";
 	}
 
+	/**
+	 * controller to redirect from payment page to order history
+	 * @param request
+	 * @param model
+	 * @return redirect to order history
+	 * @throws IOException
+	 * @throws TimeoutException
+	 */
 	@PostMapping(value = "/myOrder/cardPayment")
 	public String creditCardPaymentPost(HttpServletRequest request, Model model) throws IOException, TimeoutException {
 	

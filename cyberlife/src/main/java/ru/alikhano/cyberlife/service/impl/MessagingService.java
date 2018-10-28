@@ -19,6 +19,7 @@ public class MessagingService {
 	private static final String QUEUENAME = "productsTopQueue";
 	
 	public void sendUpdateMessage(String updateMessage) throws IOException, TimeoutException {
+		
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		connectionFactory.setHost("localhost");
 		Connection connection = connectionFactory.newConnection();

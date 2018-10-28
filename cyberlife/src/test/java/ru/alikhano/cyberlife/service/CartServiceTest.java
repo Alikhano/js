@@ -56,14 +56,15 @@ public class CartServiceTest {
 		Category category = new Category(1,"education");
 		Consciousness cons = new Consciousness(1, "middle AI", "nothing special");
 		Product product = new Product(1,"rk800", "test description", 5, 1500.0, category, cons);
-		item = new CartItem(1, 1, 1500.0, product);
+		cartMock = new Cart(1, 1500.0, items);
+		cartDTOMock = Mockito.mock(CartDTO.class);
+		item = new CartItem(1, 1, 1500.0, product, cartMock);
 		itemDTO = new CartItemDTO(item);
 		items = new HashSet<>();
 		itemsDTO = new HashSet<>();
 		items.add(item);
 		itemsDTO.add(itemDTO);
-		cartMock = new Cart(1, 1500.0, items);
-		cartDTOMock = Mockito.mock(CartDTO.class);
+		
 		cartsMock = new ArrayList<>();
 		cartsDTOMock = new ArrayList<>();
 		cartsMock.add(cartMock);

@@ -7,6 +7,7 @@ import java.util.concurrent.TimeoutException;
 import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.DTO.ProductDTO;
 import ru.alikhano.cyberlife.DTO.ProductInfo;
+import ru.alikhano.cyberlife.DTO.SearchRequest;
 import ru.alikhano.cyberlife.model.Product;
 
 public interface ProductService {
@@ -26,7 +27,7 @@ public interface ProductService {
 	
 	ProductDTO getByModel(String model) throws CustomLogicException;
 	
-	List<ProductInfo> searchParam(String model, int category, int consLevel, double fromPrice, double toPrice) throws CustomLogicException;
+	List<ProductInfo> searchParam(SearchRequest request) throws CustomLogicException;
 	
 	List<ProductDTO> getTopProducts();
 	

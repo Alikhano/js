@@ -11,10 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import ru.alikhano.cyberlife.DTO.CategoryDTO;
 import ru.alikhano.cyberlife.DTO.ConsDTO;
@@ -22,6 +22,12 @@ import ru.alikhano.cyberlife.DTO.CustomLogicException;
 import ru.alikhano.cyberlife.service.CategoryService;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
 
+/**
+ * @author Anastasia Likhanova
+ * @version 1.0
+ * @since 28.08.2018
+ *
+ */
 @Controller
 public class AdminController {
 	
@@ -39,7 +45,11 @@ public class AdminController {
 		return "admin-home";
 	}
 
-	@RequestMapping("admin/addCategory")
+	/**
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("admin/addCategory")
 	public String addCategory(Model model) {
 		CategoryDTO categoryDTO = new CategoryDTO();
 		model.addAttribute("categories", categoryService.getAll());
@@ -47,7 +57,11 @@ public class AdminController {
 		return "addCategory";
 	}
 
-	@RequestMapping("admin/addCons")
+	/**
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("admin/addCons")
 	public String addCons(Model model) {
 		ConsDTO consDTO = new ConsDTO();
 		model.addAttribute("consLevels", consService.getAll());
@@ -55,7 +69,15 @@ public class AdminController {
 		return "addCons";
 	}
 
-	@RequestMapping(value = "admin/addCategory", method = RequestMethod.POST,  produces="application/json")
+	/**
+	 * @param categoryDTO
+	 * @param result
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws CustomLogicException
+	 */
+	@PostMapping(value = "admin/addCategory",  produces="application/json")
 	public ResponseEntity<?> addCategoryPost(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result,
 			HttpServletRequest request, Model model) throws CustomLogicException {
 		
@@ -72,7 +94,15 @@ public class AdminController {
 		  return ResponseEntity.ok(categoryDTO);
 	}
 
-	@RequestMapping(value = "admin/addCons", method = RequestMethod.POST,  produces="application/json")
+	/**
+	 * @param consDTO
+	 * @param result
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws CustomLogicException
+	 */
+	@PostMapping(value = "admin/addCons",  produces="application/json")
 	public ResponseEntity<?> addConsPost(@RequestBody @Valid ConsDTO consDTO, BindingResult result,
 			HttpServletRequest request, Model model) throws CustomLogicException {
 

@@ -58,7 +58,9 @@ public class CartItemServiceTest {
 		Consciousness cons = new Consciousness(1, "middle AI", "nothing special");
 		Product productMock = new Product(1, "rk800", "test description", 5, 1500.0, category, cons);
 		ProductDTO productDTOMock = new ProductDTO(productMock);
-		cartItemMock = new CartItem(1, 1, 1500.0, productMock);
+		cartMock = new Cart(1, 1500.0, itemsMock);
+		cartDTOMock = Mockito.mock(CartDTO.class);
+		cartItemMock = new CartItem(1, 1, 1500.0, productMock, cartMock);
 		itemDTO = Mockito.mock(CartItemDTO.class);
 		itemDTO.setProduct(productDTOMock);
 		itemsMock = new HashSet<>();
@@ -67,8 +69,7 @@ public class CartItemServiceTest {
 		itemsMock.add(cartItemMock);
 		itemsMockList.add(cartItemMock);
 		itemsDTOMock.add(itemDTO);
-		cartMock = new Cart(1, 1500.0, itemsMock);
-		cartDTOMock = Mockito.mock(CartDTO.class);
+		
 		productDTOMock = Mockito.mock(ProductDTO.class);
 		Mockito.when(cartItemDaoMock.getById(1)).thenReturn(cartItemMock);
 		// Mockito.when(cartItemDaoMock.getAll()).thenReturn(itemsMockList);

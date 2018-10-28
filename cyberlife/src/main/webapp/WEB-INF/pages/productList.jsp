@@ -9,7 +9,7 @@
 				<th><spring:message code="label.model" /></th>
 				<th><spring:message code="label.category" /></th>
 				<th><spring:message code="label.consciousness" /></th>
-				<th><spring:message code="label.unitsInStock" /></th>
+				<th><spring:message code="label.stock" /></th>
 				<th><spring:message code="label.price" /></th>
 				 <sec:authorize access="hasRole('ROLE_ADMIN')">
 				<th><spring:message code="label.actions" /></th>
@@ -48,6 +48,7 @@
 		</c:forEach>
 	</table>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script

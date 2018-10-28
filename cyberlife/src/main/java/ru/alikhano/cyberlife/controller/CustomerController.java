@@ -16,8 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.alikhano.cyberlife.DTO.AddressDTO;
@@ -28,6 +28,12 @@ import ru.alikhano.cyberlife.service.AddressService;
 import ru.alikhano.cyberlife.service.CustomerService;
 import ru.alikhano.cyberlife.service.UserService;
 
+/**
+ * @author Anastasia Likhanova
+ * @version 1.0
+ * @since 28.08.2018
+ *
+ */
 @Controller
 public class CustomerController {
 	
@@ -50,6 +56,12 @@ public class CustomerController {
 	
 	private static final String REDIRECT = "redirect:/myAccount";  
 	
+	
+	/** controller to access customer's profile
+	 * @param model
+	 * @param authentication to retrieve customer's username
+	 * @return jsp file name
+	 */
 	@RequestMapping("/myAccount")
 	public String viewAccount(Model model, Authentication authentication) {
 		String username = authentication.getName();
@@ -60,6 +72,11 @@ public class CustomerController {
 		return "customerAccount";
 	}
 	
+	/** controller to show an empty customer's profile if profile generation step failed during the registration
+	 * @param model
+	 * @param authentication to retrieve customer's username
+	 * @return jsp file name
+	 */
 	@GetMapping("/myAccount/updateAccount/")
 	public String updateAccount(Model model, Authentication authentication) {
 		String username = authentication.getName();
@@ -81,8 +98,14 @@ public class CustomerController {
 		}
 	
 	
+	/** controller to show a page where customer can update his personal info
+	 * @param customerId to retrieve customer from database
+	 * @param model
+	 * @param authentication to retrieve customer's username
+	 * @return jsp file name
+	 */
 	@GetMapping("/myAccount/updateAccount/{customerId}")
-	public String updateAccount(@PathVariable("customerId") int customerId, Model model, Authentication authentication) throws CustomLogicException {
+	public String updateAccount(@PathVariable("customerId") int customerId, Model model, Authentication authentication) {
 		CustomerDTO customerDTO = customerService.getById(customerId);
 		String username = authentication.getName();
 		UserDTO user = userService.getByUsernameDTO(username);
@@ -113,7 +136,17 @@ public class CustomerController {
 		return UPDATE;
 	}
 	
-	@RequestMapping(value = "/myAccount/updateAccount", method = RequestMethod.POST)
+	/**
+	 * controller to update customer's personal info
+	 * @param customerDTO object that contains new customer info
+	 * @param result
+	 * @param request
+	 * @param authentication to retrieve customer's username
+	 * @param model
+	 * @return redirect to another page
+	 * @throws CustomLogicException
+	 */
+	@PostMapping(value = "/myAccount/updateAccount")
 	public String updateAccountPost(@Valid @ModelAttribute("customer") CustomerDTO customerDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication, Model model) throws CustomLogicException {
 		
@@ -136,7 +169,13 @@ public class CustomerController {
 		return REDIRECT;
 	}
 	
-	@RequestMapping("/myAccount/changeAddress")
+	/**
+	 * controller to display a page where customers can change their address
+	 * @param authentication to retrieve customer's username
+	 * @param model
+	 * @return jsp file name
+	 */
+	@GetMapping("/myAccount/changeAddress")
 	public String changeAddress(Authentication authentication, Model model) {
 		String username = authentication.getName();
 		UserDTO user = userService.getByUsernameDTO(username);
@@ -147,7 +186,16 @@ public class CustomerController {
 		return "changeAddress";
 	}
 	
-	@RequestMapping(value = "/myAccount/changeAddress", method = RequestMethod.POST)
+	/**
+	 * controller to change the address
+	 * @param addressDTO object that contains new address details
+	 * @param result
+	 * @param request
+	 * @param authentication to retrieve customer's username
+	 * @param model
+	 * @return redirect to another page
+	 */
+	@PostMapping(value = "/myAccount/changeAddress")
 	public String changeAddressPost(@Valid @ModelAttribute("address") AddressDTO addressDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication, Model model) {
 		
@@ -166,14 +214,29 @@ public class CustomerController {
 		return REDIRECT;
 	}
 	
-	@RequestMapping("/myAccount/changePassword")
+	/** 
+	 * controller to display a page where customer's can change their password
+	 * @param authentication to retrieve customer's username
+	 * @param model
+	 * @return jsp file name
+	 */
+	@GetMapping("/myAccount/changePassword")
 	public String changePassword(Authentication authentication, Model model) {
 	
 
 		return "changePassword";
 	}
 	
-	@RequestMapping(value = "/myAccount/changePassword", method = RequestMethod.POST)
+	/**
+	 * controller to change the password
+	 * @param oldPassword
+	 * @param newPassword
+	 * @param request
+	 * @param authentication to retrieve customer's username
+	 * @param model
+	 * @return redirect to another page
+	 */
+	@PostMapping(value = "/myAccount/changePassword")
 	public String changePasswordPost(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword,
 			HttpServletRequest request, Authentication authentication, Model model) {
 		String username = authentication.getName();

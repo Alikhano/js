@@ -16,6 +16,7 @@
 		<jdk.version>1.8</jdk.version>
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
 		<spring.security>5.0.8.RELEASE</spring.security>
+		<skipITs>true</skipITs>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -214,15 +215,16 @@
 	<build>
 		<finalName>cyberlife</finalName>
 		<plugins>
-			<plugin>
+		<!-- 	<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>1.2.2.Final</version>
 				<configuration>
+				 <jboss-home>C:\Users\alikhano\Wildfly\wildfly-10.1.0.Final</jboss-home>
 					<port>9990</port>
 					<name>cyberlife.war</name>
 				</configuration>
-			</plugin>
+			</plugin> -->
 
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -256,6 +258,14 @@
 					<url>http://localhost:8080/manager/text</url>
 					<username>admin</username>
 					<password>admin</password>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.22.1</version>
+				<configuration>
+					<skipITs>${skipITs}</skipITs>
 				</configuration>
 			</plugin>
 		</plugins>

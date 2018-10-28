@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
@@ -27,6 +27,12 @@ import ru.alikhano.cyberlife.service.ProductService;
 import ru.alikhano.cyberlife.service.RoleService;
 import ru.alikhano.cyberlife.service.UserService;
 
+/**
+ * @author Anastasia Likhanova
+ * @version 1.0
+ * @since 28.08.2018
+ *
+ */
 @Controller
 public class HomeController {
 
@@ -46,7 +52,13 @@ public class HomeController {
 	
 	private static final Logger logger = LogManager.getLogger(HomeController.class);
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	/** 
+	 * display homepage, create persistent cookie to store individual cart ids
+	 * @param request
+	 * @param response
+	 * @return jsp file name
+	 */
+	@GetMapping(value = "/")
 	public String home(HttpServletRequest request, HttpServletResponse response) {
 		String cookieName = "cartId";
 		final int expiryTime = 10 * 24 * 60 * 60; //10 days
@@ -79,7 +91,13 @@ public class HomeController {
 	
 	
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	/** controller to display login page
+	 * @param model
+	 * @param error
+	 * @param logout
+	 * @return jsp file name
+	 */
+	@GetMapping(value = "/login")
 	public String login(Model model, String error, String logout) {
 		if (error != null) {
 			model.addAttribute("error", "Username or password is incorrect.");
@@ -93,14 +111,22 @@ public class HomeController {
 		return "login";
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.GET)
+	@GetMapping(value = "/registration")
 	public String registration(Model model) {
 		model.addAttribute("userForm", new User());
 
 		return REGISTER;
 	}
 
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	/**
+	 * controller to register a new user
+	 * @param userForm object, containing login/password info
+	 * @param bindingResult
+	 * @param model
+	 * @param request
+	 * @return redirect to a page where user can create a customer profile
+	 */
+	@PostMapping(value = "/registration")
 	public String registration(@ModelAttribute("userForm") UserDTO userForm, BindingResult bindingResult, Model model,
 			HttpServletRequest request) {
 

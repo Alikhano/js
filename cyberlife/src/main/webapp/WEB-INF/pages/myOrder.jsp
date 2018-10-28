@@ -39,7 +39,7 @@
 								<form:option value="credit card"><spring:message code="label.card"/></form:option>
 							</form:select>
 							<input type="submit" value="Submit order" class="btn btn-success">
-							<span style="color: #ff0000">${noStockMsg}</span>
+							<span style="color: #ff0000">${error}</span>
 						</form:form>
 					</div>
 
@@ -50,8 +50,8 @@
 	<div class="col-25">
 		<div class="container">
 			<h4>
-				Cart <span class="price" style="color: black"> <i
-					class="fa fa-shopping-cart"></i> 
+				Cart <span class="price" style="color: black"> <em
+					class="fa fa-shopping-cart"></em> 
 				</span>
 				<c:forEach items="${cartItems}" var="cartItem">
 					<p>
