@@ -1,7 +1,5 @@
 package ru.alikhano.cyberlife.controller;
 
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.CustomerService;
@@ -51,8 +48,8 @@ public class CartController {
 	
 	/**
 	 * controller to show user's cart entries
-	 * @param request
-	 * @param authentication
+	 * @param request http request recieved from client side
+	 * @param authentication to retrieve customer's username
 	 * @return jsp file name
 	 */
 	@GetMapping("/myCart")
@@ -78,34 +75,15 @@ public class CartController {
 	/**
 	 * removes product from cart
 	 * @param itemId - id of the item to be removed from the cart
-	 * @param request
+	 * @param request http request received from client side
 	 * @param model
 	 * @return jsp file name
 	 */
 	@GetMapping(value = "/deleteItem/{itemId}")
 	public String deleteProduct(@PathVariable("itemId") int itemId, HttpServletRequest request, Model model){
-		double grandTotal = 0;
 		
-		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
-		CartItemDTO cartItemDTO = cartItemService.getById(itemId);
-		Set<CartItemDTO> items = cartDTO.getItems();
-		Set<CartItemDTO> iterSet = new HashSet<>(items);
-		for (CartItemDTO item : iterSet) {
-			if (item.getItemId() == itemId) {
-				items.remove(item);
-			}
-		}
-		if (items.isEmpty()) {
-			cartDTO.setGrandTotal(0);
-		}
-		else {
-			grandTotal = cartDTO.getGrandTotal() - cartItemDTO.getTotalPrice();
-		}
-		
-		cartDTO.setItems(items);
-		cartDTO.setGrandTotal(grandTotal);
-		cartService.update(cartDTO);
-		cartItemService.delete(cartItemDTO);
+		int cartId = Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue());
+	    cartItemService.deleteFromCart(itemId, cartId);
 				
 		logger.info("Item is removed from cart");
 

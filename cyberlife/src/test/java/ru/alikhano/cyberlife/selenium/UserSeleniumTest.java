@@ -70,8 +70,6 @@ public class UserSeleniumTest {
 
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[2]/a[1]"))).click();
 		
-		Thread.sleep(1000);
-
 		// submit order
 
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"newOrder\"]/input[2]")))

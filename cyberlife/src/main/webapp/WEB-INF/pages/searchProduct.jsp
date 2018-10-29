@@ -119,7 +119,7 @@
 			}).done(function(data) {
 					var product = data;
 					if (!$.isArray(data) || !data.length) {
-						swal("Oops, we found nothing. Try again!");
+						swal("Oops","We found nothing. Try again!", "error");
 					} else {
 						append_json(product);
 					}

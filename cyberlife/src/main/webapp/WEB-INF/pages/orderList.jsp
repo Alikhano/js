@@ -87,6 +87,8 @@ $(document).ready(function() {
 	
 	$(".update").click(function(e) {
 		e.preventDefault();
+		
+		var orderId = $(this).closest('form').find('input[name=orderId]').val();
 
 		$.ajax({
 			type : 'POST',
@@ -104,7 +106,13 @@ $(document).ready(function() {
 				var product = data;
 				console.log("recieved response");
 				append_json(product);
-				location.reload();
+				swal({
+					title : "Success",
+					text : "ID of updated order:  " + orderId,
+					icon : "success"
+				}).then(function() {
+					location.reload()
+				});
 		}).fail(function (qXHR, textStatus, errorThrown) {
 				swal("Oops","No updates after order completion", "error");
 		});

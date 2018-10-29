@@ -54,7 +54,7 @@ public class UserController {
 	 * @param customerForm object containing customer's personal information
 	 * @param result
 	 * @param model
-	 * @param request
+	 * @param request http request received from client side
 	 * @return redirect to login page
 	 * @throws CustomLogicException
 	 */

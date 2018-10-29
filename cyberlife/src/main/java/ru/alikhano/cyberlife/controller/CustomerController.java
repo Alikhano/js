@@ -140,7 +140,7 @@ public class CustomerController {
 	 * controller to update customer's personal info
 	 * @param customerDTO object that contains new customer info
 	 * @param result
-	 * @param request
+	 * @param request request http request recieved from client side
 	 * @param authentication to retrieve customer's username
 	 * @param model
 	 * @return redirect to another page
@@ -190,7 +190,7 @@ public class CustomerController {
 	 * controller to change the address
 	 * @param addressDTO object that contains new address details
 	 * @param result
-	 * @param request
+	 * @param request http request received from client side
 	 * @param authentication to retrieve customer's username
 	 * @param model
 	 * @return redirect to another page
@@ -231,7 +231,7 @@ public class CustomerController {
 	 * controller to change the password
 	 * @param oldPassword
 	 * @param newPassword
-	 * @param request
+	 * @param request http request received from client side
 	 * @param authentication to retrieve customer's username
 	 * @param model
 	 * @return redirect to another page

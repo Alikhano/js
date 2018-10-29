@@ -24,7 +24,7 @@ public class ExceptionController {
 
 	/**
 	 * handler for all exceptions
-	 * @param ex
+	 * @param ex instance of an exception
 	 * @return view to display
 	 */
 	@ExceptionHandler(Exception.class)
@@ -40,7 +40,7 @@ public class ExceptionController {
 	
 	/**
 	 * handler for custom exceptions
-	 * @param ex
+	 * @param ex instance of a custom exception
 	 * @return error message in a body of an http response
 	 */
 	@ExceptionHandler(CustomLogicException.class)

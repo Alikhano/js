@@ -72,8 +72,8 @@
 			}).done(function(response) {
 				swal({
 					title : "Success",
-					text : "New configuration",
-					type : "success"
+					text : "New configuration: " +  $("#level").val(),
+					icon : "success"
 				}).then(function() {
 					location.reload()
 				});

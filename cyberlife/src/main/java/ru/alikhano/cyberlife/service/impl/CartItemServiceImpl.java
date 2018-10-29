@@ -1,5 +1,6 @@
 package ru.alikhano.cyberlife.service.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class CartItemServiceImpl implements CartItemService {
 
 	@Autowired
 	CartItemDao cartItemDao;
-	
+
 	@Autowired
 	CartService cartService;
 
@@ -57,7 +58,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Transactional
 	public void update(CartItemDTO cartItemDTO) {
 		cartItemDao.update(cartItemMapper.cartDTOtoCartItem(cartItemDTO));
-		
+
 	}
 
 	@Override
@@ -69,79 +70,103 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public void create(ProductDTO productDTO, CartDTO cartDTO, CartItemDTO cartItemDTO) {
-		
-		 
+
 		Set<CartItemDTO> items = cartDTO.getItems();
-		
+
 		if (!items.isEmpty()) {
 			int itemId = checkCart(cartDTO, productDTO);
-			
+
 			if (itemId != 0) {
-			    CartItemDTO item = cartService.getCartItemById(cartDTO, itemId);
-			    double price = item.getTotalPrice();
-		        int quantity = item.getQuantity();
-		        double newPrice = cartItemDTO.getQuantity() * productDTO.getPrice();
+				CartItemDTO item = cartService.getCartItemById(cartDTO, itemId);
+				double price = item.getTotalPrice();
+				int quantity = item.getQuantity();
+				double newPrice = cartItemDTO.getQuantity() * productDTO.getPrice();
 				item.setQuantity(quantity + cartItemDTO.getQuantity());
-				
+
 				item.setTotalPrice(price + newPrice);
-		
+
 				cartDTO.setGrandTotal(newPrice + cartDTO.getGrandTotal());
 				update(item);
-			
-				
+
 			}
-			
+
 			else {
 				int quantity = cartItemDTO.getQuantity();
-		        
-		        double totalPrice = quantity * productDTO.getPrice();
-		        cartItemDTO.setTotalPrice(totalPrice);
-		        
-		        cartItemDTO.setProduct(productDTO);
-		        
-		        items.add(cartItemDTO);
-		        cartDTO.setItems(items);
-		        
-		        cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
-		        cartItemDTO.setCart(cartDTO);
-		        create (cartItemDTO);
-		       
+
+				double totalPrice = quantity * productDTO.getPrice();
+				cartItemDTO.setTotalPrice(totalPrice);
+
+				cartItemDTO.setProduct(productDTO);
+
+				items.add(cartItemDTO);
+				cartDTO.setItems(items);
+
+				cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
+				cartItemDTO.setCart(cartDTO);
+				create(cartItemDTO);
+
 			}
+		} else {
+			int quantity = cartItemDTO.getQuantity();
+
+			double totalPrice = quantity * productDTO.getPrice();
+			cartItemDTO.setTotalPrice(totalPrice);
+
+			cartItemDTO.setProduct(productDTO);
+
+			items.add(cartItemDTO);
+			cartDTO.setItems(items);
+
+			cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
+			cartItemDTO.setCart(cartDTO);
+			create(cartItemDTO);
+
 		}
-		else {
-	     int quantity = cartItemDTO.getQuantity();
-	        
-	        double totalPrice = quantity * productDTO.getPrice();
-	        cartItemDTO.setTotalPrice(totalPrice);
-	        
-	        cartItemDTO.setProduct(productDTO);
-	        
-	        items.add(cartItemDTO);
-	        cartDTO.setItems(items);
-	        
-	        cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
-	        cartItemDTO.setCart(cartDTO);
-	        create(cartItemDTO);
-	        
-	        
-		}
-	        
-		
+
 	}
 
 	@Override
 	@Transactional
 	public int checkCart(CartDTO cartDTO, ProductDTO productDTO) {
 		Set<CartItemDTO> items = cartDTO.getItems();
-		
+
 		for (CartItemDTO item : items) {
 			if (item.getProduct().getProductId() == productDTO.getProductId()) {
 				return item.getItemId();
 			}
 		}
-		
+
 		return 0;
-		
+
+	}
+
+	@Override
+	@Transactional
+	public void deleteFromCart(int itemId, int cartId) {
+
+		CartDTO cartDTO = cartService.getById(cartId);
+
+		double grandTotal = 0;
+
+		CartItemDTO cartItemDTO = getById(itemId);
+		Set<CartItemDTO> items = cartDTO.getItems();
+		Set<CartItemDTO> iterSet = new HashSet<>(items);
+		for (CartItemDTO item : iterSet) {
+			if (item.getItemId() == itemId) {
+				items.remove(item);
+			}
+		}
+		if (items.isEmpty()) {
+			cartDTO.setGrandTotal(0);
+		} else {
+			grandTotal = cartDTO.getGrandTotal() - cartItemDTO.getTotalPrice();
+		}
+
+		cartDTO.setItems(items);
+		cartDTO.setGrandTotal(grandTotal);
+		cartService.merge(cartDTO);
+		delete(cartItemDTO);
+
 	}
 
 }

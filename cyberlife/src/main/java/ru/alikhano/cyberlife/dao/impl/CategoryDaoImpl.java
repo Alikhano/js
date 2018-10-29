@@ -11,11 +11,13 @@ import org.springframework.stereotype.Repository;
 import ru.alikhano.cyberlife.dao.CategoryDao;
 import ru.alikhano.cyberlife.model.Category;
 
+
 @Repository
 public class CategoryDaoImpl extends GenericDaoImpl<Category> implements CategoryDao {
 	
 	@Autowired
 	SessionFactory sessionFactory;
+	
 	
 	@Override
 	public Category getByType(String catType) {
@@ -29,6 +31,7 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category> implements Categor
 		}
 	}
 
+	
 	@Override
 	public int createAndGetId(Category category)  {
 		return (Integer) sessionFactory.getCurrentSession().save(category);

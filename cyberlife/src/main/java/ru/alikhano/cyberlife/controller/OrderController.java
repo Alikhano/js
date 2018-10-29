@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
@@ -73,7 +74,7 @@ public class OrderController {
 	/** controller to view the order
 	 * @param model
 	 * @param authentication to retrieve the username
-	 * @param request
+	 * @param request http request received from client side
 	 * @return jsp file name
 	 */
 	@GetMapping("/myOrder")
@@ -97,18 +98,17 @@ public class OrderController {
 	 * controller to display a page where customer can complete the order
 	 * @param orderDTO object containing all information about the order
 	 * @param result
-	 * @param request
+	 * @param request http request received from client side
 	 * @param authentication to retrieve customer's username
 	 * @param model
 	 * @return redirect to order history
-	 * @throws CustomLogicException
 	 * @throws IOException
 	 * @throws TimeoutException
 	 */
 	@PostMapping(value = "/myOrder")
 	public String submitOrder(@Valid @ModelAttribute("newOrder") OrderDTO orderDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication, Model model)
-			throws CustomLogicException, IOException, TimeoutException {
+			throws IOException, TimeoutException {
 
 		String cartToOrder;
 		String username = authentication.getName();
@@ -141,7 +141,7 @@ public class OrderController {
 	/** 
 	 * controller to display order history for admin role
 	 * @param model
-	 * @param request
+	 * @param request http request received from client side
 	 * @return jsp file name
 	 */
 	@GetMapping(value = "/admin/orderStatus")
@@ -154,7 +154,7 @@ public class OrderController {
 	/**
 	 * controller to display order history for only a specific user
 	 * @param model
-	 * @param request
+	 * @param request http request received from client side
 	 * @param authentication to retrieve the username
 	 * @return jsp file name
 	 */
@@ -175,7 +175,7 @@ public class OrderController {
 	 * @param paymentStatus new status
 	 * @param model
 	 * @param authentication to retrieve a user who owns the order
-	 * @param request
+	 * @param request http request received from client side
 	 * @return redirect to main admin page
 	 * @throws IOException
 	 * @throws TimeoutException
@@ -203,7 +203,7 @@ public class OrderController {
 	 * controller to display a page with credit card payment simulation
 	 * @param authentication to retrieve customer's username
 	 * @param model
-	 * @param request
+	 * @param request http request received from client side
 	 * @return jsp file name
 	 */
 	@GetMapping(value = "/myOrder/cardPayment")
@@ -215,7 +215,7 @@ public class OrderController {
 
 	/**
 	 * controller to redirect from payment page to order history
-	 * @param request
+	 * @param request http request received from client side
 	 * @param model
 	 * @return redirect to order history
 	 * @throws IOException

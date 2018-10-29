@@ -24,6 +24,7 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 	@Autowired
 	SessionFactory sessionFactory;
 
+
 	@Override
 	public Product getByModel(String model) {
 		return (Product) sessionFactory.getCurrentSession().createQuery("from Product where lower(model) like :model")
@@ -82,6 +83,7 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 		return topProducts;
 		
 	}
+
 
 	@Override
 	public Product selectForUpdate(Integer id) {

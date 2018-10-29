@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <interface id="1" language="java" name="ru.alikhano.cyberlife.service.AddressService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/AddressService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="324" y="391"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="2" language="java" name="ru.alikhano.cyberlife.service.CartItemService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/CartItemService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1059" y="754"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="3" language="java" name="ru.alikhano.cyberlife.service.CartService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/CartService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="783" y="812"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="4" language="java" name="ru.alikhano.cyberlife.service.CategoryService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/CategoryService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="689" y="357"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="5" language="java" name="ru.alikhano.cyberlife.service.ConsciousnessService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/ConsciousnessService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="688" y="192"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="6" language="java" name="ru.alikhano.cyberlife.service.CustomerService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/CustomerService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="128" y="380"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="7" language="java" name="ru.alikhano.cyberlife.service.OrderItemService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/OrderItemService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1015" y="548"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="8" language="java" name="ru.alikhano.cyberlife.service.OrderService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/OrderService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="786" y="595"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="9" language="java" name="ru.alikhano.cyberlife.service.ProductJsonService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/ProductJsonService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="700" y="57"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="10" language="java" name="ru.alikhano.cyberlife.service.ProductService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/ProductService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="971" y="163"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="11" language="java" name="ru.alikhano.cyberlife.service.RoleService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/RoleService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="315" y="64"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="12" language="java" name="ru.alikhano.cyberlife.service.UserService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/UserService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="126" y="131"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="13" language="java" name="ru.alikhano.cyberlife.service.impl.MessagingService" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/service/impl/MessagingService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="125" y="714"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

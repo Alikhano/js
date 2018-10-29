@@ -13,6 +13,7 @@ public class RoleDaoImpl implements RoleDao {
 	@Autowired
 	SessionFactory sessionFactory;
 
+
 	@Override
 	public Role getRole() {
 		return (Role) sessionFactory.getCurrentSession().createQuery("from Role where type = :type").setParameter("type", "ROLE_USER").uniqueResult();

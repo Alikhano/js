@@ -28,7 +28,6 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 				.setParameter("id", id).getResultList();
 
 	}
-
 	@Override
 	public int createAndGetId(Orders order) {
 		return (Integer) sessionFactory.getCurrentSession().save(order);
@@ -69,6 +68,7 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 		
 		return 0;		
 	}
+
 
 	@Override
 	public void merge(Orders order) {

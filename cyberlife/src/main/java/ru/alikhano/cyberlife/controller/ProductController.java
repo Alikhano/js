@@ -97,7 +97,7 @@ public class ProductController {
      * @param productId
      * @param newCartItem object, containing details of a new cart item
      * @param result
-     * @param request
+     * @param request http request received from client side
      * @param model
      * @return redirect back to the catalogue
      * @throws CustomLogicException

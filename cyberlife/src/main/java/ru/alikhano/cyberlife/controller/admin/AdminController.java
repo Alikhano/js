@@ -47,7 +47,7 @@ public class AdminController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return jsp file name
 	 */
 	@GetMapping("admin/addCategory")
 	public String addCategory(Model model) {
@@ -59,7 +59,7 @@ public class AdminController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return jsp file name
 	 */
 	@GetMapping("admin/addCons")
 	public String addCons(Model model) {
@@ -70,11 +70,11 @@ public class AdminController {
 	}
 
 	/**
-	 * @param categoryDTO
+	 * @param categoryDTO instance of CategoryDTO class, containing info about new category
 	 * @param result
-	 * @param request
+	 * @param request http request received from client side
 	 * @param model
-	 * @return
+	 * @return jsp file name
 	 * @throws CustomLogicException
 	 */
 	@PostMapping(value = "admin/addCategory",  produces="application/json")
@@ -95,11 +95,11 @@ public class AdminController {
 	}
 
 	/**
-	 * @param consDTO
+	 * @param consDTO instance of ConsDTO class, containing info about new category
 	 * @param result
-	 * @param request
+	 * @param request http request received from client side
 	 * @param model
-	 * @return
+	 * @return jsp file name
 	 * @throws CustomLogicException
 	 */
 	@PostMapping(value = "admin/addCons",  produces="application/json")

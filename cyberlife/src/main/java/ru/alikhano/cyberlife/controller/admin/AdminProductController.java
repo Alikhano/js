@@ -53,7 +53,8 @@ public class AdminProductController {
 	
 	private static final Logger logger = LogManager.getLogger(AdminProductController.class);
 
-	/**
+	/** 
+	 * displays page to add new product
 	 * @param model
 	 * @return
 	 */
@@ -67,12 +68,13 @@ public class AdminProductController {
 	}
 
 	/**
+	 * adds new product
 	 * @param newProductDTO
 	 * @param result
-	 * @param request
-	 * @param file
+	 * @param request http request received from client side
+	 * @param file image file
 	 * @param model
-	 * @return
+	 * @return redirect to main admin page
 	 * @throws IOException
 	 * @throws CustomLogicException
 	 */
@@ -115,8 +117,9 @@ public class AdminProductController {
 	}
 
 	/**
+	 * displays inventory list
 	 * @param model
-	 * @return
+	 * @return jsp file name
 	 */
 	@GetMapping("/admin/productList")
 	public String getProducts(Model model) {
@@ -127,9 +130,10 @@ public class AdminProductController {
 	}
 
 	/**
-	 * @param productId
+	 * displays page to edit a product entry
+	 * @param productId id of a product to be edited
 	 * @param model
-	 * @return
+	 * @return jsp file name
 	 * @throws CustomLogicException
 	 */
 	@GetMapping("/admin/editProduct/{productId}")
@@ -155,11 +159,12 @@ public class AdminProductController {
 	}
 
 	/**
-	 * @param productDTO
+	 * changes a product entry in database
+	 * @param productDTO instance of ProductDTO with info about new product entry
 	 * @param result
-	 * @param request
+	 * @param request http request received from client side
 	 * @param model
-	 * @return
+	 * @return redirect to inventory list
 	 * @throws CustomLogicException
 	 * @throws IOException
 	 * @throws TimeoutException
@@ -190,9 +195,10 @@ public class AdminProductController {
 	}
 
 	/**
+	 * enables deletion of a product entry
 	 * @param productId
 	 * @param model
-	 * @return
+	 * @return jsp file name 
 	 * @throws CustomLogicException
 	 * @throws IOException
 	 * @throws TimeoutException
@@ -228,8 +234,9 @@ public class AdminProductController {
 	}
 	
 	/**
+	 * displays top 10 products
 	 * @param model
-	 * @return
+	 * @return jsp file name
 	 */
 	@GetMapping(value="/admin/stats") 
 	public String getTopProducts(Model model) {

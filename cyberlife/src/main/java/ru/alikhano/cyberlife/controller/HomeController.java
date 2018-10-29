@@ -54,8 +54,8 @@ public class HomeController {
 
 	/** 
 	 * display homepage, create persistent cookie to store individual cart ids
-	 * @param request
-	 * @param response
+	 * @param request http request received from client side
+	 * @param response http response from server
 	 * @return jsp file name
 	 */
 	@GetMapping(value = "/")
@@ -93,8 +93,8 @@ public class HomeController {
 
 	/** controller to display login page
 	 * @param model
-	 * @param error
-	 * @param logout
+	 * @param error message to display in case of wrong credentials
+	 * @param logout message to display after logout
 	 * @return jsp file name
 	 */
 	@GetMapping(value = "/login")
@@ -123,7 +123,7 @@ public class HomeController {
 	 * @param userForm object, containing login/password info
 	 * @param bindingResult
 	 * @param model
-	 * @param request
+	 * @param request http request received from client side
 	 * @return redirect to a page where user can create a customer profile
 	 */
 	@PostMapping(value = "/registration")

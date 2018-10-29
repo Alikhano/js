@@ -50,7 +50,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	@Transactional
 	public void update(CartDTO cartDTO) {
-		cartDao.update(cartMapper.cartDTOtoCart(cartDTO));
+		merge(cartDTO);
 		
 	}
 

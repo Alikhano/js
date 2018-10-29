@@ -78,8 +78,8 @@
 			}).done(function(response) {
 				swal({
 					title : "Success",
-					text : "New category",
-					type : "success"
+					text : "New category: " + catType,
+					icon : "success"
 				}).then(function() {
 					location.reload()
 				});

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="ru.alikhano.cyberlife.model.Address" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/Address.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="183" width="273" x="33" y="264"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="ru.alikhano.cyberlife.model.Cart" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/Cart.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="93" width="164" x="862" y="-56"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="ru.alikhano.cyberlife.model.CartItem" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/CartItem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="112" width="150" x="1013" y="57"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="ru.alikhano.cyberlife.model.Category" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/Category.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="93" width="139" x="636" y="387"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="ru.alikhano.cyberlife.model.Consciousness" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/Consciousness.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="111" width="182" x="800" y="383"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="ru.alikhano.cyberlife.model.Customer" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/Customer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="148" width="239" x="82" y="71"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="ru.alikhano.cyberlife.model.OrderItem" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/OrderItem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="111" width="154" x="635" y="-47"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="ru.alikhano.cyberlife.model.Orders" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/Orders.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="166" width="157" x="362" y="-70"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="ru.alikhano.cyberlife.model.Product" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/Product.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="166" width="317" x="612" y="152"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="ru.alikhano.cyberlife.model.Role" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/Role.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="93" width="138" x="322" y="451"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="ru.alikhano.cyberlife.model.User" project="cyberlife" 
+    file="/cyberlife/src/main/java/ru/alikhano/cyberlife/model/User.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="130" width="223" x="339" y="279"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="12">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="13" name="cart"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="15">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="16" name="items"/>      
+      <multiplicity id="17" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="18">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="19" name="product"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="21">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="22" name="roles"/>      
+      <multiplicity id="23" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="24">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="25" name="product"/>      
+      <multiplicity id="26" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="27">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="28" name="orderedItems"/>      
+      <multiplicity id="29" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="30">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="31" name="category"/>      
+      <multiplicity id="32" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="33">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="34" name="cons"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="36">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="37" name="order"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="39">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="40" name="address"/>      
+      <multiplicity id="41" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="42">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="43" name="user"/>      
+      <multiplicity id="44" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="45">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="46" name="cartItems"/>      
+      <multiplicity id="47" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="48">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="49" name="customer"/>      
+      <multiplicity id="50" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
