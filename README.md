@@ -1,4 +1,4 @@
-# Cyberlife: ecommerce project
+# Cyberlife: e-commerce project
 
 The goal of the project was to develop a web application that would simulate the operations of an e-commerce application. It turned out to be an online shop, that sales androids.
 
