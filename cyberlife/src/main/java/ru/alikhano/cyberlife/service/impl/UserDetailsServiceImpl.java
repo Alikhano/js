@@ -18,8 +18,11 @@ import ru.alikhano.cyberlife.service.UserService;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

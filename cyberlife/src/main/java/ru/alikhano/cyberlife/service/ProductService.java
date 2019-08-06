@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
-import ru.alikhano.cyberlife.DTO.ProductInfo;
-import ru.alikhano.cyberlife.DTO.SearchRequest;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.ProductDTO;
+import ru.alikhano.cyberlife.dto.ProductInfo;
+import ru.alikhano.cyberlife.dto.SearchRequest;
 import ru.alikhano.cyberlife.model.Product;
 
 /**
@@ -31,7 +31,7 @@ public interface ProductService {
 	List<ProductDTO> getAll();
 
 	/**
-	 * similar to getProductById(int id) method, but returns a DTO
+	 * similar to getProductById(int id) method, but returns a dto
 	 * @param id of a product we're searching for
 	 * @return instance of ProductDTO with corresponding id
 	 * @throws CustomLogicException

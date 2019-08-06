@@ -1,4 +1,4 @@
-package ru.alikhano.cyberlife.DTO;
+package ru.alikhano.cyberlife.dto;
 
 import ru.alikhano.cyberlife.model.Category;
 
@@ -25,7 +25,7 @@ public class CategoryDTO {
 	}
 	
 	public CategoryDTO(Category category) {
-		this.catId = category.getCatId();
-		this.catType = category.getCatType();
+		this.catId = category.getCategoryId();
+		this.catType = category.getCategoryType();
 	}
 }

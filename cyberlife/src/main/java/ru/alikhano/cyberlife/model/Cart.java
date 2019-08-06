@@ -1,5 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +18,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="cart")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cart {
 	
 	@Id
@@ -25,32 +34,6 @@ public class Cart {
 	
 	@OneToMany(mappedBy="cart")
 	private Set<CartItem> items = new HashSet<>();
-	
-	public Set<CartItem> getItems() {
-		return items;
-	}
-
-	public void setItems(Set<CartItem> items) {
-		this.items = items;
-	}
-
-	public int getCartId() {
-		return cartId;
-	}
-
-	public void setCartId(int cartId) {
-		this.cartId = cartId;
-	}
-
-
-
-	public double getGrandTotal() {
-		return grandTotal;
-	}
-
-	public void setGrandTotal(double grandTotal) {
-		this.grandTotal = grandTotal;
-	}
 
 	@Override
 	public int hashCode() {
@@ -73,19 +56,5 @@ public class Cart {
 			return false;
 		return true;
 	}
-	
-	
-
-	public Cart() {
-
-	}
-
-	public Cart(int cartId, double grandTotal, Set<CartItem> items) {
-		this.cartId = cartId;
-		this.grandTotal = grandTotal;
-		this.items = items;
-	}
-	
-	
 
 }

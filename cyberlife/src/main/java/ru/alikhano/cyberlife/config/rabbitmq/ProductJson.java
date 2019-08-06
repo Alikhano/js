@@ -4,11 +4,8 @@ import java.io.Serializable;
 
 public class ProductJson extends ProductToJsonParser implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	//
+
 	private int productId;
 	private String model;
 	private String catType;
@@ -53,6 +50,4 @@ public class ProductJson extends ProductToJsonParser implements Serializable{
 		return "ProductJson [productId=" + productId + ", model=" + model + ", category=" + catType + ", consLevel="
 				+ consLevel + ", price=" + price + "]";
 	}
-
-
 }

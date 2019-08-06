@@ -211,6 +211,12 @@
 			<artifactId>selenium-chrome-driver</artifactId>
 			<version>3.14.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.8</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>cyberlife</finalName>

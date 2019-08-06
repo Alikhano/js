@@ -13,8 +13,7 @@ import ru.alikhano.cyberlife.service.ProductJsonService;
 public class ProductJsonSenderImpl implements ProductJsonSender {
 	
 	@Autowired
-	ProductJsonService productJsonService;
-	
+	private ProductJsonService productJsonService;
 
 	@Override
 	public List<ProductJson> sendProductJson() {

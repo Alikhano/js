@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.CustomerDTO;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.CustomerDTO;
 import ru.alikhano.cyberlife.dao.CustomerDao;
 import ru.alikhano.cyberlife.mapper.CustomerMapper;
 import ru.alikhano.cyberlife.model.Customer;
@@ -18,11 +18,14 @@ import ru.alikhano.cyberlife.service.CustomerService;
 public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
-	CustomerDao customerDao;
+	private CustomerDao customerDao;
 
 	@Autowired
-	CustomerMapper customerMapper;
+	private CustomerMapper customerMapper;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public List<CustomerDTO> getAll() {
@@ -35,12 +38,18 @@ public class CustomerServiceImpl implements CustomerService {
 		return customersDTO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public CustomerDTO getById(int id) {
 		return customerMapper.customerToCustomerDTO(customerDao.getById(id));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void create(CustomerDTO customerDTO) {
@@ -48,6 +57,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void update(CustomerDTO customerDTO) throws CustomLogicException {
@@ -60,23 +72,30 @@ public class CustomerServiceImpl implements CustomerService {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void delete(CustomerDTO customerDTO) {
 		customerDao.delete(customerMapper.customerDTOtoCustomer(customerDTO));
-
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public CustomerDTO getByUserId(int userId) {
 		return customerMapper.customerToCustomerDTO(customerDao.getByUserId(userId));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public List<CustomerDTO> getTopCustomers() {
-
 		List<Customer> customerList = customerDao.getTopCustomers();
 		List<CustomerDTO> dtoList = new ArrayList<>();
 
@@ -88,10 +107,12 @@ public class CustomerServiceImpl implements CustomerService {
 		return dtoList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional 
 	public CustomerDTO getByEmail(String email) {
 		return customerMapper.customerToCustomerDTO(customerDao.getByEmail(email));
 	}
-
 }

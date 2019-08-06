@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.model.User;
 
 /**

@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ru.alikhano.cyberlife.DTO.ConsDTO;
+import ru.alikhano.cyberlife.dto.ConsDTO;
 import ru.alikhano.cyberlife.dao.ConsciousnessDao;
 import ru.alikhano.cyberlife.mapper.ConsciousnessMapper;
 import ru.alikhano.cyberlife.model.Consciousness;

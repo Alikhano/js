@@ -1,5 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +18,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="orderItem")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderItem {
 	
 	@Id
@@ -39,48 +48,6 @@ public class OrderItem {
 	@JoinColumn(name="orderId")
 	@NotNull
 	private Orders order;
-
-	
-	public int getOrderItemId() {
-		return orderItemId;
-	}
-
-	public void setOrderItemId(int orderItemId) {
-		this.orderItemId = orderItemId;
-	}
-
-	public int getOrderQuantity() {
-		return orderQuantity;
-	}
-
-	public void setOrderQuantity(int orderQuantity) {
-		this.orderQuantity = orderQuantity;
-	}
-
-	public double getOrderTotal() {
-		return orderTotal;
-	}
-
-	public void setOrderTotal(double orderTotal) {
-		this.orderTotal = orderTotal;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public Orders getOrder() {
-		return order;
-	}
-
-	public void setOrder(Orders order) {
-		this.order = order;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -102,23 +69,4 @@ public class OrderItem {
 			return false;
 		return true;
 	}
-	
-	
-
-	public OrderItem() {
-	}
-
-	public OrderItem(int orderItemId, @NotNull @Min(1) int orderQuantity, @NotNull @Min(100) double orderTotal,
-			@NotNull Product product, @NotNull Orders order) {
-		this.orderItemId = orderItemId;
-		this.orderQuantity = orderQuantity;
-		this.orderTotal = orderTotal;
-		this.product = product;
-		this.order = order;
-	}
-	
-	
-	
-	
-
 }

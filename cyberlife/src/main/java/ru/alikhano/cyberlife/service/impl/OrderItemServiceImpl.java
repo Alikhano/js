@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.DTO.OrderDTO;
-import ru.alikhano.cyberlife.DTO.OrderItemDTO;
+import ru.alikhano.cyberlife.dto.OrderDTO;
+import ru.alikhano.cyberlife.dto.OrderItemDTO;
 import ru.alikhano.cyberlife.dao.OrderItemDao;
 import ru.alikhano.cyberlife.mapper.OrderItemMapper;
 import ru.alikhano.cyberlife.mapper.OrderMapper;
@@ -19,14 +19,17 @@ import ru.alikhano.cyberlife.service.OrderItemService;
 public class OrderItemServiceImpl implements OrderItemService {
 	
 	@Autowired
-	OrderItemDao orderItemDao;
+	private OrderItemDao orderItemDao;
 	
 	@Autowired
-	OrderItemMapper orderItemMapper;
+	private OrderItemMapper orderItemMapper;
 	
 	@Autowired
-	OrderMapper orderMapper;
+	private OrderMapper orderMapper;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void create(OrderItemDTO orderItemDTO) {
@@ -34,6 +37,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void update(OrderItemDTO orderItemDTO) {
@@ -41,6 +47,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void delete(OrderItemDTO orderItemDTO) {
@@ -48,6 +57,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void deleteAll(OrderDTO orderDTO) {
@@ -58,6 +70,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public OrderItemDTO getById(int id) {

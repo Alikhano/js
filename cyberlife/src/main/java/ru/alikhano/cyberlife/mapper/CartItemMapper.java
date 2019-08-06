@@ -6,11 +6,11 @@ import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
-import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.CategoryDTO;
-import ru.alikhano.cyberlife.DTO.ConsDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
+import ru.alikhano.cyberlife.dto.CartItemDTO;
+import ru.alikhano.cyberlife.dto.CategoryDTO;
+import ru.alikhano.cyberlife.dto.ConsDTO;
+import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.model.Cart;
 import ru.alikhano.cyberlife.model.CartItem;
 import ru.alikhano.cyberlife.model.Category;

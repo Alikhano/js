@@ -1,7 +1,7 @@
 package ru.alikhano.cyberlife.mapper;
 
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.OrderItemDTO;
+import ru.alikhano.cyberlife.dto.CartItemDTO;
+import ru.alikhano.cyberlife.dto.OrderItemDTO;
 
 public class CartOrderMapper {
 	

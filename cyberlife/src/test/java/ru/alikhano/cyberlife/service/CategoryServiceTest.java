@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ru.alikhano.cyberlife.DTO.CategoryDTO;
+import ru.alikhano.cyberlife.dto.CategoryDTO;
 import ru.alikhano.cyberlife.dao.CategoryDao;
 import ru.alikhano.cyberlife.mapper.CategoryMapper;
 import ru.alikhano.cyberlife.model.Category;

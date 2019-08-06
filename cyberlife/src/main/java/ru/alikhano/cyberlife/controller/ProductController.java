@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
-import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
+import ru.alikhano.cyberlife.dto.CartItemDTO;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.ProductService;
@@ -37,13 +37,13 @@ import ru.alikhano.cyberlife.service.ProductService;
 public class ProductController {
 	
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 	
 	@Autowired
-	CartService cartService;
+	private CartService cartService;
 	
 	@Autowired
-	CartItemService cartItemService;
+	private CartItemService cartItemService;
 	
 	private static final Logger logger = LogManager.getLogger(ProductController.class);
 	
@@ -104,8 +104,7 @@ public class ProductController {
      */
     @PostMapping(value = "/viewProduct")
     public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") @Valid CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
-      
-        
+
         ProductDTO productDTO = productService.getById(productId);
         
         CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
@@ -126,7 +125,6 @@ public class ProductController {
 			logger.error("Negative values in user input");
 			return VIEW;
 		}
-        
       
         cartService.update(cartDTO);
         
@@ -134,5 +132,4 @@ public class ProductController {
 
         return "redirect:/catalogue";
     }
-    
 }

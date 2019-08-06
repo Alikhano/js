@@ -49,7 +49,7 @@ public class Product {
 	private byte[] image;
 
 	@ManyToOne
-	@JoinColumn(name="catId")
+	@JoinColumn(name="categoryId")
 	private Category category;
 	
 	@ManyToOne

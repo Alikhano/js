@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.ProductInfo;
-import ru.alikhano.cyberlife.DTO.SearchRequest;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.ProductInfo;
+import ru.alikhano.cyberlife.dto.SearchRequest;
 import ru.alikhano.cyberlife.service.CategoryService;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
 import ru.alikhano.cyberlife.service.ProductService;
@@ -30,13 +30,13 @@ import ru.alikhano.cyberlife.service.ProductService;
 public class SearchController {
 	
 	@Autowired
-	CategoryService categoryService;
+	private CategoryService categoryService;
 	
 	@Autowired
-	ConsciousnessService consService;
+	private ConsciousnessService consService;
 	
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 	
 	private static final Logger logger = LogManager.getLogger(SearchController.class);
 	
@@ -78,5 +78,4 @@ public class SearchController {
 	
 	     return ResponseEntity.ok(searchResult);
 	 }
-	 
 }

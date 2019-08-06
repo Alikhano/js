@@ -17,16 +17,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
-import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.DTO.OrderDTO;
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.CustomerDTO;
+import ru.alikhano.cyberlife.dto.OrderDTO;
+import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.service.AddressService;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
@@ -46,28 +45,28 @@ import ru.alikhano.cyberlife.service.UserService;
 public class OrderController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
 
 	@Autowired
-	AddressService addressService;
+	private AddressService addressService;
 
 	@Autowired
-	CartService cartService;
+	private CartService cartService;
 
 	@Autowired
-	CartItemService cartItemService;
+	private CartItemService cartItemService;
 
 	@Autowired
-	OrderService orderService;
+	private OrderService orderService;
 
 	@Autowired
-	OrderItemService orderItemService;
+	private OrderItemService orderItemService;
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	private static final Logger logger = LogManager.getLogger(OrderController.class);
 

@@ -16,14 +16,14 @@ public interface CategoryDao extends GenericDao<Category> {
 
 	/** 
 	 * enables database search by category of a product
-	 * @param category type parameter to search in database
+	 * @param catType category type parameter to search in database
 	 * @return instance of category
 	 */
 	Category getByType(String catType);
 	
 	/** 
 	 * creates new category and returns it's id
-	 * @param instance of Category to add to database
+	 * @param category instance of Category to add to database
 	 * @return id of new category
 	 */
 	int createAndGetId(Category category);

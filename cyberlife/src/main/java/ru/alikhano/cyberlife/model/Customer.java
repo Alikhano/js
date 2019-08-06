@@ -88,8 +88,6 @@ public class Customer {
 		this.email = email;
 	}
 
-	
-
 	public Address getAddress() {
 		return address;
 	}
@@ -128,9 +126,7 @@ public class Customer {
 		return true;
 	}
 	
-	public Customer() {
-		
-	}
+	public Customer() {}
 	
 
 	public Customer(int customerId, String firstName, String lastName, String birthDate, String email,
@@ -142,9 +138,4 @@ public class Customer {
 		this.email = email;
 		this.address = address;
 	}
-	
-	
-	
-	
-
 }

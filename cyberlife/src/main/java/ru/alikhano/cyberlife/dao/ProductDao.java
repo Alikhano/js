@@ -17,7 +17,7 @@ public interface ProductDao extends GenericDao<Product> {
 	
 	/** 
 	 * searches for specific product entry by model
-	 * @param product model to search in database
+	 * @param model product model to search in database
 	 * @return instance of User with corresponding model
 	 */
 	Product getByModel(String model);
@@ -48,7 +48,7 @@ public interface ProductDao extends GenericDao<Product> {
 	
 	/** 
 	 * saves an updated product entry
-	 * @param instance of Product to be updated
+	 * @param product instance of Product to be updated
 	 */
 	void merge(Product product);
 

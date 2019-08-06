@@ -16,8 +16,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
+import ru.alikhano.cyberlife.dto.CartItemDTO;
 import ru.alikhano.cyberlife.dao.CartDao;
 import ru.alikhano.cyberlife.mapper.CartMapper;
 import ru.alikhano.cyberlife.model.Cart;

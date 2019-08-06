@@ -1,4 +1,4 @@
-package ru.alikhano.cyberlife.DTO;
+package ru.alikhano.cyberlife.dto;
 
 import ru.alikhano.cyberlife.model.CartItem;
 

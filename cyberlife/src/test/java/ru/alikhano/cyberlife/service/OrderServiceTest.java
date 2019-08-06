@@ -21,15 +21,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ru.alikhano.cyberlife.DTO.AddressDTO;
-import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.DTO.OrderDTO;
-import ru.alikhano.cyberlife.DTO.OrderItemDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.dto.AddressDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
+import ru.alikhano.cyberlife.dto.CartItemDTO;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.CustomerDTO;
+import ru.alikhano.cyberlife.dto.OrderDTO;
+import ru.alikhano.cyberlife.dto.OrderItemDTO;
+import ru.alikhano.cyberlife.dto.ProductDTO;
+import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.dao.OrderDao;
 import ru.alikhano.cyberlife.mapper.OrderMapper;
 import ru.alikhano.cyberlife.model.Customer;
@@ -71,8 +71,6 @@ public class OrderServiceTest {
 
 	@InjectMocks
 	OrderServiceImpl orderServiceMock;
-	
-
 
 	Orders orderMock;
 	OrderDTO orderDTOMock;

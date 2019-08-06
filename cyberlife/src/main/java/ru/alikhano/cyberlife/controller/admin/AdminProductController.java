@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.service.CategoryService;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
 import ru.alikhano.cyberlife.service.CustomerService;
@@ -41,15 +41,19 @@ import ru.alikhano.cyberlife.service.ProductService;
 public class AdminProductController {
 
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
+
 	@Autowired
-	CategoryService categoryService;
+	private CategoryService categoryService;
+
 	@Autowired
-	ConsciousnessService consService;
+	private ConsciousnessService consService;
+
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
+
 	@Autowired
-	OrderService orderService;
+	private OrderService orderService;
 	
 	private static final Logger logger = LogManager.getLogger(AdminProductController.class);
 
@@ -189,8 +193,6 @@ public class AdminProductController {
 			return "editProduct";
 			
 		}
-		
-		
 		return "redirect:/admin/productList";
 	}
 
@@ -252,8 +254,5 @@ public class AdminProductController {
 		}
 		
 		return "stats";
-
-		
 	}
-	
 }

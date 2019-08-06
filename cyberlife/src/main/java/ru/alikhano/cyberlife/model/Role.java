@@ -1,5 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +14,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="role")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
 	
 	@Id
@@ -18,23 +27,6 @@ public class Role {
 	
 	@Column(name="type")
 	private String type;
-
-	
-	public int getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	@Override
 	public int hashCode() {
@@ -57,17 +49,4 @@ public class Role {
 			return false;
 		return true;
 	}
-	
-	public Role() {
-		
-	}
-	
-	public Role(int roleId, String type) {
-		this.roleId=roleId;
-		this.type=type;
-	}
-	
-	
-	
-
 }

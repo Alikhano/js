@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.WebUtils;
 
-import ru.alikhano.cyberlife.DTO.CartDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
-import ru.alikhano.cyberlife.service.CustomerService;
-import ru.alikhano.cyberlife.service.ProductService;
-import ru.alikhano.cyberlife.service.UserService;
 
 /**
  * @author Anastasia Likhanova
@@ -30,26 +27,17 @@ import ru.alikhano.cyberlife.service.UserService;
 public class CartController {
 	
 	@Autowired
-	CartService cartService;
+	private CartService cartService;
 	
 	@Autowired
-	UserService userService;
-	
-	@Autowired
-	CustomerService customerService;
-	
-	@Autowired
-	ProductService productService;
-	
-	@Autowired
-	CartItemService cartItemService;
+	private CartItemService cartItemService;
 	
 	private static final Logger logger = LogManager.getLogger(CartController.class);
 	
 	/**
 	 * controller to show user's cart entries
 	 * @param request http request recieved from client side
-	 * @param authentication to retrieve customer's username
+	 * @param model to retrieve customer's username
 	 * @return jsp file name
 	 */
 	@GetMapping("/myCart")
@@ -67,7 +55,6 @@ public class CartController {
 			model.addAttribute("cart", cartDTO);
 			model.addAttribute("cartItems", cartDTO.getItems());
 		}
-		
 		
 		return "cartList";	
 	}
@@ -89,7 +76,4 @@ public class CartController {
 
 		return "redirect:/myCart";
 	}
-	
-
-
 }

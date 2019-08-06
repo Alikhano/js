@@ -16,8 +16,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import ru.alikhano.cyberlife.DTO.RoleDTO;
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.dto.RoleDTO;
+import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.dao.UserDao;
 import ru.alikhano.cyberlife.mapper.UserMapper;
 import ru.alikhano.cyberlife.model.Role;

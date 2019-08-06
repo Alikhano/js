@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.util.WebUtils;
 
-import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.RoleDTO;
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
+import ru.alikhano.cyberlife.dto.RoleDTO;
+import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.model.User;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.ProductService;
@@ -37,16 +37,16 @@ import ru.alikhano.cyberlife.service.UserService;
 public class HomeController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	CartService cartService;
+	private CartService cartService;
 	
 	@Autowired
-	RoleService roleService;
+	private RoleService roleService;
 	
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 	
 	private static final String REGISTER = "register";  
 	

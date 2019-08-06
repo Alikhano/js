@@ -1,7 +1,7 @@
 package ru.alikhano.cyberlife.service;
 
-import ru.alikhano.cyberlife.DTO.OrderDTO;
-import ru.alikhano.cyberlife.DTO.OrderItemDTO;
+import ru.alikhano.cyberlife.dto.OrderDTO;
+import ru.alikhano.cyberlife.dto.OrderItemDTO;
 
 /**
  * @author Anastasia Likhanova

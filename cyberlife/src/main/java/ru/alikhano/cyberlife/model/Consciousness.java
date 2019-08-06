@@ -1,5 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +15,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="consciousness")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Consciousness {
 	
 	@Id
@@ -24,31 +33,6 @@ public class Consciousness {
 	@Column(name="description")
 	@NotNull
 	private String description;
-	
-
-	public int getConsId() {
-		return consId;
-	}
-
-	public void setConsId(int consId) {
-		this.consId = consId;
-	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	@Override
 	public int hashCode() {
@@ -86,18 +70,4 @@ public class Consciousness {
 		}
 		return true;
 	}
-	
-	public Consciousness() {
-		
-	}
-
-	public Consciousness(int consId, String level, String description) {
-		super();
-		this.consId = consId;
-		this.level = level;
-		this.description = description;
-	}
-	
-	
-
 }

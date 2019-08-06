@@ -3,10 +3,10 @@ package ru.alikhano.cyberlife.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-import ru.alikhano.cyberlife.DTO.AddressDTO;
-import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.DTO.RoleDTO;
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.dto.AddressDTO;
+import ru.alikhano.cyberlife.dto.CustomerDTO;
+import ru.alikhano.cyberlife.dto.RoleDTO;
+import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.model.Address;
 import ru.alikhano.cyberlife.model.Customer;
 import ru.alikhano.cyberlife.model.Role;

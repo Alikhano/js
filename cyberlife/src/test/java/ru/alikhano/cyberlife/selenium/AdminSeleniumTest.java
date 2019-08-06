@@ -65,7 +65,7 @@ public class AdminSeleniumTest {
 				ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"admin-sidebar\"]/div/div/div/a[4]")))
 				.click();
 
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"catType\"]")))
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"categoryType\"]")))
 				.sendKeys("education");
 
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"addCat\"]/div/input")))

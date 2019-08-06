@@ -16,10 +16,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.DTO.OrderDTO;
-import ru.alikhano.cyberlife.DTO.OrderItemDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.dto.CustomerDTO;
+import ru.alikhano.cyberlife.dto.OrderDTO;
+import ru.alikhano.cyberlife.dto.OrderItemDTO;
+import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dao.OrderItemDao;
 import ru.alikhano.cyberlife.mapper.OrderItemMapper;
 import ru.alikhano.cyberlife.model.OrderItem;

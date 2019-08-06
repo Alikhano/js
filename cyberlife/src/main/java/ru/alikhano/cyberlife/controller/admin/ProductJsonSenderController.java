@@ -21,7 +21,7 @@ import ru.alikhano.cyberlife.service.ProductJsonSender;
 public class ProductJsonSenderController {
 	
 	@Autowired
-	ProductJsonSender productJsonSender;
+	private ProductJsonSender productJsonSender;
 	
 	private static final Logger logger = LogManager.getLogger(ProductJsonSenderController.class);
 	

@@ -1,4 +1,4 @@
-package ru.alikhano.cyberlife.DTO;
+package ru.alikhano.cyberlife.dto;
 
 public class ProductInfo {
 	

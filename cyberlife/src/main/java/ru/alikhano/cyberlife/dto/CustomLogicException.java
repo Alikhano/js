@@ -1,4 +1,4 @@
-package ru.alikhano.cyberlife.DTO;
+package ru.alikhano.cyberlife.dto;
 
 public class CustomLogicException extends Exception{
 	
@@ -11,9 +11,7 @@ public class CustomLogicException extends Exception{
 		this.message = message;
 	}
 	
-	public CustomLogicException() {
-		
-	}
+	public CustomLogicException() {}
 
 	public String getErrMessage() {
 		return message;

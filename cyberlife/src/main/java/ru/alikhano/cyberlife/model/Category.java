@@ -1,5 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,40 +15,27 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="category")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="catId")
-	private int catId;
+	@Column(name="categoryId")
+	private int categoryId;
 	
-	@Column(name="catType", unique = true)
+	@Column(name="categoryType", unique = true)
 	@NotNull
-	private String catType;
-	
-
-	public int getCatId() {
-		return catId;
-	}
-
-	public void setCatId(int catId) {
-		this.catId = catId;
-	}
-
-	public String getCatType() {
-		return catType;
-	}
-
-	public void setCatType(String catType) {
-		this.catType = catType;
-	}
+	private String categoryType;
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + catId;
-		result = prime * result + ((catType == null) ? 0 : catType.hashCode());
+		result = prime * result + categoryId;
+		result = prime * result + ((categoryType == null) ? 0 : categoryType.hashCode());
 		return result;
 	}
 
@@ -56,24 +48,15 @@ public class Category {
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		if (catId != other.catId)
+		if (categoryId != other.categoryId)
 			return false;
-		if (catType == null) {
-			if (other.catType != null)
+		if (categoryType == null) {
+			if (other.categoryType != null)
 				return false;
-		} else if (!catType.equals(other.catType)) {
+		} else if (!categoryType.equals(other.categoryType)) {
 			return false;
 		}
 			
 		return true;
-	}
-	
-	public Category() {
-		
-	}
-	
-	public Category(int id, String catType) {
-		this.catId = id;
-		this.catType = catType;
 	}
 }

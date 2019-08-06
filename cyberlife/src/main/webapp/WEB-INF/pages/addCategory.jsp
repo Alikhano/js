@@ -63,7 +63,7 @@
 		$("#addCat").submit(function(e) {
 			e.preventDefault();
 
-			var catType = $("#catType").val();
+			var catType = $("#categoryType").val();
 
 			$.ajax({
 				method : 'POST',
@@ -73,7 +73,7 @@
 				},
 				url : '${pageContext.request.contextPath}/admin/addCategory',
 				data : JSON.stringify({
-					catType : $("#catType").val()
+					catType : $("#categoryType").val()
 				}),
 			}).done(function(response) {
 				swal({

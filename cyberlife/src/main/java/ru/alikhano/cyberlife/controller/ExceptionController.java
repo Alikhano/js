@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
 
 /**
  * @author Anastasia Likhanova

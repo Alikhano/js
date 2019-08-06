@@ -1,5 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +17,10 @@ import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="address")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address {
 	
 	@Id
@@ -46,63 +55,6 @@ public class Address {
 	@Min(value=1)
 	private String flat;
 
-
-	public int getAddressId() {
-		return addressId;
-	}
-
-	public void setAddressId(int addressId) {
-		this.addressId = addressId;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getBuilding() {
-		return building;
-	}
-
-	public void setBuilding(String building) {
-		this.building = building;
-	}
-
-	public String getFlat() {
-		return flat;
-	}
-
-	public void setFlat(String flat) {
-		this.flat = flat;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -124,24 +76,4 @@ public class Address {
 			return false;
 		return true;
 	}
-	
-	public Address() {
-		
-	}
-
-	public Address(int addressId, String country, String city, String zipCode, String street, String building,
-			String flat) {
-		super();
-		this.addressId = addressId;
-		this.country = country;
-		this.city = city;
-		this.zipCode = zipCode;
-		this.street = street;
-		this.building = building;
-		this.flat = flat;
-	}
-	
-	
-
-
 }

@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.dao.UserDao;
 import ru.alikhano.cyberlife.mapper.UserMapper;
 import ru.alikhano.cyberlife.model.Role;
@@ -22,47 +22,65 @@ import ru.alikhano.cyberlife.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserDao userDao;
+	private UserDao userDao;
 	
 	@Autowired
-	RoleService roleService;
+	private RoleService roleService;
 	
 	@Autowired
-	UserMapper userMapper;
+	private UserMapper userMapper;
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void create(User user) {
 		userDao.create(user);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void delete(User user) {
 		userDao.delete(user);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public User getById(int id) {
 		return userDao.getById(id);
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public UserDTO getDTOById(int id) {
 		return userMapper.userToUserDTO(getById(id));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public List<User> getAll() {
 		return userDao.getAll();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void changePassword(String password, UserDTO userDTO) {
@@ -71,18 +89,27 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void update(UserDTO userDTO) {
 		userDao.update(userMapper.userDTOtoUser(userDTO));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public User getByUsername(String username) {
 		return userDao.getByUsername(username);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void register(UserDTO userDTO) {
@@ -100,6 +127,9 @@ public class UserServiceImpl implements UserService {
 			
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public UserDTO getByUsernameDTO(String username) {
@@ -107,6 +137,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public boolean verifyPassword(String password, int id) {

@@ -12,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.DTO.OrderDTO;
-import ru.alikhano.cyberlife.DTO.OrderItemDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
+import ru.alikhano.cyberlife.dto.CartItemDTO;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.CustomerDTO;
+import ru.alikhano.cyberlife.dto.OrderDTO;
+import ru.alikhano.cyberlife.dto.OrderItemDTO;
+import ru.alikhano.cyberlife.dto.ProductDTO;
+import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.dao.OrderDao;
 import ru.alikhano.cyberlife.mapper.OrderMapper;
 import ru.alikhano.cyberlife.model.Orders;
@@ -35,57 +35,68 @@ import ru.alikhano.cyberlife.service.UserService;
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
-	OrderDao orderDao;
+	private OrderDao orderDao;
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
 
 	@Autowired
-	CartService cartService;
+	private CartService cartService;
 
 	@Autowired
-	CartItemService cartItemService;
+	private CartItemService cartItemService;
 	
 	@Autowired
-	OrderItemService orderItemService;
+	private OrderItemService orderItemService;
 	
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 	
 	@Autowired
-	MessagingService messaginService;
+	private MessagingService messaginService;
 
 	@Autowired
-	OrderMapper orderMapper;
-	
+	private OrderMapper orderMapper;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void create(OrderDTO orderDTO) {
 		orderDao.create(orderMapper.orderDTOtoOder(orderDTO));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public List<OrderDTO> getAll() {
 		List<Orders> orders = orderDao.getAll();
 		List<OrderDTO> ordersDTO = new ArrayList<>();
-		orders.stream().forEach(order -> {
+		orders.forEach(order -> {
 			OrderDTO orderDTO = orderMapper.orderToOrderDTO(order);
 			ordersDTO.add(orderDTO);
 		});
 		return ordersDTO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public OrderDTO getById(int id) {
 		return orderMapper.orderToOrderDTO(orderDao.getById(id));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void update(OrderDTO orderDTO) throws IOException, TimeoutException {
@@ -96,6 +107,9 @@ public class OrderServiceImpl implements OrderService {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public List<OrderDTO> getByCustomerId(int id) {
@@ -108,42 +122,55 @@ public class OrderServiceImpl implements OrderService {
 		return ordersDTO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public int createAndGetId(OrderDTO order) {
 		return orderDao.createAndGetId(orderMapper.orderDTOtoOder(order));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public Map<Integer, Double> getMonthlyRevenue() {
 		return orderDao.getMonthlyRevenue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public double getWeeklyRevenue() {
 		return orderDao.getWeeklyRevenue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
-	public String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException, IOException, TimeoutException {
+	public String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException,
+			IOException, TimeoutException {
 
 		UserDTO user = userService.getByUsernameDTO(username);
 		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
 		
 		if (customerDTO.getAddress() == null || customerDTO.getEmail() == null || customerDTO.getLastName() == null) {
-			throw new CustomLogicException("Your customer profile must miss some information. Please go back to your profile and complete it.");
+			throw new CustomLogicException("Your customer profile must miss some information. " +
+												   "Please go back to your profile and complete it.");
 		}
-
 		// assign customer to order
 		orderDTO.setCustomer(customerDTO);
-	
-		
+
 		//set price to order, erase price from cart
 		orderDTO.setOrderPrice(cartDTO.getGrandTotal());
 		cartDTO.setGrandTotal(0);
+
 		//add date to order
 		orderDTO.setOrderDate(new Date());
 		
@@ -169,10 +196,12 @@ public class OrderServiceImpl implements OrderService {
 			int prevQuantity = productDTO.getUnitsInStock();
 			if (prevQuantity == 0) {
 				
-			throw new CustomLogicException("You tried to submit order while one of the items is out of stock. Please delete item from cart and proceed to order");
+			throw new CustomLogicException("You tried to submit order while one of the items is out of stock. " +
+												   "Please delete item from cart and proceed to order");
 			}
 			else if (prevQuantity < cartItem.getQuantity()) {
-				throw new CustomLogicException("You tried to submit order while one of the items has less items in stock than you need. Please delete item from cart and proceed to order");
+				throw new CustomLogicException("You tried to submit order while one of the items has less items in stock than you need. " +
+								"Please delete item from cart and proceed to order");
 			}
 			else {
 				productDTO.setUnitsInStock(prevQuantity - cartItem.getQuantity());
@@ -199,9 +228,11 @@ public class OrderServiceImpl implements OrderService {
 		cartService.update(cartDTO);
 		
 		return "success";
-
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public boolean isInTop(OrderDTO order) {
@@ -218,9 +249,12 @@ public class OrderServiceImpl implements OrderService {
 		return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
-	public String changeOrderStatus(int orderId, String orderStatus, String paymentStatus) throws IOException, TimeoutException {
+	public String changeOrderStatus(int orderId, String orderStatus, String paymentStatus) {
 		Orders order = orderDao.getById(orderId);
 		
 		

@@ -1,4 +1,4 @@
-package ru.alikhano.cyberlife.DTO;
+package ru.alikhano.cyberlife.dto;
 
 import ru.alikhano.cyberlife.model.Product;
 
@@ -76,8 +76,8 @@ public class ProductDTO {
 		this.price = product.getPrice();
 		
 		this.category = new CategoryDTO();
-		this.category.setCatId(product.getCategory().getCatId());
-		this.category.setCatType(product.getCategory().getCatType());
+		this.category.setCatId(product.getCategory().getCategoryId());
+		this.category.setCatType(product.getCategory().getCategoryType());
 		this.cons = new ConsDTO();
 		this.cons.setConsId(product.getCons().getConsId());
 		this.cons.setLevel(product.getCons().getLevel());

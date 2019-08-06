@@ -15,7 +15,7 @@ public interface CartItemDao extends GenericDao<CartItem> {
 	
 	/** 
 	 * saves an updated cart item entry
-	 * @param instance of CartItem to be updated
+	 * @param cartItem instance of CartItem to be updated
 	 */
 	void merge(CartItem cartItem);
 }

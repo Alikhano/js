@@ -14,7 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ru.alikhano.cyberlife.DTO.AddressDTO;
+import ru.alikhano.cyberlife.dto.AddressDTO;
 import ru.alikhano.cyberlife.dao.AddressDao;
 import ru.alikhano.cyberlife.mapper.AddressMapper;
 import ru.alikhano.cyberlife.model.Address;

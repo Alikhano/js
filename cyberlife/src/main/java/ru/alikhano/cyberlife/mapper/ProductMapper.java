@@ -3,9 +3,9 @@ package ru.alikhano.cyberlife.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-import ru.alikhano.cyberlife.DTO.CategoryDTO;
-import ru.alikhano.cyberlife.DTO.ConsDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.dto.CategoryDTO;
+import ru.alikhano.cyberlife.dto.ConsDTO;
+import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.model.Category;
 import ru.alikhano.cyberlife.model.Consciousness;
 import ru.alikhano.cyberlife.model.Product;

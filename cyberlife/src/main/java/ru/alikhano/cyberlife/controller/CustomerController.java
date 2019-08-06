@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ru.alikhano.cyberlife.DTO.AddressDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.CustomerDTO;
-import ru.alikhano.cyberlife.DTO.UserDTO;
+import ru.alikhano.cyberlife.dto.AddressDTO;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.CustomerDTO;
+import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.service.AddressService;
 import ru.alikhano.cyberlife.service.CustomerService;
 import ru.alikhano.cyberlife.service.UserService;
@@ -43,16 +43,16 @@ public class CustomerController {
 	private static final String ERROR = "error";
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
 	
 	@Autowired
-	AddressService addressService;
+	private AddressService addressService;
 	
 	@Autowired
-	BCryptPasswordEncoder encoder;
+	private BCryptPasswordEncoder encoder;
 	
 	private static final String REDIRECT = "redirect:/myAccount";  
 	
@@ -82,20 +82,19 @@ public class CustomerController {
 		String username = authentication.getName();
 		UserDTO user = userService.getByUsernameDTO(username);
 		CustomerDTO customer = customerService.getByUserId(user.getUserId());
-		
+
 		if (customer == null) {
 			logger.error("Customer profile has not been created before");
 			customer = new CustomerDTO();
 			customer.setUser(user);
 			customerService.create(customer);
 			model.addAttribute(CUSTOMER, customer);
-			model.addAttribute(ERROR,"You seem to not have a profile. We generated it for you");
+			model.addAttribute(ERROR, "You seem to not have a profile. We generated it for you");
 			return UPDATE;
 		}
-		
+
 		return UPDATE;
-			
-		}
+	}
 	
 	
 	/** controller to show a page where customer can update his personal info
@@ -119,7 +118,6 @@ public class CustomerController {
 			model.addAttribute(CUSTOMER, customer);
 			model.addAttribute(ERROR,"You seem to not have a profile. We generated it for you");
 			return UPDATE;
-			
 		}
 		
 		if (customer.getCustomerId() != customerId) {
@@ -127,11 +125,10 @@ public class CustomerController {
 			model.addAttribute(CUSTOMER, customer);
 			model.addAttribute(ERROR,"You cannot access someone else's profile");
 			return UPDATE;
-			
 		}
 
+
 		model.addAttribute(CUSTOMER, customerDTO);
-		
 
 		return UPDATE;
 	}
@@ -208,9 +205,7 @@ public class CustomerController {
 			logger.error(ex.getMessage() + "WRONG values");
 			return "changeAddress";
 		}
-		
-		
-		
+
 		return REDIRECT;
 	}
 	
@@ -222,8 +217,6 @@ public class CustomerController {
 	 */
 	@GetMapping("/myAccount/changePassword")
 	public String changePassword(Authentication authentication, Model model) {
-	
-
 		return "changePassword";
 	}
 	
@@ -250,7 +243,5 @@ public class CustomerController {
 		logger.info(username + "has changed his/her password");
 		return REDIRECT;
 	}
-
-
 
 }

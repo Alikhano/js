@@ -1,5 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +26,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "orders")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Orders {
 
 	@Id
@@ -57,70 +66,6 @@ public class Orders {
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<OrderItem> orderedItems = new HashSet<>(0);
-
-	public int getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
-
-	public String getPaymentType() {
-		return paymentType;
-	}
-
-	public void setPaymentType(String paymentType) {
-		this.paymentType = paymentType;
-	}
-
-	public String getPaymentStatus() {
-		return paymentStatus;
-	}
-
-	public void setPaymentStatus(String paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
-
-	public String getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public double getOrderPrice() {
-		return orderPrice;
-	}
-
-	public void setOrderPrice(double orderPrice) {
-		this.orderPrice = orderPrice;
-	}
-
-	public Date getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
-
-	public Set<OrderItem> getOrderedItems() {
-		return orderedItems;
-	}
-
-	public void setOrderedItems(Set<OrderItem> orderedItems) {
-		this.orderedItems = orderedItems;
-	}
 
 	public void addOrderItem(OrderItem item) {
 		orderedItems.add(item);

@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
+import ru.alikhano.cyberlife.dto.CartItemDTO;
+import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dao.CartItemDao;
 import ru.alikhano.cyberlife.mapper.CartItemMapper;
 import ru.alikhano.cyberlife.mapper.CartMapper;
@@ -20,17 +20,20 @@ import ru.alikhano.cyberlife.service.CartService;
 public class CartItemServiceImpl implements CartItemService {
 
 	@Autowired
-	CartItemDao cartItemDao;
+	private CartItemDao cartItemDao;
 
 	@Autowired
-	CartService cartService;
+	private CartService cartService;
 
 	@Autowired
-	CartItemMapper cartItemMapper;
+	private CartItemMapper cartItemMapper;
 
 	@Autowired
-	CartMapper cartMapper;
+	private CartMapper cartMapper;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void create(CartItemDTO cartItemDTO) {
@@ -38,6 +41,9 @@ public class CartItemServiceImpl implements CartItemService {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void delete(CartItemDTO cartItemDTO) {
@@ -45,6 +51,9 @@ public class CartItemServiceImpl implements CartItemService {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void deleteAll(CartDTO cartDTO) {
@@ -54,6 +63,9 @@ public class CartItemServiceImpl implements CartItemService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void update(CartItemDTO cartItemDTO) {
@@ -61,12 +73,18 @@ public class CartItemServiceImpl implements CartItemService {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public CartItemDTO getById(int id) {
 		return cartItemMapper.cartItemToCartItemDTO(cartItemDao.getById(id));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void create(ProductDTO productDTO, CartDTO cartDTO, CartItemDTO cartItemDTO) {
@@ -77,7 +95,7 @@ public class CartItemServiceImpl implements CartItemService {
 			int itemId = checkCart(cartDTO, productDTO);
 
 			if (itemId != 0) {
-				CartItemDTO item = cartService.getCartItemById(cartDTO, itemId);
+				CartItemDTO item = getCartItemById(cartDTO, itemId);
 				double price = item.getTotalPrice();
 				int quantity = item.getQuantity();
 				double newPrice = cartItemDTO.getQuantity() * productDTO.getPrice();
@@ -87,7 +105,6 @@ public class CartItemServiceImpl implements CartItemService {
 
 				cartDTO.setGrandTotal(newPrice + cartDTO.getGrandTotal());
 				update(item);
-
 			}
 
 			else {
@@ -122,9 +139,11 @@ public class CartItemServiceImpl implements CartItemService {
 			create(cartItemDTO);
 
 		}
-
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public int checkCart(CartDTO cartDTO, ProductDTO productDTO) {
@@ -137,9 +156,11 @@ public class CartItemServiceImpl implements CartItemService {
 		}
 
 		return 0;
-
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void deleteFromCart(int itemId, int cartId) {
@@ -167,6 +188,22 @@ public class CartItemServiceImpl implements CartItemService {
 		cartService.merge(cartDTO);
 		delete(cartItemDTO);
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CartItemDTO getCartItemById(CartDTO cartDTO, int id) {
+		Set<CartItemDTO> items = cartDTO.getItems();
+
+		for (CartItemDTO item : items) {
+			if (item.getItemId() == id) {
+				return item;
+			}
+		}
+
+		return null;
 	}
 
 }

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.CustomerDTO;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.CustomerDTO;
 import ru.alikhano.cyberlife.service.CustomerService;
 import ru.alikhano.cyberlife.service.UserService;
 
@@ -81,6 +81,4 @@ public class UserController {
 			
 		return "redirect:/login";
 	}
-	
-	
 }

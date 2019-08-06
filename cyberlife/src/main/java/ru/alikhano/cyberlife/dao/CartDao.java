@@ -14,14 +14,14 @@ import ru.alikhano.cyberlife.model.Cart;
 public interface CartDao extends GenericDao<Cart>{
 	
 	/** 
-	 * @param instance of Cart to add to database
+	 * @param cart instance of Cart to add to database
 	 * @return id of new cart
 	 */
 	int createAndGetId(Cart cart);
 	
 	/** 
 	 * saves modified cart instance to database
-	 * @param instance of Cart to save after update
+	 * @param cart instance of Cart to save after update
 	 */
 	void merge(Cart cart);
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.config.rabbitmq.ProductJson;
 import ru.alikhano.cyberlife.service.ProductJsonService;
 import ru.alikhano.cyberlife.service.ProductService;
@@ -16,8 +16,11 @@ import ru.alikhano.cyberlife.service.ProductService;
 public class ProductJsonServiceImpl implements ProductJsonService {
 	
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Transactional
 	@Override
 	public List<ProductJson> getTopProducts() {

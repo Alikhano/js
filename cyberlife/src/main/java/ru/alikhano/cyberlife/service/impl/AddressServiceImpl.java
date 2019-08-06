@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.DTO.AddressDTO;
+import ru.alikhano.cyberlife.dto.AddressDTO;
 import ru.alikhano.cyberlife.dao.AddressDao;
 import ru.alikhano.cyberlife.mapper.AddressMapper;
 import ru.alikhano.cyberlife.model.Address;
@@ -17,12 +17,14 @@ import ru.alikhano.cyberlife.service.AddressService;
 public class AddressServiceImpl implements AddressService {
 	
 	@Autowired
-	AddressDao addressDao;
+	private AddressDao addressDao;
 	
 	@Autowired
-	AddressMapper addressMapper;
+	private AddressMapper addressMapper;
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public List<AddressDTO> getAll() {
@@ -35,12 +37,18 @@ public class AddressServiceImpl implements AddressService {
 		return addressesDTO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public AddressDTO getById(int id) {
 		return addressMapper.addressToAddressDTO(addressDao.getById(id));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void create(AddressDTO addressDTO) {
@@ -48,6 +56,9 @@ public class AddressServiceImpl implements AddressService {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void update(AddressDTO addressDTO) {
@@ -55,11 +66,13 @@ public class AddressServiceImpl implements AddressService {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void delete(AddressDTO addressDTO) {
 		addressDao.delete(addressMapper.addressDTOtoAddress(addressDTO));
-		
 	}
 
 }

@@ -1,5 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +18,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="cartItem")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CartItem {
 	
 	@Id
@@ -40,49 +49,6 @@ public class CartItem {
 	@NotNull
 	private Cart cart;
 
-	public int getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
-
-	public double getTotalPrice() {
-		return totalPrice;
-	}
-
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-	
-	
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public Cart getCart() {
-		return cart;
-	}
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -104,19 +70,4 @@ public class CartItem {
 			return false;
 		return true;
 	}
-
-	public CartItem(int itemId, @NotNull @Min(1) int quantity, @NotNull @Min(1) double totalPrice,
-			@NotNull Product product, @NotNull Cart cart) {
-		super();
-		this.itemId = itemId;
-		this.quantity = quantity;
-		this.totalPrice = totalPrice;
-		this.product = product;
-		this.cart = cart;
-	}
-
-	public CartItem() {
-	
-	}
-
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ru.alikhano.cyberlife.DTO.AddressDTO;
+import ru.alikhano.cyberlife.dto.AddressDTO;
 
 /**
  * @author Anastasia Likhanova

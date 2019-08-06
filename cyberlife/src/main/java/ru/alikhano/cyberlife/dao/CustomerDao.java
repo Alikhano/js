@@ -17,7 +17,7 @@ public interface CustomerDao extends GenericDao<Customer> {
 	
 	/** 
 	 * enables database search by customer's id
-	 * @param customer id to search in database
+	 * @param id customer id to search in database
 	 * @return instance of Customer with corresponding customer id
 	 */
 	Customer getByUserId(int id);
@@ -28,8 +28,7 @@ public interface CustomerDao extends GenericDao<Customer> {
 	 */
 	Customer getByEmail(String email);
 	
-	/** 
-	 * @param user email to search in database
+	/**
 	 * @return instance of User with corresponding email
 	 */
 	List<Customer> getTopCustomers();

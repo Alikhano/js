@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
-import ru.alikhano.cyberlife.DTO.OrderDTO;
-import ru.alikhano.cyberlife.DTO.OrderItemDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
-import ru.alikhano.cyberlife.DTO.ProductInfo;
-import ru.alikhano.cyberlife.DTO.SearchRequest;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
+import ru.alikhano.cyberlife.dto.OrderDTO;
+import ru.alikhano.cyberlife.dto.OrderItemDTO;
+import ru.alikhano.cyberlife.dto.ProductDTO;
+import ru.alikhano.cyberlife.dto.ProductInfo;
+import ru.alikhano.cyberlife.dto.SearchRequest;
 import ru.alikhano.cyberlife.dao.ProductDao;
 import ru.alikhano.cyberlife.mapper.ProductInfoMapper;
 import ru.alikhano.cyberlife.mapper.ProductMapper;
@@ -29,26 +29,29 @@ import ru.alikhano.cyberlife.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	ProductDao productDao;
+	private ProductDao productDao;
 
 	@Autowired
-	ProductMapper productMapper;
+	private ProductMapper productMapper;
 
 	@Autowired
-	ProductInfoMapper productInfoMapper;
+	private ProductInfoMapper productInfoMapper;
 	
 	@Autowired
-	OrderService orderService;
+	private OrderService orderService;
 
 	@Autowired
-	CategoryService categoryService;
+	private CategoryService categoryService;
 	
 	@Autowired
-	ConsciousnessService consService;
+	private ConsciousnessService consService;
 	
 	@Autowired
-	MessagingService messaginService;
+	private MessagingService messaginService;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public List<ProductDTO> getAll() {
@@ -62,6 +65,9 @@ public class ProductServiceImpl implements ProductService {
 		return productsDTO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public ProductDTO getById(int id) throws CustomLogicException {
@@ -72,6 +78,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDTO;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void create(ProductDTO productDTO) throws CustomLogicException {
@@ -83,6 +92,9 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public String update(ProductDTO productDTO) throws IOException, TimeoutException, CustomLogicException {
@@ -105,6 +117,9 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public String delete(ProductDTO productDTO) throws CustomLogicException, IOException, TimeoutException {
@@ -122,18 +137,20 @@ public class ProductServiceImpl implements ProductService {
 		}
 		
 		return "failed";
-		
-		
-
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public ProductDTO getByModel(String model) throws CustomLogicException {
 		return productMapper.productToProductDTO(productDao.getByModel(model));
-
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public List<ProductInfo> searchParam(SearchRequest request) {
@@ -173,6 +190,9 @@ public class ProductServiceImpl implements ProductService {
 		return infoList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public List<ProductDTO> getTopProducts() {
@@ -187,18 +207,28 @@ public class ProductServiceImpl implements ProductService {
 		return dtoList;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public ProductDTO selectForUpdate(int id) {
 		return productMapper.productToProductDTO(productDao.selectForUpdate(id));
 	}
 
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public Product getProductById(int id) {
 		return productDao.getById(id);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public boolean isInTop(ProductDTO productDTO) {
@@ -211,6 +241,9 @@ public class ProductServiceImpl implements ProductService {
 		return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public void merge(ProductDTO productDTO) throws IOException, TimeoutException {
@@ -220,6 +253,9 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	@Transactional
 	public boolean canBeDeleted(ProductDTO productDTO) {
@@ -227,7 +263,8 @@ public class ProductServiceImpl implements ProductService {
 	    for (OrderDTO order : orders) {
 	    	Set<OrderItemDTO> orderItems = order.getOrderedItems();
 	    	for (OrderItemDTO orderItem : orderItems) {
-	    		if (orderItem.getProduct().getProductId() == productDTO.getProductId() && order.getPaymentStatus() != "paid" && order.getOrderStatus() != "delivered and recieved") {
+	    		if (orderItem.getProduct().getProductId() == productDTO.getProductId() && order.getPaymentStatus()
+						!= "paid" && order.getOrderStatus() != "delivered and recieved") {
 	    			return false;
 	    		}
 	    	}

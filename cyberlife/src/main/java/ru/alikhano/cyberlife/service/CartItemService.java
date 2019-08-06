@@ -1,8 +1,8 @@
 package ru.alikhano.cyberlife.service;
 
-import ru.alikhano.cyberlife.DTO.CartDTO;
-import ru.alikhano.cyberlife.DTO.CartItemDTO;
-import ru.alikhano.cyberlife.DTO.ProductDTO;
+import ru.alikhano.cyberlife.dto.CartDTO;
+import ru.alikhano.cyberlife.dto.CartItemDTO;
+import ru.alikhano.cyberlife.dto.ProductDTO;
 
 /**
  * @author Anastasia Likhanova
@@ -11,7 +11,6 @@ import ru.alikhano.cyberlife.DTO.ProductDTO;
  *
  */
 public interface CartItemService {
-	
 	
 	/**
 	 * @param cartItemDTO instance of CarItemDTO to convert to CartItem and add to the database
@@ -63,6 +62,11 @@ public interface CartItemService {
 	 */
 	void deleteFromCart(int itemId, int cartId);
 
-
+    /**
+     * @param cartDTO
+     * @param id
+     * @return
+     */
+    CartItemDTO getCartItemById(CartDTO cartDTO, int id);
 
 }

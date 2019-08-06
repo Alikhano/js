@@ -12,6 +12,5 @@ import ru.alikhano.cyberlife.model.OrderItem;
  */
 @Repository
 public interface OrderItemDao extends GenericDao<OrderItem>{
-	
 
 }

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ru.alikhano.cyberlife.DTO.CategoryDTO;
-import ru.alikhano.cyberlife.DTO.ConsDTO;
-import ru.alikhano.cyberlife.DTO.CustomLogicException;
+import ru.alikhano.cyberlife.dto.CategoryDTO;
+import ru.alikhano.cyberlife.dto.ConsDTO;
+import ru.alikhano.cyberlife.dto.CustomLogicException;
 import ru.alikhano.cyberlife.service.CategoryService;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
 
@@ -30,15 +30,14 @@ import ru.alikhano.cyberlife.service.ConsciousnessService;
  */
 @Controller
 public class AdminController {
-	
 
 	private static final Logger logger = LogManager.getLogger(AdminController.class);
 
 	@Autowired
-	CategoryService categoryService;
+	private CategoryService categoryService;
 
 	@Autowired
-	ConsciousnessService consService;
+	private ConsciousnessService consService;
 
 	@RequestMapping("/admin/admin-home")
 	public String home() {
@@ -118,5 +117,4 @@ public class AdminController {
 
 		return ResponseEntity.ok(consDTO);
 	}
-
 }

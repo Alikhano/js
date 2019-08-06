@@ -104,9 +104,7 @@ public class User {
 	}
 	
 	
-	public User() {
-		
-	}
+	public User() {}
 
 	public User(int userId, String username, String password, boolean enabled, Set<Role> roles) {
 		this.userId = userId;
@@ -115,7 +113,4 @@ public class User {
 		this.enabled = enabled;
 		this.roles = roles;
 	}
-	
-	
-
 }
