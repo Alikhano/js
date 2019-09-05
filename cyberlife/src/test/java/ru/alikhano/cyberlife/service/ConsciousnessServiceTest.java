@@ -23,29 +23,31 @@ import ru.alikhano.cyberlife.service.impl.ConsciousnessServiceImpl;
 public class ConsciousnessServiceTest {
 	
 	@Mock
-	ConsciousnessDao consDaoMock;
+	private ConsciousnessDao consDaoMock;
 	
 	@Mock
-	ConsciousnessMapper consMapperMock;
+	private ConsciousnessMapper consMapperMock;
 	
 	@InjectMocks
-	ConsciousnessServiceImpl consServiceMock;
-	
-	Consciousness consMock;
-	ConsDTO consDTOMock;
-	List<Consciousness> consListMock;
-	List<ConsDTO> consDTOListMock;
+	private ConsciousnessServiceImpl consServiceMock;
+
+	private Consciousness consMock;
+	private ConsDTO consDTOMock;
+	private List<Consciousness> consListMock;
+	private List<ConsDTO> consDTOListMock;
+
+	private static final String CONS_LEVEL = "testAI";
 	
 	@Before
 	public void init() {
-		consMock = new Consciousness(1, "testAI", "testAI");
+		consMock = new Consciousness(1, CONS_LEVEL, CONS_LEVEL);
 		consDTOMock = new ConsDTO(consMock);
 		consListMock = new ArrayList<>();
 		consDTOListMock = new ArrayList<>();
 		consListMock.add(consMock);
 		consDTOListMock.add(consDTOMock);
 		Mockito.when(consDaoMock.getById(1)).thenReturn(consMock);
-		Mockito.when(consDaoMock.getConsByLevel("testAI")).thenReturn(consMock);
+		Mockito.when(consDaoMock.getConsByLevel(CONS_LEVEL)).thenReturn(consMock);
 		Mockito.when(consDaoMock.getAll()).thenReturn(consListMock);
 		Mockito.doNothing().when(consDaoMock).create(consMock);
 		Mockito.when(consMapperMock.consDTOtoCons(consDTOMock)).thenReturn(consMock);
@@ -68,9 +70,9 @@ public class ConsciousnessServiceTest {
 	
 	@Test
 	public void getByLevel() {
-		ConsDTO consDTO = consServiceMock.getByLevel("testAI");
+		ConsDTO consDTO = consServiceMock.getByLevel(CONS_LEVEL);
 		assertEquals(consDTO.getConsId(), consDTOMock.getConsId());
-		Mockito.verify(consDaoMock).getConsByLevel("testAI");
+		Mockito.verify(consDaoMock).getConsByLevel(CONS_LEVEL);
 	}
 	
 	@Test public void getAll() {
@@ -78,7 +80,4 @@ public class ConsciousnessServiceTest {
 		assertEquals(list.size(), consDTOListMock.size());
 		Mockito.verify(consDaoMock).getAll();
 	}
-	
-	
-
 }

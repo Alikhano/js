@@ -18,8 +18,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="cart")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cart {
@@ -34,6 +32,30 @@ public class Cart {
 	
 	@OneToMany(mappedBy="cart")
 	private Set<CartItem> items = new HashSet<>();
+
+	public int getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
+	}
+
+	public double getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(double grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+	public Set<CartItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<CartItem> items) {
+		this.items = items;
+	}
 
 	@Override
 	public int hashCode() {

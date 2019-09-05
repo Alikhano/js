@@ -42,54 +42,39 @@ import ru.alikhano.cyberlife.service.impl.OrderServiceImpl;
 public class OrderServiceTest {
 
 	@Mock
-	OrderDao orderDaoMock;
+	private OrderDao orderDaoMock;
 
 	@Mock
-	OrderMapper orderMapperMock;
+	private OrderMapper orderMapperMock;
 	
 	@Mock
-	UserService userServiceMock;
+	private UserService userServiceMock;
 	
 	@Mock
-	CustomerService customerServiceMock;
+	private CustomerService customerServiceMock;
 	
 	@Mock
-	ProductService productService;
-	
-	@Mock
-	CartService cartServcie;
-	
-	@Mock
-	MessagingService messagingService;
-	
-	@Mock
-	OrderItemService orderItemService;
-	
-	@Mock
-	CartItemService cartItemService;
-	
+	private ProductService productService;
 
 	@InjectMocks
-	OrderServiceImpl orderServiceMock;
+	private OrderServiceImpl orderServiceMock;
 
-	Orders orderMock;
-	OrderDTO orderDTOMock;
-	List<Orders> orders;
-	List<OrderDTO> ordersDTO;
-	Customer customerMock;
-	OrderItem orderItemMock;
-	OrderItemDTO orderItemDTOMock;
-	Set<OrderItem> itemsMock;
-	Set<OrderItemDTO> itemsDTOMock;
-	Map<Integer, Double> revenueMonth;
-	UserDTO userDTOMock;
-	CustomerDTO customerDTOMock;
-	AddressDTO addressMock;
-	ProductDTO productDTOMock;
-	List<ProductDTO> products;
-	CartDTO cartDTOMock;
-	CartItemDTO cartItemDTOMock;
-	Set<CartItemDTO> cartItems;
+	private Orders orderMock;
+	private OrderDTO orderDTOMock;
+	private List<Orders> orders;
+	private Customer customerMock;
+	private OrderItem orderItemMock;
+	private OrderItemDTO orderItemDTOMock;
+	private Set<OrderItemDTO> itemsDTOMock;
+	private Map<Integer, Double> revenueMonth;
+	private UserDTO userDTOMock;
+	private CustomerDTO customerDTOMock;
+	private AddressDTO addressMock;
+	private ProductDTO productDTOMock;
+	private List<ProductDTO> products;
+	private CartDTO cartDTOMock;
+	private CartItemDTO cartItemDTOMock;
+	private Set<CartItemDTO> cartItems;
 
 	@Before
 	public void init() {
@@ -222,6 +207,4 @@ public class OrderServiceTest {
 		boolean result = orderServiceMock.isInTop(orderDTOMock);
 		assertTrue(result);
 	}
-	
-	
 }

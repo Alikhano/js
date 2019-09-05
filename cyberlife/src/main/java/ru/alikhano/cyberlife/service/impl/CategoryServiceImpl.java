@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.alikhano.cyberlife.dto.CategoryDTO;
 import ru.alikhano.cyberlife.dao.CategoryDao;
 import ru.alikhano.cyberlife.mapper.CategoryMapper;
-import ru.alikhano.cyberlife.model.Category;
 import ru.alikhano.cyberlife.service.CategoryService;
 
 @Service
@@ -27,9 +26,8 @@ public class CategoryServiceImpl implements CategoryService {
 	 */
 	@Transactional
 	public List<CategoryDTO> getAll() {
-		List<Category> categories= categoryDao.getAll();
 		List<CategoryDTO> categoriesDTO = new ArrayList<>();
-		categories.stream().forEach(category -> {
+		categoryDao.getAll().stream().forEach(category -> {
 			CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
 			categoriesDTO.add(categoryDTO);
 		});
@@ -42,6 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
 	 */
 	@Transactional
 	public CategoryDTO getById(int id) {
+
 		return categoryMapper.categoryToCategoryDTO(categoryDao.getById(id));
 	}
 
@@ -51,6 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
 	 */
 	@Transactional
 	public CategoryDTO getByType(String catType) {
+
 		return categoryMapper.categoryToCategoryDTO(categoryDao.getByType(catType));
 	}
 
@@ -60,12 +60,14 @@ public class CategoryServiceImpl implements CategoryService {
 	 */
 	@Transactional
 	public void create(CategoryDTO categoryDTO){
+
 		categoryDao.create(categoryMapper.categoryDTOtoCategory(categoryDTO));
 	}
 
 	@Override
 	@Transactional
 	public int createAndGetId(CategoryDTO categoryDTO) {
+
 		return categoryDao.createAndGetId(categoryMapper.categoryDTOtoCategory(categoryDTO));
 	}
 

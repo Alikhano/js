@@ -23,7 +23,6 @@ import ru.alikhano.cyberlife.dto.RoleDTO;
 import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.model.User;
 import ru.alikhano.cyberlife.service.CartService;
-import ru.alikhano.cyberlife.service.ProductService;
 import ru.alikhano.cyberlife.service.RoleService;
 import ru.alikhano.cyberlife.service.UserService;
 
@@ -44,13 +43,10 @@ public class HomeController {
 	
 	@Autowired
 	private RoleService roleService;
-	
-	@Autowired
-	private ProductService productService;
-	
+
 	private static final String REGISTER = "register";  
 	
-	private static final Logger logger = LogManager.getLogger(HomeController.class);
+	private static final Logger LOGGER = LogManager.getLogger(HomeController.class);
 
 	/** 
 	 * display homepage, create persistent cookie to store individual cart ids
@@ -82,7 +78,7 @@ public class HomeController {
 				cartCookie.setMaxAge(expiryTime);
 				cartCookie.setPath(cookiePath);
 				response.addCookie(cartCookie);
-				logger.info("New persistent cookie and cart ID");
+				LOGGER.info("New persistent cookie and cart ID");
 			}
 			
 		}   
@@ -106,7 +102,6 @@ public class HomeController {
 		if (logout != null) {
 			model.addAttribute("message", "Logged out successfully.");
 		}
-		
 
 		return "login";
 	}
@@ -131,13 +126,13 @@ public class HomeController {
 			HttpServletRequest request) {
 
 		if (bindingResult.hasErrors()) {
-			logger.error("binding result errors");
+			LOGGER.error("binding result errors");
 			return REGISTER;
 		}
 		
 		if (userService.getByUsernameDTO(userForm.getUsername()) != null) {
 			model.addAttribute("repUsername", "Oops, this username is taken. Please try again");
-			logger.error("User tried to use a duplicate username");
+			LOGGER.error("User tried to use a duplicate username");
 			return REGISTER;
 		}
 		
@@ -146,13 +141,12 @@ public class HomeController {
 		roles.add(roleDTO);
 		userForm.setRoles(roles);
 		userForm.setEnabled(true);
-		
 
 		request.getSession().setAttribute("username", userForm.getUsername());
 		
 		userService.register(userForm);
 		
-		logger.info(userForm.getUsername() + " has registered");
+		LOGGER.info(userForm.getUsername() + " has registered");
 
 		return "redirect:/createProfile";
 	}

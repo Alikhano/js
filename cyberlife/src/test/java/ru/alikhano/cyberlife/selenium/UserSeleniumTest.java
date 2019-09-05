@@ -11,18 +11,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class UserSeleniumTest {
 
-	WebDriver driver;
+	private WebDriver driver;
 
 	@Before
 	public void init() {
 		System.setProperty("webdriver.chrome.driver", "C:/Users/alikhano/chromedriver_win32/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().fullscreen();
-		driver.get("http://localhost:8080/cyberlife/login");
+		driver.get("http://localhost:9999/cyberlife/login");
 	}
 
 	@Test
-	public void userPurchaseTest() throws InterruptedException {
+	public void userPurchaseTest() {
 		WebDriverWait driverWait = new WebDriverWait(driver,1000);
 
 		// login
@@ -86,7 +86,7 @@ public class UserSeleniumTest {
 	}
 
 	@Test
-	public void editAccountTest() throws InterruptedException {
+	public void editAccountTest() {
 
 		WebDriverWait driverWait = new WebDriverWait(driver, 1000);
 

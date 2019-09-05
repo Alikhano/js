@@ -38,7 +38,7 @@ public class SearchController {
 	@Autowired
 	private ProductService productService;
 	
-	private static final Logger logger = LogManager.getLogger(SearchController.class);
+	private static final Logger LOGGER = LogManager.getLogger(SearchController.class);
 	
 	 /** 
 	  * displays search page
@@ -63,15 +63,14 @@ public class SearchController {
 	@PostMapping(value="/searchProduct", produces="application/json")
 	 public ResponseEntity<?> getSearchedProducts(@RequestBody SearchRequest searchRequest) throws CustomLogicException {
 		 
-		 logger.info(searchRequest.toString());
-		 
-		
+		 LOGGER.info(searchRequest.toString());
+
 		 if (searchRequest.getFromPrice() < 0 || searchRequest.getToPrice() < 0) {
-			 logger.error("User have tried to search by negative price range");
+			 LOGGER.error("User have tried to search by negative price range");
 			 return ResponseEntity.badRequest().body("Price range cannot be negative!");
 		 }
 		 
-		 logger.info("Search request has produced some results");
+		 LOGGER.info("Search request has produced some results");
 		 
 		 List<ProductInfo> searchResult = productService.searchParam(searchRequest);
 		 

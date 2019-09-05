@@ -12,25 +12,25 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AdminSeleniumTest {
 
-	WebDriver driver;
+	private WebDriver driver;
 
 	@Before
 	public void init() {
 		System.setProperty("webdriver.chrome.driver", "C:/Users/alikhano/chromedriver_win32/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().fullscreen();
-		driver.get("http://localhost:8080/cyberlife/login");
+		driver.get("http://localhost:9999/cyberlife/login");
 	}
 
 	@Test
-	public void adminTest() throws InterruptedException {
+	public void adminTest() {
 		WebDriverWait driverWait = new WebDriverWait(driver, 1500);
 
 		// login
 
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("username"))).sendKeys("admin");
 
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("password"))).sendKeys("admin");
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("password"))).sendKeys("1234");
 
 		driverWait.until(
 				ExpectedConditions.presenceOfElementLocated(By.xpath("//html/body/div/form/div[4]/div[2]/button")))

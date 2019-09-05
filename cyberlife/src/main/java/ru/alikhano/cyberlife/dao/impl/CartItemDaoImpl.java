@@ -13,7 +13,7 @@ import ru.alikhano.cyberlife.model.CartItem;
 public class CartItemDaoImpl extends GenericDaoImpl<CartItem> implements CartItemDao {
 	
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Override
 	public void merge(CartItem cartItem) {

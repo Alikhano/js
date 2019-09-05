@@ -22,8 +22,7 @@ import ru.alikhano.cyberlife.model.Product;
 public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDao {
 
 	@Autowired
-	SessionFactory sessionFactory;
-
+	private SessionFactory sessionFactory;
 
 	@Override
 	public Product getByModel(String model) {
@@ -56,7 +55,6 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 		if (fromPrice != 0 && toPrice != 0) {
 			predicates.add(searchCriteriaBuilder.between(root.get("price"), fromPrice, toPrice));
 		}
-		
 
 		searchCriteria.select(root).where(predicates.toArray(new Predicate[] {}));
 
@@ -68,13 +66,13 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 		
 		List<Product> topProducts = new ArrayList<>();
 
-		String hql = "select item.product, count(*) as purchaseCount  from OrderItem item where item.order.paymentStatus =: paymentStatus " + "GROUP BY item.product ORDER BY purchaseCount desc";
+		String hql = "select item.product, count(*) as purchaseCount  from OrderItem item where item.order.paymentStatus" +
+				" =: paymentStatus " + "GROUP BY item.product ORDER BY purchaseCount desc";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameter("paymentStatus", "paid");
 		query.setMaxResults(10);
-		List<Object[]> resultList = query.list();
 		
-		for (Object o : resultList) {
+		for (Object o : query.list()) {
 			Object[] row = (Object[]) o;
 			Product product = (Product) row[0];
 			topProducts.add(product);

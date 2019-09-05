@@ -19,7 +19,5 @@ public class ProductJsonSenderImpl implements ProductJsonSender {
 	public List<ProductJson> sendProductJson() {
 		
 		return productJsonService.getTopProducts();
-		
 	}
-
 }

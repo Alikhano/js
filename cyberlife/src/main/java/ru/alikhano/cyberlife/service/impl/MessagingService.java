@@ -19,17 +19,14 @@ public class MessagingService {
 	private static final String QUEUENAME = "productsTopQueue";
 	
 	public void sendUpdateMessage(String updateMessage) throws IOException, TimeoutException {
-		
 		ConnectionFactory connectionFactory = new ConnectionFactory();
-		connectionFactory.setHost("localhost");
-		Connection connection = connectionFactory.newConnection();
-		Channel channel = connection.createChannel();
-		channel.queueDeclare(QUEUENAME, false, false, false, null);
-		channel.basicPublish("", QUEUENAME, null, updateMessage.getBytes());
-		logger.info(" [x] Sent '" + updateMessage + "'");
-		
-		channel.close();
-		connection.close();
+		try (Connection connection = connectionFactory.newConnection();
+			 Channel channel = connection.createChannel()) {
+			connectionFactory.setHost("localhost");
+			channel.queueDeclare(QUEUENAME, false, false, false, null);
+			channel.basicPublish("", QUEUENAME, null, updateMessage.getBytes());
+			logger.info(" [x] Sent '" + updateMessage + "'");
+		}
 	}
 
 }

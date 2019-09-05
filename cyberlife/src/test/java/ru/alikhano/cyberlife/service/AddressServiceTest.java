@@ -24,18 +24,18 @@ import ru.alikhano.cyberlife.service.impl.AddressServiceImpl;
 public class AddressServiceTest {
 	
 	@Mock
-	AddressDao addressDao;
+	private AddressDao addressDao;
 	
 	@InjectMocks
-	AddressServiceImpl addressService;
+	private AddressServiceImpl addressService;
 	
 	@Mock
-	AddressMapper addressMapper;
+	private AddressMapper addressMapper;
 	
-	Address addressMock;
-	AddressDTO addressDTOMock;
-	List<Address> addresses;
-	List<AddressDTO> addressesDTO;
+	private Address addressMock;
+	private AddressDTO addressDTOMock;
+	private List<Address> addresses;
+	private List<AddressDTO> addressesDTO;
 	
 	@Before
 	public void init() {

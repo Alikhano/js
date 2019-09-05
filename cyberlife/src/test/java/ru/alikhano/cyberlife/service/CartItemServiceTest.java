@@ -32,25 +32,22 @@ import ru.alikhano.cyberlife.service.impl.CartItemServiceImpl;
 public class CartItemServiceTest {
 
 	@Mock
-	CartItemDao cartItemDaoMock;
+	private CartItemDao cartItemDaoMock;
 
 	@Mock
-	CartItemMapper cartItemMapper;
-
-	@Mock
-	CartService cartServiceMock;
+	private CartItemMapper cartItemMapper;
 
 	@InjectMocks
-	CartItemServiceImpl cartItemServiceMock;
+	private CartItemServiceImpl cartItemServiceMock;
 
-	CartItem cartItemMock;
-	Set<CartItem> itemsMock;
-	List<CartItem> itemsMockList;
-	Set<CartItemDTO> itemsDTOMock;
-	Cart cartMock;
-	CartDTO cartDTOMock;
-	ProductDTO productDTOMock;
-	CartItemDTO itemDTO;
+	private CartItem cartItemMock;
+	private Set<CartItem> itemsMock;
+	private List<CartItem> itemsMockList;
+	private Set<CartItemDTO> itemsDTOMock;
+	private Cart cartMock;
+	private CartDTO cartDTOMock;
+	private ProductDTO productDTOMock;
+	private CartItemDTO itemDTO;
 
 	@Before
 	public void init() {
@@ -69,21 +66,14 @@ public class CartItemServiceTest {
 		itemsMock.add(cartItemMock);
 		itemsMockList.add(cartItemMock);
 		itemsDTOMock.add(itemDTO);
-		
+
 		productDTOMock = Mockito.mock(ProductDTO.class);
 		Mockito.when(cartItemDaoMock.getById(1)).thenReturn(cartItemMock);
-		// Mockito.when(cartItemDaoMock.getAll()).thenReturn(itemsMockList);
 		Mockito.when(cartItemMapper.cartItemToCartItemDTO(cartItemMock)).thenReturn(itemDTO);
 		Mockito.when(cartItemMapper.cartDTOtoCartItem(itemDTO)).thenReturn(cartItemMock);
-		//Mockito.doNothing().when(cartItemDaoMock).create(cartItemMock);
 		Mockito.doNothing().when(cartItemDaoMock).update(cartItemMock);
 		Mockito.doNothing().when(cartItemDaoMock).delete(cartItemMock);
 		Mockito.doReturn(itemsDTOMock).when(cartDTOMock).getItems();
-		//Mockito.doReturn(1).when(productDTOMock).getProductId();
-		//Mockito.doReturn(productDTOMock).when(itemDTO).getProduct();
-		//Mockito.doReturn(1).when(itemDTO).getItemId();
-
-	
 	}
 
 	@Test
@@ -125,13 +115,16 @@ public class CartItemServiceTest {
 
 		Mockito.verify(cartItemDaoMock).delete(cartItemMock);
 	}
-	
-/*	
-	@Test
-	public void checkCard() {
-		int id = cartItemServiceMock.checkCart(cartDTOMock, productDTOMock);
-		assertEquals(1, id);
-		
-	}*/
 
+	@Test
+	public void getCartItemById() {
+		CartItemDTO cartItem = cartItemServiceMock.getCartItemById(cartDTOMock, 1);
+		assertEquals(1,cartItem.getItemId());
+	}
+
+	@Test
+	public void getCartItemByIdFail() {
+		CartItemDTO cartItem = cartItemServiceMock.getCartItemById(cartDTOMock, 2);
+		assertNull(cartItem);
+	}
 }

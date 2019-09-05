@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.dto.CustomLogicException;
 import ru.alikhano.cyberlife.dto.CustomerDTO;
 import ru.alikhano.cyberlife.dao.CustomerDao;
 import ru.alikhano.cyberlife.mapper.CustomerMapper;
@@ -30,8 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public List<CustomerDTO> getAll() {
 		List<CustomerDTO> customersDTO = new ArrayList<>();
-		List<Customer> customers = customerDao.getAll();
-		for (Customer customer : customers) {
+		for (Customer customer : customerDao.getAll()) {
 			CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
 			customersDTO.add(customerDTO);
 		}
@@ -44,6 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public CustomerDTO getById(int id) {
+
 		return customerMapper.customerToCustomerDTO(customerDao.getById(id));
 	}
 
@@ -53,6 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void create(CustomerDTO customerDTO) {
+
 		customerDao.create(customerMapper.customerDTOtoCustomer(customerDTO));
 
 	}
@@ -62,7 +62,8 @@ public class CustomerServiceImpl implements CustomerService {
 	 */
 	@Override
 	@Transactional
-	public void update(CustomerDTO customerDTO) throws CustomLogicException {
+	public void update(CustomerDTO customerDTO){
+
 		Customer customer = customerDao.getById(customerDTO.getCustomerId());
 		customer.setFirstName(customerDTO.getFirstName());
 		customer.setLastName(customerDTO.getLastName());
@@ -78,6 +79,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void delete(CustomerDTO customerDTO) {
+
 		customerDao.delete(customerMapper.customerDTOtoCustomer(customerDTO));
 	}
 
@@ -87,6 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public CustomerDTO getByUserId(int userId) {
+
 		return customerMapper.customerToCustomerDTO(customerDao.getByUserId(userId));
 	}
 
@@ -96,10 +99,10 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public List<CustomerDTO> getTopCustomers() {
-		List<Customer> customerList = customerDao.getTopCustomers();
+
 		List<CustomerDTO> dtoList = new ArrayList<>();
 
-		for (Customer customer : customerList) {
+		for (Customer customer : customerDao.getTopCustomers()) {
 			CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
 			dtoList.add(customerDTO);
 		}
@@ -113,6 +116,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional 
 	public CustomerDTO getByEmail(String email) {
+
 		return customerMapper.customerToCustomerDTO(customerDao.getByEmail(email));
 	}
 }

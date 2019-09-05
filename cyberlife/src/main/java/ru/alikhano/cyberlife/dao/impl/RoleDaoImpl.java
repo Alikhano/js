@@ -11,12 +11,12 @@ import ru.alikhano.cyberlife.model.Role;
 public class RoleDaoImpl implements RoleDao {
 	
 	@Autowired
-	SessionFactory sessionFactory;
-
+	private SessionFactory sessionFactory;
 
 	@Override
 	public Role getRole() {
-		return (Role) sessionFactory.getCurrentSession().createQuery("from Role where type = :type").setParameter("type", "ROLE_USER").uniqueResult();
+		return (Role) sessionFactory.getCurrentSession().createQuery("from Role where type = :type")
+				.setParameter("type", "ROLE_USER").uniqueResult();
 	}
 
 }

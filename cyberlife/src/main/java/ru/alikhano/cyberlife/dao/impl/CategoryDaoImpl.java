@@ -16,14 +16,14 @@ import ru.alikhano.cyberlife.model.Category;
 public class CategoryDaoImpl extends GenericDaoImpl<Category> implements CategoryDao {
 	
 	@Autowired
-	SessionFactory sessionFactory;
-	
-	
+	private SessionFactory sessionFactory;
+
 	@Override
 	public Category getByType(String catType) {
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			return (Category) session.createQuery("from Category where lower(catType) like :catType").setParameter("catType", "%"+catType.toLowerCase()+"%").getSingleResult();
+			return (Category) session.createQuery("from Category where lower(catType) like :catType")
+					.setParameter("catType", "%"+catType.toLowerCase()+"%").getSingleResult();
 		    
 		}
 		catch (NoResultException noResultExc) {
@@ -31,12 +31,10 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category> implements Categor
 		}
 	}
 
-	
 	@Override
 	public int createAndGetId(Category category)  {
+
 		return (Integer) sessionFactory.getCurrentSession().save(category);
 	}
-
-	
 
 }

@@ -25,6 +25,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	@Transactional
 	public Role getRole() {
+
 		return roleDao.getRole();
 	}
 
@@ -34,6 +35,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	@Transactional
 	public RoleDTO getRoleDTO() {
+
 		return roleMapper.roleToRoleDTO(roleDao.getRole());
 	}
 

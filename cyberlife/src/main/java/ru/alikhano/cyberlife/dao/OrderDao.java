@@ -35,8 +35,7 @@ public interface OrderDao extends GenericDao<Orders> {
 	 * @return number of month, amount of monthly revenue in a hashmap
 	 */
 	Map<Integer, Double> getMonthlyRevenue();
-	
-	
+
 	/** 
 	 * calculates weekly revenue
 	 * @return amount of weekly revenue
@@ -48,6 +47,5 @@ public interface OrderDao extends GenericDao<Orders> {
 	 * @param order instance of order to be updated
 	 */
 	void merge(Orders order);
-	
 
 }

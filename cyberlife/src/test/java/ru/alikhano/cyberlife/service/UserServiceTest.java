@@ -2,6 +2,7 @@ package ru.alikhano.cyberlife.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import ru.alikhano.cyberlife.dto.RoleDTO;
 import ru.alikhano.cyberlife.dto.UserDTO;
@@ -28,24 +28,18 @@ import ru.alikhano.cyberlife.service.impl.UserServiceImpl;
 public class UserServiceTest {
 	
 	@Mock
-	UserDao userDaoMock;
+	private UserDao userDaoMock;
 	
 	@Mock
-	UserMapper userMapperMock;
-	
-	@Mock
-	BCryptPasswordEncoder encoder;
-	
-	@Mock
-	RoleService roleService;
+	private UserMapper userMapperMock;
 	
 	@InjectMocks
-    UserServiceImpl userServiceMock;
-	
-	User userMock;
-	UserDTO userDTOMock;
-	List<User> users;
-	List<UserDTO> usersDTO;
+	private  UserServiceImpl userServiceMock;
+
+	private User userMock;
+	private UserDTO userDTOMock;
+	private List<User> users;
+	private List<UserDTO> usersDTO;
 	
 	@Before
 	public void init() {
@@ -138,7 +132,7 @@ public class UserServiceTest {
 	@Test
 	public void verifyPassword() {
 		boolean pswdCheck = userServiceMock.verifyPassword("1234", 1);
-		assertEquals(true, pswdCheck);
+		assertTrue(pswdCheck);
 		
 	}
 

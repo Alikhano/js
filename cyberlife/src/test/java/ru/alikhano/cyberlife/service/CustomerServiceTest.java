@@ -26,18 +26,18 @@ import ru.alikhano.cyberlife.service.impl.CustomerServiceImpl;
 public class CustomerServiceTest {
 	
 	@Mock
-	CustomerDao customerDao;
+	private CustomerDao customerDao;
 	
-	@Mock 
-	CustomerMapper customerMapper;
+	@Mock
+	private CustomerMapper customerMapper;
 	
 	@InjectMocks
-	CustomerServiceImpl customerService;
-	
-	Customer customerMock;
-	CustomerDTO customerDTOMock;
-	List<Customer> customers;
-	List<CustomerDTO> customersDTO;
+	private CustomerServiceImpl customerService;
+
+	private Customer customerMock;
+	private CustomerDTO customerDTOMock;
+	private List<Customer> customers;
+	private List<CustomerDTO> customersDTO;
 	
 	@Before
 	public void init() {
@@ -79,7 +79,7 @@ public class CustomerServiceTest {
 	}
 	
 	@Test
-	public void update() throws CustomLogicException {
+	public void update() {
 		customerService.update(customerDTOMock);
 		Mockito.verify(customerDao).update(customerMock);
 		
@@ -137,6 +137,5 @@ public class CustomerServiceTest {
 		CustomerDTO customer = customerService.getByUserId(2);
 		assertNull(customer);
 	}
-	
 
 }

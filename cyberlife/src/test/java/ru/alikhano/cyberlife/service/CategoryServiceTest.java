@@ -23,18 +23,18 @@ import ru.alikhano.cyberlife.service.impl.CategoryServiceImpl;
 public class CategoryServiceTest {
 	
 	@Mock
-	CategoryDao categoryDao;
+	private CategoryDao categoryDao;
 	
 	@Mock
-	CategoryMapper categoryMapper;
+	private CategoryMapper categoryMapper;
 	
 	@InjectMocks
-	CategoryServiceImpl categoryService;
-	
-	Category categoryMock;
-	CategoryDTO categoryDTOMock;
-	List<Category> categories;
-	List<CategoryDTO> categoriesDTO;
+	private CategoryServiceImpl categoryService;
+
+	private Category categoryMock;
+	private CategoryDTO categoryDTOMock;
+	private List<Category> categories;
+	private List<CategoryDTO> categoriesDTO;
 	
 	@Before
 	public void init() {

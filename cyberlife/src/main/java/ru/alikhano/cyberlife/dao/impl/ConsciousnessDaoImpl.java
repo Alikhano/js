@@ -15,14 +15,14 @@ import ru.alikhano.cyberlife.model.Consciousness;
 public class ConsciousnessDaoImpl extends GenericDaoImpl<Consciousness> implements ConsciousnessDao {
 	
 	@Autowired
-	SessionFactory sessionFactory;
-	
-	
+	private SessionFactory sessionFactory;
+
 	@Override
 	public Consciousness getConsByLevel(String level) {
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			return (Consciousness) session.createQuery("from Consciousness where lower(level) like :level").setParameter("level", "%"+level.toLowerCase()+"%").getSingleResult();
+			return (Consciousness) session.createQuery("from Consciousness where lower(level) like :level")
+					.setParameter("level", "%"+level.toLowerCase()+"%").getSingleResult();
 		    
 		}
 		catch (NoResultException noResultExc) {

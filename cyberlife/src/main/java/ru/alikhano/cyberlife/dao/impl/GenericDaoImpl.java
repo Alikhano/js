@@ -15,18 +15,16 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 	private Class<T> entityClass;
 	
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 	
 	@SuppressWarnings("unchecked")
 	public GenericDaoImpl() {
-	
 		this.entityClass = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), GenericDao.class);
 	}
 
 	@Override
 	public void create(T entity) {
 		sessionFactory.getCurrentSession().save(entity);
-		
 	}
 
 	@Override
@@ -37,13 +35,11 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 	@Override
 	public void update(T entity) {
 		sessionFactory.getCurrentSession().update(entity);
-		
 	}
 
 	@Override
 	public void delete(T entity) {
 		sessionFactory.getCurrentSession().delete(entity);
-		
 	}
 
 	@SuppressWarnings("unchecked")

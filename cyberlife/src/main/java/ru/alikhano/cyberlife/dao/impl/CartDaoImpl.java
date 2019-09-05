@@ -12,20 +12,16 @@ import ru.alikhano.cyberlife.model.Cart;
 public class CartDaoImpl extends GenericDaoImpl<Cart> implements CartDao {
 	
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
-	
 	@Override
 	public int createAndGetId(Cart cart) {
 		return (Integer) sessionFactory.getCurrentSession().save(cart);
 	}
 
-	
 	@Override
 	public void merge(Cart cart) {
 		 Cart cartToSave = (Cart) sessionFactory.getCurrentSession().merge(cart);
 		  sessionFactory.getCurrentSession().save(cartToSave);
-		
 	}
-
 }

@@ -1,8 +1,7 @@
 package ru.alikhano.cyberlife.dto;
 
 public class CustomLogicException extends Exception{
-	
-	
+
 	private static final long serialVersionUID = 1L;
 	
 	private String message;
@@ -20,6 +19,4 @@ public class CustomLogicException extends Exception{
 	public void setErrMessage(String message) {
 		this.message = message;
 	}
-
-	
 }

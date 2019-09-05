@@ -18,8 +18,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="orderItem")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItem {
@@ -68,5 +66,45 @@ public class OrderItem {
 		if (orderItemId != other.orderItemId)
 			return false;
 		return true;
+	}
+
+	public int getOrderItemId() {
+		return orderItemId;
+	}
+
+	public void setOrderItemId(int orderItemId) {
+		this.orderItemId = orderItemId;
+	}
+
+	public int getOrderQuantity() {
+		return orderQuantity;
+	}
+
+	public void setOrderQuantity(int orderQuantity) {
+		this.orderQuantity = orderQuantity;
+	}
+
+	public double getOrderTotal() {
+		return orderTotal;
+	}
+
+	public void setOrderTotal(double orderTotal) {
+		this.orderTotal = orderTotal;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Orders getOrder() {
+		return order;
+	}
+
+	public void setOrder(Orders order) {
+		this.order = order;
 	}
 }

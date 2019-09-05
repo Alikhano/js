@@ -5,7 +5,7 @@ import ru.alikhano.cyberlife.dto.OrderItemDTO;
 
 public class CartOrderMapper {
 	
-	public OrderItemDTO mapCartItemstoOrder(CartItemDTO cartItem) {
+	public OrderItemDTO mapCartItemsToOrder(CartItemDTO cartItem) {
 		OrderItemDTO item = new OrderItemDTO();
 		item.setOrderQuantity(cartItem.getQuantity());
 		item.setOrderTotal(cartItem.getTotalPrice());
@@ -15,3 +15,4 @@ public class CartOrderMapper {
 	}
 
 }
+

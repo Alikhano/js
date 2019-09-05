@@ -78,7 +78,8 @@ public interface OrderService {
 	 * @throws IOException
 	 * @throws TimeoutException
 	 */
-	String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException, IOException, TimeoutException;
+	String cartToOrder(OrderDTO orderDTO, CartDTO cartDTO, String username) throws CustomLogicException,
+			IOException, TimeoutException;
 	
 	/**
 	 * @param order

@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,10 +36,10 @@ import ru.alikhano.cyberlife.service.UserService;
 @Controller
 public class CustomerController {
 	
-	private static final Logger logger = LogManager.getLogger(CustomerController.class);
+	private static final Logger LOGGER   = LogManager.getLogger(CustomerController.class);
 	private static final String CUSTOMER = "customer";
-	private static final String UPDATE= "updateAccount";
-	private static final String ERROR = "error";
+	private static final String UPDATE   = "updateAccount";
+	private static final String ERROR    = "error";
 	
 	@Autowired
 	private UserService userService;
@@ -51,13 +50,11 @@ public class CustomerController {
 	@Autowired
 	private AddressService addressService;
 	
-	@Autowired
-	private BCryptPasswordEncoder encoder;
-	
 	private static final String REDIRECT = "redirect:/myAccount";  
 	
 	
-	/** controller to access customer's profile
+	/**
+	 * controller to access customer's profile
 	 * @param model
 	 * @param authentication to retrieve customer's username
 	 * @return jsp file name
@@ -72,7 +69,8 @@ public class CustomerController {
 		return "customerAccount";
 	}
 	
-	/** controller to show an empty customer's profile if profile generation step failed during the registration
+	/**
+	 * controller to show an empty customer's profile if profile generation step failed during the registration
 	 * @param model
 	 * @param authentication to retrieve customer's username
 	 * @return jsp file name
@@ -84,7 +82,7 @@ public class CustomerController {
 		CustomerDTO customer = customerService.getByUserId(user.getUserId());
 
 		if (customer == null) {
-			logger.error("Customer profile has not been created before");
+			LOGGER.error("Customer profile has not been created before");
 			customer = new CustomerDTO();
 			customer.setUser(user);
 			customerService.create(customer);
@@ -97,7 +95,8 @@ public class CustomerController {
 	}
 	
 	
-	/** controller to show a page where customer can update his personal info
+	/**
+	 * controller to show a page where customer can update his personal info
 	 * @param customerId to retrieve customer from database
 	 * @param model
 	 * @param authentication to retrieve customer's username
@@ -111,7 +110,7 @@ public class CustomerController {
 		CustomerDTO customer = customerService.getByUserId(user.getUserId());
 		
 		if (customerDTO == null) {
-			logger.error("Customer profile has not been created before");
+			LOGGER.error("Customer profile has not been created before");
 			customer = new CustomerDTO();
 			customer.setUser(user);
 			customerService.create(customerDTO);
@@ -121,7 +120,7 @@ public class CustomerController {
 		}
 		
 		if (customer.getCustomerId() != customerId) {
-			logger.error("Oops. You should not try to access someone else's profile!");
+			LOGGER.error("Oops. You should not try to access someone else's profile!");
 			model.addAttribute(CUSTOMER, customer);
 			model.addAttribute(ERROR,"You cannot access someone else's profile");
 			return UPDATE;
@@ -149,16 +148,17 @@ public class CustomerController {
 		
 		try {
 			customerService.update(customerDTO);
-			logger.info(customerDTO.getLastName() + " has updated his/her account");
+			LOGGER.info(customerDTO.getLastName() + " has updated his/her account");
 		}
 		catch (DataIntegrityViolationException ex) {
-			model.addAttribute(ERROR,"Your have used the email address which is already taken on this website. Please try again.");
-			logger.error("Your have used the email address which is already taken on this website. Please try again.");
+			model.addAttribute(ERROR,
+							   "Your have used the email address which is already taken on this website. Please try again.");
+			LOGGER.error("Your have used the email address which is already taken on this website. Please try again.");
 			return UPDATE;
 		}
 		catch (ConstraintViolationException ex) {
 			model.addAttribute(ERROR,"Please check your input, some fields are filled in incorrectly");
-			logger.error("Errors in user input");
+			LOGGER.error("Errors in user input");
 			return UPDATE;
 		}
 		
@@ -198,11 +198,12 @@ public class CustomerController {
 		
 		try {
 			addressService.update(addressDTO);
-			logger.info(authentication.getName() + " has updated his/her account");
+			LOGGER.info(authentication.getName() + " has updated his/her account");
 		}
 		catch (ConstraintViolationException ex) {
-			model.addAttribute(ERROR,"Your have mistyped values for some of the fields. Please verify provided information (no negative values, correct zip code format)");
-			logger.error(ex.getMessage() + "WRONG values");
+			model.addAttribute(ERROR,
+							   "Your have mistyped values for some of the fields. Please verify provided information (no negative values, correct zip code format)");
+			LOGGER.error(ex.getMessage() + "WRONG values");
 			return "changeAddress";
 		}
 
@@ -236,11 +237,11 @@ public class CustomerController {
 		UserDTO user = userService.getByUsernameDTO(username);
 		if (!userService.verifyPassword(oldPassword, user.getUserId())) {
 			model.addAttribute("mismatchMsg", "Oops, entered password does not match the stored value");
-			logger.error("Oops, entered password does not match the stored value");
+			LOGGER.error("Oops, entered password does not match the stored value");
 			return "changePassword";
 		}
 		userService.changePassword(newPassword, user);
-		logger.info(username + "has changed his/her password");
+		LOGGER.info(username + "has changed his/her password");
 		return REDIRECT;
 	}
 

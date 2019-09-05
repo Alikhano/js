@@ -19,18 +19,18 @@ import ru.alikhano.cyberlife.service.ProductJsonSender;
  */
 @RestController
 public class ProductJsonSenderController {
+
+	private static final Logger LOGGER = LogManager.getLogger(ProductJsonSenderController.class);
 	
 	@Autowired
 	private ProductJsonSender productJsonSender;
-	
-	private static final Logger logger = LogManager.getLogger(ProductJsonSenderController.class);
 	
 	/**
 	 * @return a list of top 10 products as JSON
 	 */
 	@GetMapping(value="/topProducts")
 	public List<ProductJson> sendTopProductsGet() {
-		logger.info("sent to 10 products to cyberdisplay");
+		LOGGER.info("sent to 10 products to cyberdisplay");
 		return productJsonSender.sendProductJson();
 	}
 

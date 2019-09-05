@@ -115,7 +115,7 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderDTO> getByCustomerId(int id) {
 		List<Orders> orders = orderDao.getOrdersByCustomerId(id);
 		List<OrderDTO> ordersDTO = new ArrayList<>();
-		orders.stream().forEach(order -> {
+		orders.forEach(order -> {
 			OrderDTO orderDTO = orderMapper.orderToOrderDTO(order);
 			ordersDTO.add(orderDTO);
 		});
@@ -164,68 +164,10 @@ public class OrderServiceImpl implements OrderService {
 			throw new CustomLogicException("Your customer profile must miss some information. " +
 												   "Please go back to your profile and complete it.");
 		}
-		// assign customer to order
-		orderDTO.setCustomer(customerDTO);
 
-		//set price to order, erase price from cart
-		orderDTO.setOrderPrice(cartDTO.getGrandTotal());
-		cartDTO.setGrandTotal(0);
-
-		//add date to order
-		orderDTO.setOrderDate(new Date());
+		OrderDTO initiatedOrder = initiateOrder(orderDTO, customerDTO, cartDTO);
 		
-     	//update order status
-		
-		if (orderDTO.getPaymentType().equals("credit card")) {
-			orderDTO.setPaymentStatus("paid");
-		}
-		else {
-			orderDTO.setPaymentStatus("unpaid");	
-		}
-			
-		orderDTO.setOrderStatus("awaits delivery");
-		
-		//set ordered items, erase cart items
-		Set<CartItemDTO> items = cartDTO.getItems();
-		
-		int orderId = createAndGetId(orderDTO);
-
-		for (CartItemDTO cartItem : items) {
-			//decrease units in stock for product, update product
-			ProductDTO productDTO = productService.selectForUpdate(cartItem.getProduct().getProductId());
-			int prevQuantity = productDTO.getUnitsInStock();
-			if (prevQuantity == 0) {
-				
-			throw new CustomLogicException("You tried to submit order while one of the items is out of stock. " +
-												   "Please delete item from cart and proceed to order");
-			}
-			else if (prevQuantity < cartItem.getQuantity()) {
-				throw new CustomLogicException("You tried to submit order while one of the items has less items in stock than you need. " +
-								"Please delete item from cart and proceed to order");
-			}
-			else {
-				productDTO.setUnitsInStock(prevQuantity - cartItem.getQuantity());
-				productService.merge(productDTO);
-							
-			}
-			
-			//cartItem into orderItem
-			OrderItemDTO item = new OrderItemDTO();
-			item.setOrderQuantity(cartItem.getQuantity());
-			item.setOrderTotal(cartItem.getTotalPrice());
-			item.setProduct(cartItem.getProduct());
-			getById(orderId).addItem(item);
-			orderItemService.create(item);
-			
-		}
-		
-		cartItemService.deleteAll(cartDTO);
-		items.clear();
-	
-		cartDTO.setItems(items);
-		
-		//update cart, create order
-		cartService.update(cartDTO);
+		moveItemsFromCartToOrder(initiatedOrder, cartDTO);
 		
 		return "success";
 	}
@@ -240,8 +182,8 @@ public class OrderServiceImpl implements OrderService {
 		List<ProductDTO> top = productService.getTopProducts();
 		for (OrderItemDTO orderItem : orderItems) {
 			ProductDTO productDTO = orderItem.getProduct();	
-			for (ProductDTO product : top) {
-				if (product.getProductId() == productDTO.getProductId()) {
+			for (ProductDTO productFromTop : top) {
+				if (productFromTop.getProductId() == productDTO.getProductId()) {
 					return true;
 				}
 			}
@@ -256,8 +198,7 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional
 	public String changeOrderStatus(int orderId, String orderStatus, String paymentStatus) {
 		Orders order = orderDao.getById(orderId);
-		
-		
+
 		if (order.getOrderStatus().equals("delivered and recieved") && order.getPaymentStatus().equals("paid")) {
 			return "No status updates after order completion!";
 		}
@@ -277,4 +218,70 @@ public class OrderServiceImpl implements OrderService {
 		return "success";
 	}
 
+	private OrderDTO initiateOrder(OrderDTO orderDTO, CustomerDTO customerDTO, CartDTO cartDTO) {
+		// assign customer to order
+		orderDTO.setCustomer(customerDTO);
+
+		//set price to order, erase price from cart
+		orderDTO.setOrderPrice(cartDTO.getGrandTotal());
+		cartDTO.setGrandTotal(0);
+
+		//add date to order
+		orderDTO.setOrderDate(new Date());
+
+		//update order status
+
+		if (orderDTO.getPaymentType().equals("credit card")) {
+			orderDTO.setPaymentStatus("paid");
+		}
+		else {
+			orderDTO.setPaymentStatus("unpaid");
+		}
+
+		orderDTO.setOrderStatus("awaits delivery");
+
+		return orderDTO;
+	}
+
+	private void moveItemsFromCartToOrder(OrderDTO orderDTO, CartDTO cartDTO)
+			throws CustomLogicException, IOException, TimeoutException {
+
+		Set<CartItemDTO> items = cartDTO.getItems();
+
+		for (CartItemDTO cartItem : items) {
+			//decrease units in stock for product, update product
+			ProductDTO productDTO = productService.selectForUpdate(cartItem.getProduct().getProductId());
+			int prevQuantity = productDTO.getUnitsInStock();
+			if (prevQuantity == 0) {
+
+				throw new CustomLogicException("You tried to submit order while one of the items is out of stock. " +
+													   "Please delete item from cart and proceed to order");
+			}
+			else if (prevQuantity < cartItem.getQuantity()) {
+				throw new CustomLogicException("You tried to submit order while one of the items has less items in " +
+													   "stock than you need. Please delete item from cart and proceed to order");
+			}
+			else {
+				productDTO.setUnitsInStock(prevQuantity - cartItem.getQuantity());
+				productService.merge(productDTO);
+			}
+			createCartItemFromOrderItem(cartItem, orderDTO);
+		}
+		cartItemService.deleteAll(cartDTO);
+		items.clear();
+
+		cartDTO.setItems(items);
+
+		//update cart, create order
+		cartService.update(cartDTO);
+	}
+
+	private void createCartItemFromOrderItem(CartItemDTO cartItemDTO, OrderDTO orderDTO) {
+		OrderItemDTO item = new OrderItemDTO();
+		item.setOrderQuantity(cartItemDTO.getQuantity());
+		item.setOrderTotal(cartItemDTO.getTotalPrice());
+		item.setProduct(cartItemDTO.getProduct());
+		orderDTO.addItem(item);
+		orderItemService.create(item);
+	}
 }

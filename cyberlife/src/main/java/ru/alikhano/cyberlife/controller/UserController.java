@@ -30,10 +30,11 @@ public class UserController {
 	
 	@Autowired
 	CustomerService customerService;
+
 	@Autowired
 	UserService userService;
 	
-	private static final Logger logger = LogManager.getLogger(UserController.class);
+	private static final Logger LOGGER = LogManager.getLogger(UserController.class);
 	
 	private static final String CREATE = "createProfile";
 	
@@ -56,10 +57,10 @@ public class UserController {
 	 * @param model
 	 * @param request http request received from client side
 	 * @return redirect to login page
-	 * @throws CustomLogicException
 	 */
 	@PostMapping(value="/createProfile")
-	public String createProfilePost(@ModelAttribute(name="customerForm") @Valid CustomerDTO customerForm, BindingResult result, Model model, HttpServletRequest request) {
+	public String createProfilePost(@ModelAttribute(name="customerForm") @Valid CustomerDTO customerForm,
+			BindingResult result, Model model, HttpServletRequest request) {
 		
 		if (customerService.getByEmail(customerForm.getEmail()) != null) {
 			model.addAttribute("repEmail", "Oops, this email is taken. Please try again");
@@ -70,15 +71,15 @@ public class UserController {
 			customerForm.setUser(userService.getByUsernameDTO((String)request.getSession().getAttribute("username")));
 			
 			customerService.create(customerForm);
-			logger.info("User has registered and created an account");
+			LOGGER.info("User has registered and created an account");
 		}
 		catch (ConstraintViolationException ex) {
-			model.addAttribute("error","Your have mistyped values for some of the fields. Please verify provided information");
-			logger.error(ex.getMessage() + "WRONG values while creating a personal account");
+			model.addAttribute("error","Your have mistyped values for some of the fields. " +
+					"Please verify provided information");
+			LOGGER.error(ex.getMessage() + "WRONG values while creating a personal account");
 			return CREATE;
 		}
-		
-			
+
 		return "redirect:/login";
 	}
 }

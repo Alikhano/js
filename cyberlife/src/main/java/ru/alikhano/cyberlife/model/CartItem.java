@@ -18,8 +18,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="cartItem")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItem {
@@ -69,5 +67,45 @@ public class CartItem {
 		if (itemId != other.itemId)
 			return false;
 		return true;
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
 }

@@ -43,44 +43,38 @@ import ru.alikhano.cyberlife.service.impl.ProductServiceImpl;
 public class ProductServiceTest {
 
 	@Mock
-	ProductDao productDaoMock;
+	private ProductDao productDaoMock;
 
 	@Mock
-	ProductMapper productMapper;
+	private ProductMapper productMapper;
 
 	@Mock
-	ProductInfoMapper productInfoMapper;
+	private ProductInfoMapper productInfoMapper;
 	
 	@Mock
-	CategoryService categoryService;
+	private CategoryService categoryService;
 	
 	@Mock
-	ConsciousnessService consService;
+	private ConsciousnessService consService;
 
 	@Mock
-	OrderService orderServiceMock;
-
-	@Mock
-	OrderMapper orderMapperMock;
-
-	@Mock
-	MessagingService messagingService;
+	private OrderService orderServiceMock;
 
 	@InjectMocks
-	ProductServiceImpl productService;
+	private ProductServiceImpl productService;
 
-	Product productMock;
-	ProductDTO productDTOMock;
-	List<Product> productsMock;
-	List<ProductDTO> productsDTOMock;
-	Orders orderMock;
-	OrderDTO orderDTOMock;
-	List<OrderDTO> orders;
-	OrderItem orderItemMock;
-	OrderItemDTO orderItemDTOMock;
-	Set<OrderItemDTO> items;
-	Category category;
-	Consciousness cons;
+	private Product productMock;
+	private ProductDTO productDTOMock;
+	private List<Product> productsMock;
+	private List<ProductDTO> productsDTOMock;
+	private Orders orderMock;
+	private OrderDTO orderDTOMock;
+	private List<OrderDTO> orders;
+	private OrderItem orderItemMock;
+	private OrderItemDTO orderItemDTOMock;
+	private Set<OrderItemDTO> items;
+	private Category category;
+	private Consciousness cons;
 
 	@Before
 	public void init() {

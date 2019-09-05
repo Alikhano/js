@@ -6,7 +6,8 @@ import org.mapstruct.ReportingPolicy;
 import ru.alikhano.cyberlife.dto.OrderDTO;
 import ru.alikhano.cyberlife.model.Orders;
 
-@Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.WARN, uses= {OrderItemMapper.class})
+@Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.WARN, uses= {OrderItemMapper.class,
+		AddressMapper.class, RoleMapper.class})
 public interface OrderMapper {
 	
 	OrderDTO orderToOrderDTO(Orders order);

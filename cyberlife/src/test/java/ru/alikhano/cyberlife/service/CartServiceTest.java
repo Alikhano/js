@@ -31,25 +31,22 @@ import ru.alikhano.cyberlife.service.impl.CartServiceImpl;
 public class CartServiceTest {
 	
 	@Mock
-	CartDao cartDaoMock;
+	private CartDao cartDaoMock;
 	
 	@Mock
-	CartMapper cartMapper;
-	
-	@Mock
-	CartService cartService;
-	
+	private CartMapper cartMapper;
+
 	@InjectMocks
-	CartServiceImpl cartServiceMock;
-	
-	Cart cartMock;
-	CartDTO cartDTOMock;
-	List<Cart> cartsMock;
-	List<CartDTO> cartsDTOMock;
-	CartItem item; 
-	CartItemDTO itemDTO;
-	Set<CartItem> items;
-	Set<CartItemDTO> itemsDTO;
+	private CartServiceImpl cartServiceMock;
+
+	private Cart cartMock;
+	private CartDTO cartDTOMock;
+	private List<Cart> cartsMock;
+	private List<CartDTO> cartsDTOMock;
+	private CartItem item;
+	private CartItemDTO itemDTO;
+	private Set<CartItem> items;
+	private Set<CartItemDTO> itemsDTO;
 	
 	@Before
 	public void init() {
@@ -118,18 +115,5 @@ public class CartServiceTest {
 		int id = cartServiceMock.createAndGetId(cartDTOMock);
 		assertEquals(1, id);
 	}
-	
-	@Test
-	public void getCartItemById() {
-		CartItemDTO cartItem = cartServiceMock.getCartItemById(cartDTOMock, 1);
-		assertEquals(1,cartItem.getItemId());
-	}
-	
-	@Test
-	public void getCartItemByIdFail() {
-		CartItemDTO cartItem = cartServiceMock.getCartItemById(cartDTOMock, 2);
-		assertNull(cartItem);
-	}
-	
 
 }

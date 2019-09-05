@@ -32,7 +32,7 @@ public class CartController {
 	@Autowired
 	private CartItemService cartItemService;
 	
-	private static final Logger logger = LogManager.getLogger(CartController.class);
+	private static final Logger LOGGER = LogManager.getLogger(CartController.class);
 	
 	/**
 	 * controller to show user's cart entries
@@ -72,7 +72,7 @@ public class CartController {
 		int cartId = Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue());
 	    cartItemService.deleteFromCart(itemId, cartId);
 				
-		logger.info("Item is removed from cart");
+		LOGGER.info("Item is removed from cart");
 
 		return "redirect:/myCart";
 	}

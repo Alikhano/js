@@ -26,13 +26,9 @@ import ru.alikhano.cyberlife.dto.CustomLogicException;
 import ru.alikhano.cyberlife.dto.CustomerDTO;
 import ru.alikhano.cyberlife.dto.OrderDTO;
 import ru.alikhano.cyberlife.dto.UserDTO;
-import ru.alikhano.cyberlife.service.AddressService;
-import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.CustomerService;
-import ru.alikhano.cyberlife.service.OrderItemService;
 import ru.alikhano.cyberlife.service.OrderService;
-import ru.alikhano.cyberlife.service.ProductService;
 import ru.alikhano.cyberlife.service.UserService;
 
 /**
@@ -51,24 +47,12 @@ public class OrderController {
 	private CustomerService customerService;
 
 	@Autowired
-	private AddressService addressService;
-
-	@Autowired
 	private CartService cartService;
-
-	@Autowired
-	private CartItemService cartItemService;
 
 	@Autowired
 	private OrderService orderService;
 
-	@Autowired
-	private OrderItemService orderItemService;
-
-	@Autowired
-	private ProductService productService;
-
-	private static final Logger logger = LogManager.getLogger(OrderController.class);
+	private static final Logger LOGGER = LogManager.getLogger(OrderController.class);
 
 	/** controller to view the order
 	 * @param model
@@ -118,7 +102,7 @@ public class OrderController {
 		}
 		catch (CustomLogicException ex) {
 			model.addAttribute("error", "Empty customer profile!");
-			logger.info(username + " failed to create new order");
+			LOGGER.info(username + " failed to create new order");
 			return "/myOrder";
 		}
 
@@ -129,7 +113,7 @@ public class OrderController {
 
 		if (!cartToOrder.equals("success")) {
 			model.addAttribute("error", cartToOrder);
-			logger.info(username + " failed to create new order");
+			LOGGER.info(username + " failed to create new order");
 			return "/myOrder";
 		}
 
@@ -186,12 +170,12 @@ public class OrderController {
 
 		String result = orderService.changeOrderStatus(orderId, orderStatus, paymentStatus);
 		
-		if (result != "success") {
-			logger.error("Modifications after order completion");
+		if ("success".equals(result)) {
+			LOGGER.error("Modifications after order completion");
 			return  ResponseEntity.badRequest().body("No update after order completion");
 		}
 
-		logger.info("Admin has updated the order");
+		LOGGER.info("Admin has updated the order");
 		
 		List<OrderDTO> orders = orderService.getAll();
 
@@ -208,7 +192,7 @@ public class OrderController {
 	@GetMapping(value = "/myOrder/cardPayment")
 	public String creditCardPayment(Authentication authentication, Model model,
 			HttpServletRequest request) {
-		model.addAttribute("total", (double) request.getSession().getAttribute("totalPrice"));
+		model.addAttribute("total", request.getSession().getAttribute("totalPrice"));
 		return "cardPayment";
 	}
 
@@ -221,7 +205,7 @@ public class OrderController {
 	 * @throws TimeoutException
 	 */
 	@PostMapping(value = "/myOrder/cardPayment")
-	public String creditCardPaymentPost(HttpServletRequest request, Model model) throws IOException, TimeoutException {
+	public String creditCardPaymentPost(HttpServletRequest request, Model model)  {
 	
 		return "redirect:/orderHistory";
 

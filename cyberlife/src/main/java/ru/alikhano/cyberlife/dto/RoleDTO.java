@@ -1,27 +1,17 @@
 package ru.alikhano.cyberlife.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.alikhano.cyberlife.model.Role;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class RoleDTO {
 	
 	private int roleId;
 	private String type;
-	public int getRoleId() {
-		return roleId;
-	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	
-	public RoleDTO() {
-		
-	}
 	
 	public RoleDTO(Role role) {
 		this.roleId=role.getRoleId();

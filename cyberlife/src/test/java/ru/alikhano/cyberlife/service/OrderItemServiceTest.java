@@ -31,26 +31,21 @@ import ru.alikhano.cyberlife.service.impl.OrderItemServiceImpl;
 public class OrderItemServiceTest {
 	
 	@Mock
-	OrderItemDao orderItemDaoMock;
+	private OrderItemDao orderItemDaoMock;
 	
 	@Mock
-	OrderItemMapper orderItemMapperMock;
-	
-	@Mock
-	OrderService orderServiceMock;
+	private OrderItemMapper orderItemMapperMock;
 	
 	@InjectMocks
-	OrderItemServiceImpl orderItemServiceMock;
-	
-	OrderItem orderItemMock;
-	OrderItemDTO orderItemDTOMock;
-	List<OrderItem> items;
-	Set<OrderItemDTO> itemsDTO;
-	Orders orderMock;
-	OrderDTO orderDTOMock;
-	Product productMock;
-	ProductDTO productDTOMock;
-	CustomerDTO customerMock;
+	private OrderItemServiceImpl orderItemServiceMock;
+
+	private OrderItem orderItemMock;
+	private OrderItemDTO orderItemDTOMock;
+	private List<OrderItem> items;
+	private Set<OrderItemDTO> itemsDTO;
+	private Orders orderMock;
+	private OrderDTO orderDTOMock;
+	private Product productMock;
 	
 	@Before
 	public void init() {
@@ -67,7 +62,6 @@ public class OrderItemServiceTest {
 		Mockito.doNothing().when(orderItemDaoMock).update(orderItemMock);
 		Mockito.doNothing().when(orderItemDaoMock).delete(orderItemMock);
 		Mockito.when(orderItemDaoMock.getById(1)).thenReturn(orderItemMock);
-		//Mockito.when(orderItemMapperMock.orderDTOtoOrder(orderDTOMock)).thenReturn(orderMock);
 		Mockito.when(orderItemMapperMock.orderItemDTOtoOrderItem(orderItemDTOMock)).thenReturn(orderItemMock);
 		Mockito.when(orderItemMapperMock.orderItemToOrderItemDTO(orderItemMock)).thenReturn(orderItemDTOMock);
 		Mockito.doReturn(itemsDTO).when(orderDTOMock).getOrderedItems();

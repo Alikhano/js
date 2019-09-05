@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDTO> getAll() {
 		List<Product> products = productDao.getAll();
 		List<ProductDTO> productsDTO = new ArrayList<>();
-		products.stream().forEach(product -> {
+		products.forEach(product -> {
 			ProductDTO productDTO = productMapper.productToProductDTO(product);
 			productsDTO.add(productDTO);
 		});
@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public ProductDTO getById(int id) throws CustomLogicException {
-		ProductDTO productDTO = productMapper.productToProductDTO((Product) (productDao.getById(id)));
+		ProductDTO productDTO = productMapper.productToProductDTO((productDao.getById(id)));
 		if (productDTO == null) {
 			throw new CustomLogicException("No product with such id");
 		}
@@ -144,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override
 	@Transactional
-	public ProductDTO getByModel(String model) throws CustomLogicException {
+	public ProductDTO getByModel(String model) {
 		return productMapper.productToProductDTO(productDao.getByModel(model));
 	}
 
@@ -176,8 +176,6 @@ public class ProductServiceImpl implements ProductService {
 		
 		 double fromPrice = request.getFromPrice();
 		 double toPrice = request.getToPrice();
-		 
-		 
 		 
 		List<Product> list = productDao.searchParam(model, catId, consId, fromPrice, toPrice);
 		
@@ -213,6 +211,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public ProductDTO selectForUpdate(int id) {
+
 		return productMapper.productToProductDTO(productDao.selectForUpdate(id));
 	}
 
@@ -263,8 +262,9 @@ public class ProductServiceImpl implements ProductService {
 	    for (OrderDTO order : orders) {
 	    	Set<OrderItemDTO> orderItems = order.getOrderedItems();
 	    	for (OrderItemDTO orderItem : orderItems) {
-	    		if (orderItem.getProduct().getProductId() == productDTO.getProductId() && order.getPaymentStatus()
-						!= "paid" && order.getOrderStatus() != "delivered and recieved") {
+	    		if (orderItem.getProduct().getProductId() == productDTO.getProductId()
+						&& "paid".equals(order.getPaymentStatus())
+						&& "delivered and recieved".equals(order.getOrderStatus())) {
 	    			return false;
 	    		}
 	    	}

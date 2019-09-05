@@ -55,7 +55,7 @@ public class AdminProductController {
 	@Autowired
 	private OrderService orderService;
 	
-	private static final Logger logger = LogManager.getLogger(AdminProductController.class);
+	private static final Logger LOGGER = LogManager.getLogger(AdminProductController.class);
 
 	/** 
 	 * displays page to add new product
@@ -90,7 +90,7 @@ public class AdminProductController {
 		
 		if (productService.getByModel(newProductDTO.getModel()) != null) {
 			model.addAttribute("error", "Oops, this model exists already");
-			logger.error("Oops, this model exists already");
+			LOGGER.error("Oops, this model exists already");
 			return "addProduct";
 			
 		}
@@ -115,7 +115,7 @@ public class AdminProductController {
 		
 		model.addAttribute("status", "New product: " + newProductDTO.getModel());
 		
-		logger.info("New product: " + newProductDTO.getModel());
+		LOGGER.info("New product: " + newProductDTO.getModel());
 
 		return "redirect:/admin/productList";
 	}
@@ -138,16 +138,15 @@ public class AdminProductController {
 	 * @param productId id of a product to be edited
 	 * @param model
 	 * @return jsp file name
-	 * @throws CustomLogicException
 	 */
 	@GetMapping("/admin/editProduct/{productId}")
-	public String editProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException {
+	public String editProduct(@PathVariable("productId") int productId, Model model) {
 		ProductDTO productDTO;
 		try {
 		productDTO = productService.getById(productId);
 		}
 		catch(CustomLogicException ex) {
-			logger.error(ex.getErrMessage());
+			LOGGER.error(ex.getErrMessage());
 			model.addAttribute("status", "No such product!");
 			List<ProductDTO> products = productService.getAll();
 			model.addAttribute("products", products);
@@ -182,14 +181,14 @@ public class AdminProductController {
 			model.addAttribute("error", "There should > 0 units in stock!");
 			model.addAttribute("categoryDTOList", categoryService.getAll());
 			model.addAttribute("consDTOList", consService.getAll());
-			logger.error("There should > 0 units in stock!");
+			LOGGER.error("There should > 0 units in stock!");
 			return "editProduct";
 		}
 		if (opResult.equals("negative price")) {
 			model.addAttribute("error", "Price should be > 0!");
 			model.addAttribute("categoryDTOList", categoryService.getAll());
 			model.addAttribute("consDTOList", consService.getAll());
-			logger.error("Price should be > 0!");
+			LOGGER.error("Price should be > 0!");
 			return "editProduct";
 			
 		}
@@ -213,7 +212,7 @@ public class AdminProductController {
 			result = productService.delete(productService.getById(productId));
 		}
 		catch (CustomLogicException ex) {
-			logger.error(ex.getErrMessage());
+			LOGGER.error(ex.getErrMessage());
 			model.addAttribute("status", "No such product!");
 			List<ProductDTO> products = productService.getAll();
 			model.addAttribute("products", products);
@@ -223,7 +222,7 @@ public class AdminProductController {
 		}
 	
 		if (result.equals("failed")) {
-			logger.error("You cannot delete a product that has not been delivered yet!");
+			LOGGER.error("You cannot delete a product that has not been delivered yet!");
 			model.addAttribute("status", "Not delivered yet! " + productService.getById(productId).getModel());
 			List<ProductDTO> products = productService.getAll();
 			model.addAttribute("products", products);
@@ -231,7 +230,7 @@ public class AdminProductController {
 			return "productList";
 		}
 		
-		logger.info("Product has been deleted");
+		LOGGER.info("Product has been deleted");
 		return "redirect:/admin/productList";
 	}
 	

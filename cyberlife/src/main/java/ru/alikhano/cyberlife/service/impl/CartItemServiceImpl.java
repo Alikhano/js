@@ -12,7 +12,6 @@ import ru.alikhano.cyberlife.dto.CartItemDTO;
 import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dao.CartItemDao;
 import ru.alikhano.cyberlife.mapper.CartItemMapper;
-import ru.alikhano.cyberlife.mapper.CartMapper;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 
@@ -27,9 +26,6 @@ public class CartItemServiceImpl implements CartItemService {
 
 	@Autowired
 	private CartItemMapper cartItemMapper;
-
-	@Autowired
-	private CartMapper cartMapper;
 
 	/**
 	 * {@inheritDoc}
@@ -47,6 +43,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public void delete(CartItemDTO cartItemDTO) {
+
 		cartItemDao.delete(cartItemMapper.cartDTOtoCartItem(cartItemDTO));
 
 	}
@@ -57,8 +54,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public void deleteAll(CartDTO cartDTO) {
-		Set<CartItemDTO> items = cartDTO.getItems();
-		for (CartItemDTO item : items) {
+		for (CartItemDTO item : cartDTO.getItems()) {
 			delete(item);
 		}
 	}
@@ -69,6 +65,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public void update(CartItemDTO cartItemDTO) {
+
 		cartItemDao.update(cartItemMapper.cartDTOtoCartItem(cartItemDTO));
 
 	}
@@ -79,6 +76,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public CartItemDTO getById(int id) {
+
 		return cartItemMapper.cartItemToCartItemDTO(cartItemDao.getById(id));
 	}
 
@@ -89,55 +87,14 @@ public class CartItemServiceImpl implements CartItemService {
 	@Transactional
 	public void create(ProductDTO productDTO, CartDTO cartDTO, CartItemDTO cartItemDTO) {
 
-		Set<CartItemDTO> items = cartDTO.getItems();
+		int itemId = checkCart(cartDTO, productDTO);
 
-		if (!items.isEmpty()) {
-			int itemId = checkCart(cartDTO, productDTO);
+		if (itemId != 0) {
+			CartItemDTO item = getCartItemById(cartDTO, itemId);
+			updateExistingCartItem(cartDTO, item, productDTO);
 
-			if (itemId != 0) {
-				CartItemDTO item = getCartItemById(cartDTO, itemId);
-				double price = item.getTotalPrice();
-				int quantity = item.getQuantity();
-				double newPrice = cartItemDTO.getQuantity() * productDTO.getPrice();
-				item.setQuantity(quantity + cartItemDTO.getQuantity());
-
-				item.setTotalPrice(price + newPrice);
-
-				cartDTO.setGrandTotal(newPrice + cartDTO.getGrandTotal());
-				update(item);
-			}
-
-			else {
-				int quantity = cartItemDTO.getQuantity();
-
-				double totalPrice = quantity * productDTO.getPrice();
-				cartItemDTO.setTotalPrice(totalPrice);
-
-				cartItemDTO.setProduct(productDTO);
-
-				items.add(cartItemDTO);
-				cartDTO.setItems(items);
-
-				cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
-				cartItemDTO.setCart(cartDTO);
-				create(cartItemDTO);
-
-			}
 		} else {
-			int quantity = cartItemDTO.getQuantity();
-
-			double totalPrice = quantity * productDTO.getPrice();
-			cartItemDTO.setTotalPrice(totalPrice);
-
-			cartItemDTO.setProduct(productDTO);
-
-			items.add(cartItemDTO);
-			cartDTO.setItems(items);
-
-			cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
-			cartItemDTO.setCart(cartDTO);
-			create(cartItemDTO);
-
+		   createNewCartItem(cartDTO, cartItemDTO, productDTO);
 		}
 	}
 
@@ -149,10 +106,13 @@ public class CartItemServiceImpl implements CartItemService {
 	public int checkCart(CartDTO cartDTO, ProductDTO productDTO) {
 		Set<CartItemDTO> items = cartDTO.getItems();
 
-		for (CartItemDTO item : items) {
-			if (item.getProduct().getProductId() == productDTO.getProductId()) {
-				return item.getItemId();
-			}
+		if (!items.isEmpty()) {
+			CartItemDTO matchingCartItem = items.stream()
+					.filter(item -> item.getProduct().getProductId() == productDTO.getProductId())
+					.findFirst().orElse(null);
+
+			return matchingCartItem != null ? matchingCartItem.getItemId() : 0;
+
 		}
 
 		return 0;
@@ -195,15 +155,46 @@ public class CartItemServiceImpl implements CartItemService {
 	 */
 	@Override
 	public CartItemDTO getCartItemById(CartDTO cartDTO, int id) {
-		Set<CartItemDTO> items = cartDTO.getItems();
-
-		for (CartItemDTO item : items) {
+		for (CartItemDTO item : cartDTO.getItems()) {
 			if (item.getItemId() == id) {
 				return item;
 			}
 		}
 
 		return null;
+	}
+
+	private void createNewCartItem(CartDTO cartDTO, CartItemDTO cartItemDTO, ProductDTO productDTO) {
+
+		int quantity = cartItemDTO.getQuantity();
+
+		double totalPrice = quantity * productDTO.getPrice();
+		cartItemDTO.setTotalPrice(totalPrice);
+
+		cartItemDTO.setProduct(productDTO);
+		cartItemDTO.setCart(cartDTO);
+
+		cartDTO.getItems().add(cartItemDTO);
+
+		cartDTO.setGrandTotal(cartItemDTO.getTotalPrice() + cartDTO.getGrandTotal());
+
+		create(cartItemDTO);
+
+	}
+
+	private void updateExistingCartItem(CartDTO cartDTO, CartItemDTO cartItemDTO, ProductDTO productDTO) {
+
+		int quantity = cartItemDTO.getQuantity();
+
+		double price = cartItemDTO.getTotalPrice();
+
+		double newPrice = cartItemDTO.getQuantity() * productDTO.getPrice();
+		cartItemDTO.setQuantity(quantity + cartItemDTO.getQuantity());
+
+		cartItemDTO.setTotalPrice(price + newPrice);
+
+		cartDTO.setGrandTotal(newPrice + cartDTO.getGrandTotal());
+		update(cartItemDTO);
 	}
 
 }

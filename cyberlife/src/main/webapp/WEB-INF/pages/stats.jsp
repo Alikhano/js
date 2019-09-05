@@ -6,34 +6,22 @@
 		<div class="col">
 			<table class="table table-striped table-hover">
 				<thead>
-
-
 					<tr>
-
 						<th><spring:message code="label.topModels" /></th>
-
 					</tr>
 				</thead>
 				<c:forEach items="${topProduct}" var="product">
 					<tr>
-
 						<td>${product.model}</td>
-
 					</tr>
 				</c:forEach>
-
 			</table>
 		</div>
 		<div class="col">
 			<table class="table table-striped table-hover">
 				<thead>
-
-
 					<tr>
-
 						<th><spring:message code="label.topCustomers" /></th>
-
-
 					</tr>
 				</thead>
 				<c:forEach items="${topCustomer}" var="customer">
@@ -41,30 +29,20 @@
 						<td>${customer.firstName} ${customer.lastName}</td>
 					</tr>
 				</c:forEach>
-
 			</table>
 		</div>
 		<div class="col">
 			<table class="table table-striped table-hover">
 				<thead>
-
-
 					<tr>
-
 						<th><spring:message code="label.MonthlyRevenue" /></th>
-						
-
-
 					</tr>
 				</thead>
 					<c:forEach items="${monthlyRev}" var="entry">
 					<tr>
-
 						<td>${entry.key} - ${entry.value} USD</td>
-
 					</tr>
 				</c:forEach>
-
 			</table>
 		</div>
 		<div class="col">

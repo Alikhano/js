@@ -1,7 +1,8 @@
 package ru.alikhano.cyberlife.dao.impl;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,13 +14,12 @@ import org.springframework.stereotype.Repository;
 
 import ru.alikhano.cyberlife.dao.OrderDao;
 import ru.alikhano.cyberlife.model.Orders;
-import ru.alikhano.cyberlife.model.Product;
 
 @Repository
 public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -35,7 +35,8 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 
 	@Override
 	public Map<Integer, Double> getMonthlyRevenue() {
-		String hql = "select month(orderDate), sum(orderPrice)  from Orders where paymentStatus =: paymentStatus " +  "GROUP BY month(orderDate), YEAR(orderDate)";
+		String hql = "select month(orderDate), sum(orderPrice)  from Orders where paymentStatus =: paymentStatus "
+				+  "GROUP BY month(orderDate), YEAR(orderDate)";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setParameter("paymentStatus", "paid");
 		Map<Integer, Double> monthlyRev = new HashMap<>();
@@ -45,25 +46,22 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 			monthlyRev.put((Integer)row[0], (Double)row[1]);
 
 		}
-
 		return monthlyRev;
 	}
 
 	@Override
 	public double getWeeklyRevenue() {
-		Calendar date = Calendar.getInstance();
-		if (date.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-			date.add(Calendar.DAY_OF_MONTH, -1);
-			Date yesterday = date.getTime();
-			date.add(Calendar.DAY_OF_MONTH, -7);
-			Date weekBefore = date.getTime();
-			String hql = "SELECT sum(orderPrice) FROM Orders WHERE paymentStatus =: paymentStatus AND orderDate BETWEEN ?1 AND ?2";
+		LocalDate localDate = LocalDate.now();
+		if (localDate.getDayOfWeek() == DayOfWeek.FRIDAY) {
+			LocalDate yesterday = localDate.minus(Period.ofDays(1));
+			LocalDate weekBefore = localDate.minus(Period.ofWeeks(1));
+			String hql = "SELECT sum(orderPrice) FROM Orders WHERE paymentStatus =: paymentStatus " +
+					"AND orderDate BETWEEN ?1 AND ?2";
 			Query query = sessionFactory.getCurrentSession().createQuery(hql);
 			query.setParameter("paymentStatus", "paid");
 			query.setParameter(1, weekBefore);
 			query.setParameter(2, yesterday);
 			return (double) query.uniqueResult();
-			
 		}
 		
 		return 0;		
@@ -74,8 +72,6 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 	public void merge(Orders order) {
 		 Orders orderToSave = (Orders) sessionFactory.getCurrentSession().merge(order);
 		 sessionFactory.getCurrentSession().save(orderToSave);
-			
-		
 	}
 
 }

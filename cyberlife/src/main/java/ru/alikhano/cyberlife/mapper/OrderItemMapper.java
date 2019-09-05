@@ -10,8 +10,10 @@ import ru.alikhano.cyberlife.dto.OrderDTO;
 import ru.alikhano.cyberlife.dto.OrderItemDTO;
 import ru.alikhano.cyberlife.model.OrderItem;
 import ru.alikhano.cyberlife.model.Orders;
+import ru.alikhano.cyberlife.model.Role;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.WARN, uses = {OrderMapper.class, ProductMapper.class })
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.WARN,
+		uses = {OrderMapper.class, ProductMapper.class, AddressMapper.class, RoleMapper.class})
 public interface OrderItemMapper {
 	
 	@Mappings({

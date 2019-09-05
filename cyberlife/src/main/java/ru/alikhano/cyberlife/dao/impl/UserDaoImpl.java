@@ -11,11 +11,12 @@ import ru.alikhano.cyberlife.model.User;
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 	
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Override
 	public User getByUsername(String username) {
-		return (User) sessionFactory.getCurrentSession().createQuery("from User where username = :username").setParameter("username", username).uniqueResult();
+		return (User) sessionFactory.getCurrentSession().createQuery("from User where username = :username")
+				.setParameter("username", username).uniqueResult();
 	}
 
 }

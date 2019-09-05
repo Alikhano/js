@@ -74,7 +74,7 @@ public class AdminController {
 	 * @param request http request received from client side
 	 * @param model
 	 * @return jsp file name
-	 * @throws CustomLogicException
+	 * @throws CustomLogicException for duplicate entry
 	 */
 	@PostMapping(value = "admin/addCategory",  produces="application/json")
 	public ResponseEntity<?> addCategoryPost(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result,
@@ -99,7 +99,7 @@ public class AdminController {
 	 * @param request http request received from client side
 	 * @param model
 	 * @return jsp file name
-	 * @throws CustomLogicException
+	 * @throws CustomLogicException for duplicate entry
 	 */
 	@PostMapping(value = "admin/addCons",  produces="application/json")
 	public ResponseEntity<?> addConsPost(@RequestBody @Valid ConsDTO consDTO, BindingResult result,

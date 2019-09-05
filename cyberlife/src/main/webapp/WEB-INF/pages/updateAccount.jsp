@@ -29,7 +29,7 @@
 				<form:errors path="email" cssClass="error"></form:errors>
 			</div>
 			<div class="form-group">
-				<label for="birtDate"><spring:message
+				<label for="birthDate"><spring:message
 						code="label.dateOfBirth" /></label>
 				<form:input path="birthDate" id="birthDate" class="form-Control" />
 				<form:errors path="birthDate" cssClass="error"></form:errors>

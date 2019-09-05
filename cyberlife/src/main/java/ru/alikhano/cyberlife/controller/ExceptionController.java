@@ -20,7 +20,7 @@ import ru.alikhano.cyberlife.dto.CustomLogicException;
 @ControllerAdvice
 public class ExceptionController {
 
-	private static final Logger logger = LogManager.getLogger(ExceptionController.class);
+	private static final Logger LOGGER = LogManager.getLogger(ExceptionController.class);
 
 	/**
 	 * handler for all exceptions
@@ -30,7 +30,7 @@ public class ExceptionController {
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleGenericException(Exception ex) {
 
-		logger.error(ex.getMessage(), ex);
+		LOGGER.error(ex.getMessage(), ex);
 		ModelAndView model = new ModelAndView("generic_error");
 
 		model.addObject("errorMessage", ex.getMessage());
@@ -46,7 +46,7 @@ public class ExceptionController {
 	@ExceptionHandler(CustomLogicException.class)
 	public ResponseEntity<?> handleCustomException(CustomLogicException ex) {
 
-		logger.error(ex.getErrMessage(), ex);
+		LOGGER.error(ex.getErrMessage(), ex);
 
 		return ResponseEntity.badRequest().body(ex.getErrMessage());
 	}

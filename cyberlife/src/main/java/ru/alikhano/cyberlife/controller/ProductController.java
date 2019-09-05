@@ -45,7 +45,7 @@ public class ProductController {
 	@Autowired
 	private CartItemService cartItemService;
 	
-	private static final Logger logger = LogManager.getLogger(ProductController.class);
+	private static final Logger LOGGER = LogManager.getLogger(ProductController.class);
 	
 	private static final String VIEW = "viewProduct";
 
@@ -67,16 +67,15 @@ public class ProductController {
      * @param productId to retrieve the product from database
      * @param model
      * @return jsp file name
-     * @throws CustomLogicException
      */
     @GetMapping("/viewProduct/{productId}")
-    public String viewProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException {
+    public String viewProduct(@PathVariable("productId") int productId, Model model) {
     	ProductDTO productDTO;
     	try {
     		  productDTO = productService.getById(productId);
     	}
     	catch (CustomLogicException ex) {
-    		logger.error(ex.getErrMessage());
+    		LOGGER.error(ex.getErrMessage());
     		model.addAttribute("status", "No such product!");
     		List<ProductDTO> products = productService.getAll();
     		model.addAttribute("products", products);
@@ -103,7 +102,9 @@ public class ProductController {
      * @throws CustomLogicException
      */
     @PostMapping(value = "/viewProduct")
-    public String addToCart(@RequestParam("productId") int productId, @ModelAttribute("newCartItem") @Valid CartItemDTO newCartItem, BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
+    public String addToCart(@RequestParam("productId") int productId,
+			@ModelAttribute("newCartItem") @Valid CartItemDTO newCartItem,
+			BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
 
         ProductDTO productDTO = productService.getById(productId);
         
@@ -112,7 +113,7 @@ public class ProductController {
         if (newCartItem.getQuantity() > productDTO.getUnitsInStock()) {
         	model.addAttribute("error","Sorry, we do not have enough units in stock. Try again");
         	model.addAttribute("product", productDTO);
-			logger.error("Not enough units in stock");
+			LOGGER.error("Not enough units in stock");
 			return VIEW;
         }       
 
@@ -122,13 +123,13 @@ public class ProductController {
 		catch (ConstraintViolationException ex) {
 			model.addAttribute("error","Plese check your input for negative values");
 			model.addAttribute("product", productDTO);
-			logger.error("Negative values in user input");
+			LOGGER.error("Negative values in user input");
 			return VIEW;
 		}
       
         cartService.update(cartDTO);
         
-        logger.info("new item has been added to cart: " + productDTO.getModel());
+        LOGGER.info("new item has been added to cart: " + productDTO.getModel());
 
         return "redirect:/catalogue";
     }
