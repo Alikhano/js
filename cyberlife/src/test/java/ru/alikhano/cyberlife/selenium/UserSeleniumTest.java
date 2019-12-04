@@ -5,148 +5,80 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class UserSeleniumTest {
 
-	private WebDriver driver;
+    private WebDriver driver;
 
-	@Before
+    private WebDriverWait driverWait;
+
+    @Before
 	public void init() {
-		System.setProperty("webdriver.chrome.driver", "C:/Users/alikhano/chromedriver_win32/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().fullscreen();
-		driver.get("http://localhost:9999/cyberlife/login");
+        System.setProperty("webdriver.chrome.driver", "C:/Users/alikhano/chromedriver_win32/chromedriver.exe");
+        System.setProperty("webdriver.edge.drive", "C:/Windows/System32/MicrosoftWebDriver.exe");
+        driver = new EdgeDriver();
+        driver.get("http://localhost:9999/cyberlife/login");
+        driverWait = new WebDriverWait(driver, 15);
+
+        // login
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("username"))).sendKeys("test");
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("password"))).sendKeys("test");
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("login-button"))).click();
 	}
+
+    @After
+    public void close() {
+        // logout
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("logout"))).click();
+        driver.quit();
+    }
 
 	@Test
 	public void userPurchaseTest() {
-		WebDriverWait driverWait = new WebDriverWait(driver,1000);
-
-		// login
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("username"))).sendKeys("user2");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("password"))).sendKeys("admin");
-
-		driverWait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//html/body/div/form/div[4]/div[2]/button")))
-				.click();
-
-		// go to catalogue, select product
-
-		driverWait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul[1]/li[1]/a")))
-				.click();
-
-		driverWait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//*[@id=\"admin-catalogue_paginate\"]/ul/li[3]/a")))
-				.click();
-		
-
-		// add product to cart
-
-		driverWait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//*[@id=\"admin-catalogue\"]/tbody/tr[5]/td[2]/a")))
-				.click();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"quantity\"]"))).clear();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"quantity\"]"))).sendKeys("2");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"addToCart\"]"))).click();
-		
-		// open cart, proceed to order
-
-		driverWait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul[1]/li[4]/a")))
-				.click();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[2]/a[1]"))).click();
-		
-		// submit order
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"newOrder\"]/input[2]")))
-				.click();
-
-		// log out
-
-		driverWait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul[1]/li[6]/a")))
-				.click();
-		
-
+		addProductToCart();
+		submitOrder();
 	}
 
 	@Test
 	public void editAccountTest() {
-
-		WebDriverWait driverWait = new WebDriverWait(driver, 1000);
-
-		// login
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("username"))).sendKeys("user2");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("password"))).sendKeys("admin");
-
-		driverWait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//html/body/div/form/div[4]/div[2]/button")))
-				.click();
-		
-
 		// access account
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("user-account"))).click();
 
-		driverWait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul[1]/li[3]/a")))
-				.click();
-
-		// edit personal info
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div/div/div/div/p[7]/a[2]")))
-				.click();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"birthDate\"]"))).clear();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"birthDate\"]")))
-				.sendKeys("1994-10-27");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"updateProfile\"]/input[2]")))
-				.click();
-		
-
-		// edit address
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div/div/div/div/p[5]/a")))
-				.click();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"city\"]"))).clear();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"city\"]"))).sendKeys("Paris");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"changeAdr\"]/input[2]")))
-				.click();
-		
-		// log out
-
-		driverWait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul[1]/li[6]/a")))
-				.click();
-
-
+		editPersonalInfo();
+		editAddressInfo();
 	}
 
-	@After
-	public void close() {
-		driver.quit();
+	private void addProductToCart() {
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("catalogue"))).click();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"catalogue\"]/tbody/tr[1]/td[2]/a")))
+				.click();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("quantity"))).clear();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("quantity"))).sendKeys("2");
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("addToCart"))).submit();
 	}
 
+	private void submitOrder() {
+		// open cart, proceed to order
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("my-cart"))).click();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("proceed-order"))).click();
+		// submit order
+		driverWait.until(ExpectedConditions.elementToBeClickable(By.id("submit-order"))).submit();
+	}
+
+	private void editPersonalInfo() {
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("edit-account"))).click();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("birthDate"))).clear();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("birthDate"))).sendKeys("1994-10-27");
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("submit-change"))).click();
+	}
+
+	private void editAddressInfo() {
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("edit-address"))).click();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("city"))).clear();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("city"))).sendKeys("Paris");
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("submit-change"))).click();
+	}
 }

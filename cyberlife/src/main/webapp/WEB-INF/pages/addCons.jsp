@@ -39,7 +39,7 @@
 				</div>
 
 				<spring:message code="label.addAiConfig" var="addAI" />
-				<input type="submit" value="${addAI}" class="btn btn-success">
+				<input id="submit-cons" type="submit" value="${addAI}" class="btn btn-success">
 				<a href="<c:url value="/productList" />" class="btn btn-danger"><spring:message
 						code="label.cancel" /></a>
 			</div>
@@ -62,13 +62,13 @@
 				method : 'POST',
 				headers : {
 					'Content-Type' : 'application/json',
-					'Accept' : 'application/json',
+					'Accept' : 'application/json'
 				},
 				url : '${pageContext.request.contextPath}/admin/addCons',
 				data : JSON.stringify({
 					level : $("#level").val(),
 					description : $("#description").val()
-				}),
+				})
 			}).done(function(response) {
 				swal({
 					title : "Success",

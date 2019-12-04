@@ -13,7 +13,7 @@
 				</thead>
 				<c:forEach items="${categories}" var="category">
 					<tr>
-						<td>${category.catType}</td>
+						<td>${category.categoryType}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -25,17 +25,15 @@
 				method="post" modelAttribute="newCategory">
 				<div class="container">
 					<div class="form-group">
-						<form:input path="catType" id="catType" class="form-Control"
-							placeholder="Category" />
+						<form:input path="categoryType" id="catType" class="form-Control"
+                                    placeholder="Category" />
 					</div>
 					<spring:message code="label.add" var="addCat" />
-					<input type="submit" value="${addCat}"
+					<input id="submit-category" type="submit" value="${addCat}"
 						class="btn btn-success"> <a
 						href="<c:url value="/productList" />" class="btn btn-danger"><spring:message
 							code="label.cancel" /></a>
 				</div>
-
-
 			</form:form>
 		</div>
 	</div>
@@ -63,8 +61,6 @@
 		$("#addCat").submit(function(e) {
 			e.preventDefault();
 
-			var catType = $("#categoryType").val();
-
 			$.ajax({
 				method : 'POST',
 				headers : {
@@ -74,7 +70,7 @@
 				url : '${pageContext.request.contextPath}/admin/addCategory',
 				data : JSON.stringify({
 					catType : $("#categoryType").val()
-				}),
+				})
 			}).done(function(response) {
 				swal({
 					title : "Success",

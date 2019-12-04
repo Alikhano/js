@@ -25,9 +25,9 @@
 				type="password" name="repeatPassword" id="repeatPassword"
 				class="form-Control" />
 		</div>
-		<br /> <br /> <input type="submit" value="<spring:message code="label.change"/>"
+		<br /> <br /> <input id="submit-change" type="submit" value="<spring:message code="label.change"/>"
 			class="btn btn-default"> <a
-			href="<c:url value="/myAccount" />" class="btn btn-default"><spring:message code="label.cancel"/></a>
+			 id="back-account" href="<c:url value="/myAccount" />" class="btn btn-default"><spring:message code="label.cancel"/></a>
 
 
 	</form>
@@ -45,11 +45,11 @@
 	$("#changePass").validate({
 		rules : {
 			oldPassword : {
-				required : true,
+				required : true
 
 			},
 			newPassword : {
-				required : true,
+				required : true
 			},
 			repeatPassword : {
 				equalTo : "#newPassword"

@@ -18,14 +18,14 @@
 			
 				<p>${customer.address.street}, ${customer.address.building}, ${customer.address.flat}</p>
 				
-				<p><a href="<spring:url value="/myAccount/changeAddress" />" class="btn btn-default"> <spring:message code="label.editAddress"/></a></p>
+				<p><a id="edit-address" href="<spring:url value="/myAccount/changeAddress" />" class="btn btn-default"> <spring:message code="label.editAddress"/></a></p>
 			
 			<p><strong><em class="fas fa-birthday-cake"></em></strong> ${customer.birthDate}</p>
 
 			<p>
-				<a href="<spring:url value="/myAccount/changePassword" />" class="btn btn-default"><spring:message code="label.changePssword"/></a>
+				<a id="change-password" href="<spring:url value="/myAccount/changePassword" />" class="btn btn-default"><spring:message code="label.changePssword"/></a>
 				<input type="hidden" name="customerId" value="${customer.customerId}" />
-				<a href="<spring:url value="/myAccount/updateAccount/${customer.customerId}" />" class="btn btn-default"><spring:message code="label.editAccount"/></a>
+				<a id="edit-account" href="<spring:url value="/myAccount/updateAccount/${customer.customerId}" />" class="btn btn-default"><spring:message code="label.editAccount"/></a>
 			</p>
 
 		</div>

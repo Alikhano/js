@@ -2,7 +2,7 @@
 
 <div class="col" id="admin-main">
 	<span id="statusSpan" style="display: none">${status}</span>
-	<table class="table table-striped table-hover" id="admin-catalogue">
+	<table class="table table-striped table-hover" id="catalogue">
 		<thead>
 			<tr>
 				<th><spring:message code="label.photoThumb" /></th>
@@ -19,25 +19,25 @@
 		<c:forEach items="${products}" var="product">
 			<tr>
 				<td><img
-					src="${pageContext.request.contextPath}/static/images/${product.model}.jpg"
+					src="${pageContext.request.contextPath}/images/${product.model}.jpg"
 					alt="image" style="width: 150px; height: auto" /></td>
 				<td><a
-					href="http://localhost:8080/cyberlife/viewProduct/${product.productId}">
+					href="${pageContext.request.contextPath}/viewProduct/${product.productId}">
 						<c:out value="${product.model}" />
 				</a></td>
-				<td>${product.category.catType}</td>
+				<td>${product.category.categoryType}</td>
 				<td>${product.cons.level}</td>
 				<td>${product.unitsInStock}</td>
 				<td>${product.price} USD</td>
 				 <sec:authorize access="hasRole('ROLE_ADMIN')">
 				<td><a
 					href="<spring:url value="/admin/editProduct/${product.productId}" />">
-						<input type="submit" class="buttons"
+						<input id="edit-button" type="submit" class="buttons"
 						value="<spring:message code="label.edit" />" />
 				</a> <a><input type="hidden" name="id" value="${product.productId}" />
 				</a> <a
 					href="<spring:url value="/admin/deleteProduct/${product.productId}" />">
-						<input type="submit" class="buttons"
+						<input id="delete-button" type="submit" class="buttons"
 						value="<spring:message code="label.delete" />" /> <input type="hidden"
 						name="id" value="${product.productId}" /> <input type="hidden"
 						name="model" value="${product.model}" /> <input type="hidden"

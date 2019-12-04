@@ -5,7 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,117 +16,68 @@ public class AdminSeleniumTest {
 
 	private WebDriver driver;
 
+	private WebDriverWait driverWait;
+
 	@Before
 	public void init() {
 		System.setProperty("webdriver.chrome.driver", "C:/Users/alikhano/chromedriver_win32/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().fullscreen();
+		System.setProperty("webdriver.edge.drive", "C:/Windows/System32/MicrosoftWebDriver.exe");
+		driver = new EdgeDriver();
 		driver.get("http://localhost:9999/cyberlife/login");
-	}
-
-	@Test
-	public void adminTest() {
-		WebDriverWait driverWait = new WebDriverWait(driver, 1500);
+		driverWait = new WebDriverWait(driver, 15);
 
 		// login
-
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("username"))).sendKeys("admin");
-
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("password"))).sendKeys("1234");
-
-		driverWait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//html/body/div/form/div[4]/div[2]/button")))
-				.click();
-
-		// edit product
-
-		driverWait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul[1]/li[3]/a")))
-				.click();
-
-		driverWait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"admin-sidebar\"]/div/div/div/a[2]")))
-				.click();
-
-		driverWait.until(ExpectedConditions
-				.presenceOfElementLocated(By.xpath("//*[@id=\"admin-catalogue\"]/tbody/tr[1]/td[7]/a[1]/input")))
-				.click();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"unitsInStock\"]"))).clear();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"unitsInStock\"]")))
-				.sendKeys("10");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"editProduct\"]/div/input")))
-				.click();
-
-		// try to add category (fail)
-
-		driverWait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"admin-sidebar\"]/div/div/div/a[4]")))
-				.click();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"categoryType\"]")))
-				.sendKeys("education");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"addCat\"]/div/input")))
-				.click();
-
-		driverWait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[2]/div/div[4]/div/button")))
-				.click();
-
-		// try to add AI config (fail)
-
-		driverWait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"admin-sidebar\"]/div/div/div/a[5]")))
-				.click();
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"level\"]")))
-				.sendKeys("high AI");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"description\"]")))
-				.sendKeys("test");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"addCons\"]/div/input")))
-				.click();
-
-		driverWait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[2]/div/div[4]/div/button")))
-				.click();
-
-		// try to update order status (fail)
-
-		driverWait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"admin-sidebar\"]/div/div/div/a[6]")))
-				.click();
-
-		Select selectOrder = new Select(driver.findElement(By.xpath("//*[@id=\"orderStatus\"]")));
-		selectOrder.selectByValue("awaits delivery");
-
-		Select selectPayment = new Select(driver.findElement(By.xpath("//*[@id=\"paymentStatus\"]")));
-		selectPayment.selectByValue("unpaid");
-
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"updateOrder\"]/input[2]")))
-				.click();
-
-		driverWait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[3]/div/div[4]/div/button")))
-				.click();
-
-		// logout
-
-		driverWait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//*[@id=\"navbarSupportedContent\"]/ul[1]/li[6]/a")))
-				.click();
-
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("login-button"))).click();
 	}
 
 	@After
 	public void close() {
+		// logout
+        driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("logout"))).click();
 		driver.quit();
 	}
 
+	@Test
+	public void adminTest() {
+		successfullyEditProduct();
+		tryToAddDuplicateCategoryAndFail();
+		tryToAddDuplicateConfigAndFail();
+		tryToUpdateOrderStatusAndFail();
+	}
+
+	private void successfullyEditProduct() {
+		WebElement inventoryElement = driverWait.until(ExpectedConditions.elementToBeClickable(By.id("inventory")));
+		new Actions(driver).moveToElement(inventoryElement).click().perform();
+		driverWait.until(ExpectedConditions.elementToBeClickable(By.id("edit-button"))).click();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("unitsInStock"))).clear();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("unitsInStock"))).sendKeys("10");
+		driverWait.until(ExpectedConditions.elementToBeClickable(By.id("submit-button"))).submit();
+	}
+
+	private void tryToAddDuplicateCategoryAndFail() {
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("add-category"))).click();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("catType"))).sendKeys("education");
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("submit-category"))).submit();
+	}
+
+	private void tryToAddDuplicateConfigAndFail() {
+		driverWait.until(
+				ExpectedConditions.presenceOfElementLocated(By.id("add-cons"))).click();
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("level"))).sendKeys("high AI");
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("description"))).sendKeys("test");
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("submit-cons"))).submit();
+	}
+
+	private void tryToUpdateOrderStatusAndFail() {
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("order-status"))).click();
+
+		Select selectOrder = new Select(driver.findElement(By.id("orderStatus")));
+		selectOrder.selectByValue("awaits delivery");
+		Select selectPayment = new Select(driver.findElement(By.id("paymentStatus")));
+		selectPayment.selectByValue("unpaid");
+
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("submit-order-change"))).submit();
+	}
 }

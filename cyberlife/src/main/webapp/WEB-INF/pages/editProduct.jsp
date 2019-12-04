@@ -14,9 +14,9 @@
 
 			<div class="form-group">
 				<label for="category"><spring:message code="label.category"/></label>
-				<form:select path="category.catId">
-					<form:options items="${categoryDTOList}" itemValue="catId"
-						itemLabel="catType" />
+				<form:select path="category.categoryId">
+					<form:options items="${categoryDTOList}" itemValue="categoryId"
+						itemLabel="categoryType" />
 				</form:select>
 			</div>
 			<div class="form-group">
@@ -53,9 +53,8 @@
 
 
 
-			<br /> <br /> <input type="submit" value="<spring:message code="label.submit"/>"
-				class="btn btn-default"> <a
-				href="<c:url value="/admin/productList" />" class="btn btn-default"><spring:message code="label.cancel"/></a>
+			<br /> <br /> <input id="submit-button" type="submit" value="<spring:message code="label.submit"/>"
+				class="btn btn-default"> <a href="<c:url value="/admin/productList" />" class="btn btn-default"><spring:message code="label.cancel"/></a>
 		</div>
 
 	</form:form>
@@ -74,22 +73,22 @@
 		rules : {
 
 			"category.catId" : {
-				required : true,
+				required : true
 
 			},
 			"cons.consId" : {
-				required : true,
+				required : true
 			},
 			"description" : {
-				required : true,
+				required : true
 			},
 			"price" : {
-				required : true,
+				required : true
 			},
 			"unitsInStock" : {
 				required : true,
 				number : true
-			},
+			}
 
 		},
 		messages : {
@@ -99,7 +98,7 @@
 
 			},
 			"cons.consId" : {
-				required : "Please choose AI config",
+				required : "Please choose AI config"
 			},
 			"description" : {
 				required : "Please add product description"

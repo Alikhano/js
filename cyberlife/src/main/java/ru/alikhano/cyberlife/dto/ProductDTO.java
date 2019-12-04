@@ -27,8 +27,8 @@ public class ProductDTO {
 		this.price = product.getPrice();
 		
 		this.category = new CategoryDTO();
-		this.category.setCatId(product.getCategory().getCategoryId());
-		this.category.setCatType(product.getCategory().getCategoryType());
+		this.category.setCategoryId(product.getCategory().getCategoryId());
+		this.category.setCategoryType(product.getCategory().getCategoryType());
 		this.cons = new ConsDTO();
 		this.cons.setConsId(product.getCons().getConsId());
 		this.cons.setLevel(product.getCons().getLevel());

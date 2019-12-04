@@ -72,13 +72,13 @@ public class CategoryServiceTest {
 	@Test
 	public void getByType() {
 		CategoryDTO category = categoryService.getByType("education");
-		assertEquals("education", category.getCatType());
+		assertEquals("education", category.getCategoryType());
 	}
 	
 	@Test
 	public void getById() {
 		CategoryDTO category = categoryService.getById(1);
-		assertEquals("education", category.getCatType());
+		assertEquals("education", category.getCategoryType());
 	}
 	
 	@Test

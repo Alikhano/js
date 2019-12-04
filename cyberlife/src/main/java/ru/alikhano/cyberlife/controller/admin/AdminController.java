@@ -88,7 +88,7 @@ public class AdminController {
 			throw new CustomLogicException("duplicate entry");
 		}
 		
-		logger.info("New category: " + categoryDTO.getCatType());
+		logger.info("New category: " + categoryDTO.getCategoryType());
 		
 		  return ResponseEntity.ok(categoryDTO);
 	}

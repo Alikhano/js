@@ -17,6 +17,10 @@
 			/WEB-INF/security-config.xml
 		</param-value>
 	</context-param>
+	<context-param>
+		<param-name>uploadDirectory</param-name>
+		<param-value>C:/images/</param-value>
+	</context-param>
 
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>

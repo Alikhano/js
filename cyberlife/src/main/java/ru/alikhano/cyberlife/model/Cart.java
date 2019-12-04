@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Cart {
 	@Column(name="grandTotal")
 	private double grandTotal;
 	
-	@OneToMany(mappedBy="cart")
+	@OneToMany(mappedBy="cart", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<CartItem> items = new HashSet<>();
 
 	public int getCartId() {

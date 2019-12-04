@@ -16,10 +16,10 @@
 	<c:forEach items="${products}" var="product">
 		<tr>
 			<td><img
-				src="${pageContext.request.contextPath}/static/images/${product.model}.jpg"
+				src="${pageContext.request.contextPath}/images/${product.model}.jpg"
 				alt="image" style="width: 150px; height: auto" /></td>
 			<td><a
-				href="http://localhost:8080/cyberlife/viewProduct/${product.productId}">
+				href="${pageContext.request.contextPath}/viewProduct/${product.productId}">
 					<c:out value="${product.model}" />
 			</a> <input type="hidden" name="id" value="${product.productId}" /></td>
 			<td>${product.category.catType}</td>

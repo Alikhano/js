@@ -89,7 +89,6 @@ public class ProductServiceImpl implements ProductService {
 			throw new CustomLogicException("The model you have specified already exists in the catalogue");
 		}
 		productDao.create(productMapper.productDTOtOProduct(productDTO));
-
 	}
 
 	/**
@@ -127,7 +126,7 @@ public class ProductServiceImpl implements ProductService {
 			throw new CustomLogicException("No such product, cannot delete");
 		}
 		
-		if (canBeDeleted(productDTO)) {
+		if (isAvailableForDeletion(productDTO)) {
 			productDao.delete(productMapper.productDTOtOProduct(productDTO));
 			if (isInTop(productDTO)) {
 				messaginService.sendUpdateMessage("table should be updated!");
@@ -163,7 +162,7 @@ public class ProductServiceImpl implements ProductService {
 			 catId = 0;
 		 }
 		 else {
-			 catId = categoryService.getByType(category).getCatId();
+			 catId = categoryService.getByType(category).getCategoryId();
 		 }
 
 		 String consLevel = request.getConsLevel();
@@ -257,7 +256,7 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override
 	@Transactional
-	public boolean canBeDeleted(ProductDTO productDTO) {
+	public boolean isAvailableForDeletion(ProductDTO productDTO) {
 	    List<OrderDTO> orders = orderService.getAll();
 	    for (OrderDTO order : orders) {
 	    	Set<OrderItemDTO> orderItems = order.getOrderedItems();
@@ -270,6 +269,18 @@ public class ProductServiceImpl implements ProductService {
 	    	}
 	    }
 		return true;
+	}
+
+	@Override
+	@Transactional
+	public boolean isProductExistingById(Integer productId) {
+		return getProductById(productId) != null;
+	}
+
+	@Override
+	@Transactional
+	public boolean isProductExistingByModel(String productModel) {
+		return getByModel(productModel) != null;
 	}
 
 }

@@ -21,7 +21,7 @@
 				src="${pageContext.request.contextPath}/static/images/${cartItem.product.model}.jpg"
 				alt="image" style="width: 150px; height: auto"/></td>
 			<td>${cartItem.product.model}</td>
-			<td>${cartItem.product.category.catType}</td>
+			<td>${cartItem.product.category.categoryType}</td>
 			<td>${cartItem.product.cons.level}</td>
 			<td>${cartItem.product.description}</td>
 			<td>${cartItem.totalPrice} USD</td>
@@ -39,8 +39,8 @@
 <p><strong><spring:message code="label.totalPrice"/>: ${cart.grandTotal} USD</strong></p>
 </div>
 <div>
-             <a href="<c:url value = "/myOrder" />" class="btn btn-success"><spring:message code="label.proceedToOrder"/></a>
-			 <a href="<c:url value = "/catalogue" />" class="btn btn-secondary"><spring:message code="label.back"/></a>
+             <a id="proceed-order" href="<c:url value = "/myOrder" />" class="btn btn-success"><spring:message code="label.proceedToOrder"/></a>
+			 <a id="back-catalogue"  href="<c:url value = "/catalogue" />" class="btn btn-secondary"><spring:message code="label.back"/></a>
 	         
 </div>
 

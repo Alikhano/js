@@ -38,10 +38,10 @@
 
 			<br />
 			<br />
-			<input type="submit" value="<spring:message code="label.change" />"
+			<input id="submit-change" type="submit" value="<spring:message code="label.change" />"
 				class="btn btn-default">
 
-			<a href="<c:url value="/myAccount" />" class="btn btn-default"><spring:message
+			<a id="back-account" href="<c:url value="/myAccount" />" class="btn btn-default"><spring:message
 					code="label.cancel" /></a>
 
 
@@ -66,11 +66,11 @@
 										{
 											rules : {
 												firstName : {
-													required : true,
+													required : true
 
 												},
 												lastName : {
-													required : true,
+													required : true
 
 												},
 												email : {
@@ -78,7 +78,7 @@
 													email : true
 												},
 												birthDate : {
-													required : true,
+													required : true
 												}
 											},
 											messages : {

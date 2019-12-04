@@ -21,9 +21,9 @@
 
 					<div class="form-group">
 						<label for="category"><spring:message code="label.category"/></label>
-						<form:select path="category.catId">
-							<form:options items="${categoryDTOList}" itemValue="catId"
-								itemLabel="catType" />
+						<form:select path="category.categoryId">
+							<form:options items="${categoryDTOList}" itemValue="categoryId"
+								itemLabel="categoryType" />
 						</form:select>
 					</div>
 
@@ -85,18 +85,18 @@
 	$("#addProduct").validate({
 		rules : {
 			"model" : {
-				required : true,
+				required : true
 
 			},
 			"category.catId" : {
-				required : true,
+				required : true
 
 			},
 			"cons.consId" : {
-				required : true,
+				required : true
 			},
 			"description" : {
-				required : true,
+				required : true
 			},
 			"price" : {
 				required : true,
@@ -123,7 +123,7 @@
 
 			},
 			"cons.consId" : {
-				required : "Please choose AI config",
+				required : "Please choose AI config"
 			},
 			"description" : {
 				required : "Please add product description"
@@ -145,26 +145,7 @@
 		}
 		
 	});
-	
-/* 	function exception()
-	{
-	    $.ajax({
-	    	 headers: {
-	             'Content-Type': 'application/json',
-	             'Accept': 'application/json'
-	         },
-	         method: "GET",
-	         url: "/admin/addProduct",
-	         data: JSON.stringify(data),
-	     }).done(function (response) {
-	         swal("Good job!", successMessage, "success");
-	     }).fail(function (qXHR, textStatus, errorThrown) {
-	         var messageError = JSON.parse(qXHR.responseText);
-	         swal("Oops..", messageError, "error");
-	     });
-	    
-	    return false;
-	} */
+
 </script>
 </body>
 </html>

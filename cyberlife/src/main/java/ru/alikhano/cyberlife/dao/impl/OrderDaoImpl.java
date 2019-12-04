@@ -1,8 +1,10 @@
 package ru.alikhano.cyberlife.dao.impl;
 
+import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,9 +61,9 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 					"AND orderDate BETWEEN ?1 AND ?2";
 			Query query = sessionFactory.getCurrentSession().createQuery(hql);
 			query.setParameter("paymentStatus", "paid");
-			query.setParameter(1, weekBefore);
-			query.setParameter(2, yesterday);
-			return (double) query.uniqueResult();
+			query.setParameter(1, Date.from(weekBefore.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+			query.setParameter(2, Date.from(yesterday.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+			return (query.uniqueResult() == null) ? 0: (double) query.uniqueResult();
 		}
 		
 		return 0;		

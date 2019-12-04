@@ -31,7 +31,7 @@ public class ProductJsonServiceImpl implements ProductJsonService {
 			ProductJson productJson = new ProductJson();
 			productJson.setProductId(product.getProductId());
 			productJson.setModel(product.getModel());
-			productJson.setCatType(product.getCategory().getCatType());
+			productJson.setCatType(product.getCategory().getCategoryType());
 			productJson.setConsLevel(product.getCons().getLevel());
 			productJson.setPrice(product.getPrice());
 			productsJson.add(productJson);

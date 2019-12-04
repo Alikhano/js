@@ -28,7 +28,6 @@ import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dto.ProductInfo;
 import ru.alikhano.cyberlife.dto.SearchRequest;
 import ru.alikhano.cyberlife.dao.ProductDao;
-import ru.alikhano.cyberlife.mapper.OrderMapper;
 import ru.alikhano.cyberlife.mapper.ProductInfoMapper;
 import ru.alikhano.cyberlife.mapper.ProductMapper;
 import ru.alikhano.cyberlife.model.Category;
@@ -36,7 +35,6 @@ import ru.alikhano.cyberlife.model.Consciousness;
 import ru.alikhano.cyberlife.model.OrderItem;
 import ru.alikhano.cyberlife.model.Orders;
 import ru.alikhano.cyberlife.model.Product;
-import ru.alikhano.cyberlife.service.impl.MessagingService;
 import ru.alikhano.cyberlife.service.impl.ProductServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -236,7 +234,7 @@ public class ProductServiceTest {
 		Mockito.doReturn(0.0).when(search).getFromPrice();
 		CategoryDTO category = Mockito.mock(CategoryDTO.class);
 		ConsDTO cons = Mockito.mock(ConsDTO.class);
-		Mockito.doReturn(1).when(category).getCatId();
+		Mockito.doReturn(1).when(category).getCategoryType();
 		Mockito.doReturn(1).when(cons).getConsId();
 		Mockito.doReturn(category).when(categoryService).getByType("child care");
 		Mockito.doReturn(cons).when(consService).getByLevel("low AI");
@@ -254,7 +252,7 @@ public class ProductServiceTest {
 		Mockito.doReturn(1500.0).when(search).getToPrice();
 		CategoryDTO category = Mockito.mock(CategoryDTO.class);
 		ConsDTO cons = Mockito.mock(ConsDTO.class);
-		Mockito.doReturn(1).when(category).getCatId();
+		Mockito.doReturn(1).when(category).getCategoryId();
 		Mockito.doReturn(1).when(cons).getConsId();
 		Mockito.doReturn(category).when(categoryService).getByType("education");
 		Mockito.doReturn(cons).when(consService).getByLevel("middle AI");
@@ -271,7 +269,7 @@ public class ProductServiceTest {
 
 	@Test
 	public void canBeDeleted() {
-		boolean result = productService.canBeDeleted(productDTOMock);
+		boolean result = productService.isAvailableForDeletion(productDTOMock);
 		assertEquals(true, result);
 	}
 	
@@ -279,7 +277,7 @@ public class ProductServiceTest {
 	public void canBeDeletedFalse() {
 		Mockito.doReturn("unpaid").when(orderDTOMock).getPaymentStatus();
 		Mockito.doReturn("awaits pickup").when(orderDTOMock).getOrderStatus();
-		boolean result = productService.canBeDeleted(productDTOMock);
+		boolean result = productService.isAvailableForDeletion(productDTOMock);
 		assertEquals(false, result);
 	}
 

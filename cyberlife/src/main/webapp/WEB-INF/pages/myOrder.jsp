@@ -38,7 +38,7 @@
 								<form:option value="cash"><spring:message code="label.cash"/></form:option>
 								<form:option value="credit card"><spring:message code="label.card"/></form:option>
 							</form:select>
-							<input type="submit" value="Submit order" class="btn btn-success">
+							<input id="submit-order" type="submit" value="Submit order" class="btn btn-success">
 							<span style="color: #ff0000">${error}</span>
 						</form:form>
 					</div>

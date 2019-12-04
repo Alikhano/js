@@ -11,8 +11,8 @@
 			name="categorySearch">
 			<option selected value="any">any</option>
 			<c:forEach var="category" items="${categoryDTOList}">
-				<option value="${category.catType}">
-					<c:out value="${category.catType}" />
+				<option value="${category.categoryType}">
+					<c:out value="${category.categoryType}" />
 				</option>
 			</c:forEach>
 
@@ -139,7 +139,8 @@
 			tr.className = "resultRow";
 			for ( var x in object) {
 				var id = object.productId;
-				var link = "<a href='http://localhost:8080/cyberlife/viewProduct/" + object.productId + "'>" + object.model +"</a>";
+				var url = window.location.host;
+				var link = "<a href='"+ url + "/cyberlife/viewProduct/" + object.productId + "'>" + object.model +"</a>";
 				tr.innerHTML = '<td>' + link +'</td>' + '<td>'
 						+ object.category + '</td>' + '<td>' + object.cons
 						+ '</td>' + '<td>' + object.description + '</td>'

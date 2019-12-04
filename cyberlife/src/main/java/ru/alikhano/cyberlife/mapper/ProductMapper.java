@@ -12,7 +12,7 @@ import ru.alikhano.cyberlife.model.Product;
 
 @Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.WARN)
 public interface ProductMapper {
-	
+
 	ProductDTO productToProductDTO(Product product);
 	Product productDTOtOProduct(ProductDTO productDTO);
 	

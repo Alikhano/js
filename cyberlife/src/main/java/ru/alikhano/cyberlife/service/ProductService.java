@@ -10,6 +10,8 @@ import ru.alikhano.cyberlife.dto.ProductInfo;
 import ru.alikhano.cyberlife.dto.SearchRequest;
 import ru.alikhano.cyberlife.model.Product;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Anastasia Likhanova
  * @version 1.0
@@ -106,7 +108,11 @@ public interface ProductService {
 	 * @param productDTO
 	 * @return true/false
 	 */
-	boolean canBeDeleted(ProductDTO productDTO);
+	boolean isAvailableForDeletion(ProductDTO productDTO);
+
+	boolean isProductExistingById(Integer productId);
+
+	boolean isProductExistingByModel(String productModel);
 
 
 }

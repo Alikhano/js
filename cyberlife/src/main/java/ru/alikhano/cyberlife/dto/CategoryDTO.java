@@ -10,11 +10,11 @@ import ru.alikhano.cyberlife.model.Category;
 @NoArgsConstructor
 public class CategoryDTO {
 
-	private int catId;
-	private String catType;
+	private int categoryId;
+	private String categoryType;
 
 	public CategoryDTO(Category category) {
-		this.catId = category.getCategoryId();
-		this.catType = category.getCategoryType();
+		this.categoryId = category.getCategoryId();
+		this.categoryType = category.getCategoryType();
 	}
 }

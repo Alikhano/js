@@ -32,7 +32,7 @@
 								<option value="order status"
 									label="order status" />
 								<option value="awaits delivery" label="awaits delivery" />
-								<option value="delivered, awaits pickup" label="delivered, awaits pickup"/>
+								<option value="delivered, awaits pickup" label="delivered, awaits pickup"/>id
 								<option value="delivered and recieved" label="delivered and recieved" />
 							</select>
 							<select id="paymentStatus" name="paymentStatus">
@@ -41,7 +41,7 @@
 								<option value="unpaid" label="unpaid" />
 								<option value="paid" label="paid" />
 							</select>
-							<input class="update" type="submit" value="<spring:message code="label.updateOrder" />" class="btn btn-success">
+							<input id="submit-order-change" class="update" type="submit" value="<spring:message code="label.updateOrder" />" class="btn btn-success">
 							<span style="color: #ff0000">${noChangehMsg}</span>
 						</form></td>
 				</sec:authorize>

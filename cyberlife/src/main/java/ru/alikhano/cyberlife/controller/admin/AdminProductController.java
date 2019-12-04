@@ -2,6 +2,8 @@ package ru.alikhano.cyberlife.controller.admin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -40,7 +42,9 @@ import ru.alikhano.cyberlife.service.ProductService;
 @Controller
 public class AdminProductController {
 
-	@Autowired
+    private static final Logger LOGGER = LogManager.getLogger(AdminProductController.class);
+
+    @Autowired
 	private ProductService productService;
 
 	@Autowired
@@ -54,8 +58,6 @@ public class AdminProductController {
 
 	@Autowired
 	private OrderService orderService;
-	
-	private static final Logger LOGGER = LogManager.getLogger(AdminProductController.class);
 
 	/** 
 	 * displays page to add new product
@@ -64,8 +66,7 @@ public class AdminProductController {
 	 */
 	@GetMapping(value = "/admin/addProduct")
 	public String getAddNewProductForm(Model model) {
-		ProductDTO newProductDTO = new ProductDTO();
-		model.addAttribute("newProductDTO", newProductDTO);
+		model.addAttribute("newProductDTO", new ProductDTO());
 		model.addAttribute("categoryDTOList", categoryService.getAll());
 		model.addAttribute("consDTOList", consService.getAll());
 		return "addProduct";
@@ -84,41 +85,29 @@ public class AdminProductController {
 	 */
 	@PostMapping(value = "/admin/addProduct", consumes = "multipart/form-data")
 	public String addProductPost(@ModelAttribute("newProductDTO") @Valid ProductDTO newProductDTO, BindingResult result,
-			HttpServletRequest request, @RequestPart("file") MultipartFile file, Model model) throws IOException, CustomLogicException {
+			HttpServletRequest request, @RequestPart("file") MultipartFile file, Model model)
+			throws IOException, CustomLogicException {
 
-		Path path;
-		
-		if (productService.getByModel(newProductDTO.getModel()) != null) {
-			model.addAttribute("error", "Oops, this model exists already");
-			LOGGER.error("Oops, this model exists already");
-			return "addProduct";
-			
-		}
-		else {
-			newProductDTO.setImage(file.getBytes());
-			productService.create(newProductDTO);
-			
-		}
-		
-		productService.getByModel(newProductDTO.getModel()).setImage(file.getBytes());
+	    String productModel = newProductDTO.getModel();
 
-		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-		path = Paths.get(rootDirectory + "/static/images/" + newProductDTO.getModel() + ".jpg");
+        if (productService.isProductExistingById(newProductDTO.getProductId())
+				|| productService.isProductExistingByModel(productModel)) {
+            model.addAttribute("error", "Oops, this model exists already");
+            LOGGER.error("Oops, this model exists already");
+            return "addProduct";
+        }
 
-		if (!file.isEmpty()) {
-			try {
-				file.transferTo(new File(path.toString()));
-			} catch (Exception ex) {
-				throw new CustomLogicException("Product image saving failed");
-			}
-		}
-		
-		model.addAttribute("status", "New product: " + newProductDTO.getModel());
-		
-		LOGGER.info("New product: " + newProductDTO.getModel());
+		newProductDTO.setImage(file.getBytes());
+        saveProductImage(request, productModel, file);
 
-		return "redirect:/admin/productList";
-	}
+        productService.create(newProductDTO);
+
+        model.addAttribute("status", "New product: " + productModel);
+
+        LOGGER.info("New product: " + productModel);
+
+        return "redirect:/admin/productList";
+    }
 
 	/**
 	 * displays inventory list
@@ -127,8 +116,7 @@ public class AdminProductController {
 	 */
 	@GetMapping("/admin/productList")
 	public String getProducts(Model model) {
-		List<ProductDTO> products = productService.getAll();
-		model.addAttribute("products", products);
+		model.addAttribute("products", productService.getAll());
 
 		return "productList";
 	}
@@ -148,11 +136,8 @@ public class AdminProductController {
 		catch(CustomLogicException ex) {
 			LOGGER.error(ex.getErrMessage());
 			model.addAttribute("status", "No such product!");
-			List<ProductDTO> products = productService.getAll();
-			model.addAttribute("products", products);
 
-			return "productList";
-			
+			return getProducts(model);
 		}
 		model.addAttribute("categoryDTOList", categoryService.getAll());
 		model.addAttribute("consDTOList", consService.getAll());
@@ -218,7 +203,7 @@ public class AdminProductController {
 			model.addAttribute("products", products);
 
 			return "productList";
-			
+
 		}
 	
 		if (result.equals("failed")) {
@@ -244,14 +229,34 @@ public class AdminProductController {
 		model.addAttribute("topProduct", productService.getTopProducts());
 		model.addAttribute("topCustomer", customerService.getTopCustomers());
 		model.addAttribute("monthlyRev", orderService.getMonthlyRevenue());
+
 		double weeklyRev = orderService.getWeeklyRevenue();
+
 		if (weeklyRev == 0) {
 			model.addAttribute("weeklyNo", "nothing to show here, try later");
 		}
-		else {
-			model.addAttribute("weeklyRev", orderService.getWeeklyRevenue() + " USD");
-		}
+
+		model.addAttribute("weeklyRev", orderService.getWeeklyRevenue() + " USD");
 		
 		return "stats";
 	}
+
+	private void saveProductImage(HttpServletRequest request, String productModel, MultipartFile productImage)
+            throws CustomLogicException {
+
+        String rootDirectory = request.getSession().getServletContext().getInitParameter("uploadDirectory");
+        File uploads = new File(rootDirectory, productModel + ".jpg");
+
+        if (uploads.exists() && !uploads.isDirectory()) {
+        	LOGGER.info("The picture for this model exists; skip saving new file");
+        	return;
+		}
+
+        try (InputStream input = productImage.getInputStream()) {
+			Files.copy(input, uploads.toPath());
+		}
+        catch (IOException ex) {
+			throw new CustomLogicException("Product image saving failed, try again later");
+		}
+    }
 }

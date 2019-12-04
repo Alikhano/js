@@ -7,14 +7,14 @@
 
 	<div class="left-column">
 		<img
-			src="${pageContext.request.contextPath}/static/images/${product.model}.jpg"
+			src="${pageContext.request.contextPath}/images/${product.model}.jpg"
 			alt="image" />
 	</div>
 	<div class="right-column">
 		<h3 class="title mb-3">${product.model}</h3>
 		<p>${product.description}</p>
 		<p>
-			<strong><spring:message code="label.Category" />: </strong>${product.category.catType}
+			<strong><spring:message code="label.Category" />: </strong>${product.category.categoryType}
 		</p>
 		<p>
 			<strong><spring:message code="label.consciousness" />: </strong>${product.cons.level} <br>
@@ -37,10 +37,10 @@
 						value='${product.unitsInStock}' />
 					<input type='hidden' id='totalPrice' name='totalPrice'
 						value='${product.price}' />
-					<form:input path="quantity" id="quantity" class="form-Control" />
 					  <sec:authorize access="!hasRole('ROLE_ADMIN')">
 					  <span id="error" style="display:none">${error}</span>
-					<input type="submit" id="addToCart" value="<spring:message code="label.submit" />"
+						  <form:input path="quantity" id="quantity" class="form-Control" />
+						  <input type="submit" id="addToCart" value="<spring:message code="label.submit" />"
 						class="btn btn-success">
 						</sec:authorize>
 					<%-- <a href="<c:url value = "/catalogue" />" class="btn btn-secondary"><spring:message code="label.back" /></a> --%>

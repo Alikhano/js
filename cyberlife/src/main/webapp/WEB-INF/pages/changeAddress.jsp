@@ -47,9 +47,9 @@
 
 		<br />
 		<br />
-		<input type="submit" value="<spring:message code="label.change"/>" class="btn btn-default">
+		<input id="submit-change" type="submit" value="<spring:message code="label.change"/>" class="btn btn-default">
 
-		<a href="<c:url value="/myAccount" />" class="btn btn-default"><spring:message code="label.cancel"/></a>
+		<a id="back-account" href="<c:url value="/myAccount" />" class="btn btn-default"><spring:message code="label.cancel"/></a>
 
 
 	</form:form>
@@ -67,46 +67,46 @@
 	$("#changeAdr").validate({
 		rules : {
 			country : {
-				required : true,
+				required : true
 
 			},
 			city : {
-				required : true,
+				required : true
 			},
 			zipCode : {
 				required : true,
 				digits : true
 			},
 			street : {
-				required : true,
+				required : true
 			},
 			building : {
-				required : true,
+				required : true
 			},
 			flat : {
-				required : true,
+				required : true
 			}
 		},
 		messages : {
 			country : {
-				required : "Please enter country",
+				required : "Please enter country"
 
 			},
 			city : {
-				required : "Please enter city",
+				required : "Please enter city"
 			},
 			zipCode : {
 				required : "Please enter zipCode",
 				digits : "Should only contain digits"
 			},
 			street : {
-				required : "Please enter the street name",
+				required : "Please enter the street name"
 			},
 			building : {
-				required : "Please enter the building number",
+				required : "Please enter the building number"
 			},
 			flat : {
-				required : "Please enter the flat number",
+				required : "Please enter the flat number"
 			}
 		}
 	});

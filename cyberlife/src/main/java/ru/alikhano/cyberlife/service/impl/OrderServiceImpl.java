@@ -166,8 +166,10 @@ public class OrderServiceImpl implements OrderService {
 		}
 
 		OrderDTO initiatedOrder = initiateOrder(orderDTO, customerDTO, cartDTO);
+
+		int orderId = createAndGetId(initiatedOrder);
 		
-		moveItemsFromCartToOrder(initiatedOrder, cartDTO);
+		moveItemsFromCartToOrder(orderId, cartDTO);
 		
 		return "success";
 	}
@@ -243,7 +245,7 @@ public class OrderServiceImpl implements OrderService {
 		return orderDTO;
 	}
 
-	private void moveItemsFromCartToOrder(OrderDTO orderDTO, CartDTO cartDTO)
+	private void moveItemsFromCartToOrder(Integer orderId, CartDTO cartDTO)
 			throws CustomLogicException, IOException, TimeoutException {
 
 		Set<CartItemDTO> items = cartDTO.getItems();
@@ -265,7 +267,7 @@ public class OrderServiceImpl implements OrderService {
 				productDTO.setUnitsInStock(prevQuantity - cartItem.getQuantity());
 				productService.merge(productDTO);
 			}
-			createCartItemFromOrderItem(cartItem, orderDTO);
+			createCartItemFromOrderItem(cartItem, orderId);
 		}
 		cartItemService.deleteAll(cartDTO);
 		items.clear();
@@ -276,12 +278,12 @@ public class OrderServiceImpl implements OrderService {
 		cartService.update(cartDTO);
 	}
 
-	private void createCartItemFromOrderItem(CartItemDTO cartItemDTO, OrderDTO orderDTO) {
+	private void createCartItemFromOrderItem(CartItemDTO cartItemDTO, Integer orderId) {
 		OrderItemDTO item = new OrderItemDTO();
 		item.setOrderQuantity(cartItemDTO.getQuantity());
 		item.setOrderTotal(cartItemDTO.getTotalPrice());
 		item.setProduct(cartItemDTO.getProduct());
-		orderDTO.addItem(item);
+		getById(orderId).addItem(item);
 		orderItemService.create(item);
 	}
 }
