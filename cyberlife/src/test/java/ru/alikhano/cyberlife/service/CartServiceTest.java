@@ -32,69 +32,57 @@ public class CartServiceTest {
 	
 	@Mock
 	private CartDao cartDaoMock;
-	
 	@Mock
 	private CartMapper cartMapper;
 
 	@InjectMocks
 	private CartServiceImpl cartServiceMock;
 
-	private Cart cartMock;
-	private CartDTO cartDTOMock;
-	private List<Cart> cartsMock;
-	private List<CartDTO> cartsDTOMock;
-	private CartItem item;
-	private CartItemDTO itemDTO;
+	private Cart cart;
+	private CartDTO cartDTO;
+	private List<CartDTO> cartsDTO;
 	private Set<CartItem> items;
-	private Set<CartItemDTO> itemsDTO;
-	
+
 	@Before
 	public void init() {
 		Category category = new Category(1,"education");
 		Consciousness cons = new Consciousness(1, "middle AI", "nothing special");
 		Product product = new Product(1,"rk800", "test description", 5, 1500.0, category, cons);
-		cartMock = new Cart(1, 1500.0, items);
-		cartDTOMock = Mockito.mock(CartDTO.class);
-		item = new CartItem(1, 1, 1500.0, product, cartMock);
-		itemDTO = new CartItemDTO(item);
+		cart = new Cart(1, 1500.0, items);
+		cartDTO = Mockito.mock(CartDTO.class);
+		CartItem item = new CartItem(1, 1, 1500.0, product, cart);
+		CartItemDTO itemDTO = new CartItemDTO(item);
 		items = new HashSet<>();
-		itemsDTO = new HashSet<>();
 		items.add(item);
-		itemsDTO.add(itemDTO);
-		
-		cartsMock = new ArrayList<>();
-		cartsDTOMock = new ArrayList<>();
-		cartsMock.add(cartMock);
-		cartsDTOMock.add(cartDTOMock);
-		Mockito.when(cartMapper.cartToCartDTO(cartMock)).thenReturn(cartDTOMock);
-		Mockito.when(cartMapper.cartDTOtoCart(cartDTOMock)).thenReturn(cartMock);
-		Mockito.doNothing().when(cartDaoMock).update(cartMock);
-		Mockito.when(cartDaoMock.getAll()).thenReturn(cartsMock);
-		Mockito.when(cartDaoMock.getById(1)).thenReturn(cartMock);
-		Mockito.when(cartDaoMock.createAndGetId(cartMock)).thenReturn(1);
-		Mockito.doReturn(itemsDTO).when(cartDTOMock).getItems();
 
+		List<Cart> carts = new ArrayList<>();
+		cartsDTO = new ArrayList<>();
+		carts.add(cart);
+		cartsDTO.add(cartDTO);
+		Mockito.when(cartMapper.cartToCartDTO(cart)).thenReturn(cartDTO);
+		Mockito.when(cartMapper.cartDTOtoCart(cartDTO)).thenReturn(cart);
+		Mockito.doNothing().when(cartDaoMock).update(cart);
+		Mockito.when(cartDaoMock.getAll()).thenReturn(carts);
+		Mockito.when(cartDaoMock.getById(1)).thenReturn(cart);
+		Mockito.when(cartDaoMock.createAndGetId(cart)).thenReturn(1);
 	}
 	
 	@Test
 	public void create() {
-		Cart cart = new Cart();
-		CartDTO cartDTO = new CartDTO(cart);
 		cartServiceMock.create(cartDTO);
-		cartDaoMock.create(cart);
-		
+		Mockito.verify(cartDaoMock).create(cart);
 	}
 	
 	@Test
 	public void update() {
-		cartServiceMock.update(cartDTOMock);
-		Mockito.verify(cartDaoMock).update(cartMock);
+		cartServiceMock.update(cartDTO);
+		Mockito.verify(cartDaoMock).update(cart);
 	}
 	
 	@Test
 	public void getById() {
 		CartDTO cartDTO = cartServiceMock.getById(1);
-		assertEquals(cartDTO, cartDTOMock);
+		assertEquals(cartDTO, this.cartDTO);
 	}
 	
 	@Test
@@ -106,13 +94,13 @@ public class CartServiceTest {
 	@Test
 	public void getAll() {
 		List<CartDTO> list = cartServiceMock.getAll();
-		assertEquals(list, cartsDTOMock);
+		assertEquals(list, cartsDTO);
 		Mockito.verify(cartDaoMock).getAll();
 	}
 	
 	@Test
 	public void createAndGetId() {
-		int id = cartServiceMock.createAndGetId(cartDTOMock);
+		int id = cartServiceMock.createAndGetId(cartDTO);
 		assertEquals(1, id);
 	}
 

@@ -14,10 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import ru.alikhano.cyberlife.dto.CategoryDTO;
-import ru.alikhano.cyberlife.dto.ConsDTO;
+import ru.alikhano.cyberlife.dto.ConsciousnessDTO;
 import ru.alikhano.cyberlife.dto.CustomLogicException;
 import ru.alikhano.cyberlife.service.CategoryService;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
@@ -39,9 +38,9 @@ public class AdminController {
 	@Autowired
 	private ConsciousnessService consService;
 
-	@RequestMapping("/admin/admin-home")
+	@GetMapping("/admin/admin-home")
 	public String home() {
-		return "admin-home";
+		return "stats";
 	}
 
 	/**
@@ -62,9 +61,9 @@ public class AdminController {
 	 */
 	@GetMapping("admin/addCons")
 	public String addCons(Model model) {
-		ConsDTO consDTO = new ConsDTO();
+		ConsciousnessDTO consciousnessDTO = new ConsciousnessDTO();
 		model.addAttribute("consLevels", consService.getAll());
-		model.addAttribute("newCons", consDTO);
+		model.addAttribute("newCons", consciousnessDTO);
 		return "addCons";
 	}
 
@@ -94,7 +93,7 @@ public class AdminController {
 	}
 
 	/**
-	 * @param consDTO instance of ConsDTO class, containing info about new category
+	 * @param consciousnessDTO instance of ConsDTO class, containing info about new category
 	 * @param result
 	 * @param request http request received from client side
 	 * @param model
@@ -102,19 +101,19 @@ public class AdminController {
 	 * @throws CustomLogicException for duplicate entry
 	 */
 	@PostMapping(value = "admin/addCons",  produces="application/json")
-	public ResponseEntity<?> addConsPost(@RequestBody @Valid ConsDTO consDTO, BindingResult result,
+	public ResponseEntity<?> addConsPost(@RequestBody @Valid ConsciousnessDTO consciousnessDTO, BindingResult result,
 			HttpServletRequest request, Model model) throws CustomLogicException {
 
 		try {
-			consService.create(consDTO);
+			consService.create(consciousnessDTO);
 		}
 		catch (ConstraintViolationException ex) {
 			logger.error(ex.getMessage() + " DUPLICATE cons entry");
 			throw new CustomLogicException("duplicate entry");
 		}
 		
-		logger.info("New AI config: " + consDTO.getLevel());
+		logger.info("New AI config: " + consciousnessDTO.getLevel());
 
-		return ResponseEntity.ok(consDTO);
+		return ResponseEntity.ok(consciousnessDTO);
 	}
 }

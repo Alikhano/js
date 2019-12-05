@@ -45,22 +45,6 @@ public interface CartItemService {
 	 * @return instance of CartItemDTO with corresponding id
 	 */
 	CartItemDTO getById(int id);
-	
-	/**
-	 * checks whether a specific product has already been added to cart
-	 * @param cartDTO instance of cart to be checked 
-	 * @param productDTO instance of a product that might have already been added to cart
-	 * @return cart item id or 0 (if no such cart item has been created yet)
-	 */
-	int checkCart(CartDTO cartDTO, ProductDTO productDTO);
-	
-	
-	/**
-	 * deletes an item from cart
-	 * @param itemId id of a cart item to be deleted
-	 * @param cartId id of a cart to be edited
-	 */
-	void deleteFromCart(int itemId, int cartId);
 
     /**
      * @param cartDTO

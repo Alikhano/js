@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 import ru.alikhano.cyberlife.dto.CategoryDTO;
-import ru.alikhano.cyberlife.dto.ConsDTO;
+import ru.alikhano.cyberlife.dto.ConsciousnessDTO;
 import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.model.Category;
 import ru.alikhano.cyberlife.model.Consciousness;
@@ -19,7 +19,7 @@ public interface ProductMapper {
 	CategoryDTO categoryToCategoryDTO(Category category);
 	Category categoryDTOtoCategory(CategoryDTO categoryDTO);
 	
-	ConsDTO consToConsDTO(Consciousness cons);
-	Consciousness consDTOtoCons(ConsDTO consDTO);
+	ConsciousnessDTO consToConsDTO(Consciousness cons);
+	Consciousness consDTOtoCons(ConsciousnessDTO consciousnessDTO);
 
 }

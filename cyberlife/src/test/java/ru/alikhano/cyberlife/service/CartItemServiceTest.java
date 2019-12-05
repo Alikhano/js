@@ -3,9 +3,7 @@ package ru.alikhano.cyberlife.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
@@ -32,99 +30,101 @@ import ru.alikhano.cyberlife.service.impl.CartItemServiceImpl;
 public class CartItemServiceTest {
 
 	@Mock
-	private CartItemDao cartItemDaoMock;
-
+	private CartItemDao cartItemDao;
 	@Mock
 	private CartItemMapper cartItemMapper;
 
 	@InjectMocks
-	private CartItemServiceImpl cartItemServiceMock;
+	private CartItemServiceImpl cartItemService;
 
-	private CartItem cartItemMock;
-	private Set<CartItem> itemsMock;
-	private List<CartItem> itemsMockList;
-	private Set<CartItemDTO> itemsDTOMock;
-	private Cart cartMock;
-	private CartDTO cartDTOMock;
-	private ProductDTO productDTOMock;
-	private CartItemDTO itemDTO;
+	private CartItem cartItem;
+	private Cart cart;
+	private CartDTO cartDTO;
+	private CartDTO cartDTOWithEmptyItems;
+	private CartItemDTO cartItemDTO;
+	private ProductDTO  productDTONew;
+	private ProductDTO productDTOExisting;
 
 	@Before
 	public void init() {
 		Category category = new Category(1, "education");
 		Consciousness cons = new Consciousness(1, "middle AI", "nothing special");
-		Product productMock = new Product(1, "rk800", "test description", 5, 1500.0, category, cons);
-		ProductDTO productDTOMock = new ProductDTO(productMock);
-		cartMock = new Cart(1, 1500.0, itemsMock);
-		cartDTOMock = Mockito.mock(CartDTO.class);
-		cartItemMock = new CartItem(1, 1, 1500.0, productMock, cartMock);
-		itemDTO = Mockito.mock(CartItemDTO.class);
-		itemDTO.setProduct(productDTOMock);
-		itemsMock = new HashSet<>();
-		itemsDTOMock = new HashSet<>();
-		itemsMockList = new ArrayList<>();
-		itemsMock.add(cartItemMock);
-		itemsMockList.add(cartItemMock);
-		itemsDTOMock.add(itemDTO);
+		Product productExisting = new Product(1, "rk800", "test description", 5, 1500.0, category, cons);
+		productDTOExisting = new ProductDTO(productExisting);
+		Product productNew = new Product(2, "rk900", "test description", 5, 1500.0, category, cons);
+		productDTONew = new ProductDTO(productNew);
+		cartItem = new CartItem(1, 1, 1500.0, productNew, cart);
+		cartItemDTO = new CartItemDTO(cartItem);
+		cartItemDTO.setProduct(productDTOExisting);
+		Set<CartItem> cartItems = new HashSet<>();
+		Set<CartItemDTO> cartItemsDTO = new HashSet<>();
+		cartItems.add(cartItem);
+		cartItemsDTO.add(cartItemDTO);
 
-		productDTOMock = Mockito.mock(ProductDTO.class);
-		Mockito.when(cartItemDaoMock.getById(1)).thenReturn(cartItemMock);
-		Mockito.when(cartItemMapper.cartItemToCartItemDTO(cartItemMock)).thenReturn(itemDTO);
-		Mockito.when(cartItemMapper.cartDTOtoCartItem(itemDTO)).thenReturn(cartItemMock);
-		Mockito.doNothing().when(cartItemDaoMock).update(cartItemMock);
-		Mockito.doNothing().when(cartItemDaoMock).delete(cartItemMock);
-		Mockito.doReturn(itemsDTOMock).when(cartDTOMock).getItems();
+		cart = new Cart(1, 1500.0, cartItems);
+		cartDTO = new CartDTO(1, 1500, cartItemsDTO);
+		cartDTOWithEmptyItems = new CartDTO(2, 1500, new HashSet<>());
+
+
+		Mockito.when(cartItemDao.getById(1)).thenReturn(cartItem);
+		Mockito.when(cartItemMapper.cartItemToCartItemDTO(cartItem)).thenReturn(cartItemDTO);
+		Mockito.when(cartItemMapper.cartDTOtoCartItem(cartItemDTO)).thenReturn(cartItem);
+		Mockito.doNothing().when(cartItemDao).create(cartItem);
+		Mockito.doNothing().when(cartItemDao).update(cartItem);
+		Mockito.doNothing().when(cartItemDao).delete(cartItem);
 	}
 
 	@Test
-	public void create() {
-		CartItem cartItem = new CartItem();
-		CartItemDTO itemDTO = new CartItemDTO(cartItem);
-		cartItemServiceMock.create(itemDTO);
-		cartItemDaoMock.create(cartItem);
-
+	public void createNewCartItem() {
+		cartItemService.create(productDTONew, cartDTO, cartItemDTO);
+		Mockito.verify(cartItemDao).create(cartItem);
 	}
 
 	@Test
-	public void update() {
-		cartItemServiceMock.update(itemDTO);
-		Mockito.verify(cartItemDaoMock).update(cartItemMock);
+	public void creatNewCartItemWithEmptyCart() {
+		cartItemService.create(productDTONew, cartDTOWithEmptyItems, cartItemDTO);
+		Mockito.verify(cartItemDao).create(cartItem);
+	}
+
+	@Test
+	public void updateExistingCartItem() {
+		cartItemService.create(productDTOExisting, cartDTO, cartItemDTO);
+		Mockito.verify(cartItemDao).update(cartItem);
 	}
 
 	@Test
 	public void delete() {
-		cartItemServiceMock.delete(itemDTO);
-		Mockito.verify(cartItemDaoMock).delete(cartItemMock);
+		cartItemService.delete(cartItemDTO);
+		Mockito.verify(cartItemDao).delete(cartItem);
 	}
 
 	@Test
 	public void getById() {
-		CartItemDTO cartItemDTO = cartItemServiceMock.getById(1);
-		assertEquals(cartItemDTO, itemDTO);
+		CartItemDTO cartItemDTO = cartItemService.getById(1);
+		assertEquals(cartItemDTO, this.cartItemDTO);
 	}
 
 	@Test
 	public void getByIdFail() {
-		CartItemDTO cartItemDTO = cartItemServiceMock.getById(2);
+		CartItemDTO cartItemDTO = cartItemService.getById(2);
 		assertNull(cartItemDTO);
 	}
 
 	@Test
 	public void deleteAll() {
-		cartItemServiceMock.deleteAll(cartDTOMock);
-
-		Mockito.verify(cartItemDaoMock).delete(cartItemMock);
+		cartItemService.deleteAll(cartDTO);
+		Mockito.verify(cartItemDao).delete(cartItem);
 	}
 
 	@Test
 	public void getCartItemById() {
-		CartItemDTO cartItem = cartItemServiceMock.getCartItemById(cartDTOMock, 1);
+		CartItemDTO cartItem = cartItemService.getCartItemById(cartDTO, 1);
 		assertEquals(1,cartItem.getItemId());
 	}
 
 	@Test
 	public void getCartItemByIdFail() {
-		CartItemDTO cartItem = cartItemServiceMock.getCartItemById(cartDTOMock, 2);
+		CartItemDTO cartItem = cartItemService.getCartItemById(cartDTO, 2);
 		assertNull(cartItem);
 	}
 }

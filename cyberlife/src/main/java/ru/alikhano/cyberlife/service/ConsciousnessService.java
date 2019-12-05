@@ -2,7 +2,7 @@ package ru.alikhano.cyberlife.service;
 
 import java.util.List;
 
-import ru.alikhano.cyberlife.dto.ConsDTO;
+import ru.alikhano.cyberlife.dto.ConsciousnessDTO;
 
 
 /**
@@ -16,26 +16,26 @@ public interface ConsciousnessService {
 	/**
 	 * @return list of all AI configurations
 	 */
-	List<ConsDTO> getAll();
+	List<ConsciousnessDTO> getAll();
 
 	/**
 	 * searches for a specific AI configuration by id
 	 * @param id of a configuration that user's searching for
 	 * @return instance of ConsDTO
 	 */
-	ConsDTO getById(int id);
+	ConsciousnessDTO getById(int id);
 
 	/**
 	 * searches for a specific AI configuration by name
 	 * @param consLevel name of a configuration that user's searching for
 	 * @return instance of ConsDTO
 	 */
-	ConsDTO getByLevel(String consLevel);
+	ConsciousnessDTO getByLevel(String consLevel);
 
 	/**
 	 * creates new AI configuration
-	 * @param consDTO
+	 * @param consciousnessDTO
 	 */
-	void create(ConsDTO consDTO);
+	void create(ConsciousnessDTO consciousnessDTO);
 
 }

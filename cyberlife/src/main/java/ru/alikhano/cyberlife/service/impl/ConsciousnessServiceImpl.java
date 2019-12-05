@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.alikhano.cyberlife.dto.ConsDTO;
+import ru.alikhano.cyberlife.dto.ConsciousnessDTO;
 import ru.alikhano.cyberlife.dao.ConsciousnessDao;
 import ru.alikhano.cyberlife.mapper.ConsciousnessMapper;
 import ru.alikhano.cyberlife.service.ConsciousnessService;
@@ -26,11 +26,11 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	 */
 	@Override
 	@Transactional
-	public List<ConsDTO> getAll() {
-		List<ConsDTO> consesDTO = new ArrayList<>();
+	public List<ConsciousnessDTO> getAll() {
+		List<ConsciousnessDTO> consesDTO = new ArrayList<>();
 		consciousnessDao.getAll().forEach(cons -> {
-			ConsDTO consDTO = consciousnessMapper.consToConsDTO(cons);
-			consesDTO.add(consDTO);
+			ConsciousnessDTO consciousnessDTO = consciousnessMapper.consToConsDTO(cons);
+			consesDTO.add(consciousnessDTO);
 		});
 		return consesDTO;
 	}
@@ -40,7 +40,7 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	 */
 	@Override
 	@Transactional
-	public ConsDTO getById(int id) {
+	public ConsciousnessDTO getById(int id) {
 
 		return consciousnessMapper.consToConsDTO(consciousnessDao.getById(id));
 	}
@@ -50,7 +50,7 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	 */
 	@Override
 	@Transactional
-	public ConsDTO getByLevel(String consciousnessLevel) {
+	public ConsciousnessDTO getByLevel(String consciousnessLevel) {
 		return consciousnessMapper.consToConsDTO(consciousnessDao.getConsByLevel(consciousnessLevel));
 	}
 
@@ -59,7 +59,7 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	 */
 	@Override
 	@Transactional
-	public void create(ConsDTO consDTO) {
-		consciousnessDao.create(consciousnessMapper.consDTOtoCons(consDTO));
+	public void create(ConsciousnessDTO consciousnessDTO) {
+		consciousnessDao.create(consciousnessMapper.consDTOtoCons(consciousnessDTO));
 	}
 }

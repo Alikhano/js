@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ru.alikhano.cyberlife.dto.ConsDTO;
+import ru.alikhano.cyberlife.dto.ConsciousnessDTO;
 import ru.alikhano.cyberlife.dao.ConsciousnessDao;
 import ru.alikhano.cyberlife.mapper.ConsciousnessMapper;
 import ru.alikhano.cyberlife.model.Consciousness;
@@ -21,63 +21,61 @@ import ru.alikhano.cyberlife.service.impl.ConsciousnessServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConsciousnessServiceTest {
-	
 	@Mock
 	private ConsciousnessDao consDaoMock;
-	
 	@Mock
 	private ConsciousnessMapper consMapperMock;
 	
 	@InjectMocks
 	private ConsciousnessServiceImpl consServiceMock;
 
-	private Consciousness consMock;
-	private ConsDTO consDTOMock;
-	private List<Consciousness> consListMock;
-	private List<ConsDTO> consDTOListMock;
+	private Consciousness  consciousness;
+	private ConsciousnessDTO consciousnessDTOMock;
+	private List<ConsciousnessDTO> consciousnessDTOList;
 
 	private static final String CONS_LEVEL = "testAI";
 	
 	@Before
 	public void init() {
-		consMock = new Consciousness(1, CONS_LEVEL, CONS_LEVEL);
-		consDTOMock = new ConsDTO(consMock);
-		consListMock = new ArrayList<>();
-		consDTOListMock = new ArrayList<>();
-		consListMock.add(consMock);
-		consDTOListMock.add(consDTOMock);
-		Mockito.when(consDaoMock.getById(1)).thenReturn(consMock);
-		Mockito.when(consDaoMock.getConsByLevel(CONS_LEVEL)).thenReturn(consMock);
-		Mockito.when(consDaoMock.getAll()).thenReturn(consListMock);
-		Mockito.doNothing().when(consDaoMock).create(consMock);
-		Mockito.when(consMapperMock.consDTOtoCons(consDTOMock)).thenReturn(consMock);
-		Mockito.when(consMapperMock.consToConsDTO(consMock)).thenReturn(consDTOMock);
+		consciousness = new Consciousness(1, CONS_LEVEL, CONS_LEVEL);
+		consciousnessDTOMock = new ConsciousnessDTO(consciousness);
+		List<Consciousness> consList = new ArrayList<>();
+		consciousnessDTOList = new ArrayList<>();
+		consList.add(consciousness);
+		consciousnessDTOList.add(consciousnessDTOMock);
+
+		Mockito.when(consDaoMock.getById(1)).thenReturn(consciousness);
+		Mockito.when(consDaoMock.getConsByLevel(CONS_LEVEL)).thenReturn(consciousness);
+		Mockito.when(consDaoMock.getAll()).thenReturn(consList);
+		Mockito.doNothing().when(consDaoMock).create(consciousness);
+		Mockito.when(consMapperMock.consDTOtoCons(consciousnessDTOMock)).thenReturn(consciousness);
+		Mockito.when(consMapperMock.consToConsDTO(consciousness)).thenReturn(consciousnessDTOMock);
 	}
 	
 	@Test
 	public void create() {
-		consServiceMock.create(consDTOMock);
-		Mockito.verify(consDaoMock).create(consMock);
+		consServiceMock.create(consciousnessDTOMock);
+		Mockito.verify(consDaoMock).create(consciousness);
 		
 	}
 	
 	@Test
 	public void getById() {
-		ConsDTO consDTO = consServiceMock.getById(1);
-	    assertEquals(consDTO.getConsId(), consDTOMock.getConsId());
+		ConsciousnessDTO consciousnessDTO = consServiceMock.getById(1);
+	    assertEquals(consciousnessDTO.getConsId(), consciousnessDTOMock.getConsId());
 		Mockito.verify(consDaoMock).getById(1);
 	}
 	
 	@Test
 	public void getByLevel() {
-		ConsDTO consDTO = consServiceMock.getByLevel(CONS_LEVEL);
-		assertEquals(consDTO.getConsId(), consDTOMock.getConsId());
+		ConsciousnessDTO consciousnessDTO = consServiceMock.getByLevel(CONS_LEVEL);
+		assertEquals(consciousnessDTO.getConsId(), consciousnessDTOMock.getConsId());
 		Mockito.verify(consDaoMock).getConsByLevel(CONS_LEVEL);
 	}
 	
 	@Test public void getAll() {
-		List<ConsDTO> list = consServiceMock.getAll();
-		assertEquals(list.size(), consDTOListMock.size());
+		List<ConsciousnessDTO> list = consServiceMock.getAll();
+		assertEquals(list.size(), consciousnessDTOList.size());
 		Mockito.verify(consDaoMock).getAll();
 	}
 }

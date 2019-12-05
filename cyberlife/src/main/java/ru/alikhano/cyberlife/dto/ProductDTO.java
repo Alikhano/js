@@ -17,7 +17,7 @@ public class ProductDTO {
 	private double price;
 	private byte[] image;
 	private CategoryDTO category;
-	private ConsDTO cons;
+	private ConsciousnessDTO cons;
 	
 	public ProductDTO (Product product) {
 		this.productId = product.getProductId();
@@ -29,7 +29,7 @@ public class ProductDTO {
 		this.category = new CategoryDTO();
 		this.category.setCategoryId(product.getCategory().getCategoryId());
 		this.category.setCategoryType(product.getCategory().getCategoryType());
-		this.cons = new ConsDTO();
+		this.cons = new ConsciousnessDTO();
 		this.cons.setConsId(product.getCons().getConsId());
 		this.cons.setLevel(product.getCons().getLevel());
 		this.cons.setDescription(product.getCons().getDescription());

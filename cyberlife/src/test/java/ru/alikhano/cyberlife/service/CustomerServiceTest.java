@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ru.alikhano.cyberlife.dto.CustomLogicException;
 import ru.alikhano.cyberlife.dto.CustomerDTO;
 import ru.alikhano.cyberlife.dao.CustomerDao;
 import ru.alikhano.cyberlife.mapper.CustomerMapper;
@@ -24,64 +23,56 @@ import ru.alikhano.cyberlife.service.impl.CustomerServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
-	
 	@Mock
 	private CustomerDao customerDao;
-	
 	@Mock
 	private CustomerMapper customerMapper;
 	
 	@InjectMocks
 	private CustomerServiceImpl customerService;
 
-	private Customer customerMock;
-	private CustomerDTO customerDTOMock;
-	private List<Customer> customers;
+	private Customer customer;
+	private CustomerDTO customerDTO;
 	private List<CustomerDTO> customersDTO;
 	
 	@Before
 	public void init() {
 	   Address address = new Address(1, "UK", "London", "198303","Sptring street","10","5");
-	   customerMock = new Customer(1, "Anna", "Johnson", "1994-10-26", "johnsanna@gmail.com", address);
-	   customerDTOMock = new CustomerDTO(customerMock);
-	   customers = new ArrayList<>();
+	   customer = new Customer(1, "Anna", "Johnson", "1994-10-26", "johnsanna@gmail.com", address);
+	   customerDTO = new CustomerDTO(customer);
+	   List<Customer> customers = new ArrayList<>();
 	   customersDTO = new ArrayList<>();
-	   customers.add(customerMock);
-	   customersDTO.add(customerDTOMock);
+	   customers.add(customer);
+	   customersDTO.add(customerDTO);
 	   
-	   Mockito.when(customerDao.getById(1)).thenReturn(customerMock);
-	   Mockito.when(customerDao.getByEmail("johnsanna@gmail.com")).thenReturn(customerMock);
+	   Mockito.when(customerDao.getById(1)).thenReturn(customer);
+	   Mockito.when(customerDao.getByEmail("johnsanna@gmail.com")).thenReturn(customer);
 	   Mockito.when(customerDao.getAll()).thenReturn(customers);
-	   Mockito.when(customerMapper.customerDTOtoCustomer(customerDTOMock)).thenReturn(customerMock);
-	   Mockito.when(customerMapper.customerToCustomerDTO(customerMock)).thenReturn(customerDTOMock);
-	   
-	   Mockito.doNothing().when(customerDao).create(customerMock);
-		
-		Mockito.doNothing().when(customerDao).update(customerMock);
-		
-		Mockito.doNothing().when(customerDao).delete(customerMock);
-		
-		Mockito.when(customerDao.getTopCustomers()).thenReturn(customers);
-		Mockito.when(customerDao.getByUserId(1)).thenReturn(customerMock);
-	
+	   Mockito.when(customerMapper.customerDTOtoCustomer(customerDTO)).thenReturn(customer);
+	   Mockito.when(customerMapper.customerToCustomerDTO(customer)).thenReturn(customerDTO);
+	   Mockito.doNothing().when(customerDao).create(customer);
+	   Mockito.doNothing().when(customerDao).update(customer);
+	   Mockito.doNothing().when(customerDao).delete(customer);
+	   Mockito.when(customerDao.getTopCustomers()).thenReturn(customers);
+	   Mockito.when(customerDao.getByUserId(1)).thenReturn(customer);
 	}
 	
 	@Test
 	public void create() {
-		customerService.create(customerDTOMock);
-		Mockito.verify(customerDao).create(customerMock);
+		customerService.create(customerDTO);
+		Mockito.verify(customerDao).create(customer);
 	}
 	
 	@Test
 	public void delete() {
-		customerService.delete(customerDTOMock);
-		Mockito.verify(customerDao).delete(customerMock);
+		customerService.delete(customerDTO);
+		Mockito.verify(customerDao).delete(customer);
 	}
 	
 	@Test
 	public void update() {
-		customerService.update(customerDTOMock);
-		Mockito.verify(customerDao).update(customerMock);
+		customerService.update(customerDTO);
+		Mockito.verify(customerDao).update(customer);
 		
 	}
 	
@@ -128,7 +119,7 @@ public class CustomerServiceTest {
 	@Test
 	public void getByUserId() {
 		CustomerDTO customer = customerService.getByUserId(1);
-		assertEquals(customer, customerDTOMock);
+		assertEquals(customer, customerDTO);
 		Mockito.verify(customerDao).getByUserId(1);
 	}
 	
@@ -137,5 +128,4 @@ public class CustomerServiceTest {
 		CustomerDTO customer = customerService.getByUserId(2);
 		assertNull(customer);
 	}
-
 }

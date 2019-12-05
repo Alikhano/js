@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.util.WebUtils;
 
 import ru.alikhano.cyberlife.dto.CartDTO;
-import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 
 /**
@@ -29,9 +28,6 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
-	@Autowired
-	private CartItemService cartItemService;
-	
 	private static final Logger LOGGER = LogManager.getLogger(CartController.class);
 	
 	/**
@@ -43,7 +39,6 @@ public class CartController {
 	@GetMapping("/myCart")
 	public String viewCart(HttpServletRequest request, Model model) {
 		int cartId = 0;
-		CartDTO cartDTO = null;
 		Cookie[] cookies = request.getCookies();
 		for (Cookie cookie : cookies) {
 			if (cookie.getName().equals("cartId")) {
@@ -51,7 +46,7 @@ public class CartController {
 			}
 		}
 		if (cartId != 0) {
-			cartDTO = cartService.getById(cartId);
+			CartDTO cartDTO = cartService.getById(cartId);
 			model.addAttribute("cart", cartDTO);
 			model.addAttribute("cartItems", cartDTO.getItems());
 		}
@@ -70,7 +65,8 @@ public class CartController {
 	public String deleteProduct(@PathVariable("itemId") int itemId, HttpServletRequest request, Model model){
 		
 		int cartId = Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue());
-	    cartItemService.deleteFromCart(itemId, cartId);
+		CartDTO cartDTO = cartService.getById(cartId);
+	    cartService.deleteItemFromCart(cartDTO, itemId);
 				
 		LOGGER.info("Item is removed from cart");
 

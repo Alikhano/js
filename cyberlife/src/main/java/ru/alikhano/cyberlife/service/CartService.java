@@ -44,4 +44,6 @@ public interface CartService {
      */
 	void merge(CartDTO cartDTO);
 
+	void deleteItemFromCart(CartDTO cartDTO, int itemId);
+
 }

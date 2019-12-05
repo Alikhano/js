@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 import ru.alikhano.cyberlife.dto.CartDTO;
 import ru.alikhano.cyberlife.dto.CartItemDTO;
 import ru.alikhano.cyberlife.dto.CategoryDTO;
-import ru.alikhano.cyberlife.dto.ConsDTO;
+import ru.alikhano.cyberlife.dto.ConsciousnessDTO;
 import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.model.Cart;
 import ru.alikhano.cyberlife.model.CartItem;
@@ -44,8 +44,8 @@ public interface CartItemMapper {
 
 	Category categoryDTOtoCategory(CategoryDTO categoryDTO);
 
-	ConsDTO consToConsDTO(Consciousness cons);
+	ConsciousnessDTO consToConsDTO(Consciousness cons);
 
-	Consciousness consDTOtoCons(ConsDTO consDTO);
+	Consciousness consDTOtoCons(ConsciousnessDTO consciousnessDTO);
 
 }

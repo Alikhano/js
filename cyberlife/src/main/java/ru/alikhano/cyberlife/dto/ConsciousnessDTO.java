@@ -9,13 +9,13 @@ import ru.alikhano.cyberlife.model.Consciousness;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ConsDTO {
+public class ConsciousnessDTO {
 	
 	private int consId;
 	private String level;
 	private String description;
 
-	public ConsDTO(Consciousness cons) {
+	public ConsciousnessDTO(Consciousness cons) {
 		this.consId = cons.getConsId();
 		this.level = cons.getLevel();
 		this.description = cons.getDescription();

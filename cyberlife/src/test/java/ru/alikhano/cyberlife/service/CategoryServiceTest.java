@@ -21,51 +21,44 @@ import ru.alikhano.cyberlife.service.impl.CategoryServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryServiceTest {
-	
 	@Mock
 	private CategoryDao categoryDao;
-	
 	@Mock
 	private CategoryMapper categoryMapper;
 	
 	@InjectMocks
 	private CategoryServiceImpl categoryService;
 
-	private Category categoryMock;
-	private CategoryDTO categoryDTOMock;
-	private List<Category> categories;
-	private List<CategoryDTO> categoriesDTO;
+	private Category category;
+	private CategoryDTO categoryDTO;
 	
 	@Before
 	public void init() {
-		categoryMock = new Category(1, "education");
-		categoryDTOMock = new CategoryDTO(categoryMock);
-		categories = new ArrayList<>();
-		categoriesDTO = new ArrayList<>();
-		categories.add(categoryMock);
-		categoriesDTO.add(categoryDTOMock);
-		Mockito.when(categoryDao.getByType("education")).thenReturn(categoryMock);
-		Mockito.when(categoryDao.getById(1)).thenReturn(categoryMock);
+		category = new Category(1, "education");
+		categoryDTO = new CategoryDTO(category);
+		List<Category> categories = new ArrayList<>();
+		categories.add(category);
+
+		Mockito.when(categoryDao.getByType("education")).thenReturn(category);
+		Mockito.when(categoryDao.getById(1)).thenReturn(category);
 		Mockito.when(categoryDao.getAll()).thenReturn(categories);
-		Mockito.when(categoryMapper.categoryDTOtoCategory(categoryDTOMock)).thenReturn(categoryMock);
-		Mockito.when(categoryMapper.categoryToCategoryDTO(categoryMock)).thenReturn(categoryDTOMock);
-		Mockito.when(categoryDao.createAndGetId(categoryMock)).thenReturn(1);
-		
-		Mockito.doNothing().when(categoryDao).create(categoryMock);
-		
-		
+		Mockito.when(categoryMapper.categoryDTOtoCategory(categoryDTO)).thenReturn(category);
+		Mockito.when(categoryMapper.categoryToCategoryDTO(category)).thenReturn(categoryDTO);
+		Mockito.when(categoryDao.createAndGetId(category)).thenReturn(1);
+		Mockito.doNothing().when(categoryDao).create(category);
+
 	}
 	
 	@Test
 	public void create() {
-		categoryService.create(categoryDTOMock);
-		Mockito.verify(categoryDao).create(categoryMock);
+		categoryService.create(categoryDTO);
+		Mockito.verify(categoryDao).create(category);
 	}
 
 	
 	@Test
 	public void createAndGetId() {
-		int id = categoryService.createAndGetId(categoryDTOMock);
+		int id = categoryService.createAndGetId(categoryDTO);
 		assertEquals(1, id);
 	}
 	
@@ -86,5 +79,4 @@ public class CategoryServiceTest {
 		categoryService.getAll();
 		Mockito.verify(categoryDao).getAll();
 	}
-
 }

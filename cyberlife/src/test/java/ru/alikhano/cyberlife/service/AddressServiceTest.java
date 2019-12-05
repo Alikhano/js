@@ -25,56 +25,53 @@ public class AddressServiceTest {
 	
 	@Mock
 	private AddressDao addressDao;
-	
-	@InjectMocks
-	private AddressServiceImpl addressService;
-	
 	@Mock
 	private AddressMapper addressMapper;
 	
-	private Address addressMock;
-	private AddressDTO addressDTOMock;
-	private List<Address> addresses;
+	@InjectMocks
+	private AddressServiceImpl addressService;
+
+	private Address address;
+	private AddressDTO addressDTO;
 	private List<AddressDTO> addressesDTO;
 	
 	@Before
 	public void init() {
-		addressMock = new Address(1, "UK", "London", "198303","Sptring street","10","5");
-		addressDTOMock = new AddressDTO(addressMock);
-		addresses = new ArrayList<>();
+		address = new Address(1, "UK", "London", "198303",
+							  "Spring street", "10", "5");
+		addressDTO = new AddressDTO(address);
+		List<Address> addresses = new ArrayList<>();
 		addressesDTO = new ArrayList<>();
-		addresses.add(addressMock);
-		addressesDTO.add(addressDTOMock);
+		addresses.add(address);
+		addressesDTO.add(addressDTO);
 		
-		Mockito.when(addressDao.getById(1)).thenReturn(addressMock);
+		Mockito.when(addressDao.getById(1)).thenReturn(address);
 		Mockito.when(addressDao.getAll()).thenReturn(addresses);
-		Mockito.when(addressMapper.addressDTOtoAddress(addressDTOMock)).thenReturn(addressMock);
-		Mockito.when(addressMapper.addressToAddressDTO(addressMock)).thenReturn(addressDTOMock);
+		Mockito.when(addressMapper.addressDTOtoAddress(addressDTO)).thenReturn(address);
+		Mockito.when(addressMapper.addressToAddressDTO(address)).thenReturn(addressDTO);
 		
-		Mockito.doNothing().when(addressDao).create(addressMock);
-		
-		Mockito.doNothing().when(addressDao).update(addressMock);
-		
-		Mockito.doNothing().when(addressDao).delete(addressMock);
+		Mockito.doNothing().when(addressDao).create(address);
+		Mockito.doNothing().when(addressDao).update(address);
+		Mockito.doNothing().when(addressDao).delete(address);
 		
 	}
 	
 	@Test
 	public void create() {
-		addressService.create(addressDTOMock);
-		addressDao.create(addressMock);
+		addressService.create(addressDTO);
+		Mockito.verify(addressDao).create(address);
 	}
 	
 	@Test
 	public void update() {
-		addressService.update(addressDTOMock);
-		addressDao.update(addressMock);
+		addressService.update(addressDTO);
+		Mockito.verify(addressDao).update(address);
 	}
 	
 	@Test
 	public void delete() {
-		addressService.delete(addressDTOMock);
-		addressDao.delete(addressMock);
+		addressService.delete(addressDTO);
+		Mockito.verify(addressDao).delete(address);
 	}
 	
 	@Test
