@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
 	private ConsciousnessService consService;
 	
 	@Autowired
-	private MessagingService messaginService;
+	private MessagingService messagingService;
 
 	/**
 	 * {@inheritDoc}
@@ -109,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		productDao.update(productMapper.productDTOtOProduct(productDTO));
 		if (isInTop(productDTO)) {
-			messaginService.sendUpdateMessage("table should be updated!");
+			messagingService.sendUpdateMessage("table should be updated!");
 		}
 		
 		return "sucess";
@@ -129,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
 		if (isAvailableForDeletion(productDTO)) {
 			productDao.delete(productMapper.productDTOtOProduct(productDTO));
 			if (isInTop(productDTO)) {
-				messaginService.sendUpdateMessage("table should be updated!");
+				messagingService.sendUpdateMessage("table should be updated!");
 			}
 			
 			return "success";
@@ -210,18 +210,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public ProductDTO selectForUpdate(int id) {
-
 		return productMapper.productToProductDTO(productDao.selectForUpdate(id));
-	}
-
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Transactional
-	public Product getProductById(int id) {
-		return productDao.getById(id);
 	}
 
 	/**
@@ -247,7 +236,7 @@ public class ProductServiceImpl implements ProductService {
 	public void merge(ProductDTO productDTO) throws IOException, TimeoutException {
 		productDao.merge(productMapper.productDTOtOProduct(productDTO));
 		if (isInTop(productDTO)) {
-			messaginService.sendUpdateMessage("table should be updated!");
+			messagingService.sendUpdateMessage("table should be updated!");
 		}
 	}
 
@@ -274,7 +263,14 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public boolean isProductExistingById(Integer productId) {
-		return getProductById(productId) != null;
+		try {
+		 getById(productId);
+		 return true;
+		}
+		catch (CustomLogicException e) {
+			return false;
+		}
+
 	}
 
 	@Override

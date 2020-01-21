@@ -26,9 +26,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	@Transactional
 	public void create(OrderItemDTO orderItemDTO) {
-
 		orderItemDao.create(orderItemMapper.orderItemDTOtoOrderItem(orderItemDTO));
-		
 	}
 
 	/**
@@ -37,9 +35,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	@Transactional
 	public void update(OrderItemDTO orderItemDTO) {
-
 		orderItemDao.update(orderItemMapper.orderItemDTOtoOrderItem(orderItemDTO));
-		
 	}
 
 	/**
@@ -48,9 +44,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	@Transactional
 	public void delete(OrderItemDTO orderItemDTO) {
-
 		orderItemDao.delete(orderItemMapper.orderItemDTOtoOrderItem(orderItemDTO));
-		
 	}
 
 	/**
@@ -59,11 +53,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	@Transactional
 	public void deleteAll(OrderDTO orderDTO) {
-
 		for (OrderItemDTO item : orderDTO.getOrderedItems()) {
 			orderItemDao.delete(orderItemMapper.orderItemDTOtoOrderItem(item));
 		}
-		
 	}
 
 	/**
@@ -72,7 +64,6 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	@Transactional
 	public OrderItemDTO getById(int id) {
-
 		return orderItemMapper.orderItemToOrderItemDTO(orderItemDao.getById(id));
 	}
 }

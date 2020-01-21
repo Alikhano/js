@@ -4,9 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,124 +14,118 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import ru.alikhano.cyberlife.dto.RoleDTO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.dao.UserDao;
 import ru.alikhano.cyberlife.mapper.UserMapper;
-import ru.alikhano.cyberlife.model.Role;
 import ru.alikhano.cyberlife.model.User;
 import ru.alikhano.cyberlife.service.impl.UserServiceImpl;
+import ru.alikhano.cyberlife.supplier.UserSupplier;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 	
 	@Mock
-	private UserDao userDaoMock;
-	
+	private UserDao userDao;
 	@Mock
-	private UserMapper userMapperMock;
+	private UserMapper userMapper;
+	@Mock
+	private RoleService roleService;
+	@Mock
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@InjectMocks
-	private  UserServiceImpl userServiceMock;
+	private  UserServiceImpl userService;
 
-	private User userMock;
-	private UserDTO userDTOMock;
-	private List<User> users;
-	private List<UserDTO> usersDTO;
-	
+	private User user;
+	private UserDTO userDTO;
+
+	private static final String TEST_PASSWORD = "1234";
+	private static final String TEST_USERNAME = "user";
+
 	@Before
 	public void init() {
-		Role role = new Role(1, "ADMIN");
-		RoleDTO roleDTO = new RoleDTO(role);
-		Set<Role> roles = new HashSet<>();
-		Set<RoleDTO> rolesDTO=new HashSet<>();
-		roles.add(role);
-		rolesDTO.add(roleDTO);
-		userMock = new User(1, "user", "1234", true, roles);
-		userDTOMock = Mockito.mock(UserDTO.class);
-		userDTOMock.setRoles(rolesDTO);
+		user = UserSupplier.getAdminUser();
+		userDTO = UserSupplier.getAdminUserDTO();
 		
-		Mockito.doNothing().when(userDaoMock).create(userMock);
-		Mockito.doNothing().when(userDaoMock).delete(userMock);
-		Mockito.doNothing().when(userDaoMock).update(userMock);
+		Mockito.doNothing().when(userDao).create(user);
+		Mockito.doNothing().when(userDao).delete(user);
+		Mockito.doNothing().when(userDao).update(user);
 		
-		Mockito.when(userDaoMock.getByUsername("user")).thenReturn(userMock);
-		Mockito.when(userDaoMock.getById(1)).thenReturn(userMock);
-		Mockito.when(userDaoMock.getAll()).thenReturn(users);
-		
-		Mockito.when(userMapperMock.userDTOtoUser(userDTOMock)).thenReturn(userMock);
-		Mockito.when(userMapperMock.userToUserDTO(userMock)).thenReturn(userDTOMock);
-		Mockito.doReturn("$2a$11$CGbN7TL4PbIg3nnRzRCPjOJPGl2e2enng/xSbf1SQ.WuKWCfTLtF6").when(userDTOMock).getPassword();
-		
+		Mockito.when(userDao.getByUsername(TEST_USERNAME)).thenReturn(user);
+		Mockito.when(userDao.getById(1)).thenReturn(user);
+		Mockito.when(userDao.getAll()).thenReturn(Collections.singletonList(user));
+		Mockito.when(userMapper.userDTOtoUser(userDTO)).thenReturn(user);
+		Mockito.when(userMapper.userToUserDTO(user)).thenReturn(userDTO);
+
 	}
 	
 	@Test
 	public void create() {
-		userServiceMock.create(userMock);
-		Mockito.verify(userDaoMock).create(userMock);
+		userService.create(user);
+		Mockito.verify(userDao).create(user);
 	}
 	
 	@Test
 	public void delete() {
-		userServiceMock.delete(userMock);
-		Mockito.verify(userDaoMock).delete(userMock);
+		userService.delete(user);
+		Mockito.verify(userDao).delete(user);
 	}
 	
 	@Test
 	public void getById() {
-		User user = userServiceMock.getById(1);
-		assertEquals(user.getUserId(), userMock.getUserId());
-		Mockito.verify(userDaoMock).getById(1);
+		User user = userService.getById(1);
+		assertEquals(user.getUserId(), this.user.getUserId());
+		Mockito.verify(userDao).getById(1);
 	}
 	
 	@Test
 	public void getByIdFail() {
-		User user = userServiceMock.getById(2);
+		User user = userService.getById(2);
 		assertNull(user);
 	}
 	
 	
 	@Test
 	public void updateDTO() {
-		userServiceMock.update(userDTOMock);
-		Mockito.verify(userDaoMock).update(userMock);
+		userService.update(userDTO);
+		Mockito.verify(userDao).update(user);
 	}
 	
 	@Test
 	public void getByUsername() {
-		userServiceMock.getByUsernameDTO("user");
-		Mockito.verify(userDaoMock).getByUsername("user");
+		userService.getByUsernameDTO(TEST_USERNAME);
+		Mockito.verify(userDao).getByUsername(TEST_USERNAME);
 	}
 	
 	@Test
 	public void getByUserNameFail() {
-		UserDTO user = userServiceMock.getByUsernameDTO("user1");
+		UserDTO user = userService.getByUsernameDTO("user1");
 		assertNull(user);
 	}
 	
 	@Test
 	public void getAll() {
-		userServiceMock.getAll();
-		Mockito.verify(userDaoMock).getAll();
+		userService.getAll();
+		Mockito.verify(userDao).getAll();
 	}
 	
 	@Test
 	public void register() {
-		userServiceMock.register(userDTOMock);
+		userService.register(userDTO);
+		Mockito.verify(userDao).create(Mockito.any());
 	}
 	
 	@Test
 	public void changePassword() {
-		userServiceMock.changePassword("1234", userDTOMock);
-		Mockito.verify(userDaoMock).update(userMock);
-		
+		userService.changePassword(TEST_PASSWORD, userDTO);
+		Mockito.verify(userDao).update(user);
 	}
 	
 	@Test
 	public void verifyPassword() {
-		boolean pswdCheck = userServiceMock.verifyPassword("1234", 1);
+		boolean pswdCheck = userService.verifyPassword(TEST_PASSWORD, 1);
 		assertTrue(pswdCheck);
-		
 	}
 
 }

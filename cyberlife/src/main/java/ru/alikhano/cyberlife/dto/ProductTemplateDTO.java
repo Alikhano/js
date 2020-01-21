@@ -13,5 +13,5 @@ public class ProductTemplateDTO {
 
     List<CategoryDTO> availableCategories;
 
-    List<ConsDTO> availableConsciousnessLevels;
+    List<ConsciousnessDTO> availableConsciousnessLevels;
 }

@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void create(User user) {
-
 		userDao.create(user);
 	}
 
@@ -49,7 +48,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void delete(User user) {
-
 		userDao.delete(user);
 	}
 
@@ -59,7 +57,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User getById(int id) {
-
 		return userDao.getById(id);
 	}
 
@@ -69,7 +66,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public UserDTO getDTOById(int id) {
-
 		return userMapper.userToUserDTO(getById(id));
 	}
 
@@ -79,7 +75,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public List<User> getAll() {
-
 		return userDao.getAll();
 	}
 
@@ -89,7 +84,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void changePassword(String password, UserDTO userDTO) {
-
 		userDTO.setPassword(encoder.encode(password));
 		update(userDTO);
 	}
@@ -100,7 +94,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void update(UserDTO userDTO) {
-
 		userDao.update(userMapper.userDTOtoUser(userDTO));
 	}
 
@@ -110,7 +103,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User getByUsername(String username) {
-
 		return userDao.getByUsername(username);
 	}
 
@@ -140,7 +132,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public UserDTO getByUsernameDTO(String username) {
-
 		return userMapper.userToUserDTO(getByUsername(username));
 	}
 
@@ -152,7 +143,6 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public boolean verifyPassword(String password, int id) {
 		UserDTO userDTO = getDTOById(id);
-
 		return BCrypt.checkpw(password, userDTO.getPassword());
 	}
 

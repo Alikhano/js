@@ -8,9 +8,6 @@ import ru.alikhano.cyberlife.dto.CustomLogicException;
 import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dto.ProductInfo;
 import ru.alikhano.cyberlife.dto.SearchRequest;
-import ru.alikhano.cyberlife.model.Product;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Anastasia Likhanova
@@ -19,13 +16,6 @@ import javax.servlet.http.HttpSession;
  *
  */
 public interface ProductService {
-	
-	/**
-	 * searches for a product by id
-	 * @param id of a product we're searching for
-	 * @return instance of Product with corresponding id
-	 */
-	Product getProductById(int id);
 
 	/**
 	 * @return list of all products
@@ -110,7 +100,7 @@ public interface ProductService {
 	 */
 	boolean isAvailableForDeletion(ProductDTO productDTO);
 
-	boolean isProductExistingById(Integer productId);
+	boolean isProductExistingById(Integer productId) throws CustomLogicException;
 
 	boolean isProductExistingByModel(String productModel);
 

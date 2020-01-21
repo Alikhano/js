@@ -1,14 +1,15 @@
 package ru.alikhano.cyberlife.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.mapstruct.Named;
 import ru.alikhano.cyberlife.model.Consciousness;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ConsciousnessDTO {
 	
 	private int consId;

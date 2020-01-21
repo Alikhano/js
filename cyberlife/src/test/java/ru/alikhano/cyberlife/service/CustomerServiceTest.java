@@ -3,7 +3,6 @@ package ru.alikhano.cyberlife.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -17,9 +16,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ru.alikhano.cyberlife.dto.CustomerDTO;
 import ru.alikhano.cyberlife.dao.CustomerDao;
 import ru.alikhano.cyberlife.mapper.CustomerMapper;
-import ru.alikhano.cyberlife.model.Address;
 import ru.alikhano.cyberlife.model.Customer;
 import ru.alikhano.cyberlife.service.impl.CustomerServiceImpl;
+import ru.alikhano.cyberlife.supplier.CustomerSupplier;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
@@ -34,19 +33,18 @@ public class CustomerServiceTest {
 	private Customer customer;
 	private CustomerDTO customerDTO;
 	private List<CustomerDTO> customersDTO;
+
+	private static final String TEST_EMAIL = "johnsanna@gmail.com";
 	
 	@Before
 	public void init() {
-	   Address address = new Address(1, "UK", "London", "198303","Sptring street","10","5");
-	   customer = new Customer(1, "Anna", "Johnson", "1994-10-26", "johnsanna@gmail.com", address);
-	   customerDTO = new CustomerDTO(customer);
-	   List<Customer> customers = new ArrayList<>();
-	   customersDTO = new ArrayList<>();
-	   customers.add(customer);
-	   customersDTO.add(customerDTO);
+	   customer = CustomerSupplier.getCustomer();
+	   customerDTO = CustomerSupplier.getCustomerDTO();
+	   List<Customer> customers = CustomerSupplier.getCustomers();
+	   customersDTO = CustomerSupplier.getCustomersDTO();
 	   
 	   Mockito.when(customerDao.getById(1)).thenReturn(customer);
-	   Mockito.when(customerDao.getByEmail("johnsanna@gmail.com")).thenReturn(customer);
+	   Mockito.when(customerDao.getByEmail(TEST_EMAIL)).thenReturn(customer);
 	   Mockito.when(customerDao.getAll()).thenReturn(customers);
 	   Mockito.when(customerMapper.customerDTOtoCustomer(customerDTO)).thenReturn(customer);
 	   Mockito.when(customerMapper.customerToCustomerDTO(customer)).thenReturn(customerDTO);
@@ -91,9 +89,9 @@ public class CustomerServiceTest {
 	
 	@Test
 	public void getByEmail() {
-		CustomerDTO customer = customerService.getByEmail("johnsanna@gmail.com");
+		CustomerDTO customer = customerService.getByEmail(TEST_EMAIL);
 		assertEquals(1, customer.getCustomerId());
-		Mockito.verify(customerDao).getByEmail("johnsanna@gmail.com");
+		Mockito.verify(customerDao).getByEmail(TEST_EMAIL);
 	}
 	
 	@Test
