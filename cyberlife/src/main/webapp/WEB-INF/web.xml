@@ -69,4 +69,5 @@
 	<location>/WEB-INF/pages/error.jsp</location>
 	</error-page>
 
+	<absolute-ordering />
 </web-app>

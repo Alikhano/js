@@ -3,9 +3,6 @@ package ru.alikhano.cyberlife.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +16,11 @@ import ru.alikhano.cyberlife.dto.CartItemDTO;
 import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dao.CartItemDao;
 import ru.alikhano.cyberlife.mapper.CartItemMapper;
-import ru.alikhano.cyberlife.model.Cart;
 import ru.alikhano.cyberlife.model.CartItem;
-import ru.alikhano.cyberlife.model.Category;
-import ru.alikhano.cyberlife.model.Consciousness;
-import ru.alikhano.cyberlife.model.Product;
 import ru.alikhano.cyberlife.service.impl.CartItemServiceImpl;
+import ru.alikhano.cyberlife.supplier.CartItemSupplier;
+import ru.alikhano.cyberlife.supplier.CartSupplier;
+import ru.alikhano.cyberlife.supplier.ProductSupplier;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CartItemServiceTest {
@@ -38,7 +34,6 @@ public class CartItemServiceTest {
 	private CartItemServiceImpl cartItemService;
 
 	private CartItem cartItem;
-	private Cart cart;
 	private CartDTO cartDTO;
 	private CartDTO cartDTOWithEmptyItems;
 	private CartItemDTO cartItemDTO;
@@ -47,23 +42,12 @@ public class CartItemServiceTest {
 
 	@Before
 	public void init() {
-		Category category = new Category(1, "education");
-		Consciousness cons = new Consciousness(1, "middle AI", "nothing special");
-		Product productExisting = new Product(1, "rk800", "test description", 5, 1500.0, category, cons);
-		productDTOExisting = new ProductDTO(productExisting);
-		Product productNew = new Product(2, "rk900", "test description", 5, 1500.0, category, cons);
-		productDTONew = new ProductDTO(productNew);
-		cartItem = new CartItem(1, 1, 1500.0, productNew, cart);
-		cartItemDTO = new CartItemDTO(cartItem);
-		cartItemDTO.setProduct(productDTOExisting);
-		Set<CartItem> cartItems = new HashSet<>();
-		Set<CartItemDTO> cartItemsDTO = new HashSet<>();
-		cartItems.add(cartItem);
-		cartItemsDTO.add(cartItemDTO);
-
-		cart = new Cart(1, 1500.0, cartItems);
-		cartDTO = new CartDTO(1, 1500, cartItemsDTO);
-		cartDTOWithEmptyItems = new CartDTO(2, 1500, new HashSet<>());
+		productDTOExisting = ProductSupplier.getProductDTO(1, "rk800");
+		productDTONew = ProductSupplier.getProductDTO(2, "rk900");
+		cartItem = CartItemSupplier.getCartItemWithSetProduct();
+		cartItemDTO = CartItemSupplier.getCartItemDTOWithSetProduct();
+		cartDTO = CartSupplier.getCartDTOWithSpecifiedCartItems(cartItemDTO);
+		cartDTOWithEmptyItems = CartSupplier.getEmptyCartDTO();
 
 
 		Mockito.when(cartItemDao.getById(1)).thenReturn(cartItem);

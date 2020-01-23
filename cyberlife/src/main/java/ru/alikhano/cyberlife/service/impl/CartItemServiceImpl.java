@@ -1,11 +1,13 @@
 package ru.alikhano.cyberlife.service.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.util.CollectionUtils;
 import ru.alikhano.cyberlife.dto.CartDTO;
 import ru.alikhano.cyberlife.dto.CartItemDTO;
 import ru.alikhano.cyberlife.dto.ProductDTO;
@@ -59,9 +61,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public void update(CartItemDTO cartItemDTO) {
-
 		cartItemDao.update(cartItemMapper.cartDTOtoCartItem(cartItemDTO));
-
 	}
 
 	/**
@@ -70,7 +70,6 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public CartItemDTO getById(int id) {
-
 		return cartItemMapper.cartItemToCartItemDTO(cartItemDao.getById(id));
 	}
 
@@ -109,13 +108,12 @@ public class CartItemServiceImpl implements CartItemService {
 	private int checkCart(CartDTO cartDTO, ProductDTO productDTO) {
 		Set<CartItemDTO> items = cartDTO.getItems();
 
-		if (!items.isEmpty()) {
+		if (!CollectionUtils.isEmpty(items)) {
 			CartItemDTO matchingCartItem = items.stream()
 					.filter(item -> item.getProduct().getProductId() == productDTO.getProductId())
 					.findFirst().orElse(null);
 
 			return matchingCartItem != null ? matchingCartItem.getItemId() : 0;
-
 		}
 
 		return 0;
@@ -131,6 +129,10 @@ public class CartItemServiceImpl implements CartItemService {
 
 		cartItemDTO.setProduct(productDTO);
 		cartItemDTO.setCart(cartDTO);
+
+		if (CollectionUtils.isEmpty(cartDTO.getItems())) {
+			cartDTO.setItems(new HashSet<>());
+		}
 
 		cartDTO.getItems().add(cartItemDTO);
 

@@ -3,7 +3,7 @@ package ru.alikhano.cyberlife.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -19,6 +19,7 @@ import ru.alikhano.cyberlife.dao.AddressDao;
 import ru.alikhano.cyberlife.mapper.AddressMapper;
 import ru.alikhano.cyberlife.model.Address;
 import ru.alikhano.cyberlife.service.impl.AddressServiceImpl;
+import ru.alikhano.cyberlife.supplier.AddressSupplier;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AddressServiceTest {
@@ -33,20 +34,14 @@ public class AddressServiceTest {
 
 	private Address address;
 	private AddressDTO addressDTO;
-	private List<AddressDTO> addressesDTO;
 	
 	@Before
 	public void init() {
-		address = new Address(1, "UK", "London", "198303",
-							  "Spring street", "10", "5");
-		addressDTO = new AddressDTO(address);
-		List<Address> addresses = new ArrayList<>();
-		addressesDTO = new ArrayList<>();
-		addresses.add(address);
-		addressesDTO.add(addressDTO);
+		address = AddressSupplier.getAddress();
+		addressDTO = AddressSupplier.getAddressDTO();
 		
 		Mockito.when(addressDao.getById(1)).thenReturn(address);
-		Mockito.when(addressDao.getAll()).thenReturn(addresses);
+		Mockito.when(addressDao.getAll()).thenReturn(Collections.singletonList(address));
 		Mockito.when(addressMapper.addressDTOtoAddress(addressDTO)).thenReturn(address);
 		Mockito.when(addressMapper.addressToAddressDTO(address)).thenReturn(addressDTO);
 		
@@ -77,7 +72,7 @@ public class AddressServiceTest {
 	@Test
 	public void getAll() {
 		List<AddressDTO> list = addressService.getAll();
-		assertEquals(addressesDTO, list);
+		assertEquals(Collections.singletonList(addressDTO), list);
 	}
 	
 	@Test

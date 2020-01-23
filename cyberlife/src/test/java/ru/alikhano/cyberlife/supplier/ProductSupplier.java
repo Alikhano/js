@@ -50,5 +50,18 @@ public class ProductSupplier {
         return productDTO;
     }
 
+    public static Product getProduct() {
+        Product product = new Product();
+        product.setProductId(1);
+        product.setModel(TEST_MODEL);
+        product.setDescription(TEST_DESCRIPTION);
+        product.setUnitsInStock(TEST_UNITS_IN_STOCK);
+        product.setPrice(TEST_PRICE);
+        product.setCategory(CategorySupplier.getCategory());
+        product.setCons(ConsciousnessSupplier.getConsciousness());
+
+        return product;
+    }
+
 
 }

@@ -103,14 +103,14 @@ public class CustomerServiceTest {
 	@Test
 	public void getAll() {
 		List<CustomerDTO> list = customerService.getAll();
-		assertEquals(customersDTO, list);
+		assertEquals(customersDTO.get(0).getCustomerId(), list.get(0).getCustomerId());
 		Mockito.verify(customerDao).getAll();
 	}
 	
 	@Test
 	public void getTopCustomer() {
 		List<CustomerDTO> list = customerService.getTopCustomers();
-		assertEquals(list, customersDTO);
+		assertEquals(list.get(0).getCustomerId(), customersDTO.get(0).getCustomerId());
 		Mockito.verify(customerDao).getTopCustomers();
 	}
 	

@@ -33,4 +33,15 @@ public class UserSupplier {
 
         return adminUser;
     }
+
+    public static UserDTO getUserDTO(Integer id, String username) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(id);
+        userDTO.setUsername(username);
+        userDTO.setPassword(TEST_PASSWORD_ENCODED);
+        userDTO.setEnabled(true);
+        userDTO.setRoles(Collections.singleton(RoleSupplier.getUserRoleDTO()));
+
+        return userDTO;
+    }
 }
