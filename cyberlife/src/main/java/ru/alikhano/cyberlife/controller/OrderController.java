@@ -26,6 +26,11 @@ import ru.alikhano.cyberlife.dto.CustomLogicException;
 import ru.alikhano.cyberlife.dto.CustomerDTO;
 import ru.alikhano.cyberlife.dto.OrderDTO;
 import ru.alikhano.cyberlife.dto.UserDTO;
+import ru.alikhano.cyberlife.dto.enums.OrderStatusDTO;
+import ru.alikhano.cyberlife.dto.enums.PaymentStatusDTO;
+import ru.alikhano.cyberlife.dto.enums.PaymentTypeDTO;
+import ru.alikhano.cyberlife.mapper.OrderStatusMapper;
+import ru.alikhano.cyberlife.mapper.PaymentStatusMapper;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.CustomerService;
 import ru.alikhano.cyberlife.service.OrderService;
@@ -51,6 +56,12 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private PaymentStatusMapper paymentStatusMapper;
+
+	@Autowired
+	private OrderStatusMapper orderStatusMapper;
 
 	private static final Logger LOGGER = LogManager.getLogger(OrderController.class);
 
@@ -106,7 +117,7 @@ public class OrderController {
 			return "/myOrder";
 		}
 
-		if (orderDTO.getPaymentType().equals("credit card")) {
+		if (PaymentTypeDTO.CREDIT_CART.equals(orderDTO.getPaymentType())) {
 			request.getSession().setAttribute("totalPrice", orderDTO.getOrderPrice());
 			return "redirect:/myOrder/cardPayment";
 		}
@@ -164,11 +175,13 @@ public class OrderController {
 	 * @throws TimeoutException
 	 */
 	@PostMapping(value = "/admin/orderStatus",  produces="application/json")
-	public ResponseEntity<?> orderStatusPost(@RequestParam("orderId") int orderId, @RequestParam("orderStatus") String orderStatus,
-			@RequestParam("paymentStatus") String paymentStatus, Model model, Authentication authentication,
+	public ResponseEntity<?> orderStatusPost(@RequestParam("orderId") int orderId,
+			@RequestParam("orderStatus") OrderStatusDTO orderStatus,
+			@RequestParam("paymentStatus") PaymentStatusDTO paymentStatus, Model model, Authentication authentication,
 			HttpServletRequest request) throws IOException, TimeoutException {
 
-		String result = orderService.changeOrderStatus(orderId, orderStatus, paymentStatus);
+		String result = orderService.changeOrderStatus(orderId, orderStatusMapper.backward(orderStatus),
+													   paymentStatusMapper.backward(paymentStatus));
 		
 		if ("success".equals(result)) {
 			LOGGER.error("Modifications after order completion");
@@ -201,8 +214,6 @@ public class OrderController {
 	 * @param request http request received from client side
 	 * @param model
 	 * @return redirect to order history
-	 * @throws IOException
-	 * @throws TimeoutException
 	 */
 	@PostMapping(value = "/myOrder/cardPayment")
 	public String creditCardPaymentPost(HttpServletRequest request, Model model)  {

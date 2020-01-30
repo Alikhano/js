@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public UserDTO getDTOById(int id) {
-		return userMapper.userToUserDTO(getById(id));
+		return userMapper.forward(getById(id));
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void update(UserDTO userDTO) {
-		userDao.update(userMapper.userDTOtoUser(userDTO));
+		userDao.update(userMapper.backward(userDTO));
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public UserDTO getByUsernameDTO(String username) {
-		return userMapper.userToUserDTO(getByUsername(username));
+		return userMapper.forward(getByUsername(username));
 	}
 
 

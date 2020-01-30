@@ -46,8 +46,8 @@ public class CustomerServiceTest {
 	   Mockito.when(customerDao.getById(1)).thenReturn(customer);
 	   Mockito.when(customerDao.getByEmail(TEST_EMAIL)).thenReturn(customer);
 	   Mockito.when(customerDao.getAll()).thenReturn(customers);
-	   Mockito.when(customerMapper.customerDTOtoCustomer(customerDTO)).thenReturn(customer);
-	   Mockito.when(customerMapper.customerToCustomerDTO(customer)).thenReturn(customerDTO);
+	   Mockito.when(customerMapper.backward(customerDTO)).thenReturn(customer);
+	   Mockito.when(customerMapper.forward(customer)).thenReturn(customerDTO);
 	   Mockito.doNothing().when(customerDao).create(customer);
 	   Mockito.doNothing().when(customerDao).update(customer);
 	   Mockito.doNothing().when(customerDao).delete(customer);

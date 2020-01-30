@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.alikhano.cyberlife.dto.enums.OrderStatusDTO;
+import ru.alikhano.cyberlife.dto.enums.PaymentStatusDTO;
+import ru.alikhano.cyberlife.dto.enums.PaymentTypeDTO;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -15,11 +18,11 @@ import java.util.Set;
 @AllArgsConstructor
 public class OrderDTO {
 
-	private int orderId;
-	private String paymentType;
-	private String paymentStatus;
-	private String orderStatus;
-	private CustomerDTO customer;
+	private int              orderId;
+	private PaymentTypeDTO   paymentType;
+	private PaymentStatusDTO paymentStatus;
+	private OrderStatusDTO   orderStatus;
+	private CustomerDTO      customer;
 
 	private double orderPrice;
 	private Date orderDate;

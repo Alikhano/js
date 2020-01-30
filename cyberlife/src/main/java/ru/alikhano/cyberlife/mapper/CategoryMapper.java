@@ -7,9 +7,6 @@ import ru.alikhano.cyberlife.dto.CategoryDTO;
 import ru.alikhano.cyberlife.model.Category;
 
 @Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.WARN)
-public interface CategoryMapper {
-	
-	CategoryDTO categoryToCategoryDTO(Category category);
-	Category categoryDTOtoCategory(CategoryDTO categoryDTO);
+public interface CategoryMapper extends BiConverter<Category, CategoryDTO> {
 
 }

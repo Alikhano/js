@@ -29,7 +29,7 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	public List<ConsciousnessDTO> getAll() {
 		List<ConsciousnessDTO> consesDTO = new ArrayList<>();
 		consciousnessDao.getAll().forEach(cons -> {
-			ConsciousnessDTO consciousnessDTO = consciousnessMapper.consToConsDTO(cons);
+			ConsciousnessDTO consciousnessDTO = consciousnessMapper.forward(cons);
 			consesDTO.add(consciousnessDTO);
 		});
 		return consesDTO;
@@ -42,7 +42,7 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	@Transactional
 	public ConsciousnessDTO getById(int id) {
 
-		return consciousnessMapper.consToConsDTO(consciousnessDao.getById(id));
+		return consciousnessMapper.forward(consciousnessDao.getById(id));
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	@Override
 	@Transactional
 	public ConsciousnessDTO getByLevel(String consciousnessLevel) {
-		return consciousnessMapper.consToConsDTO(consciousnessDao.getConsByLevel(consciousnessLevel));
+		return consciousnessMapper.forward(consciousnessDao.getConsByLevel(consciousnessLevel));
 	}
 
 	/**
@@ -60,6 +60,6 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	@Override
 	@Transactional
 	public void create(ConsciousnessDTO consciousnessDTO) {
-		consciousnessDao.create(consciousnessMapper.consDTOtoCons(consciousnessDTO));
+		consciousnessDao.create(consciousnessMapper.backward(consciousnessDTO));
 	}
 }

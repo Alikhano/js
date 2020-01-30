@@ -7,8 +7,6 @@ import ru.alikhano.cyberlife.dto.RoleDTO;
 import ru.alikhano.cyberlife.model.Role;
 
 @Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.WARN)
-public interface RoleMapper {
-	
-	RoleDTO roleToRoleDTO(Role role);
-	Role roleDTOtoRole(RoleDTO roleDTO);
+public interface RoleMapper extends BiConverter<Role, RoleDTO> {
+
 }

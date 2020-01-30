@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
 	public List<CartDTO> getAll() {
 		List<CartDTO> cartsDTO = new ArrayList<>();
 		cartDao.getAll().forEach(cart -> {
-			CartDTO cartDTO = cartMapper.cartToCartDTO(cart);
+			CartDTO cartDTO = cartMapper.forward(cart);
 			cartsDTO.add(cartDTO);
 		});
 		
@@ -48,7 +48,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	@Transactional
 	public CartDTO getById(int id) {
-		return cartMapper.cartToCartDTO(cartDao.getById(id));
+		return cartMapper.forward(cartDao.getById(id));
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class CartServiceImpl implements CartService {
 	@Transactional
 	public void create(CartDTO cartDTO) {
 
-		cartDao.create(cartMapper.cartDTOtoCart(cartDTO));
+		cartDao.create(cartMapper.backward(cartDTO));
 		
 	}
 
@@ -80,7 +80,7 @@ public class CartServiceImpl implements CartService {
 	@Transactional
 	public int createAndGetId(CartDTO cartDTO) {
 
-		return cartDao.createAndGetId(cartMapper.cartDTOtoCart(cartDTO));
+		return cartDao.createAndGetId(cartMapper.backward(cartDTO));
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void merge(CartDTO cartDTO) {
 
-		cartDao.merge(cartMapper.cartDTOtoCart(cartDTO));
+		cartDao.merge(cartMapper.backward(cartDTO));
 	}
 
 	@Override

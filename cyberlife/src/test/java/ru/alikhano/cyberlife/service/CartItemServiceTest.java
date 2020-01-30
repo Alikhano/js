@@ -51,8 +51,8 @@ public class CartItemServiceTest {
 
 
 		Mockito.when(cartItemDao.getById(1)).thenReturn(cartItem);
-		Mockito.when(cartItemMapper.cartItemToCartItemDTO(cartItem)).thenReturn(cartItemDTO);
-		Mockito.when(cartItemMapper.cartDTOtoCartItem(cartItemDTO)).thenReturn(cartItem);
+		Mockito.when(cartItemMapper.forward(cartItem)).thenReturn(cartItemDTO);
+		Mockito.when(cartItemMapper.backward(cartItemDTO)).thenReturn(cartItem);
 		Mockito.doNothing().when(cartItemDao).create(cartItem);
 		Mockito.doNothing().when(cartItemDao).update(cartItem);
 		Mockito.doNothing().when(cartItemDao).delete(cartItem);

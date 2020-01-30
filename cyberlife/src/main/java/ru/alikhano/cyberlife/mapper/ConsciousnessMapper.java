@@ -7,10 +7,6 @@ import ru.alikhano.cyberlife.dto.ConsciousnessDTO;
 import ru.alikhano.cyberlife.model.Consciousness;
 
 @Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.WARN)
-public interface ConsciousnessMapper {
-	
-	ConsciousnessDTO consToConsDTO(Consciousness cons);
-	Consciousness consDTOtoCons(ConsciousnessDTO consciousnessDTO);
-
+public interface ConsciousnessMapper extends BiConverter<Consciousness, ConsciousnessDTO> {
 
 }

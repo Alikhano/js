@@ -49,8 +49,8 @@ public class ConsciousnessServiceTest {
 		Mockito.when(consciousnessDao.getConsByLevel(CONSCIOUSNESS_LEVEL)).thenReturn(consciousness);
 		Mockito.when(consciousnessDao.getAll()).thenReturn(consciousnessList);
 		Mockito.doNothing().when(consciousnessDao).create(consciousness);
-		Mockito.when(consciousnessMapper.consDTOtoCons(consciousnessDTO)).thenReturn(consciousness);
-		Mockito.when(consciousnessMapper.consToConsDTO(consciousness)).thenReturn(consciousnessDTO);
+		Mockito.when(consciousnessMapper.backward(consciousnessDTO)).thenReturn(consciousness);
+		Mockito.when(consciousnessMapper.forward(consciousness)).thenReturn(consciousnessDTO);
 	}
 	
 	@Test

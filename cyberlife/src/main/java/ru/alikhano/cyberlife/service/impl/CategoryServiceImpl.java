@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<CategoryDTO> getAll() {
 		List<CategoryDTO> categoriesDTO = new ArrayList<>();
 		categoryDao.getAll().stream().forEach(category -> {
-			CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
+			CategoryDTO categoryDTO = categoryMapper.forward(category);
 			categoriesDTO.add(categoryDTO);
 		});
 		
@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	public CategoryDTO getById(int id) {
 
-		return categoryMapper.categoryToCategoryDTO(categoryDao.getById(id));
+		return categoryMapper.forward(categoryDao.getById(id));
 	}
 
 
@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	public CategoryDTO getByType(String catType) {
 
-		return categoryMapper.categoryToCategoryDTO(categoryDao.getByType(catType));
+		return categoryMapper.forward(categoryDao.getByType(catType));
 	}
 
 
@@ -61,14 +61,14 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	public void create(CategoryDTO categoryDTO){
 
-		categoryDao.create(categoryMapper.categoryDTOtoCategory(categoryDTO));
+		categoryDao.create(categoryMapper.backward(categoryDTO));
 	}
 
 	@Override
 	@Transactional
 	public int createAndGetId(CategoryDTO categoryDTO) {
 
-		return categoryDao.createAndGetId(categoryMapper.categoryDTOtoCategory(categoryDTO));
+		return categoryDao.createAndGetId(categoryMapper.backward(categoryDTO));
 	}
 
 }

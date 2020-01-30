@@ -29,7 +29,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public void create(CartItemDTO cartItemDTO) {
-		cartItemDao.create(cartItemMapper.cartDTOtoCartItem(cartItemDTO));
+		cartItemDao.create(cartItemMapper.backward(cartItemDTO));
 
 	}
 
@@ -40,7 +40,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Transactional
 	public void delete(CartItemDTO cartItemDTO) {
 
-		cartItemDao.delete(cartItemMapper.cartDTOtoCartItem(cartItemDTO));
+		cartItemDao.delete(cartItemMapper.backward(cartItemDTO));
 
 	}
 
@@ -61,7 +61,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public void update(CartItemDTO cartItemDTO) {
-		cartItemDao.update(cartItemMapper.cartDTOtoCartItem(cartItemDTO));
+		cartItemDao.update(cartItemMapper.backward(cartItemDTO));
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	@Transactional
 	public CartItemDTO getById(int id) {
-		return cartItemMapper.cartItemToCartItemDTO(cartItemDao.getById(id));
+		return cartItemMapper.forward(cartItemDao.getById(id));
 	}
 
 	/**

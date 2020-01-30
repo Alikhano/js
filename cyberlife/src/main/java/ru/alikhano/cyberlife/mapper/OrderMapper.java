@@ -8,9 +8,6 @@ import ru.alikhano.cyberlife.model.Orders;
 
 @Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.WARN, uses= {OrderItemMapper.class,
 		AddressMapper.class, RoleMapper.class})
-public interface OrderMapper {
-	
-	OrderDTO orderToOrderDTO(Orders order);
-	Orders orderDTOtoOder(OrderDTO orderDTO);
+public interface OrderMapper extends BiConverter<Orders, OrderDTO> {
 
 }

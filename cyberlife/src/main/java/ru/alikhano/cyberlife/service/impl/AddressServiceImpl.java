@@ -31,7 +31,7 @@ public class AddressServiceImpl implements AddressService {
 		List<AddressDTO> addressesDTO = new ArrayList<>();
 
 		for (Address address : addressDao.getAll()) {
-			AddressDTO addressDTO = addressMapper.addressToAddressDTO(address);
+			AddressDTO addressDTO = addressMapper.forward(address);
 			addressesDTO.add(addressDTO);
 		}
 
@@ -45,7 +45,7 @@ public class AddressServiceImpl implements AddressService {
 	@Transactional
 	public AddressDTO getById(int id) {
 
-		return addressMapper.addressToAddressDTO(addressDao.getById(id));
+		return addressMapper.forward(addressDao.getById(id));
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class AddressServiceImpl implements AddressService {
 	@Transactional
 	public void create(AddressDTO addressDTO) {
 
-		addressDao.create(addressMapper.addressDTOtoAddress(addressDTO));
+		addressDao.create(addressMapper.backward(addressDTO));
 		
 	}
 
@@ -66,7 +66,7 @@ public class AddressServiceImpl implements AddressService {
 	@Transactional
 	public void update(AddressDTO addressDTO) {
 
-		addressDao.update(addressMapper.addressDTOtoAddress(addressDTO));
+		addressDao.update(addressMapper.backward(addressDTO));
 		
 	}
 
@@ -77,7 +77,7 @@ public class AddressServiceImpl implements AddressService {
 	@Transactional
 	public void delete(AddressDTO addressDTO) {
 
-		addressDao.delete(addressMapper.addressDTOtoAddress(addressDTO));
+		addressDao.delete(addressMapper.backward(addressDTO));
 	}
 
 }

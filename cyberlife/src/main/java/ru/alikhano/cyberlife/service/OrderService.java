@@ -8,6 +8,8 @@ import java.util.concurrent.TimeoutException;
 import ru.alikhano.cyberlife.dto.CartDTO;
 import ru.alikhano.cyberlife.dto.CustomLogicException;
 import ru.alikhano.cyberlife.dto.OrderDTO;
+import ru.alikhano.cyberlife.model.enums.OrderStatus;
+import ru.alikhano.cyberlife.model.enums.PaymentStatus;
 
 
 /**
@@ -96,6 +98,7 @@ public interface OrderService {
 	 * @throws IOException
 	 * @throws TimeoutException
 	 */
-	String changeOrderStatus(int orderId, String orderStatus, String paymentStatus) throws IOException, TimeoutException;
+	String changeOrderStatus(int orderId, OrderStatus orderStatus, PaymentStatus paymentStatus) throws IOException,
+			TimeoutException;
 
 }

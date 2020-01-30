@@ -36,7 +36,7 @@ public class RoleServiceImpl implements RoleService {
 	@Transactional
 	public RoleDTO getRoleDTO() {
 
-		return roleMapper.roleToRoleDTO(roleDao.getRole());
+		return roleMapper.forward(roleDao.getRole());
 	}
 
 }

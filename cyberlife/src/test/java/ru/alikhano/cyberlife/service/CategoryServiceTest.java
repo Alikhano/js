@@ -40,8 +40,8 @@ public class CategoryServiceTest {
 		Mockito.when(categoryDao.getByType(TEST_CATEGORY_TYPE)).thenReturn(category);
 		Mockito.when(categoryDao.getById(1)).thenReturn(category);
 		Mockito.when(categoryDao.getAll()).thenReturn(CategorySupplier.getCategories());
-		Mockito.when(categoryMapper.categoryDTOtoCategory(categoryDTO)).thenReturn(category);
-		Mockito.when(categoryMapper.categoryToCategoryDTO(category)).thenReturn(categoryDTO);
+		Mockito.when(categoryMapper.backward(categoryDTO)).thenReturn(category);
+		Mockito.when(categoryMapper.forward(category)).thenReturn(categoryDTO);
 		Mockito.when(categoryDao.createAndGetId(category)).thenReturn(1);
 		Mockito.doNothing().when(categoryDao).create(category);
 

@@ -45,8 +45,8 @@ public class OrderItemServiceTest {
 		Mockito.doNothing().when(orderItemDao).update(orderItem);
 		Mockito.doNothing().when(orderItemDao).delete(orderItem);
 		Mockito.when(orderItemDao.getById(1)).thenReturn(orderItem);
-		Mockito.when(orderItemMapper.orderItemDTOtoOrderItem(orderItemDTO)).thenReturn(orderItem);
-        Mockito.when(orderItemMapper.orderItemToOrderItemDTO(orderItem)).thenReturn(orderItemDTO);
+		Mockito.when(orderItemMapper.backward(orderItemDTO)).thenReturn(orderItem);
+        Mockito.when(orderItemMapper.forward(orderItem)).thenReturn(orderItemDTO);
 	}
 	
 	@Test

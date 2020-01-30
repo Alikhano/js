@@ -17,6 +17,8 @@ import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dto.ProductInfo;
 import ru.alikhano.cyberlife.dto.SearchRequest;
 import ru.alikhano.cyberlife.dao.ProductDao;
+import ru.alikhano.cyberlife.dto.enums.OrderStatusDTO;
+import ru.alikhano.cyberlife.dto.enums.PaymentStatusDTO;
 import ru.alikhano.cyberlife.mapper.ProductInfoMapper;
 import ru.alikhano.cyberlife.mapper.ProductMapper;
 import ru.alikhano.cyberlife.model.Product;
@@ -58,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> products = productDao.getAll();
 		List<ProductDTO> productsDTO = new ArrayList<>();
 		products.forEach(product -> {
-			ProductDTO productDTO = productMapper.productToProductDTO(product);
+			ProductDTO productDTO = productMapper.forward(product);
 			productsDTO.add(productDTO);
 		});
 
@@ -71,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public ProductDTO getById(int id) throws CustomLogicException {
-		ProductDTO productDTO = productMapper.productToProductDTO((productDao.getById(id)));
+		ProductDTO productDTO = productMapper.forward((productDao.getById(id)));
 		if (productDTO == null) {
 			throw new CustomLogicException("No product with such id");
 		}
@@ -88,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
 		if (product != null) {
 			throw new CustomLogicException("The model you have specified already exists in the catalogue");
 		}
-		productDao.create(productMapper.productDTOtOProduct(productDTO));
+		productDao.create(productMapper.backward(productDTO));
 	}
 
 	/**
@@ -107,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
 		else if (productDTO.getPrice() < 0) {
 			return "negative price";
 		}
-		productDao.update(productMapper.productDTOtOProduct(productDTO));
+		productDao.update(productMapper.backward(productDTO));
 		if (isInTop(productDTO)) {
 			messagingService.sendUpdateMessage("table should be updated!");
 		}
@@ -127,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		
 		if (isAvailableForDeletion(productDTO)) {
-			productDao.delete(productMapper.productDTOtOProduct(productDTO));
+			productDao.delete(productMapper.backward(productDTO));
 			if (isInTop(productDTO)) {
 				messagingService.sendUpdateMessage("table should be updated!");
 			}
@@ -144,7 +146,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public ProductDTO getByModel(String model) {
-		return productMapper.productToProductDTO(productDao.getByModel(model));
+		return productMapper.forward(productDao.getByModel(model));
 	}
 
 	/**
@@ -197,7 +199,7 @@ public class ProductServiceImpl implements ProductService {
 		List<ProductDTO> dtoList = new ArrayList<>();
 
 		for (Product prod : prodList) {
-			ProductDTO prodDTO = productMapper.productToProductDTO(prod);
+			ProductDTO prodDTO = productMapper.forward(prod);
 			dtoList.add(prodDTO);
 		}
 
@@ -210,7 +212,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public ProductDTO selectForUpdate(int id) {
-		return productMapper.productToProductDTO(productDao.selectForUpdate(id));
+		return productMapper.forward(productDao.selectForUpdate(id));
 	}
 
 	/**
@@ -234,7 +236,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void merge(ProductDTO productDTO) throws IOException, TimeoutException {
-		productDao.merge(productMapper.productDTOtOProduct(productDTO));
+		productDao.merge(productMapper.backward(productDTO));
 		if (isInTop(productDTO)) {
 			messagingService.sendUpdateMessage("table should be updated!");
 		}
@@ -251,8 +253,8 @@ public class ProductServiceImpl implements ProductService {
 	    	Set<OrderItemDTO> orderItems = order.getOrderedItems();
 	    	for (OrderItemDTO orderItem : orderItems) {
 	    		if (orderItem.getProduct().getProductId() == productDTO.getProductId()
-						&& "paid".equals(order.getPaymentStatus())
-						&& "delivered and recieved".equals(order.getOrderStatus())) {
+						&& PaymentStatusDTO.PAID.equals(order.getPaymentStatus())
+						&& OrderStatusDTO.RECEIVED.equals(order.getOrderStatus())) {
 	    			return false;
 	    		}
 	    	}

@@ -21,8 +21,13 @@ import ru.alikhano.cyberlife.dto.OrderItemDTO;
 import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dto.UserDTO;
 import ru.alikhano.cyberlife.dao.OrderDao;
+import ru.alikhano.cyberlife.dto.enums.OrderStatusDTO;
+import ru.alikhano.cyberlife.dto.enums.PaymentStatusDTO;
+import ru.alikhano.cyberlife.dto.enums.PaymentTypeDTO;
 import ru.alikhano.cyberlife.mapper.OrderMapper;
 import ru.alikhano.cyberlife.model.Orders;
+import ru.alikhano.cyberlife.model.enums.OrderStatus;
+import ru.alikhano.cyberlife.model.enums.PaymentStatus;
 import ru.alikhano.cyberlife.service.CartItemService;
 import ru.alikhano.cyberlife.service.CartService;
 import ru.alikhano.cyberlife.service.CustomerService;
@@ -67,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public void create(OrderDTO orderDTO) {
-		orderDao.create(orderMapper.orderDTOtoOder(orderDTO));
+		orderDao.create(orderMapper.backward(orderDTO));
 	}
 
 	/**
@@ -79,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
 		List<Orders> orders = orderDao.getAll();
 		List<OrderDTO> ordersDTO = new ArrayList<>();
 		orders.forEach(order -> {
-			OrderDTO orderDTO = orderMapper.orderToOrderDTO(order);
+			OrderDTO orderDTO = orderMapper.forward(order);
 			ordersDTO.add(orderDTO);
 		});
 		return ordersDTO;
@@ -91,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public OrderDTO getById(int id) {
-		return orderMapper.orderToOrderDTO(orderDao.getById(id));
+		return orderMapper.forward(orderDao.getById(id));
 	}
 
 	/**
@@ -100,8 +105,8 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public void update(OrderDTO orderDTO) throws IOException, TimeoutException {
-		orderDao.update(orderMapper.orderDTOtoOder(orderDTO));
-		if (orderDTO.getPaymentStatus().equals("paid") && isInTop(orderDTO)) {	
+		orderDao.update(orderMapper.backward(orderDTO));
+		if (PaymentStatusDTO.PAID.equals(orderDTO.getPaymentStatus()) && isInTop(orderDTO)) {
 				messaginService.sendUpdateMessage("table should be updated!");			
 		}
 
@@ -116,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
 		List<Orders> orders = orderDao.getOrdersByCustomerId(id);
 		List<OrderDTO> ordersDTO = new ArrayList<>();
 		orders.forEach(order -> {
-			OrderDTO orderDTO = orderMapper.orderToOrderDTO(order);
+			OrderDTO orderDTO = orderMapper.forward(order);
 			ordersDTO.add(orderDTO);
 		});
 		return ordersDTO;
@@ -128,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public int createAndGetId(OrderDTO order) {
-		return orderDao.createAndGetId(orderMapper.orderDTOtoOder(order));
+		return orderDao.createAndGetId(orderMapper.backward(order));
 	}
 
 	/**
@@ -198,24 +203,18 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@Override
 	@Transactional
-	public String changeOrderStatus(int orderId, String orderStatus, String paymentStatus) {
+	public String changeOrderStatus(int orderId, OrderStatus orderStatus, PaymentStatus paymentStatus) {
 		Orders order = orderDao.getById(orderId);
-
-		if (order.getOrderStatus().equals("delivered and recieved") && order.getPaymentStatus().equals("paid")) {
+		if (PaymentStatus.PAID.equals(order.getPaymentStatus()) && PaymentStatus.UNPAID.equals(paymentStatus)) {
+			return "No payment status change - already paid";
+		}
+		if (OrderStatus.RECEIVED.equals(order.getOrderStatus())) {
 			return "No status updates after order completion!";
 		}
-		
-		if (orderStatus.equals("order status")) {
-			order.setPaymentStatus(paymentStatus);
-			orderDao.merge(order);
-		} else if (paymentStatus.equals("payment status")) {
-			order.setOrderStatus(orderStatus);
-			orderDao.merge(order);
-		} else {
-			order.setOrderStatus(orderStatus);
-			order.setPaymentStatus(paymentStatus);
-			orderDao.merge(order);
-		}
+
+		order.setOrderStatus(orderStatus);
+		order.setPaymentStatus(paymentStatus);
+		orderDao.merge(order);
 		
 		return "success";
 	}
@@ -233,14 +232,14 @@ public class OrderServiceImpl implements OrderService {
 
 		//update order status
 
-		if (orderDTO.getPaymentType().equals("credit card")) {
-			orderDTO.setPaymentStatus("paid");
+		if (PaymentTypeDTO.CREDIT_CART.equals(orderDTO.getPaymentType())) {
+			orderDTO.setPaymentStatus(PaymentStatusDTO.PAID);
 		}
 		else {
-			orderDTO.setPaymentStatus("unpaid");
+			orderDTO.setPaymentStatus(PaymentStatusDTO.UNPAID);
 		}
 
-		orderDTO.setOrderStatus("awaits delivery");
+		orderDTO.setOrderStatus(OrderStatusDTO.AWAITS_DELIVERY);
 
 		return orderDTO;
 	}

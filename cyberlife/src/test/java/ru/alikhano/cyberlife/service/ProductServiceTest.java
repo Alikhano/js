@@ -27,6 +27,8 @@ import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dto.ProductInfo;
 import ru.alikhano.cyberlife.dto.SearchRequest;
 import ru.alikhano.cyberlife.dao.ProductDao;
+import ru.alikhano.cyberlife.dto.enums.OrderStatusDTO;
+import ru.alikhano.cyberlife.dto.enums.PaymentStatusDTO;
 import ru.alikhano.cyberlife.mapper.ProductInfoMapper;
 import ru.alikhano.cyberlife.mapper.ProductMapper;
 import ru.alikhano.cyberlife.model.Product;
@@ -61,7 +63,7 @@ public class ProductServiceTest {
 	private Product       product;
 	private ProductDTO    productDTO;
 	private OrderDTO      orderDTO;
-	List<Product> products;
+	private List<Product> products;
 
 	@Before
 	public void init() {
@@ -80,10 +82,10 @@ public class ProductServiceTest {
 		Mockito.when(productDao.getByModel("rk800")).thenReturn(product);
 
 		Mockito.when(productDao.getAll()).thenReturn(products);
-		Mockito.when(productMapper.productToProductDTO(newProduct)).thenReturn(newProductDTO);
-		Mockito.when(productMapper.productDTOtOProduct(newProductDTO)).thenReturn(newProduct);
-		Mockito.when(productMapper.productToProductDTO(product)).thenReturn(productDTO);
-		Mockito.when(productMapper.productDTOtOProduct(productDTO)).thenReturn(product);
+		Mockito.when(productMapper.forward(newProduct)).thenReturn(newProductDTO);
+		Mockito.when(productMapper.backward(newProductDTO)).thenReturn(newProduct);
+		Mockito.when(productMapper.forward(product)).thenReturn(productDTO);
+		Mockito.when(productMapper.backward(productDTO)).thenReturn(product);
 		Mockito.when(productInfoMapper.productToProductInfo(newProduct)).thenReturn(productInfo);
 
 		Mockito.when(orderService.getAll()).thenReturn(Collections.singletonList(orderDTO));
@@ -115,8 +117,8 @@ public class ProductServiceTest {
 	@Test
 	public void deleteFail() throws CustomLogicException, IOException, TimeoutException {
 		OrderDTO unpaidOrderDTO = orderDTO;
-		unpaidOrderDTO.setPaymentStatus("paid");
-		unpaidOrderDTO.setOrderStatus("delivered and recieved");
+		unpaidOrderDTO.setPaymentStatus(PaymentStatusDTO.PAID);
+		unpaidOrderDTO.setOrderStatus(OrderStatusDTO.RECEIVED);
 		String result = productService.delete(productDTO);
 		assertEquals("failed", result);
 		

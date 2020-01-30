@@ -42,8 +42,8 @@ public class AddressServiceTest {
 		
 		Mockito.when(addressDao.getById(1)).thenReturn(address);
 		Mockito.when(addressDao.getAll()).thenReturn(Collections.singletonList(address));
-		Mockito.when(addressMapper.addressDTOtoAddress(addressDTO)).thenReturn(address);
-		Mockito.when(addressMapper.addressToAddressDTO(address)).thenReturn(addressDTO);
+		Mockito.when(addressMapper.backward(addressDTO)).thenReturn(address);
+		Mockito.when(addressMapper.forward(address)).thenReturn(addressDTO);
 		
 		Mockito.doNothing().when(addressDao).create(address);
 		Mockito.doNothing().when(addressDao).update(address);

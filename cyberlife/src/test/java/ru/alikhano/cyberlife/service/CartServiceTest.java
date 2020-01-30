@@ -48,8 +48,8 @@ public class CartServiceTest {
 		cartsDTO = new ArrayList<>();
 		cartsDTO.add(cartDTO);
 
-		Mockito.when(cartMapper.cartToCartDTO(cart)).thenReturn(cartDTO);
-		Mockito.when(cartMapper.cartDTOtoCart(cartDTO)).thenReturn(cart);
+		Mockito.when(cartMapper.forward(cart)).thenReturn(cartDTO);
+		Mockito.when(cartMapper.backward(cartDTO)).thenReturn(cart);
 		Mockito.when(cartDao.getAll()).thenReturn(carts);
 		Mockito.when(cartDao.getById(1)).thenReturn(cart);
 		Mockito.when(cartDao.createAndGetId(cart)).thenReturn(1);

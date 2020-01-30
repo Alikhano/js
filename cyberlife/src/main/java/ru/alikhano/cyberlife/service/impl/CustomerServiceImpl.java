@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<CustomerDTO> getAll() {
 		List<CustomerDTO> customersDTO = new ArrayList<>();
 		for (Customer customer : customerDao.getAll()) {
-			CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
+			CustomerDTO customerDTO = customerMapper.forward(customer);
 			customersDTO.add(customerDTO);
 		}
 		return customersDTO;
@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public CustomerDTO getById(int id) {
 
-		return customerMapper.customerToCustomerDTO(customerDao.getById(id));
+		return customerMapper.forward(customerDao.getById(id));
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public void create(CustomerDTO customerDTO) {
 
-		customerDao.create(customerMapper.customerDTOtoCustomer(customerDTO));
+		customerDao.create(customerMapper.backward(customerDTO));
 
 	}
 
@@ -80,7 +80,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public void delete(CustomerDTO customerDTO) {
 
-		customerDao.delete(customerMapper.customerDTOtoCustomer(customerDTO));
+		customerDao.delete(customerMapper.backward(customerDTO));
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public CustomerDTO getByUserId(int userId) {
 
-		return customerMapper.customerToCustomerDTO(customerDao.getByUserId(userId));
+		return customerMapper.forward(customerDao.getByUserId(userId));
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class CustomerServiceImpl implements CustomerService {
 		List<CustomerDTO> dtoList = new ArrayList<>();
 
 		for (Customer customer : customerDao.getTopCustomers()) {
-			CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
+			CustomerDTO customerDTO = customerMapper.forward(customer);
 			dtoList.add(customerDTO);
 		}
 
@@ -117,6 +117,6 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional 
 	public CustomerDTO getByEmail(String email) {
 
-		return customerMapper.customerToCustomerDTO(customerDao.getByEmail(email));
+		return customerMapper.forward(customerDao.getByEmail(email));
 	}
 }

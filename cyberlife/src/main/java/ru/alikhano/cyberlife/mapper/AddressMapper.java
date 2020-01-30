@@ -7,9 +7,6 @@ import ru.alikhano.cyberlife.dto.AddressDTO;
 import ru.alikhano.cyberlife.model.Address;
 
 @Mapper(componentModel="spring", unmappedTargetPolicy = ReportingPolicy.WARN)
-public interface AddressMapper {
-	
-	AddressDTO addressToAddressDTO(Address address);
-	Address addressDTOtoAddress(AddressDTO addressDTO);
+public interface AddressMapper extends BiConverter<Address, AddressDTO>{
 
 }

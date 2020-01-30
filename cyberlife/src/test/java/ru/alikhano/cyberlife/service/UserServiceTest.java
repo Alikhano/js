@@ -55,8 +55,8 @@ public class UserServiceTest {
 		Mockito.when(userDao.getByUsername(TEST_USERNAME)).thenReturn(user);
 		Mockito.when(userDao.getById(1)).thenReturn(user);
 		Mockito.when(userDao.getAll()).thenReturn(Collections.singletonList(user));
-		Mockito.when(userMapper.userDTOtoUser(userDTO)).thenReturn(user);
-		Mockito.when(userMapper.userToUserDTO(user)).thenReturn(userDTO);
+		Mockito.when(userMapper.backward(userDTO)).thenReturn(user);
+		Mockito.when(userMapper.forward(user)).thenReturn(userDTO);
 
 	}
 	
