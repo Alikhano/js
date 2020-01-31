@@ -34,12 +34,14 @@ import javax.validation.constraints.NotNull;
 @Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Orders {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderId")
-	private int orderId;
+	private Integer orderId;
 
 	@Column(name = "paymentType")
 	@Convert(converter = PaymentType.class)
@@ -64,7 +66,7 @@ public class Orders {
 	@Column(name = "orderPrice")
 	@NotNull
 	@Min(value=100)
-	private double orderPrice;
+	private Double orderPrice;
 
 	@Column(name = "orderDate")
 	@Temporal(TemporalType.DATE)
@@ -73,102 +75,5 @@ public class Orders {
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 	Set<OrderItem> orderedItems = new HashSet<>(0);
-
-	public int getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
-
-	public PaymentType getPaymentType() {
-		return paymentType;
-	}
-
-	public void setPaymentType(PaymentType paymentType) {
-		this.paymentType = paymentType;
-	}
-
-	public PaymentStatus getPaymentStatus() {
-		return paymentStatus;
-	}
-
-	public void setPaymentStatus(PaymentStatus paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
-
-	public OrderStatus getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public double getOrderPrice() {
-		return orderPrice;
-	}
-
-	public void setOrderPrice(double orderPrice) {
-		this.orderPrice = orderPrice;
-	}
-
-	public Date getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
-
-	public Set<OrderItem> getOrderedItems() {
-		return orderedItems;
-	}
-
-	public void setOrderedItems(Set<OrderItem> orderedItems) {
-		this.orderedItems = orderedItems;
-	}
-
-	public void addOrderItem(OrderItem item) {
-		orderedItems.add(item);
-		item.setOrder(this);
-		
-	}
-
-	public void removeOrderItem(OrderItem item) {
-		orderedItems.remove(item);
-		item.setOrder(null);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + orderId;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Orders other = (Orders) obj;
-		if (orderId != other.orderId)
-			return false;
-		return true;
-	}
 
 }

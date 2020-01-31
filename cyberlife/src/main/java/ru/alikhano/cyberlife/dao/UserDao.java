@@ -12,12 +12,7 @@ import ru.alikhano.cyberlife.model.User;
  */
 @Repository
 public interface UserDao extends GenericDao<User> {
-	
-	/** 
-	 * database search by username
-	 * @param username
-	 * @return an instance of User with corresponding username
-	 */
+
 	User getByUsername(String username);
 
 }

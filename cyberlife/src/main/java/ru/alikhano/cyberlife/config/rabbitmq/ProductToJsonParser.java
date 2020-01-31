@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class ProductToJsonParser {
 	
-	private static final Logger logger = LogManager.getLogger(ProductToJsonParser.class);
+	private static final Logger LOGGER = LogManager.getLogger(ProductToJsonParser.class);
 	
 	public String toJson() {
 		String result = "";
@@ -22,7 +22,7 @@ public abstract class ProductToJsonParser {
 			result = objMapper.writeValueAsString(this);
 		}
 		catch (JsonProcessingException e) {
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage());
 		}
 	
 		return result;

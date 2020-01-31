@@ -35,6 +35,9 @@ import ru.alikhano.cyberlife.service.UserService;
 @Controller
 public class HomeController {
 
+	private static final Logger LOGGER = LogManager.getLogger(HomeController.class);
+	private static final String REGISTER = "register";
+
 	@Autowired
 	private UserService userService;
 
@@ -44,18 +47,8 @@ public class HomeController {
 	@Autowired
 	private RoleService roleService;
 
-	private static final String REGISTER = "register";  
-	
-	private static final Logger LOGGER = LogManager.getLogger(HomeController.class);
-
-	/** 
-	 * display homepage, create persistent cookie to store individual cart ids
-	 * @param request http request received from client side
-	 * @param response http response from server
-	 * @return jsp file name
-	 */
 	@GetMapping(value = "/")
-	public String home(HttpServletRequest request, HttpServletResponse response) {
+	public String showHomepage(HttpServletRequest request, HttpServletResponse response) {
 		String cookieName = "cartId";
 		final int expiryTime = 10 * 24 * 60 * 60; //10 days
 		final String cookiePath = "/";
@@ -84,17 +77,9 @@ public class HomeController {
 		}   
 		return "home";
 	}
-	
-	
 
-	/** controller to display login page
-	 * @param model
-	 * @param error message to display in case of wrong credentials
-	 * @param logout message to display after logout
-	 * @return jsp file name
-	 */
 	@GetMapping(value = "/login")
-	public String login(Model model, String error, String logout) {
+	public String showLoginPage(Model model, String error, String logout) {
 		if (error != null) {
 			model.addAttribute("error", "Username or password is incorrect.");
 		}
@@ -107,24 +92,15 @@ public class HomeController {
 	}
 
 	@GetMapping(value = "/registration")
-	public String registration(Model model) {
+	public String showRegistrationPage(Model model) {
 		model.addAttribute("userForm", new User());
 
 		return REGISTER;
 	}
 
-	/**
-	 * controller to register a new user
-	 * @param userForm object, containing login/password info
-	 * @param bindingResult
-	 * @param model
-	 * @param request http request received from client side
-	 * @return redirect to a page where user can create a customer profile
-	 */
 	@PostMapping(value = "/registration")
-	public String registration(@ModelAttribute("userForm") UserDTO userForm, BindingResult bindingResult, Model model,
+	public String registerUser(@ModelAttribute("userForm") UserDTO userForm, BindingResult bindingResult, Model model,
 			HttpServletRequest request) {
-
 		if (bindingResult.hasErrors()) {
 			LOGGER.error("binding result errors");
 			return REGISTER;

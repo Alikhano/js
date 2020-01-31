@@ -32,8 +32,7 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category> implements Categor
 	}
 
 	@Override
-	public int createAndGetId(Category category)  {
-
+	public Integer createAndGetId(Category category)  {
 		return (Integer) sessionFactory.getCurrentSession().save(category);
 	}
 

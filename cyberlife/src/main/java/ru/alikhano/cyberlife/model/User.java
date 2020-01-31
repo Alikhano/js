@@ -1,5 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,12 +21,16 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="user")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="userId")
-	private int userId;
+	private Integer userId;
 	
 	@Column(name="username", unique = true)
 	@NotNull
@@ -32,7 +41,7 @@ public class User {
 	private String password;
 	
 	@Column(name="enabled")
-	private boolean enabled;
+	private Boolean enabled;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="user_role", joinColumns= {
@@ -41,76 +50,4 @@ public class User {
 					@JoinColumn(name="roleId")})
 	private Set<Role> roles;
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-	
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + userId;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (userId != other.userId)
-			return false;
-		return true;
-	}
-	
-	
-	public User() {}
-
-	public User(int userId, String username, String password, boolean enabled, Set<Role> roles) {
-		this.userId = userId;
-		this.username = username;
-		this.password = password;
-		this.enabled = enabled;
-		this.roles = roles;
-	}
 }

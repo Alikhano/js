@@ -25,13 +25,13 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Orders> getOrdersByCustomerId(int id) {
+	public List<Orders> getOrdersByCustomerId(Integer id) {
 		return sessionFactory.getCurrentSession().createQuery("from Orders where customerId =:id")
 				.setParameter("id", id).getResultList();
 
 	}
 	@Override
-	public int createAndGetId(Orders order) {
+	public Integer createAndGetId(Orders order) {
 		return (Integer) sessionFactory.getCurrentSession().save(order);
 	}
 
@@ -52,7 +52,7 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 	}
 
 	@Override
-	public double getWeeklyRevenue() {
+	public Double getWeeklyRevenue() {
 		LocalDate localDate = LocalDate.now();
 		if (localDate.getDayOfWeek() == DayOfWeek.FRIDAY) {
 			LocalDate yesterday = localDate.minus(Period.ofDays(1));
@@ -66,7 +66,7 @@ public class OrderDaoImpl extends GenericDaoImpl<Orders> implements OrderDao {
 			return (query.uniqueResult() == null) ? 0: (double) query.uniqueResult();
 		}
 		
-		return 0;		
+		return 0.0;
 	}
 
 

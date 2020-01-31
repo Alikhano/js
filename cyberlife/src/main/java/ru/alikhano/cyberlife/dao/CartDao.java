@@ -11,20 +11,10 @@ import ru.alikhano.cyberlife.model.Cart;
  *
  */
 @Repository
-public interface CartDao extends GenericDao<Cart>{
-	
-	/** 
-	 * @param cart instance of Cart to add to database
-	 * @return id of new cart
-	 */
-	int createAndGetId(Cart cart);
-	
-	/** 
-	 * saves modified cart instance to database
-	 * @param cart instance of Cart to save after update
-	 */
-	void merge(Cart cart);
+public interface CartDao extends GenericDao<Cart> {
 
-	
+	Integer createAndGetId(Cart cart);
+
+	void merge(Cart cart);
 
 }

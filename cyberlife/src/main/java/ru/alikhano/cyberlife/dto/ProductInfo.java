@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class ProductInfo {
 	
-	private int productId;
+	private Integer productId;
 	private String model;
 	private String description;
-	private int unitsInStock;
-	private double price;
+	private Integer unitsInStock;
+	private Double price;
 	private String category;
 	private String cons;
 }

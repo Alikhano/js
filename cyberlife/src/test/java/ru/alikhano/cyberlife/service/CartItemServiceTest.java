@@ -103,7 +103,7 @@ public class CartItemServiceTest {
 	@Test
 	public void getCartItemById() {
 		CartItemDTO cartItem = cartItemService.getCartItemById(cartDTO, 1);
-		assertEquals(1,cartItem.getItemId());
+		assertEquals(1,cartItem.getItemId().intValue());
 	}
 
 	@Test

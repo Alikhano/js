@@ -2,6 +2,7 @@ package ru.alikhano.cyberlife.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,8 +46,8 @@ public class OrderItemServiceTest {
 		Mockito.doNothing().when(orderItemDao).update(orderItem);
 		Mockito.doNothing().when(orderItemDao).delete(orderItem);
 		Mockito.when(orderItemDao.getById(1)).thenReturn(orderItem);
-		Mockito.when(orderItemMapper.backward(orderItemDTO)).thenReturn(orderItem);
-        Mockito.when(orderItemMapper.forward(orderItem)).thenReturn(orderItemDTO);
+		Mockito.when(orderItemMapper.backward(any(OrderItemDTO.class))).thenReturn(orderItem);
+        Mockito.when(orderItemMapper.forward(any(OrderItem.class))).thenReturn(orderItemDTO);
 	}
 	
 	@Test
@@ -70,7 +71,7 @@ public class OrderItemServiceTest {
 	@Test
 	public void getById() {
 		OrderItemDTO item = orderItemService.getById(1);
-		assertEquals(1, item.getOrderItemId());
+		assertEquals(1, item.getOrderItemId().intValue());
 		Mockito.verify(orderItemDao).getById(1);
 	}
 	

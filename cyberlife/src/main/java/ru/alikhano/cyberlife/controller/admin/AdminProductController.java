@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -59,35 +57,18 @@ public class AdminProductController {
 	@Autowired
 	private OrderService orderService;
 
-	/** 
-	 * displays page to add new product
-	 * @param model
-	 * @return
-	 */
 	@GetMapping(value = "/admin/addProduct")
-	public String getAddNewProductForm(Model model) {
+	public String showAddProductPage(Model model) {
 		model.addAttribute("newProductDTO", new ProductDTO());
 		model.addAttribute("categoryDTOList", categoryService.getAll());
 		model.addAttribute("consDTOList", consService.getAll());
 		return "addProduct";
 	}
 
-	/**
-	 * adds new product
-	 * @param newProductDTO
-	 * @param result
-	 * @param request http request received from client side
-	 * @param file image file
-	 * @param model
-	 * @return redirect to main admin page
-	 * @throws IOException
-	 * @throws CustomLogicException
-	 */
 	@PostMapping(value = "/admin/addProduct", consumes = "multipart/form-data")
-	public String addProductPost(@ModelAttribute("newProductDTO") @Valid ProductDTO newProductDTO, BindingResult result,
+	public String addNewProduct(@ModelAttribute("newProductDTO") @Valid ProductDTO newProductDTO, BindingResult result,
 			HttpServletRequest request, @RequestPart("file") MultipartFile file, Model model)
 			throws IOException, CustomLogicException {
-
 	    String productModel = newProductDTO.getModel();
 
         if (productService.isProductExistingById(newProductDTO.getProductId())
@@ -109,26 +90,15 @@ public class AdminProductController {
         return "redirect:/admin/productList";
     }
 
-	/**
-	 * displays inventory list
-	 * @param model
-	 * @return jsp file name
-	 */
 	@GetMapping("/admin/productList")
-	public String getProducts(Model model) {
+	public String showProductList(Model model) {
 		model.addAttribute("products", productService.getAll());
 
 		return "productList";
 	}
 
-	/**
-	 * displays page to edit a product entry
-	 * @param productId id of a product to be edited
-	 * @param model
-	 * @return jsp file name
-	 */
 	@GetMapping("/admin/editProduct/{productId}")
-	public String editProduct(@PathVariable("productId") int productId, Model model) {
+	public String showEditProductPage(@PathVariable("productId") int productId, Model model) {
 		ProductDTO productDTO;
 		try {
 		productDTO = productService.getById(productId);
@@ -137,7 +107,7 @@ public class AdminProductController {
 			LOGGER.error(ex.getErrMessage());
 			model.addAttribute("status", "No such product!");
 
-			return getProducts(model);
+			return showProductList(model);
 		}
 		model.addAttribute("categoryDTOList", categoryService.getAll());
 		model.addAttribute("consDTOList", consService.getAll());
@@ -146,19 +116,8 @@ public class AdminProductController {
 		return "editProduct";
 	}
 
-	/**
-	 * changes a product entry in database
-	 * @param productDTO instance of ProductDTO with info about new product entry
-	 * @param result
-	 * @param request http request received from client side
-	 * @param model
-	 * @return redirect to inventory list
-	 * @throws CustomLogicException
-	 * @throws IOException
-	 * @throws TimeoutException
-	 */
 	@PostMapping(value = "/admin/editProduct")
-	public String editProductPost(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result,
+	public String submitEditedProduct(@Valid @ModelAttribute("product") ProductDTO productDTO, BindingResult result,
 			HttpServletRequest request, Model model) throws CustomLogicException, IOException, TimeoutException {
 		String opResult = productService.update(productDTO);	
 
@@ -180,18 +139,9 @@ public class AdminProductController {
 		return "redirect:/admin/productList";
 	}
 
-	/**
-	 * enables deletion of a product entry
-	 * @param productId
-	 * @param model
-	 * @return jsp file name 
-	 * @throws CustomLogicException
-	 * @throws IOException
-	 * @throws TimeoutException
-	 */
 	@GetMapping(value = "/admin/deleteProduct/{productId}")
-	public String deleteProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException, IOException, TimeoutException {
-		
+	public String deleteProduct(@PathVariable("productId") int productId, Model model) throws CustomLogicException,
+			IOException, TimeoutException {
 		String result;
 		try {
 			result = productService.delete(productService.getById(productId));
@@ -219,13 +169,9 @@ public class AdminProductController {
 		return "redirect:/admin/productList";
 	}
 	
-	/**
-	 * displays top 10 products
-	 * @param model
-	 * @return jsp file name
-	 */
+
 	@GetMapping(value="/admin/stats") 
-	public String getTopProducts(Model model) {
+	public String showTenTopProducts(Model model) {
 		model.addAttribute("topProduct", productService.getTopProducts());
 		model.addAttribute("topCustomer", customerService.getTopCustomers());
 		model.addAttribute("monthlyRev", orderService.getMonthlyRevenue());

@@ -45,7 +45,9 @@ import ru.alikhano.cyberlife.service.UserService;
 @Controller
 public class OrderController {
 
-	@Autowired
+    private static final Logger LOGGER = LogManager.getLogger(OrderController.class);
+
+    @Autowired
 	private UserService userService;
 
 	@Autowired
@@ -63,14 +65,6 @@ public class OrderController {
 	@Autowired
 	private OrderStatusMapper orderStatusMapper;
 
-	private static final Logger LOGGER = LogManager.getLogger(OrderController.class);
-
-	/** controller to view the order
-	 * @param model
-	 * @param authentication to retrieve the username
-	 * @param request http request received from client side
-	 * @return jsp file name
-	 */
 	@GetMapping("/myOrder")
 	public String viewOrder(Model model, Authentication authentication, HttpServletRequest request) {
 		String username = authentication.getName();
@@ -88,22 +82,10 @@ public class OrderController {
 		return "myOrder";
 	}
 
-	/**
-	 * controller to display a page where customer can complete the order
-	 * @param orderDTO object containing all information about the order
-	 * @param result
-	 * @param request http request received from client side
-	 * @param authentication to retrieve customer's username
-	 * @param model
-	 * @return redirect to order history
-	 * @throws IOException
-	 * @throws TimeoutException
-	 */
 	@PostMapping(value = "/myOrder")
 	public String submitOrder(@Valid @ModelAttribute("newOrder") OrderDTO orderDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication, Model model)
 			throws IOException, TimeoutException {
-
 		String cartToOrder;
 		String username = authentication.getName();
 		CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));
@@ -132,28 +114,15 @@ public class OrderController {
 
 	}
 
-	/** 
-	 * controller to display order history for admin role
-	 * @param model
-	 * @param request http request received from client side
-	 * @return jsp file name
-	 */
 	@GetMapping(value = "/admin/orderStatus")
-	public String orderStatus(Model model, HttpServletRequest request) {
+	public String showOrderStatus(Model model, HttpServletRequest request) {
 		model.addAttribute("orders", orderService.getAll());
 		model.addAttribute("updatedOrder", new OrderDTO());
 		return "orderList";
 	}
 
-	/**
-	 * controller to display order history for only a specific user
-	 * @param model
-	 * @param request http request received from client side
-	 * @param authentication to retrieve the username
-	 * @return jsp file name
-	 */
 	@GetMapping(value = "/orderHistory")
-	public String myOrders(Model model, HttpServletRequest request, Authentication authentication) {
+	public String showOrdersForUser(Model model, HttpServletRequest request, Authentication authentication) {
 		String username = authentication.getName();
 		UserDTO user = userService.getByUsernameDTO(username);
 		CustomerDTO customerDTO = customerService.getByUserId(user.getUserId());
@@ -162,20 +131,8 @@ public class OrderController {
 		return "orderList";
 	}
 
-	/**
-	 * controller to change the order status (required admin role)
-	 * @param orderId to retrieve the order from the database
-	 * @param orderStatus new status
-	 * @param paymentStatus new status
-	 * @param model
-	 * @param authentication to retrieve a user who owns the order
-	 * @param request http request received from client side
-	 * @return redirect to main admin page
-	 * @throws IOException
-	 * @throws TimeoutException
-	 */
 	@PostMapping(value = "/admin/orderStatus",  produces="application/json")
-	public ResponseEntity<?> orderStatusPost(@RequestParam("orderId") int orderId,
+	public ResponseEntity<?> changeOrderStatus(@RequestParam("orderId") int orderId,
 			@RequestParam("orderStatus") OrderStatusDTO orderStatus,
 			@RequestParam("paymentStatus") PaymentStatusDTO paymentStatus, Model model, Authentication authentication,
 			HttpServletRequest request) throws IOException, TimeoutException {
@@ -195,31 +152,16 @@ public class OrderController {
 		return ResponseEntity.ok(orders);
 	}
 
-	/**
-	 * controller to display a page with credit card payment simulation
-	 * @param authentication to retrieve customer's username
-	 * @param model
-	 * @param request http request received from client side
-	 * @return jsp file name
-	 */
 	@GetMapping(value = "/myOrder/cardPayment")
-	public String creditCardPayment(Authentication authentication, Model model,
+	public String showCardPaymentPage(Authentication authentication, Model model,
 			HttpServletRequest request) {
 		model.addAttribute("total", request.getSession().getAttribute("totalPrice"));
 		return "cardPayment";
 	}
 
-	/**
-	 * controller to redirect from payment page to order history
-	 * @param request http request received from client side
-	 * @param model
-	 * @return redirect to order history
-	 */
 	@PostMapping(value = "/myOrder/cardPayment")
-	public String creditCardPaymentPost(HttpServletRequest request, Model model)  {
-	
+	public String processCardPayment(HttpServletRequest request, Model model)  {
 		return "redirect:/orderHistory";
-
 	}
 
 }

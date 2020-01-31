@@ -29,7 +29,7 @@ public class ProductJsonSenderController {
 	 * @return a list of top 10 products as JSON
 	 */
 	@GetMapping(value="/topProducts")
-	public List<ProductJson> sendTopProductsGet() {
+	public List<ProductJson> sendTopProducts() {
 		LOGGER.info("sent to 10 products to cyberdisplay");
 		return productJsonSender.sendProductJson();
 	}

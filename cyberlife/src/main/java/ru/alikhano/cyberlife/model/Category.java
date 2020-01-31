@@ -24,39 +24,10 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="categoryId")
-	private int categoryId;
+	private Integer categoryId;
 	
 	@Column(name="categoryType", unique = true)
 	@NotNull
 	private String categoryType;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + categoryId;
-		result = prime * result + ((categoryType == null) ? 0 : categoryType.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Category other = (Category) obj;
-		if (categoryId != other.categoryId)
-			return false;
-		if (categoryType == null) {
-			if (other.categoryType != null)
-				return false;
-		} else if (!categoryType.equals(other.categoryType)) {
-			return false;
-		}
-			
-		return true;
-	}
 }

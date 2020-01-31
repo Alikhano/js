@@ -15,37 +15,15 @@ import ru.alikhano.cyberlife.model.Orders;
  */
 @Repository
 public interface OrderDao extends GenericDao<Orders> {
-	
-	/** 
-	 * searches for order by id of a customer who created id
-	 * @param id customer id
-	 * @return list of orders created by a specific customer
-	 */
-	List<Orders> getOrdersByCustomerId(int id);
-	
-	/** 
-	 * creates new order entry
-	 * @param order Order instance to add to database
-	 * @return id of new order
-	 */
-	int createAndGetId(Orders order);
-	
-	/** 
-	 * calculates monthly revenue
-	 * @return number of month, amount of monthly revenue in a hashmap
-	 */
+
+	List<Orders> getOrdersByCustomerId(Integer id);
+
+	Integer createAndGetId(Orders order);
+
 	Map<Integer, Double> getMonthlyRevenue();
 
-	/** 
-	 * calculates weekly revenue
-	 * @return amount of weekly revenue
-	 */
-	double getWeeklyRevenue();
-	
-	/** 
-	 * saves an updated order entry
-	 * @param order instance of order to be updated
-	 */
+	Double getWeeklyRevenue();
+
 	void merge(Orders order);
 
 }

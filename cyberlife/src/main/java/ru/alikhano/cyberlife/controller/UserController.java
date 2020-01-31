@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import ru.alikhano.cyberlife.dto.CustomLogicException;
 import ru.alikhano.cyberlife.dto.CustomerDTO;
 import ru.alikhano.cyberlife.service.CustomerService;
 import ru.alikhano.cyberlife.service.UserService;
@@ -27,41 +26,27 @@ import ru.alikhano.cyberlife.service.UserService;
  */
 @Controller
 public class UserController {
-	
-	@Autowired
-	CustomerService customerService;
 
-	@Autowired
-	UserService userService;
-	
 	private static final Logger LOGGER = LogManager.getLogger(UserController.class);
-	
 	private static final String CREATE = "createProfile";
 	
-	/** displays a form to create a customer's profile
-	 * @param model
-	 * @return jsp file name
-	 */
+	@Autowired
+	private CustomerService customerService;
+
+	@Autowired
+	private UserService userService;
+
 	@GetMapping("/createProfile")
-	public String createProfile(Model model) {
+	public String showCreateProfilePage(Model model) {
 		CustomerDTO customerDTO = new CustomerDTO();
 		model.addAttribute("customerForm", customerDTO);
 		
 		return CREATE;
 	}
-	
-	/**
-	 * controller to create new customer's profile
-	 * @param customerForm object containing customer's personal information
-	 * @param result
-	 * @param model
-	 * @param request http request received from client side
-	 * @return redirect to login page
-	 */
+
 	@PostMapping(value="/createProfile")
-	public String createProfilePost(@ModelAttribute(name="customerForm") @Valid CustomerDTO customerForm,
+	public String createProfile(@ModelAttribute(name="customerForm") @Valid CustomerDTO customerForm,
 			BindingResult result, Model model, HttpServletRequest request) {
-		
 		if (customerService.getByEmail(customerForm.getEmail()) != null) {
 			model.addAttribute("repEmail", "Oops, this email is taken. Please try again");
 			return CREATE;
@@ -69,7 +54,6 @@ public class UserController {
 		
 		try {
 			customerForm.setUser(userService.getByUsernameDTO((String)request.getSession().getAttribute("username")));
-			
 			customerService.create(customerForm);
 			LOGGER.info("User has registered and created an account");
 		}

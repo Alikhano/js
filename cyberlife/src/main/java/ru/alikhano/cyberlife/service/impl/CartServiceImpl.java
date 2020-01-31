@@ -105,7 +105,7 @@ public class CartServiceImpl implements CartService {
 			}
 		}
 		if (items.isEmpty()) {
-			cartDTO.setGrandTotal(0);
+			cartDTO.setGrandTotal(0.0);
 		}
 		merge(cartDTO);
 	}

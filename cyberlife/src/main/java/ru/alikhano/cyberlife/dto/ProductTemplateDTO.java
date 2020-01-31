@@ -10,8 +10,6 @@ import java.util.List;
 public class ProductTemplateDTO {
 
     private ProductDTO product;
-
     List<CategoryDTO> availableCategories;
-
     List<ConsciousnessDTO> availableConsciousnessLevels;
 }

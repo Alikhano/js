@@ -9,7 +9,6 @@ import ru.alikhano.cyberlife.dto.enums.PaymentStatusDTO;
 import ru.alikhano.cyberlife.dto.enums.PaymentTypeDTO;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -18,24 +17,20 @@ import java.util.Set;
 @AllArgsConstructor
 public class OrderDTO {
 
-	private int              orderId;
+	private Integer orderId;
 	private PaymentTypeDTO   paymentType;
 	private PaymentStatusDTO paymentStatus;
-	private OrderStatusDTO   orderStatus;
-	private CustomerDTO      customer;
+	private OrderStatusDTO orderStatus;
+	private CustomerDTO customer;
 
-	private double orderPrice;
+	private Double orderPrice;
 	private Date orderDate;
 
-	Set<OrderItemDTO> orderedItems = new HashSet<>(0);
+	Set<OrderItemDTO> orderItems;
 
 	public void addItem(OrderItemDTO item) {
-		orderedItems.add(item);
+		orderItems.add(item);
 		item.setOrder(this);
 	}
-	
-	public void removeItem(OrderItemDTO item) {
-		orderedItems.remove(item);
-		item.setOrder(null);
-	}
+
 }

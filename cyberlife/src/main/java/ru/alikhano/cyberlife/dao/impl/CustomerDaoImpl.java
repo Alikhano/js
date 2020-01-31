@@ -18,7 +18,7 @@ public class CustomerDaoImpl extends GenericDaoImpl<Customer> implements Custome
 	private SessionFactory sessionFactory;
 
 	@Override
-	public Customer getByUserId(int userId) {
+	public Customer getByUserId(Integer userId) {
 		return (Customer) sessionFactory.getCurrentSession().createQuery("from Customer where userId = :userId")
 				.setParameter("userId", userId).uniqueResult();
 	}

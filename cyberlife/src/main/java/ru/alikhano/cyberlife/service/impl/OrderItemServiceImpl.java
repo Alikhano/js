@@ -53,8 +53,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	@Transactional
 	public void deleteAll(OrderDTO orderDTO) {
-		for (OrderItemDTO item : orderDTO.getOrderedItems()) {
-			orderItemDao.delete(orderItemMapper.backward(item));
+		for (OrderItemDTO item : orderDTO.getOrderItems()) {
+			delete(item);
 		}
 	}
 

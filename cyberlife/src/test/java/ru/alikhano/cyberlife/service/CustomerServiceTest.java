@@ -2,7 +2,9 @@ package ru.alikhano.cyberlife.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -22,6 +24,9 @@ import ru.alikhano.cyberlife.supplier.CustomerSupplier;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
+
+	private static final String TEST_EMAIL = "johnsanna@gmail.com";
+
 	@Mock
 	private CustomerDao customerDao;
 	@Mock
@@ -33,11 +38,10 @@ public class CustomerServiceTest {
 	private Customer customer;
 	private CustomerDTO customerDTO;
 	private List<CustomerDTO> customersDTO;
-
-	private static final String TEST_EMAIL = "johnsanna@gmail.com";
 	
 	@Before
 	public void init() {
+		Mockito.reset(customerDao, customerMapper);
 	   customer = CustomerSupplier.getCustomer();
 	   customerDTO = CustomerSupplier.getCustomerDTO();
 	   List<Customer> customers = CustomerSupplier.getCustomers();
@@ -46,15 +50,15 @@ public class CustomerServiceTest {
 	   Mockito.when(customerDao.getById(1)).thenReturn(customer);
 	   Mockito.when(customerDao.getByEmail(TEST_EMAIL)).thenReturn(customer);
 	   Mockito.when(customerDao.getAll()).thenReturn(customers);
-	   Mockito.when(customerMapper.backward(customerDTO)).thenReturn(customer);
-	   Mockito.when(customerMapper.forward(customer)).thenReturn(customerDTO);
+	   Mockito.when(customerMapper.backward(any(CustomerDTO.class))).thenReturn(customer);
+	   Mockito.when(customerMapper.forward(any(Customer.class))).thenReturn(customerDTO);
 	   Mockito.doNothing().when(customerDao).create(customer);
 	   Mockito.doNothing().when(customerDao).update(customer);
 	   Mockito.doNothing().when(customerDao).delete(customer);
 	   Mockito.when(customerDao.getTopCustomers()).thenReturn(customers);
 	   Mockito.when(customerDao.getByUserId(1)).thenReturn(customer);
 	}
-	
+
 	@Test
 	public void create() {
 		customerService.create(customerDTO);
@@ -77,7 +81,7 @@ public class CustomerServiceTest {
 	@Test
 	public void getById() {
 		CustomerDTO customer = customerService.getById(1);
-		assertEquals(1, customer.getCustomerId());
+		assertEquals(1, customer.getCustomerId().intValue());
 		Mockito.verify(customerDao).getById(1);
 	}
 	
@@ -90,7 +94,7 @@ public class CustomerServiceTest {
 	@Test
 	public void getByEmail() {
 		CustomerDTO customer = customerService.getByEmail(TEST_EMAIL);
-		assertEquals(1, customer.getCustomerId());
+		assertEquals(1, customer.getCustomerId().intValue());
 		Mockito.verify(customerDao).getByEmail(TEST_EMAIL);
 	}
 	
@@ -103,7 +107,7 @@ public class CustomerServiceTest {
 	@Test
 	public void getAll() {
 		List<CustomerDTO> list = customerService.getAll();
-		assertEquals(customersDTO.get(0).getCustomerId(), list.get(0).getCustomerId());
+		assertEquals(Collections.singletonList(customerDTO), list);
 		Mockito.verify(customerDao).getAll();
 	}
 	

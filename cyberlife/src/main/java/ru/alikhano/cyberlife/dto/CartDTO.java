@@ -13,7 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDTO {
-	private int cartId;
-	private double grandTotal;
+
+	private Integer cartId;
+	private Double grandTotal;
 	private Set<CartItemDTO> items;
 }

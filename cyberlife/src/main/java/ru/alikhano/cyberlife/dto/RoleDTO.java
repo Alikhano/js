@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.alikhano.cyberlife.model.Role;
 
 @Getter
 @Setter
@@ -12,12 +11,7 @@ import ru.alikhano.cyberlife.model.Role;
 @AllArgsConstructor
 public class RoleDTO {
 	
-	private int roleId;
+	private Integer roleId;
 	private String type;
-	
-	public RoleDTO(Role role) {
-		this.roleId=role.getRoleId();
-		this.type=role.getType();
-	}
 
 }

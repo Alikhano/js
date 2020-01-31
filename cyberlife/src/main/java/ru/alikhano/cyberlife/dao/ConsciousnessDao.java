@@ -13,13 +13,7 @@ import ru.alikhano.cyberlife.model.Consciousness;
  */
 @Repository
 public interface ConsciousnessDao extends GenericDao<Consciousness> {
-	
-	/** 
-	 * enables database search by AI configurations of a product (android)
-	 * @param consLevel level of AI parameter to search in database
-	 * @return instance of Consciousness parameter
-	 */
-	Consciousness getConsByLevel(String consLevel);
 
+	Consciousness getConsByLevel(String consLevel);
 
 }

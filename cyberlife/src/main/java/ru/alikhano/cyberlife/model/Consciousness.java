@@ -24,7 +24,7 @@ public class Consciousness {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="consId")
-	private int consId;
+	private Integer consId;
 	
 	@Column(name="level", unique = true)
 	@NotNull
@@ -34,40 +34,4 @@ public class Consciousness {
 	@NotNull
 	private String description;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + consId;
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((level == null) ? 0 : level.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Consciousness other = (Consciousness) obj;
-		if (consId != other.consId)
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description)) {
-			
-			return false;
-		}
-		if (level == null) {
-			if (other.level != null)
-				return false;
-		} else if (!level.equals(other.level)) {
-			return false;
-		}
-		return true;
-	}
 }

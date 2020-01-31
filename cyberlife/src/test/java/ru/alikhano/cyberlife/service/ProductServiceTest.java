@@ -41,28 +41,28 @@ import ru.alikhano.cyberlife.supplier.ProductSupplier;
 public class ProductServiceTest {
 
 	@Mock
-	private ProductDao           productDao;
+	private ProductDao productDao;
 	@Mock
-	private ProductMapper        productMapper;
+	private ProductMapper productMapper;
 	@Mock
-	private ProductInfoMapper    productInfoMapper;
+	private ProductInfoMapper productInfoMapper;
 	@Mock
-	private CategoryService      categoryService;
+	private CategoryService categoryService;
 	@Mock
 	private ConsciousnessService consService;
 	@Mock
-	private OrderService         orderService;
+	private OrderService orderService;
 	@Mock
-	private MessagingService     messagingService;
+	private MessagingService messagingService;
 
 	@InjectMocks
 	private ProductServiceImpl productService;
 
-	private Product       newProduct;
-	private ProductDTO    newProductDTO;
-	private Product       product;
-	private ProductDTO    productDTO;
-	private OrderDTO      orderDTO;
+	private Product newProduct;
+	private ProductDTO newProductDTO;
+	private Product product;
+	private ProductDTO productDTO;
+	private OrderDTO orderDTO;
 	private List<Product> products;
 
 	@Before
@@ -221,7 +221,7 @@ public class ProductServiceTest {
 		Mockito.doReturn(category).when(categoryService).getByType("education");
 		Mockito.doReturn(consciousness).when(consService).getByLevel("middle AI");
 		List<ProductInfo> list = productService.searchParam(search);
-		Mockito.verify(productDao).searchParam("rk800", 1, 1, 0, 1500.0);
+		Mockito.verify(productDao).searchParam("rk800", 1, 1, 0.0, 1500.0);
 		assertEquals(list.size(), products.size());
 	}
 
@@ -229,7 +229,7 @@ public class ProductServiceTest {
 	public void searchWithAnyParameters() {
 		SearchRequest search = new SearchRequest("rk800", "any", "any", 0.0, 1500.0);
 		productService.searchParam(search);
-		Mockito.verify(productDao).searchParam("rk800", 0, 0, 0, 1500.0);
+		Mockito.verify(productDao).searchParam("rk800", 0, 0, 0.0, 1500.0);
 	}
 
 	@Test

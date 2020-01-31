@@ -30,7 +30,7 @@ import ru.alikhano.cyberlife.service.ConsciousnessService;
 @Controller
 public class AdminController {
 
-	private static final Logger logger = LogManager.getLogger(AdminController.class);
+	private static final Logger LOGGER = LogManager.getLogger(AdminController.class);
 
 	@Autowired
 	private CategoryService categoryService;
@@ -43,76 +43,49 @@ public class AdminController {
 		return "stats";
 	}
 
-	/**
-	 * @param model
-	 * @return jsp file name
-	 */
+
 	@GetMapping("admin/addCategory")
-	public String addCategory(Model model) {
+	public String showCategoryPage(Model model) {
 		CategoryDTO categoryDTO = new CategoryDTO();
 		model.addAttribute("categories", categoryService.getAll());
 		model.addAttribute("newCategory", categoryDTO);
 		return "addCategory";
 	}
 
-	/**
-	 * @param model
-	 * @return jsp file name
-	 */
+
 	@GetMapping("admin/addCons")
-	public String addCons(Model model) {
+	public String showConsciousnessPage(Model model) {
 		ConsciousnessDTO consciousnessDTO = new ConsciousnessDTO();
 		model.addAttribute("consLevels", consService.getAll());
 		model.addAttribute("newCons", consciousnessDTO);
 		return "addCons";
 	}
 
-	/**
-	 * @param categoryDTO instance of CategoryDTO class, containing info about new category
-	 * @param result
-	 * @param request http request received from client side
-	 * @param model
-	 * @return jsp file name
-	 * @throws CustomLogicException for duplicate entry
-	 */
-	@PostMapping(value = "admin/addCategory",  produces="application/json")
-	public ResponseEntity<?> addCategoryPost(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result,
+	@PostMapping(value = "admin/addCategory", produces="application/json")
+	public ResponseEntity<?> addNewCategory(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result,
 			HttpServletRequest request, Model model) throws CustomLogicException {
-		
 		try {
 			categoryService.create(categoryDTO);
-		}
-		catch (ConstraintViolationException ex) {
-			logger.error(ex.getMessage() + " DUPLICATE category entry");
+		} catch (ConstraintViolationException ex) {
+			LOGGER.error("DUPLICATE category entry");
 			throw new CustomLogicException("duplicate entry");
 		}
-		
-		logger.info("New category: " + categoryDTO.getCategoryType());
-		
-		  return ResponseEntity.ok(categoryDTO);
+		LOGGER.info(String.format("New category: %s", categoryDTO.getCategoryType()));
+
+		return ResponseEntity.ok(categoryDTO);
 	}
 
-	/**
-	 * @param consciousnessDTO instance of ConsDTO class, containing info about new category
-	 * @param result
-	 * @param request http request received from client side
-	 * @param model
-	 * @return jsp file name
-	 * @throws CustomLogicException for duplicate entry
-	 */
 	@PostMapping(value = "admin/addCons",  produces="application/json")
-	public ResponseEntity<?> addConsPost(@RequestBody @Valid ConsciousnessDTO consciousnessDTO, BindingResult result,
+	public ResponseEntity<?> addNewConsciousnessLevel(@RequestBody @Valid ConsciousnessDTO consciousnessDTO, BindingResult result,
 			HttpServletRequest request, Model model) throws CustomLogicException {
-
 		try {
 			consService.create(consciousnessDTO);
 		}
 		catch (ConstraintViolationException ex) {
-			logger.error(ex.getMessage() + " DUPLICATE cons entry");
+			LOGGER.error("DUPLICATE cons entry");
 			throw new CustomLogicException("duplicate entry");
 		}
-		
-		logger.info("New AI config: " + consciousnessDTO.getLevel());
+		LOGGER.info(String.format("New AI config: %s", consciousnessDTO.getLevel()));
 
 		return ResponseEntity.ok(consciousnessDTO);
 	}

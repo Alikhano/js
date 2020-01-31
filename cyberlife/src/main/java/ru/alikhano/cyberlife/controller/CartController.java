@@ -29,13 +29,7 @@ public class CartController {
 	private CartService cartService;
 	
 	private static final Logger LOGGER = LogManager.getLogger(CartController.class);
-	
-	/**
-	 * controller to show user's cart entries
-	 * @param request http request recieved from client side
-	 * @param model to retrieve customer's username
-	 * @return jsp file name
-	 */
+
 	@GetMapping("/myCart")
 	public String viewCart(HttpServletRequest request, Model model) {
 		int cartId = 0;
@@ -53,17 +47,9 @@ public class CartController {
 		
 		return "cartList";	
 	}
-	
-	/**
-	 * removes product from cart
-	 * @param itemId - id of the item to be removed from the cart
-	 * @param request http request received from client side
-	 * @param model
-	 * @return jsp file name
-	 */
+
 	@GetMapping(value = "/deleteItem/{itemId}")
 	public String deleteProduct(@PathVariable("itemId") int itemId, HttpServletRequest request, Model model){
-		
 		int cartId = Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue());
 		CartDTO cartDTO = cartService.getById(cartId);
 	    cartService.deleteItemFromCart(cartDTO, itemId);

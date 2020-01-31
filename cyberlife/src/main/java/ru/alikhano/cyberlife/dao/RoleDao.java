@@ -12,10 +12,7 @@ import ru.alikhano.cyberlife.model.Role;
  */
 @Repository
 public interface RoleDao {
-	
-	/** 
-	 * @return an instance of Role (always USER_ROLE)
-	 */
+
 	Role getRole();
 
 }

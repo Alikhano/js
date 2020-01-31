@@ -51,14 +51,7 @@ public class CustomerController {
 	private AddressService addressService;
 	
 	private static final String REDIRECT = "redirect:/myAccount";  
-	
-	
-	/**
-	 * controller to access customer's profile
-	 * @param model
-	 * @param authentication to retrieve customer's username
-	 * @return jsp file name
-	 */
+
 	@RequestMapping("/myAccount")
 	public String viewAccount(Model model, Authentication authentication) {
 		String username = authentication.getName();
@@ -69,12 +62,7 @@ public class CustomerController {
 		return "customerAccount";
 	}
 	
-	/**
-	 * controller to show an empty customer's profile if profile generation step failed during the registration
-	 * @param model
-	 * @param authentication to retrieve customer's username
-	 * @return jsp file name
-	 */
+
 	@GetMapping("/myAccount/updateAccount/")
 	public String updateAccount(Model model, Authentication authentication) {
 		String username = authentication.getName();
@@ -94,14 +82,7 @@ public class CustomerController {
 		return UPDATE;
 	}
 	
-	
-	/**
-	 * controller to show a page where customer can update his personal info
-	 * @param customerId to retrieve customer from database
-	 * @param model
-	 * @param authentication to retrieve customer's username
-	 * @return jsp file name
-	 */
+
 	@GetMapping("/myAccount/updateAccount/{customerId}")
 	public String updateAccount(@PathVariable("customerId") int customerId, Model model, Authentication authentication) {
 		CustomerDTO customerDTO = customerService.getById(customerId);
@@ -131,17 +112,7 @@ public class CustomerController {
 
 		return UPDATE;
 	}
-	
-	/**
-	 * controller to update customer's personal info
-	 * @param customerDTO object that contains new customer info
-	 * @param result
-	 * @param request request http request recieved from client side
-	 * @param authentication to retrieve customer's username
-	 * @param model
-	 * @return redirect to another page
-	 * @throws CustomLogicException
-	 */
+
 	@PostMapping(value = "/myAccount/updateAccount")
 	public String updateAccountPost(@Valid @ModelAttribute("customer") CustomerDTO customerDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication, Model model) throws CustomLogicException {
@@ -165,13 +136,7 @@ public class CustomerController {
 
 		return REDIRECT;
 	}
-	
-	/**
-	 * controller to display a page where customers can change their address
-	 * @param authentication to retrieve customer's username
-	 * @param model
-	 * @return jsp file name
-	 */
+
 	@GetMapping("/myAccount/changeAddress")
 	public String changeAddress(Authentication authentication, Model model) {
 		String username = authentication.getName();
@@ -182,16 +147,7 @@ public class CustomerController {
 
 		return "changeAddress";
 	}
-	
-	/**
-	 * controller to change the address
-	 * @param addressDTO object that contains new address details
-	 * @param result
-	 * @param request http request received from client side
-	 * @param authentication to retrieve customer's username
-	 * @param model
-	 * @return redirect to another page
-	 */
+
 	@PostMapping(value = "/myAccount/changeAddress")
 	public String changeAddressPost(@Valid @ModelAttribute("address") AddressDTO addressDTO, BindingResult result,
 			HttpServletRequest request, Authentication authentication, Model model) {
@@ -209,27 +165,12 @@ public class CustomerController {
 
 		return REDIRECT;
 	}
-	
-	/** 
-	 * controller to display a page where customer's can change their password
-	 * @param authentication to retrieve customer's username
-	 * @param model
-	 * @return jsp file name
-	 */
+
 	@GetMapping("/myAccount/changePassword")
 	public String changePassword(Authentication authentication, Model model) {
 		return "changePassword";
 	}
-	
-	/**
-	 * controller to change the password
-	 * @param oldPassword
-	 * @param newPassword
-	 * @param request http request received from client side
-	 * @param authentication to retrieve customer's username
-	 * @param model
-	 * @return redirect to another page
-	 */
+
 	@PostMapping(value = "/myAccount/changePassword")
 	public String changePasswordPost(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword,
 			HttpServletRequest request, Authentication authentication, Model model) {

@@ -223,7 +223,7 @@ public class ProductServiceImpl implements ProductService {
 	public boolean isInTop(ProductDTO productDTO) {
 		List<ProductDTO> top = getTopProducts();
 		for (ProductDTO product : top) {
-			if (product.getProductId() == productDTO.getProductId()) {
+			if (product.getProductId().equals(productDTO.getProductId())) {
 				return true;
 			}
 		}
@@ -250,9 +250,9 @@ public class ProductServiceImpl implements ProductService {
 	public boolean isAvailableForDeletion(ProductDTO productDTO) {
 	    List<OrderDTO> orders = orderService.getAll();
 	    for (OrderDTO order : orders) {
-	    	Set<OrderItemDTO> orderItems = order.getOrderedItems();
+	    	Set<OrderItemDTO> orderItems = order.getOrderItems();
 	    	for (OrderItemDTO orderItem : orderItems) {
-	    		if (orderItem.getProduct().getProductId() == productDTO.getProductId()
+	    		if (orderItem.getProduct().getProductId().equals(productDTO.getProductId())
 						&& PaymentStatusDTO.PAID.equals(order.getPaymentStatus())
 						&& OrderStatusDTO.RECEIVED.equals(order.getOrderStatus())) {
 	    			return false;

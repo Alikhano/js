@@ -31,7 +31,7 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 	}
 
 	@Override
-	public List<Product> searchParam(String model, int category, int consLevel, double fromPrice, double toPrice) {
+	public List<Product> searchParam(String model, Integer category, Integer consLevel, Double fromPrice, Double toPrice) {
 
 		Session session = sessionFactory.getCurrentSession();
 		CriteriaBuilder searchCriteriaBuilder = session.getCriteriaBuilder();

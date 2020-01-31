@@ -11,6 +11,6 @@ import ru.alikhano.cyberlife.model.Address;
  *
  */
 @Repository
-public interface AddressDao extends GenericDao<Address>{
+public interface AddressDao extends GenericDao<Address> {
 
 }

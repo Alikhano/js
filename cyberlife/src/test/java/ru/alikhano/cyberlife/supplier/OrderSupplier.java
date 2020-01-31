@@ -30,7 +30,7 @@ public class OrderSupplier {
         orderDTO.setOrderStatus(TEST_ORDER_STATUS_DTO);
         orderDTO.setOrderPrice(TEST_ORDER_PRICE);
         orderDTO.setOrderDate(new Date());
-        orderDTO.setOrderedItems(Collections.singleton(OrderItemSupplier.getOrderItemDTO()));
+        orderDTO.setOrderItems(Collections.singleton(OrderItemSupplier.getOrderItemDTO()));
         orderDTO.setCustomer(CustomerSupplier.getCustomerDTO());
 
         return orderDTO;

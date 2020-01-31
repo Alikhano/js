@@ -78,7 +78,7 @@ public class AddressServiceTest {
 	@Test
 	public void getById() {
 		AddressDTO address = addressService.getById(1);
-		assertEquals(1, address.getAddressId());
+		assertEquals(1, address.getAddressId().intValue());
 	}
 	
 	@Test

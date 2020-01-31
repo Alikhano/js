@@ -185,12 +185,12 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public boolean isInTop(OrderDTO order) {
-		Set<OrderItemDTO> orderItems = order.getOrderedItems();
+		Set<OrderItemDTO> orderItems = order.getOrderItems();
 		List<ProductDTO> top = productService.getTopProducts();
 		for (OrderItemDTO orderItem : orderItems) {
 			ProductDTO productDTO = orderItem.getProduct();	
 			for (ProductDTO productFromTop : top) {
-				if (productFromTop.getProductId() == productDTO.getProductId()) {
+				if (productFromTop.getProductId().equals(productDTO.getProductId())) {
 					return true;
 				}
 			}
@@ -225,7 +225,7 @@ public class OrderServiceImpl implements OrderService {
 
 		//set price to order, erase price from cart
 		orderDTO.setOrderPrice(cartDTO.getGrandTotal());
-		cartDTO.setGrandTotal(0);
+		cartDTO.setGrandTotal(0.0);
 
 		//add date to order
 		orderDTO.setOrderDate(new Date());

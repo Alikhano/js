@@ -35,6 +35,9 @@ import ru.alikhano.cyberlife.service.ProductService;
  */
 @Controller
 public class ProductController {
+
+	private static final Logger LOGGER = LogManager.getLogger(ProductController.class);
+	private static final String VIEW = "viewProduct";
 	
 	@Autowired
 	private ProductService productService;
@@ -44,30 +47,16 @@ public class ProductController {
 	
 	@Autowired
 	private CartItemService cartItemService;
-	
-	private static final Logger LOGGER = LogManager.getLogger(ProductController.class);
-	
-	private static final String VIEW = "viewProduct";
 
-	/**
-	 * @param model
-	 * @return
-	 */
 	@GetMapping("/catalogue")
-	public String getProducts(Model model) {
+	public String showProductCatalog(Model model) {
 		List<ProductDTO> products = productService.getAll();
 		model.addAttribute("products", products);
 
 		return "productList";
 	}
 
-    
-    /**
-     * controller to view detailed product info
-     * @param productId to retrieve the product from database
-     * @param model
-     * @return jsp file name
-     */
+
     @GetMapping("/viewProduct/{productId}")
     public String viewProduct(@PathVariable("productId") int productId, Model model) {
     	ProductDTO productDTO;
@@ -90,22 +79,11 @@ public class ProductController {
 
         return VIEW;
     }
-    
-    /**
-     * controller to add product to cart
-     * @param productId
-     * @param newCartItem object, containing details of a new cart item
-     * @param result
-     * @param request http request received from client side
-     * @param model
-     * @return redirect back to the catalogue
-     * @throws CustomLogicException
-     */
+
     @PostMapping(value = "/viewProduct")
-    public String addToCart(@RequestParam("productId") int productId,
+    public String addProductToCart(@RequestParam("productId") int productId,
 			@ModelAttribute("newCartItem") @Valid CartItemDTO newCartItem,
 			BindingResult result, HttpServletRequest request, Model model) throws CustomLogicException {
-
         ProductDTO productDTO = productService.getById(productId);
         
         CartDTO cartDTO = cartService.getById(Integer.parseInt(WebUtils.getCookie(request, "cartId").getValue()));

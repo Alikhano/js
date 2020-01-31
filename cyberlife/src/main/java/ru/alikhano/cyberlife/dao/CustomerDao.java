@@ -14,23 +14,11 @@ import ru.alikhano.cyberlife.model.Customer;
  */
 @Repository
 public interface CustomerDao extends GenericDao<Customer> {
-	
-	/** 
-	 * enables database search by customer's id
-	 * @param id customer id to search in database
-	 * @return instance of Customer with corresponding customer id
-	 */
-	Customer getByUserId(int id);
-	
-	
-	/** 
-	 * @return list of most active customers
-	 */
+
+	Customer getByUserId(Integer id);
+
 	Customer getByEmail(String email);
-	
-	/**
-	 * @return instance of User with corresponding email
-	 */
+
 	List<Customer> getTopCustomers();
 
 }
