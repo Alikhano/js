@@ -1,2 +1,4 @@
 language: java
-script: mvn clean verify
+script: 
+  - cd project 
+  - mvn clean install
