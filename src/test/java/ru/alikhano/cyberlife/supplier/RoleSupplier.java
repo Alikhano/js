@@ -3,8 +3,6 @@ package ru.alikhano.cyberlife.supplier;
 import ru.alikhano.cyberlife.dto.RoleDTO;
 import ru.alikhano.cyberlife.model.Role;
 
-import java.util.Set;
-
 public class RoleSupplier {
 
     private static final String  ADMIN_ROLE    = "ADMIN";

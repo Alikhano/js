@@ -65,7 +65,7 @@ public class AdminSeleniumTest {
 	private void tryToAddDuplicateConfigAndFail() {
 		driverWait.until(
 				ExpectedConditions.presenceOfElementLocated(By.id("add-cons"))).click();
-		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("level"))).sendKeys("high AI");
+		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("level"))).sendKeys("high");
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("description"))).sendKeys("test");
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("submit-cons"))).submit();
 	}

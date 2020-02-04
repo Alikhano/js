@@ -1,11 +1,10 @@
 package ru.alikhano.cyberlife.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.alikhano.cyberlife.converter.OrderStatusJpaConverter;
 import ru.alikhano.cyberlife.converter.PaymentStatusJpaConverter;
+import ru.alikhano.cyberlife.converter.PaymentTypeJpaConverter;
 import ru.alikhano.cyberlife.model.enums.OrderStatus;
 import ru.alikhano.cyberlife.model.enums.PaymentStatus;
 import ru.alikhano.cyberlife.model.enums.PaymentType;
@@ -42,7 +41,7 @@ public class Orders {
 	private int orderId;
 
 	@Column(name = "paymentType")
-	@Convert(converter = PaymentType.class)
+	@Convert(converter = PaymentTypeJpaConverter.class)
 	@NotNull
 	private PaymentType paymentType;
 

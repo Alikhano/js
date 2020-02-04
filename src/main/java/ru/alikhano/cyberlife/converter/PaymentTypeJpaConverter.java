@@ -5,7 +5,7 @@ import ru.alikhano.cyberlife.model.enums.PaymentType;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-@Converter
+@Converter(autoApply=true)
 public class PaymentTypeJpaConverter implements AttributeConverter<PaymentType, String> {
     @Override
     public String convertToDatabaseColumn(PaymentType paymentType) {
