@@ -2,6 +2,7 @@ language: java
 addons:
   sonarcloud:
     organization: "alikhano-github"
+    projectKey: "Alikhano_cyberlife"
     token: $SONAR_TOKEN
 script: 
   - cd project 
