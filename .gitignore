@@ -9,3 +9,4 @@ logs
 .project
 .factorypath
 /.factorypath
+.DS_Store
