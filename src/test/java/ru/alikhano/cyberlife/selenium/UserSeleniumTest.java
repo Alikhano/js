@@ -2,6 +2,7 @@ package ru.alikhano.cyberlife.selenium;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -37,12 +38,14 @@ public class UserSeleniumTest {
     }
 
 	@Test
+	@Ignore
 	public void userPurchaseTest() {
 		addProductToCart();
 		submitOrder();
 	}
 
 	@Test
+	@Ignore
 	public void editAccountTest() {
 		// access account
 		driverWait.until(ExpectedConditions.presenceOfElementLocated(By.id("user-account"))).click();
