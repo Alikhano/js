@@ -1,4 +1,8 @@
 language: java
+addons:
+  sonarcloud:
+    organization: "alikhano-github"
+    token: $SONAR_TOKEN
 script: 
   - cd project 
   - mvn clean install
