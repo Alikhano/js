@@ -1,0 +1,12 @@
+.idea
+*.iml
+target
+logs
+
+# eclipse project file
+.settings/
+.classpath
+.project
+.factorypath
+/.factorypath
+.DS_Store
