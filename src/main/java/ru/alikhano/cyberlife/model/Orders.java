@@ -1,7 +1,9 @@
 package ru.alikhano.cyberlife.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.alikhano.cyberlife.converter.OrderStatusJpaConverter;
 import ru.alikhano.cyberlife.converter.PaymentStatusJpaConverter;
 import ru.alikhano.cyberlife.converter.PaymentTypeJpaConverter;
