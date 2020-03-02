@@ -3,6 +3,7 @@ package ru.alikhano.cyberlife.service.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -220,26 +221,21 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	private OrderDTO initiateOrder(OrderDTO orderDTO, CustomerDTO customerDTO, CartDTO cartDTO) {
-		// assign customer to order
 		orderDTO.setCustomer(customerDTO);
 
 		//set price to order, erase price from cart
 		orderDTO.setOrderPrice(cartDTO.getGrandTotal());
 		cartDTO.setGrandTotal(0.0);
 
-		//add date to order
 		orderDTO.setOrderDate(new Date());
 
 		//update order status
-
-		if (PaymentTypeDTO.CREDIT_CART.equals(orderDTO.getPaymentType())) {
-			orderDTO.setPaymentStatus(PaymentStatusDTO.PAID);
-		}
-		else {
-			orderDTO.setPaymentStatus(PaymentStatusDTO.UNPAID);
-		}
+		orderDTO.setPaymentStatus(PaymentTypeDTO.CREDIT_CART.equals(orderDTO.getPaymentType()) ?
+				PaymentStatusDTO.PAID :
+				PaymentStatusDTO.UNPAID);
 
 		orderDTO.setOrderStatus(OrderStatusDTO.AWAITS_DELIVERY);
+		orderDTO.setOrderItems(new HashSet<>());
 
 		return orderDTO;
 	}
@@ -282,7 +278,9 @@ public class OrderServiceImpl implements OrderService {
 		item.setOrderQuantity(cartItemDTO.getQuantity());
 		item.setOrderTotal(cartItemDTO.getTotalPrice());
 		item.setProduct(cartItemDTO.getProduct());
-		getById(orderId).addItem(item);
+		OrderDTO orderDTO = getById(orderId);
+		item.setOrder(orderDTO);
+		orderDTO.getOrderItems().add(item);
 		orderItemService.create(item);
 	}
 }

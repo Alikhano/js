@@ -27,10 +27,4 @@ public class OrderDTO {
 	private Date orderDate;
 
 	Set<OrderItemDTO> orderItems;
-
-	public void addItem(OrderItemDTO item) {
-		orderItems.add(item);
-		item.setOrder(this);
-	}
-
 }
