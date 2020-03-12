@@ -39,18 +39,5 @@ public interface CartItemService {
 	 * @param cartDTO instance of cart to be emptied
 	 */
 	void deleteAll(CartDTO cartDTO);
-	
-	/**
-	 * @param id of a cart item to be retrieved from the database
-	 * @return instance of CartItemDTO with corresponding id
-	 */
-	CartItemDTO getById(int id);
-
-    /**
-     * @param cartDTO
-     * @param id
-     * @return
-     */
-    CartItemDTO getCartItemById(CartDTO cartDTO, int id);
 
 }

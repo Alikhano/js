@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import ru.alikhano.cyberlife.dto.CartDTO;
 import ru.alikhano.cyberlife.dto.CartItemDTO;
+import ru.alikhano.cyberlife.dto.OrderDTO;
 import ru.alikhano.cyberlife.dto.ProductDTO;
 import ru.alikhano.cyberlife.dao.CartItemDao;
 import ru.alikhano.cyberlife.mapper.CartItemMapper;
@@ -29,6 +30,8 @@ public class CartItemServiceTest {
 	private CartItemDao cartItemDao;
 	@Mock
 	private CartItemMapper cartItemMapper;
+	@Mock
+	private CartService cartService;
 
 	@InjectMocks
 	private CartItemServiceImpl cartItemService;
@@ -49,13 +52,11 @@ public class CartItemServiceTest {
 		cartDTO = CartSupplier.getCartDTOWithSpecifiedCartItems(cartItemDTO);
 		cartDTOWithEmptyItems = CartSupplier.getEmptyCartDTO();
 
-
-		Mockito.when(cartItemDao.getById(1)).thenReturn(cartItem);
-		Mockito.when(cartItemMapper.forward(cartItem)).thenReturn(cartItemDTO);
 		Mockito.when(cartItemMapper.backward(cartItemDTO)).thenReturn(cartItem);
 		Mockito.doNothing().when(cartItemDao).create(cartItem);
 		Mockito.doNothing().when(cartItemDao).update(cartItem);
 		Mockito.doNothing().when(cartItemDao).delete(cartItem);
+		Mockito.doNothing().when(cartService).update(Mockito.any(CartDTO.class));
 	}
 
 	@Test
@@ -83,32 +84,8 @@ public class CartItemServiceTest {
 	}
 
 	@Test
-	public void getById() {
-		CartItemDTO cartItemDTO = cartItemService.getById(1);
-		assertEquals(cartItemDTO, this.cartItemDTO);
-	}
-
-	@Test
-	public void getByIdFail() {
-		CartItemDTO cartItemDTO = cartItemService.getById(2);
-		assertNull(cartItemDTO);
-	}
-
-	@Test
 	public void deleteAll() {
 		cartItemService.deleteAll(cartDTO);
 		Mockito.verify(cartItemDao).delete(cartItem);
-	}
-
-	@Test
-	public void getCartItemById() {
-		CartItemDTO cartItem = cartItemService.getCartItemById(cartDTO, 1);
-		assertEquals(1,cartItem.getItemId().intValue());
-	}
-
-	@Test
-	public void getCartItemByIdFail() {
-		CartItemDTO cartItem = cartItemService.getCartItemById(cartDTO, 2);
-		assertNull(cartItem);
 	}
 }

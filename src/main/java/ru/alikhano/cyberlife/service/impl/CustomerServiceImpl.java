@@ -2,7 +2,12 @@ package ru.alikhano.cyberlife.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +20,8 @@ import ru.alikhano.cyberlife.service.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+
+	private static final Logger LOGGER = LogManager.getLogger(CustomerServiceImpl.class);
 
 	@Autowired
 	private CustomerDao customerDao;
@@ -42,7 +49,6 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public CustomerDTO getById(int id) {
-
 		return customerMapper.forward(customerDao.getById(id));
 	}
 
@@ -52,9 +58,11 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void create(CustomerDTO customerDTO) {
-
+		if (customerDTO == null) {
+			LOGGER.info("Customer is null");
+			return;
+		}
 		customerDao.create(customerMapper.backward(customerDTO));
-
 	}
 
 	/**
@@ -63,14 +71,16 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void update(CustomerDTO customerDTO){
-
+		if (customerDTO == null) {
+			LOGGER.info("Customer is null");
+			return;
+		}
 		Customer customer = customerDao.getById(customerDTO.getCustomerId());
 		customer.setFirstName(customerDTO.getFirstName());
 		customer.setLastName(customerDTO.getLastName());
 		customer.setBirthDate(customerDTO.getBirthDate());
 		customer.setEmail(customerDTO.getEmail());
 		customerDao.update(customer);
-
 	}
 
 	/**
@@ -79,7 +89,10 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public void delete(CustomerDTO customerDTO) {
-
+		if (customerDTO == null) {
+			LOGGER.info("Customer is null");
+			return;
+		}
 		customerDao.delete(customerMapper.backward(customerDTO));
 	}
 
@@ -89,7 +102,6 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public CustomerDTO getByUserId(int userId) {
-
 		return customerMapper.forward(customerDao.getByUserId(userId));
 	}
 
@@ -99,15 +111,10 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional
 	public List<CustomerDTO> getTopCustomers() {
-
-		List<CustomerDTO> dtoList = new ArrayList<>();
-
-		for (Customer customer : customerDao.getTopCustomers()) {
-			CustomerDTO customerDTO = customerMapper.forward(customer);
-			dtoList.add(customerDTO);
-		}
-
-		return dtoList;
+		return customerDao.getTopCustomers().stream()
+				.filter(Objects::nonNull)
+				.map(customer -> customerMapper.forward(customer))
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -116,7 +123,10 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional 
 	public CustomerDTO getByEmail(String email) {
-
+		if (StringUtils.isNullOrEmpty(email)) {
+			LOGGER.info("Email is null or empty");
+			return null;
+		}
 		return customerMapper.forward(customerDao.getByEmail(email));
 	}
 }

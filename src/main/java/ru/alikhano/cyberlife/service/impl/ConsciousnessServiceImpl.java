@@ -1,8 +1,12 @@
 package ru.alikhano.cyberlife.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +18,8 @@ import ru.alikhano.cyberlife.service.ConsciousnessService;
 
 @Service
 public class ConsciousnessServiceImpl implements ConsciousnessService{
+
+	private static final Logger LOGGER = LogManager.getLogger(ConsciousnessServiceImpl.class);
 	
 	@Autowired
 	private ConsciousnessDao consciousnessDao;
@@ -27,12 +33,10 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	@Override
 	@Transactional
 	public List<ConsciousnessDTO> getAll() {
-		List<ConsciousnessDTO> consesDTO = new ArrayList<>();
-		consciousnessDao.getAll().forEach(cons -> {
-			ConsciousnessDTO consciousnessDTO = consciousnessMapper.forward(cons);
-			consesDTO.add(consciousnessDTO);
-		});
-		return consesDTO;
+		return consciousnessDao.getAll().stream()
+				.filter(Objects::nonNull)
+				.map(consciousness -> consciousnessMapper.forward(consciousness))
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -41,7 +45,6 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	@Override
 	@Transactional
 	public ConsciousnessDTO getById(int id) {
-
 		return consciousnessMapper.forward(consciousnessDao.getById(id));
 	}
 
@@ -51,6 +54,10 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	@Override
 	@Transactional
 	public ConsciousnessDTO getByLevel(String consciousnessLevel) {
+		if (StringUtils.isNullOrEmpty(consciousnessLevel)) {
+			LOGGER.info("Consciousness level is null or empty");
+			return null;
+		}
 		return consciousnessMapper.forward(consciousnessDao.getConsByLevel(consciousnessLevel));
 	}
 
@@ -60,6 +67,10 @@ public class ConsciousnessServiceImpl implements ConsciousnessService{
 	@Override
 	@Transactional
 	public void create(ConsciousnessDTO consciousnessDTO) {
+		if (consciousnessDTO == null) {
+			LOGGER.info("Consciousness is null");
+			return;
+		}
 		consciousnessDao.create(consciousnessMapper.backward(consciousnessDTO));
 	}
 }

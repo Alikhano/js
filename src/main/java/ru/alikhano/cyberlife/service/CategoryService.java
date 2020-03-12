@@ -36,12 +36,5 @@ public interface CategoryService {
 	 * @param categoryDTO
 	 */
 	void create(CategoryDTO categoryDTO);
-	
-	/**
-	 * creates new category and returns it's id
-	 * @param categoryDTO
-	 * @return id of a newly created category
-	 */
-	int createAndGetId(CategoryDTO categoryDTO);
 
 }

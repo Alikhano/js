@@ -39,11 +39,8 @@ public class AddressServiceTest {
 	public void init() {
 		address = AddressSupplier.getAddress();
 		addressDTO = AddressSupplier.getAddressDTO();
-		
-		Mockito.when(addressDao.getById(1)).thenReturn(address);
-		Mockito.when(addressDao.getAll()).thenReturn(Collections.singletonList(address));
+
 		Mockito.when(addressMapper.backward(addressDTO)).thenReturn(address);
-		Mockito.when(addressMapper.forward(address)).thenReturn(addressDTO);
 		
 		Mockito.doNothing().when(addressDao).create(address);
 		Mockito.doNothing().when(addressDao).update(address);
@@ -67,24 +64,6 @@ public class AddressServiceTest {
 	public void delete() {
 		addressService.delete(addressDTO);
 		Mockito.verify(addressDao).delete(address);
-	}
-	
-	@Test
-	public void getAll() {
-		List<AddressDTO> list = addressService.getAll();
-		assertEquals(Collections.singletonList(addressDTO), list);
-	}
-	
-	@Test
-	public void getById() {
-		AddressDTO address = addressService.getById(1);
-		assertEquals(1, address.getAddressId().intValue());
-	}
-	
-	@Test
-	public void getByIdFail() {
-		AddressDTO address = addressService.getById(2);
-		assertNull(address);
 	}
 
 }

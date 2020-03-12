@@ -1,7 +1,5 @@
 package ru.alikhano.cyberlife.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import ru.alikhano.cyberlife.dto.AddressDTO;
@@ -14,18 +12,6 @@ import ru.alikhano.cyberlife.dto.AddressDTO;
  */
 @Service
 public interface AddressService {
-	
-	/**
-	 * @return list of all addresses in the database
-	 */
-	List<AddressDTO> getAll();
-
-	/**
-	 * searches for address by customer's id
-	 * @param id customer's id 
-	 * @return instance of AddressDTO for a corresponding customer
-	 */
-	AddressDTO getById(int id);
 
 	/**
 	 * @param addressDTO instance of AddressDTO to convert to Address and add to the database
